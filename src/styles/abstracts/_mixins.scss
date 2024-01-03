@@ -1,0 +1,59 @@
+@mixin h1() {
+  font-size: rem(40);
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+@mixin h2() {
+  font-size: rem(36);
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+@mixin h3() {
+  font-size: rem(32);
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+@mixin h4($weight: normal) {
+  font-size: rem(32);
+  line-height: 1.5;
+  font-weight: $weight;
+}
+
+@mixin h5($weight: normal) {
+  font-size: rem(20);
+  line-height: 1.5;
+  font-weight: $weight;
+}
+
+@mixin body1($weight: normal) {
+  font-size: rem(18);
+  line-height: 1.5;
+  font-weight: $weight;
+}
+
+@mixin body2($weight: normal) {
+  font-size: rem(16);
+  line-height: 1.5;
+  font-weight: $weight;
+}
+
+@mixin body3($weight: normal) {
+  font-size: rem(14);
+  line-height: 1.5;
+  font-weight: $weight;
+}
+
+@mixin body4($weight: normal) {
+  font-size: rem(12);
+  line-height: 1.5;
+  font-weight: $weight;
+}
+
+@mixin body5() {
+  font-size: rem(10);
+  line-height: 1.5;
+  font-weight: normal;
+}

@@ -1,0 +1,37 @@
+// 색상
+$primary: #0351ff;
+$primaryHover: #0349e6;
+$primaryActive: #0241cc;
+
+$primaryLight: #e6eeff;
+$primaryLightHover: #d9e5ff;
+$primaryLightActive: #b1c9ff;
+
+$primaryDark: #023dbf;
+$primaryDarkHover: #023199;
+$primaryDarkActive: #012473;
+$primaryDarker: #011c59;
+
+$subMidGray: #f1f1f6;
+$subPaleGray: #dae4fb;
+$subBlue: #1775f9;
+
+$color: (
+  0: #fff,
+  100: #f9f9fa,
+  200: #f1f5f8,
+  300: #e5e9ed,
+  400: #d0dae3,
+  500: #b4bcc6,
+  600: #9199a4,
+  700: #5c656c,
+  800: #414447,
+  900: #000000,
+);
+
+@function color($shade) {
+  @return map-get($color, $shade);
+}
+
+$error: #fe395b;
+$success: #0cbc72;
