@@ -22,25 +22,27 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* 레이아웃 미적용 페이지 */}
+        <Route path={ROUTES.SIGNIN} element={<SignIn />} />
+        <Route path={ROUTES.SIGNIN_AGREEMENT} element={<SignInAgreement />} />
+        <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+        <Route path={ROUTES.SIGNUP_SUCCESS} element={<SignUpSuccess />} />
+        <Route path={ROUTES.INIT} element={<Init />} />
+        <Route
+          path={ROUTES.INIT_ACCOMMODATION_REGISTRATION}
+          element={<InitAccommodationRegistration />}
+        />
+        <Route
+          path={ROUTES.INIT_ROOM_REGISTRATION}
+          element={<InitRoomRegistration />}
+        />
+        <Route
+          path={ROUTES.INIT_INFO_CONFIRMATION}
+          element={<InitInfoConfirmation />}
+        />
+        {/* 레이아웃 적용 페이지  */}
         <Route element={<RootLayout />}>
-          <Route path={ROUTES.SIGNIN} element={<SignIn />} />
-          <Route path={ROUTES.SIGNIN_AGREEMENT} element={<SignInAgreement />} />
-          <Route path={ROUTES.SIGNUP} element={<SignUp />} />
-          <Route path={ROUTES.SIGNUP_SUCCESS} element={<SignUpSuccess />} />
           <Route path={ROUTES.POINT_DETAIL} element={<PointDetail />} />
-          <Route path={ROUTES.INIT} element={<Init />} />
-          <Route
-            path={ROUTES.INIT_ACCOMMODATION_REGISTRATION}
-            element={<InitAccommodationRegistration />}
-          />
-          <Route
-            path={ROUTES.INIT_ROOM_REGISTRATION}
-            element={<InitRoomRegistration />}
-          />
-          <Route
-            path={ROUTES.INIT_INFO_CONFIRMATION}
-            element={<InitInfoConfirmation />}
-          />
           <Route path={ROUTES.COUPON} element={<Coupon />} />
           <Route
             path={ROUTES.COUPON_REGISTRATION}
