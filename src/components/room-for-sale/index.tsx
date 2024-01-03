@@ -1,4 +1,3 @@
-import React from 'react';
 import './roomForSale.scss';
 
 const RoomForSale = () => {

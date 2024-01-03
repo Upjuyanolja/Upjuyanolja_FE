@@ -1,0 +1,65 @@
+.room-card {
+  display: flex;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  .room-image {
+    flex: 1;
+    background: url('https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/173854e0-54ee-4e2d-bde8-54593d87be39')
+      center/cover no-repeat;
+  }
+
+  .room-content {
+    flex: 2;
+    padding-left: 20px;
+
+    .room-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .room-amenities {
+      span {
+        margin-right: 10px;
+        &:after {
+          content: '|';
+          margin-left: 10px;
+        }
+        &:last-child:after {
+          content: '';
+        }
+      }
+    }
+
+    .room-info {
+      margin: 10px 0;
+      div {
+        margin-bottom: 5px;
+      }
+    }
+
+    .room-booking {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .booking-button {
+        border: none;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        &:hover {
+          background-color: darken(#007bff, 10%);
+        }
+      }
+
+      .room-price {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+    }
+  }
+}
