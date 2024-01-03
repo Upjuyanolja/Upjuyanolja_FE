@@ -1,9 +1,9 @@
-import './App.less';
+import Test from './components/Test';
 
 function App() {
   return (
     <>
-      <p className="hi">sdasdsad</p>
+      <Test></Test>
     </>
   );
 }
