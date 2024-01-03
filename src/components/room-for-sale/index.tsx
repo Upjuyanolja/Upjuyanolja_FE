@@ -1,4 +1,4 @@
-import './roomForSale.scss';
+import './/roomForSale.module.scss';
 
 const RoomForSale = () => {
   return (

@@ -12,7 +12,7 @@ import { InitInfoConfirmation } from './pages/init-info-confirmation';
 import { Coupon } from './pages/coupon';
 import { CouponRegistration } from './pages/coupon-registration';
 import { Main } from './pages/main';
-import { Room } from './pages/room';
+import Room from './pages/room';
 import { RoomRegistration } from './pages/room-registration';
 import { RoomUpdate } from './pages/room-update';
 import { RootLayout } from './layout';
