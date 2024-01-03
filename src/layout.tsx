@@ -10,7 +10,6 @@ export const RootLayout = () => {
         margin: '0 auto',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
       }}
     >
       <Outlet />
