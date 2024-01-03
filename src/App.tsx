@@ -1,7 +1,11 @@
 import './App.less';
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <p className="hi">sdasdsad</p>
+    </>
+  );
 }
 
 export default App;
