@@ -29,5 +29,9 @@ $color: (
   900: #000000,
 );
 
+@function color($shade) {
+  @return map-get($color, $shade);
+}
+
 $error: #fe395b;
 $success: #0cbc72;

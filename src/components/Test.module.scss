@@ -1,5 +1,4 @@
-@use '../styles/abstracts/mixins';
-
 .test {
-  font-size: rem(12);
+  font-size: rem(40);
+  color: $primary;
 }

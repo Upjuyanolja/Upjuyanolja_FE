@@ -1,2 +1,5 @@
-@use 'abstracts';
-@use 'base';
+@import './abstracts/functions';
+@import './abstracts/mixins';
+@import './abstracts/variables';
+@import './base/global';
+@import './base/typography';

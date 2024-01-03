@@ -1,8 +1,9 @@
 import React from 'react';
-import * as styles from './Test.module.scss';
+
+// import styles from './Test.module.scss';
 
 function Test() {
-  return <div className={styles.test}>Test</div>;
+  return <div>Test</div>;
 }
 
 export default Test;
