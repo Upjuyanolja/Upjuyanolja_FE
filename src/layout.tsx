@@ -1,47 +1,27 @@
 import { Layout } from 'antd';
-import Sider from 'antd/lib/layout/Sider';
-import { Content, Header } from 'antd/lib/layout/layout';
 import { Outlet } from 'react-router-dom';
 
 export const RootLayout = () => {
   return (
-    <Layout
-      style={{
-        height: '100vh',
-      }}
-    >
-      <Header
-        style={{
-          width: '100vw',
-          height: '4vh',
-          backgroundColor: 'lightblue',
-        }}
-      >
-        Header
-      </Header>
-
-      <Layout
-        style={{
-          display: 'flex',
-        }}
-      >
-        <Sider
+    <Layout>
+      <Layout.Header>Header</Layout.Header>
+      <Layout>
+        <Layout.Sider
           style={{
-            width: '256px',
-            height: '96vh',
-            backgroundColor: 'lightgray',
+            backgroundColor: 'blue',
+            height: '100vh',
           }}
         >
           Sider
-        </Sider>
-        <Content
+        </Layout.Sider>
+        <Layout.Content
           style={{
             maxWidth: '1024px',
             margin: '0 auto',
           }}
         >
           <Outlet />
-        </Content>
+        </Layout.Content>
       </Layout>
     </Layout>
   );
