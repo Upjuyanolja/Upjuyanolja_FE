@@ -1,3 +1,4 @@
+import SideBar from './components/side-bar';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 
@@ -6,13 +7,8 @@ export const RootLayout = () => {
     <Layout>
       <Layout.Header>Header</Layout.Header>
       <Layout>
-        <Layout.Sider
-          style={{
-            backgroundColor: 'blue',
-            height: '100vh',
-          }}
-        >
-          Sider
+        <Layout.Sider width="256" style={{ background: '#fff' }}>
+          <SideBar />
         </Layout.Sider>
         <Layout.Content
           style={{
