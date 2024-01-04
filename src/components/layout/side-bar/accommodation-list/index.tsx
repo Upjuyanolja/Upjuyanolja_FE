@@ -6,7 +6,8 @@ import { useState } from 'react';
 import {
   StyledAccommodationItemProps,
   StyledAccommodationWrapProps,
-} from './typs';
+} from './type';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 export const AccommodationList = () => {
   const [clickedSelectBox, setClickedSelectBox] = useState(false);
@@ -53,6 +54,7 @@ export const AccommodationList = () => {
         <TextBox typography="body2" bold={true}>
           {accommodationMap[0].name}
         </TextBox>
+        {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
       </StyledButton>
       <StyledAccommodationWrap height={clickedSelectBox ? 'auto' : '0'}>
         {accommodationMap.map((item) => (
@@ -82,6 +84,7 @@ const StyledButton = styled(Button)`
   height: 44px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px 16px;
 `;
 
