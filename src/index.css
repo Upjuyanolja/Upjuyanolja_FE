@@ -16,3 +16,9 @@ html {
 .ant-btn-primary:hover {
   background-color: #0349e6;
 }
+.ant-btn-primary:active {
+  background-color: #0241cc;
+}
+.ant-btn-lg {
+  width: 100%;
+}
