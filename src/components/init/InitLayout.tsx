@@ -46,9 +46,11 @@ export const InitLayout = () => {
 
 const StyledHeadContent = styled(Layout.Content)`
   height: 140px;
-  margin: 0 auto;
-  background-color: white;
   width: 100%;
+
+  background-color: white;
+
+  margin: 0 auto;
   display: flex;
   align-items: center;
 `;
@@ -57,7 +59,7 @@ const StyledTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-left: 150px;
+  margin-left: 67px;
 `;
 
 const StyledPageName = styled.h1`
