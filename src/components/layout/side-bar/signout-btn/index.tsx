@@ -1,5 +1,5 @@
 import { LogoutOutlined } from '@ant-design/icons';
-import TextBox from '@components/text';
+import TextBox from '@components/text-box';
 import styled from 'styled-components';
 
 export const SignOutBtn = () => {

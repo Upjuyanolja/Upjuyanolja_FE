@@ -1,4 +1,4 @@
-import TextBox from '@components/text';
+import TextBox from '@components/text-box';
 import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
