@@ -1,6 +1,6 @@
 import { Button, Space } from 'antd';
 import styled from 'styled-components';
-import TextBox from '@components/text-box';
+import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
 import { StyledSpaceProps } from './type';
 

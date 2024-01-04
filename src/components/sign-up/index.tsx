@@ -1,4 +1,4 @@
-import TextBox from '@components/text';
+import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import MainLogo from '@assets/image/logo.png';
 import React from 'react';
@@ -14,14 +14,14 @@ export const Main = () => {
           typography="h2"
           color={'primary'}
           fontWeight={'700'}
-          textalign="center"
+          textAlign="center"
         >
           빨리잡아!
         </TextBox>
         <TextBox
           typography="h2"
           color="black900"
-          textalign="center"
+          textAlign="center"
           fontWeight={'700'}
         >
           {' '}
