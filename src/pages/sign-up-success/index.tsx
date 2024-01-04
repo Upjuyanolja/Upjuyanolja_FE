@@ -2,7 +2,7 @@ import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { Layout, Button } from 'antd';
 import styled from 'styled-components';
 import TextBox from '@components/text';
-import Main from '@components/sign-up';
+import { Main } from '@components/sign-up';
 
 export const SignUpSuccess = () => {
   const { handleChangeUrl } = useCustomNavigate();

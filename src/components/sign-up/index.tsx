@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MainLogo from '@assets/image/logo.png';
 import React from 'react';
 
-function Main() {
+export const Main = () => {
   return (
     <MainContainer>
       <LogoContainer>
@@ -30,7 +30,7 @@ function Main() {
       </TextContainer>
     </MainContainer>
   );
-}
+};
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,5 +59,3 @@ const Logo = styled.div`
 `;
 
 const TextContainer = styled.div``;
-
-export default Main;
