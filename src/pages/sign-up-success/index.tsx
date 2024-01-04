@@ -31,7 +31,7 @@ export const SignUpSuccess = () => {
 };
 
 const StyledLayout = styled(Layout)`
-  width: 100vw;
+  max-width: 100vw;
   background-color: white;
 `;
 
