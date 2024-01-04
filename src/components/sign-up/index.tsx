@@ -1,6 +1,6 @@
 import TextBox from '@components/text';
 import styled from 'styled-components';
-import MainLogo from '../../assets/image/logo.png';
+import MainLogo from '@assets/image/logo.png';
 import React from 'react';
 
 function Main() {
