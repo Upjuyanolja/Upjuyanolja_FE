@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/plots": "^2.1.5",
     "@craco/craco": "^7.1.0",
     "@tanstack/react-query": "^5.17.0",
     "@testing-library/jest-dom": "^5.17.0",
