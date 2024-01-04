@@ -1,10 +1,9 @@
-import { styled } from 'styled-components';
+import { TextBox } from '@components/text-box';
 
 export const ItemTypography = ({ text }: { text: string }) => {
-  return <StyledText>{text}</StyledText>;
+  return (
+    <TextBox typography="h4" fontWeight={700}>
+      {text}
+    </TextBox>
+  );
 };
-
-const StyledText = styled.h4`
-  font-size: 24px;
-  font-weight: 700;
-`;
