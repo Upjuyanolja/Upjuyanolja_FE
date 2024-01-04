@@ -1,5 +1,4 @@
-//import './roomForSale.scss';
-import RoomForSale from '../../components/room-for-sale/index';
+import { RoomForSale } from '../../components/room/room-for-sale';
 
 const Room = () => {
   return (

@@ -12,6 +12,6 @@ export const ROUTES = {
   COUPON_REGISTRATION: '/coupon/registration',
   MAIN: '/',
   ROOM: '/room',
-  ROOM_REGISTRATION: '/room/room-registration',
-  ROOM_UPDATE: '/room/room-update',
+  ROOM_REGISTRATION: '/room/registration',
+  ROOM_UPDATE: '/room/update',
 };
