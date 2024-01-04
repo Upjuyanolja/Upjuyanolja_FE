@@ -1,0 +1,18 @@
+/*
+공통적으로 custom 해야 할 디자인 작업 
+*/
+html {
+  font-size: 62.5%;
+}
+/*modal custom style*/
+.ant-modal-content {
+  border-radius: 1.6rem;
+}
+.ant-modal-header {
+  border-radius: 1.6rem;
+}
+
+/*button custom style*/
+.ant-btn-primary:hover {
+  background-color: #0349e6;
+}
