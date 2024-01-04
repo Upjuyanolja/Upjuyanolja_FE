@@ -2,7 +2,7 @@ import { Button, Space } from 'antd';
 import styled from 'styled-components';
 import TextBox from '@components/text';
 
-function UserProfile() {
+export const UserProfile = () => {
   return (
     <Space
       direction="vertical"
@@ -12,7 +12,7 @@ function UserProfile() {
       <TextBox typography="h5" color={'primary'} bold={true}>
         김업주 님
       </TextBox>
-      <TextBox typography="h1" color={'black900'} bold={true}>
+      <TextBox typography="h3" color={'black900'} bold={true}>
         330,000 P
       </TextBox>
       <div style={{ marginTop: '8px' }}>
@@ -22,14 +22,12 @@ function UserProfile() {
       </div>
     </Space>
   );
-}
-
-export default UserProfile;
+};
 
 const StyledButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 4.6rem;
-  width: 19.6rem;
+  height: 46px;
+  width: 196px;
 `;
