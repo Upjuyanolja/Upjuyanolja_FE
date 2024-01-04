@@ -9,7 +9,7 @@ export const Main = () => {
         <p>Some contents...</p>
         <p>Some contents...</p>
       </StyledModal>
-      <Button type="primary">가나다라</Button>
+      <StyledButton type="primary">가나다라</StyledButton>
     </>
   );
 };
@@ -18,4 +18,9 @@ const StyledModal = styled(Modal)`
   .ant-modal-header {
     height: 400px;
   }
+`;
+
+const StyledButton = styled(Button)`
+  width: 100px;
+  height: 100px;
 `;
