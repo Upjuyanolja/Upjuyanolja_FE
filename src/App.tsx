@@ -16,6 +16,7 @@ import { Room } from './pages/room';
 import { RoomRegistration } from './pages/room-registration';
 import { RoomUpdate } from './pages/room-update';
 import { RootLayout } from './layout';
+import './App.less';
 
 function App() {
   return (
