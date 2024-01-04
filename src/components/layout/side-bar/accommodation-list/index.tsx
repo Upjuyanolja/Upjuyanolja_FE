@@ -85,10 +85,6 @@ export const AccommodationList = () => {
 };
 
 const Container = styled.div`
-  box-shadow: 0px 9px 28px 8px #0000000d;
-
-  box-shadow: 0px 6px 16px 0px #00000014;
-
   box-shadow: 0px 3px 6px -4px #0000001f;
 `;
 
