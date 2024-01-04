@@ -1,3 +1,4 @@
+import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
 import { Layout } from 'antd';
 import React from 'react';
@@ -64,6 +65,7 @@ export const Footer = () => {
 
 const StyledLayout = styled(Layout)`
   width: 100%;
+  background-color: ${colors.midGray};
 `;
 
 const Container = styled.div`
