@@ -7,7 +7,7 @@ import {
   StyledAccommodationItemProps,
   StyledAccommodationWrapProps,
 } from './type';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, DownOutlined, UpOutlined } from '@ant-design/icons';
 
 export const AccommodationList = () => {
   const [clickedSelectBox, setClickedSelectBox] = useState(false);
@@ -51,19 +51,32 @@ export const AccommodationList = () => {
   return (
     <Container>
       <StyledButton onClick={handleSelectBox}>
-        <TextBox typography="body2" bold={true}>
-          {accommodationMap[0].name}
-        </TextBox>
+        <StyledFlex>
+          <TextBox typography="body2" bold={true}>
+            {accommodationMap[0].name}
+          </TextBox>
+          {accommodationMap.map(
+            (item, index) =>
+              item.test && (
+                <StyledCheckCircleFilled key={index} color={colors.primary} />
+              ),
+          )}
+        </StyledFlex>
         {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
       </StyledButton>
       <StyledAccommodationWrap height={clickedSelectBox ? 'auto' : '0'}>
-        {accommodationMap.map((item) => (
+        {accommodationMap.map((item, index) => (
           <StyledAccommodationItem
             key={item.id}
             hoverColor={colors.light}
             activeColor={colors.lightActive}
           >
-            <TextBox typography="body3">{item.name}</TextBox>
+            <StyledFlex>
+              <TextBox typography="body3">{item.name}</TextBox>
+              {item.test && (
+                <StyledCheckCircleFilled key={index} color={colors.primary} />
+              )}
+            </StyledFlex>
           </StyledAccommodationItem>
         ))}
       </StyledAccommodationWrap>
@@ -104,4 +117,15 @@ const StyledAccommodationItem = styled.li<StyledAccommodationItemProps>`
   &:active {
     background-color: ${(props) => props.activeColor};
   }
+`;
+
+const StyledCheckCircleFilled = styled(CheckCircleFilled)`
+  font-size: 18px;
+  color: ${(props) => props.color};
+  margin-left: 4px;
+`;
+
+const StyledFlex = styled.div`
+  display: flex;
+  align-items: center;
 `;

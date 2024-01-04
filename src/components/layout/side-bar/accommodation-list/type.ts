@@ -6,3 +6,7 @@ export type StyledAccommodationItemProps = {
 export type StyledAccommodationWrapProps = {
   height?: string;
 };
+
+export type StyledCheckCircleFilled = {
+  color?: string;
+};
