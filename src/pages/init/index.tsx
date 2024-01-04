@@ -1,5 +1,4 @@
 import { Layout, Typography, Button } from 'antd';
-import { Content } from 'antd/lib/layout/layout';
 import { MdOutlineAddHome } from 'react-icons/md';
 import './init.module.scss';
 
@@ -15,7 +14,7 @@ export const Init = () => {
       }}
     >
       <Layout.Header>Header</Layout.Header>
-      <Content
+      <Layout.Content
         style={{
           width: '1024px',
           margin: '0 auto',
@@ -48,7 +47,7 @@ export const Init = () => {
             숙소 등록 시작하기
           </Button>
         </div>
-      </Content>
+      </Layout.Content>
     </Layout>
   );
 };
