@@ -1,6 +1,9 @@
 /*
 공통적으로 custom 해야 할 디자인 작업 
 */
+* {
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
+}
 /*modal custom style*/
 .ant-modal-content {
   border-radius: 16px;
