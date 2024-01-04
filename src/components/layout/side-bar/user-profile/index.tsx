@@ -17,11 +17,9 @@ export const UserProfile = () => {
       <TextBox typography="h3" color={'black900'} bold={true}>
         330,000 P
       </TextBox>
-      <div style={{ marginTop: '8px' }}>
-        <StyledButton type="primary" size="large">
-          포인트 추가하기
-        </StyledButton>
-      </div>
+      <StyledButton type="primary" size="large">
+        포인트 추가하기
+      </StyledButton>
     </StyledSpace>
   );
 };
@@ -39,4 +37,5 @@ const StyledButton = styled(Button)`
   justify-content: center;
   height: 46px;
   width: 196px;
+  margin-top: 8px;
 `;
