@@ -35,13 +35,13 @@ const StyledLayout = styled(Layout)`
 `;
 
 const StyledContent = styled(Layout.Content)`
-  width: 102.4rem;
+  width: 1024px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
 `;
 
 const MainContent = styled.div`
@@ -51,11 +51,11 @@ const MainContent = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 78.4rem;
-  height: 7.2rem;
-  font-size: 2.4rem;
+  width: 784px;
+  height: 72px;
+  font-size: 24px;
   font-weight: bold;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
 `;
