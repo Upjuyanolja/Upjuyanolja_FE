@@ -1,20 +1,26 @@
 /*
 공통적으로 custom 해야 할 디자인 작업 
 */
-html {
-  font-size: 62.5%;
+* {
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
 }
 /*modal custom style*/
 .ant-modal-content {
-  border-radius: 1.6rem;
+  border-radius: 16px;
 }
 .ant-modal-header {
-  border-radius: 1.6rem;
+  border-radius: 16px 16px 0 0;
 }
 
 /*button custom style*/
 .ant-btn-primary:hover {
   background-color: #0349e6;
+}
+.ant-btn-primary:active {
+  background-color: #0241cc;
+}
+.ant-btn-lg {
+  width: 100%;
 }
 
 /*drop down custom style*/
