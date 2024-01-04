@@ -23,7 +23,7 @@ export const SignUpSuccess = () => {
           type="primary"
           size="large"
         >
-          로그인 하러 가기
+          로그인 하러가기
         </StyledButton>
       </StyledContent>
     </StyledLayout>
