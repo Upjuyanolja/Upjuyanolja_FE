@@ -9,13 +9,13 @@ export const ButtonContainer = ({
   isValid: boolean;
 }) => {
   return (
-    <StyledWrapper buttonStyle={buttonStyle}>
+    <StyledWrapper $buttonStyle={buttonStyle}>
       {buttonStyle === 'navigate' && (
         <>
           <StyledButton type="primary" ghost>
             이전
           </StyledButton>
-          <StyledButton type="primary" disabled={isValid}>
+          <StyledButton type="primary" disabled={!isValid}>
             다음
           </StyledButton>
         </>
@@ -26,7 +26,7 @@ export const ButtonContainer = ({
         </StyledButton>
       )}
       {buttonStyle === 'edit' && (
-        <StyledButton type="primary" size="large" disabled={isValid}>
+        <StyledButton type="primary" size="large" disabled={!isValid}>
           수정하기
         </StyledButton>
       )}
@@ -35,18 +35,18 @@ export const ButtonContainer = ({
 };
 
 const StyledWrapper = styled.div<{
-  buttonStyle: 'navigate' | 'request' | 'edit';
+  $buttonStyle: 'navigate' | 'request' | 'edit';
 }>`
   width: 100%;
-  display: ${({ buttonStyle }) =>
-    buttonStyle === 'navigate' || buttonStyle === 'edit' ? 'grid' : 'block'};
-  grid-template-columns: ${({ buttonStyle }) =>
-    buttonStyle === 'navigate'
+  display: ${({ $buttonStyle }) =>
+    $buttonStyle === 'navigate' || $buttonStyle === 'edit' ? 'grid' : 'block'};
+  grid-template-columns: ${({ $buttonStyle }) =>
+    $buttonStyle === 'navigate'
       ? '1fr 2.5fr'
-      : buttonStyle === 'edit'
+      : $buttonStyle === 'edit'
         ? 'auto'
         : 'none'};
-  gap: ${({ buttonStyle }) => (buttonStyle === 'navigate' ? '10px' : '0')};
+  gap: ${({ $buttonStyle }) => ($buttonStyle === 'navigate' ? '10px' : '0')};
 `;
 
 const StyledButton = styled(Button)`
