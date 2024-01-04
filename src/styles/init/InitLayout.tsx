@@ -31,36 +31,53 @@ export const InitLayout = () => {
   return (
     <Layout>
       <Layout.Header>Header</Layout.Header>
-      <Layout>
-        <StyledMainContent>
-          <StyledHeadContent>
-            <StyledPageName>{pageName}</StyledPageName>
-            <StyledPageDesc>{pageDesc}</StyledPageDesc>
-          </StyledHeadContent>
-          <Outlet />
-        </StyledMainContent>
-      </Layout>
+      <StyledHeadContent>
+        <StyledTextWrapper>
+          <StyledPageName>{pageName}</StyledPageName>
+          <StyledPageDesc>{pageDesc}</StyledPageDesc>
+        </StyledTextWrapper>
+      </StyledHeadContent>
+      <StyledMainContent>
+        <Outlet />
+      </StyledMainContent>
     </Layout>
   );
 };
 
-const StyledMainContent = styled(Layout.Content)`
-  max-width: 102.4rem;
-  width: 102.4rem;
+const StyledHeadContent = styled(Layout.Content)`
+  height: 140px;
   margin: 0 auto;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 150px;
 `;
 
 const StyledPageName = styled.h1`
-  /* Your pageName styling here */
+  font-size: 36px;
+  color: #0351ff;
+  font-weight: 700;
+
+  margin: 0;
 `;
 
 const StyledPageDesc = styled.p`
-  /* Your pageDesc styling here */
+  font-size: 24px;
+  font-weight: 400;
+
+  margin: 0;
 `;
 
-const StyledHeadContent = styled(Layout.Content)`
-  max-width: 102.4rem;
-  width: 102.4rem;
-  height: 14rem;
-  margin: 0 auto;
+const StyledMainContent = styled(Layout.Content)`
+  max-width: 1024px;
+  width: 1024px;
+
+  margin: 40px auto;
 `;
