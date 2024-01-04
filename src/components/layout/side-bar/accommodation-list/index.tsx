@@ -52,7 +52,7 @@ export const AccommodationList = () => {
     <Container>
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
-          <TextBox typography="body2" bold={true}>
+          <TextBox typography="body2" bold={true} cursor="pointer">
             {accommodationMap[0].name}
           </TextBox>
           {accommodationMap.map(
@@ -72,7 +72,9 @@ export const AccommodationList = () => {
             activeColor={colors.lightActive}
           >
             <StyledFlex>
-              <TextBox typography="body3">{item.name}</TextBox>
+              <TextBox typography="body3" cursor="pointer">
+                {item.name}
+              </TextBox>
               {item.test && (
                 <StyledCheckCircleFilled key={index} color={colors.primary} />
               )}
