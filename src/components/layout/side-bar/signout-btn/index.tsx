@@ -6,7 +6,7 @@ export const SignOutBtn = () => {
   return (
     <Container>
       <StyledLogoutOutlined />
-      <TextBox typography="body2" color="black700">
+      <TextBox typography="body2" color="black700" cursor="pointer">
         로그아웃
       </TextBox>
     </Container>
