@@ -16,3 +16,22 @@ html {
 .ant-btn-primary:hover {
   background-color: #0349e6;
 }
+
+/*drop down custom style*/
+.ant-dropdown-trigger {
+  color: black;
+}
+
+.ant-dropdown-menu-item-only-child:hover {
+  background-color: #e6eeff;
+}
+
+/*tooltip custom style*/
+.ant-tooltip-arrow-content {
+  --antd-arrow-background-color: #ffffff;
+}
+
+.ant-tooltip-inner {
+  background-color: #ffffff;
+  color: black;
+}
