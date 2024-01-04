@@ -1,4 +1,6 @@
+import { colors } from '@/constants/colors';
 import { ROUTES } from '@/constants/routes';
+import { TextBox } from '@components/text-box';
 import { Layout } from 'antd';
 import { Outlet, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -31,10 +33,12 @@ export const InitLayout = () => {
   return (
     <Layout>
       <Layout.Header>Header</Layout.Header>
-      <StyledHeadContent>
+      <StyledHeadContent color={colors.white}>
         <StyledTextWrapper>
-          <StyledPageName>{pageName}</StyledPageName>
-          <StyledPageDesc>{pageDesc}</StyledPageDesc>
+          <TextBox typography="h2" color={'primary'} fontWeight={700}>
+            {pageName}
+          </TextBox>
+          <TextBox typography="h4">{pageDesc}</TextBox>
         </StyledTextWrapper>
       </StyledHeadContent>
       <StyledMainContent>
@@ -48,7 +52,7 @@ const StyledHeadContent = styled(Layout.Content)`
   height: 140px;
   width: 100%;
 
-  background-color: white;
+  background-color: ${(props) => props.color};
 
   margin: 0 auto;
   display: flex;
@@ -60,21 +64,6 @@ const StyledTextWrapper = styled.div`
   flex-direction: column;
 
   margin-left: 67px;
-`;
-
-const StyledPageName = styled.h1`
-  font-size: 36px;
-  color: #0351ff;
-  font-weight: 700;
-
-  margin: 0;
-`;
-
-const StyledPageDesc = styled.p`
-  font-size: 24px;
-  font-weight: 400;
-
-  margin: 0;
 `;
 
 const StyledMainContent = styled(Layout.Content)`
