@@ -38,6 +38,7 @@ const StyledWrapper = styled.div<{
   $buttonStyle: 'navigate' | 'request' | 'edit';
 }>`
   width: 100%;
+
   display: ${({ $buttonStyle }) =>
     $buttonStyle === 'navigate' || $buttonStyle === 'edit' ? 'grid' : 'block'};
   grid-template-columns: ${({ $buttonStyle }) =>
@@ -51,5 +52,6 @@ const StyledWrapper = styled.div<{
 
 const StyledButton = styled(Button)`
   height: 62px;
+
   font-size: 20px;
 `;
