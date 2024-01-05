@@ -11,16 +11,12 @@ export const Navigation = () => {
         {Object.entries(navigationMap).map(([key, { label, link }]) => (
           <StyledNavItem key={key}>
             <Link to={link}>
-<<<<<<< HEAD
               <TextBox
                 typography="body2"
                 color="black900"
                 fontWeight="bold"
                 cursor="pointer"
               >
-=======
-              <TextBox typography="body2" color={'black900'} bold={true}>
->>>>>>> ab3c56ccfe49aa6a9807d5e234f662d68a045871
                 {label}
               </TextBox>
             </Link>
