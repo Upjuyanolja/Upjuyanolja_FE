@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { navigationMap } from '@/constants/navigation';
-import TextBox from '@components/text-box';
+import { TextBox } from '@components/text-box';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { StyledNavItemProps } from './type';
