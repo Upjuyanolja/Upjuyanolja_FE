@@ -7,7 +7,7 @@ import { AccommodationDesc } from '@components/init-registration/AccommodationDe
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
-import { AccommodationImage } from '@components/init/AccommodationImage';
+import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 
 export const InitAccommodationRegistration = () => {
   const isValid = true;
@@ -34,7 +34,7 @@ export const InitAccommodationRegistration = () => {
         {/*숙소 주소 */}
         <AccommodationAddress />
         {/*숙소 대표 이미지 */}
-        <AccommodationImage />
+        <ImageUploadContainer />
         {/*숙소 옵션 */}
         <StyledInputWrapper>
           <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
