@@ -19,7 +19,7 @@ export const Navigation = () => {
             <Link to={link}>
               <TextBox
                 typography="body2"
-                color={'black900'}
+                color="black900"
                 bold={true}
                 cursor="pointer"
               >

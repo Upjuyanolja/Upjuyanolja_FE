@@ -11,10 +11,10 @@ export const UserProfile = () => {
       align="center"
       borderColor={colors.black500}
     >
-      <TextBox typography="h5" color={'primary'} bold={true}>
+      <TextBox typography="h5" color="primary" bold={true}>
         김업주 님
       </TextBox>
-      <TextBox typography="h3" color={'black900'} bold={true}>
+      <TextBox typography="h3" color="black900" bold={true}>
         330,000 P
       </TextBox>
       <StyledButton type="primary" size="large">
