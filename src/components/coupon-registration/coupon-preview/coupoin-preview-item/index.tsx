@@ -3,6 +3,7 @@ import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
 import { Divider } from 'antd';
 import styled from 'styled-components';
+import { CouponPreviewItemProps } from './type';
 
 export const CouponPreviewItem = ({ data }: CouponPreviewItemProps) => {
   return (
@@ -75,12 +76,3 @@ const StyledCouponPrice = styled.div`
   justify-content: flex-end;
   margin-top: 8px;
 `;
-
-export type CouponPreviewItemProps = {
-  data: {
-    roomName: string;
-    couponName: string;
-    couponPrice: number;
-    couponAmount: number;
-  };
-};
