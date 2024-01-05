@@ -44,9 +44,11 @@ export const CouponType = () => {
       </StyledButtonWrap>
       <StyledInputWrap>
         <StyledInput />
-        <TextBox typography="body2" fontWeight="bold">
-          {selectedButton === 'discountPrice' ? '원 할인' : '% 할인'}
-        </TextBox>
+        <StyledTextWrap>
+          <TextBox typography="body2" fontWeight="bold">
+            {selectedButton === 'discountPrice' ? '원 할인' : '% 할인'}
+          </TextBox>
+        </StyledTextWrap>
       </StyledInputWrap>
     </Container>
   );
@@ -95,4 +97,8 @@ const StyledInputWrap = styled.div`
 
 const StyledInput = styled(Input)`
   width: 160px;
+`;
+
+const StyledTextWrap = styled.div`
+  width: 47px;
 `;
