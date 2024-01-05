@@ -10,27 +10,44 @@ export const RoomForSale = () => {
   return (
     <Card
       hoverable
+      bodyStyle={{ padding: 16 }}
       style={{
         borderRadius: '8px',
         border: '2px solid var(--Foundation-Blue-Normal, #0351FF)',
         background: 'var(--white, #FFF)',
         boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.10)',
+        margin: '0px',
       }}
     >
       <Row gutter={[16, 16]} wrap={false}>
-        <Col flex="224px" style={{ height: '144px' }}>
-          <COUPON></COUPON>
-          <Image
-            width={224}
-            height={144}
-            style={{ borderRadius: 8 }}
-            src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b"
-          />
+        <Col flex="224px" style={{ height: '144px', position: 'relative' }}>
+          <div
+            style={{ position: 'relative', width: '224px', height: '144px' }}
+          >
+            <Image
+              src={COUPON}
+              alt="Coupon"
+              style={{
+                position: 'absolute',
+                bottom: 50,
+                left: -8,
+                width: '39.636px',
+                height: '31.143px',
+                zIndex: 2,
+              }}
+            />
+            <Image
+              width={224}
+              height={144}
+              style={{ borderRadius: 8, zIndex: 1 }}
+              src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b"
+            />
+          </div>
         </Col>
         <Col
           flex="auto"
           style={{
-            marginLeft: '24px',
+            marginLeft: '16px',
             height: '144px',
             display: 'flex',
             flexDirection: 'column',
