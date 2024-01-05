@@ -39,7 +39,7 @@ export const CouponPreview = () => {
   return (
     <Container>
       <TextBox typography="h4" fontWeight="bold" color="black900">
-        쿠폰 만들기
+        쿠폰 미리보기
       </TextBox>
       <StyledCouponWrap>
         <StyledTitleWrap>
@@ -82,7 +82,6 @@ export const CouponPreview = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 8px;
 `;
 
