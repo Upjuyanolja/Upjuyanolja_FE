@@ -31,25 +31,22 @@ export const AccommodationAddress = () => {
   return (
     <StyledInputWrapper>
       <Form.Item rules={[{ required: true }]} label="숙소 위치" colon={false}>
-        <StyledInput
-          id="accommodationPost"
-          placeholder="우편번호"
-          value={inputPost}
-          onChange={(event) => handleInputChange(event, 'accommodationPost')}
-        />
         <StyledAddressWrapper>
           <StyledInput
-            id="accommodationAddress"
-            placeholder="주소"
-            value={inputAddress}
-            onChange={(event) =>
-              handleInputChange(event, 'accommodationAddress')
-            }
+            id="accommodationPost"
+            placeholder="우편번호"
+            value={inputPost}
+            onChange={(event) => handleInputChange(event, 'accommodationPost')}
           />
-          <StyledAddressButton type="primary">
-            우편번호 검색
-          </StyledAddressButton>
+          <StyledAddressButton type="primary">주소 검색</StyledAddressButton>
         </StyledAddressWrapper>
+        <StyledInput
+          id="accommodationAddress"
+          placeholder="주소"
+          value={inputAddress}
+          onChange={(event) => handleInputChange(event, 'accommodationAddress')}
+        />
+
         <StyledInput
           id="accommodationDetailAddress"
           placeholder="상세주소"
@@ -102,7 +99,7 @@ const StyledInput = styled(Input)`
 
 const StyledAddressWrapper = styled.div`
   display: grid;
-  grid-template-columns: 9fr 1fr;
+  grid-template-columns: 7fr 1fr;
   gap: 5px;
 `;
 
