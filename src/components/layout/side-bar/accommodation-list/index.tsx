@@ -49,11 +49,7 @@ export const AccommodationList = () => {
     <Container>
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
-<<<<<<< HEAD
           <TextBox typography="body2" fontWeight="bold">
-=======
-          <TextBox typography="body2" bold={true}>
->>>>>>> ab3c56ccfe49aa6a9807d5e234f662d68a045871
             {accommodationMap[0].name}
           </TextBox>
           {accommodationMap.map(
@@ -67,17 +63,10 @@ export const AccommodationList = () => {
         {accommodationMap.map((item, index) => (
           <StyledAccommodationItem key={item.id}>
             <StyledFlex>
-<<<<<<< HEAD
               <TextBox typography="body3" fontWeight="bold">
                 {item.name}
               </TextBox>
               {item.test && <StyledCheckCircleFilled key={index} />}
-=======
-              <TextBox typography="body3">{item.name}</TextBox>
-              {item.test && (
-                <StyledCheckCircleFilled key={index} color={colors.primary} />
-              )}
->>>>>>> ab3c56ccfe49aa6a9807d5e234f662d68a045871
             </StyledFlex>
           </StyledAccommodationItem>
         ))}
