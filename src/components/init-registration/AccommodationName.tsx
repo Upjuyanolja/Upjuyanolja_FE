@@ -7,16 +7,22 @@ export const AccommodationName = () => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  {
+    /*최소,최대 글자 수 상수 */
+  }
+  const MIN_LENGTH = 2;
+  const MAX_LENGTH = 30;
+
   const validateInput = (value: string) => {
-    if (value.length < 2) {
-      setError('숙소명은 최소 2자 이상 작성해 주세요.');
+    if (value.length < MIN_LENGTH) {
+      setError(`숙소명은 최소 ${MIN_LENGTH}자 이상 작성해 주세요.`);
     } else {
       setError(null);
     }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value.slice(0, 30);
+    const newValue = event.target.value.slice(0, MAX_LENGTH);
     setInputValue(newValue);
     validateInput(newValue);
   };
@@ -28,13 +34,13 @@ export const AccommodationName = () => {
           id="accommodationName"
           placeholder="숙소명을 입력해 주세요."
           type="text"
-          minLength={2}
-          maxLength={30}
+          minLength={MIN_LENGTH}
+          maxLength={MAX_LENGTH}
           showCount
           style={{ height: 40 }}
           value={inputValue}
           onChange={handleInputChange}
-          disabled={inputValue.length >= 30}
+          disabled={inputValue.length >= MAX_LENGTH}
         />
         <StyledErrorMessageWrapper>
           {error && <StyledFormErrorMessage errorMessage={error} />}

@@ -7,15 +7,21 @@ export const AccommodationDesc = () => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  {
+    /*최소,최대 글자 수 상수 */
+  }
+  const MIN_LENGTH = 10;
+  const MAX_LENGTH = 500;
+
   const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = event.target.value.slice(0, 500);
+    const newValue = event.target.value.slice(0, MAX_LENGTH);
     setInputValue(newValue);
     validateInput(newValue);
   };
 
   const validateInput = (value: string) => {
-    if (value.length < 10) {
-      setError('숙소 소개는 최소 10자 이상 작성해 주세요.');
+    if (value.length < MIN_LENGTH) {
+      setError(`숙소 소개는 최소 ${MIN_LENGTH}자 이상 작성해 주세요.`);
     } else {
       setError(null);
     }
@@ -27,10 +33,10 @@ export const AccommodationDesc = () => {
         <Input.TextArea
           id="accommodationDesc"
           placeholder="고객에게 멋진 숙소를 소개해 주세요."
-          minLength={10}
+          minLength={MIN_LENGTH}
           showCount
-          maxLength={500}
-          disabled={inputValue.length >= 500}
+          maxLength={MAX_LENGTH}
+          disabled={inputValue.length >= MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
           onChange={handleInputChange}
         />
