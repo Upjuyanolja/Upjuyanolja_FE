@@ -1,25 +1,35 @@
 import { colors } from '@/constants/colors';
 import { ButtonContainer } from '@components/init-registration/ButtonContainer';
-import { ItemTypography } from '@components/init-registration/ItemTypography';
 import { styled } from 'styled-components';
+import { AccommodationCategory } from '@components/init-registration/AccommodationCategory';
+import { AccommodationName } from '@components/init-registration/AccommodationName';
+import { AccommodationAddress } from '@components/init-registration/AccommodationAddress';
+import { AccommodationImage } from '@components/init-registration/AccommodationImage';
+import { AccommodationOption } from '@components/init-registration/AccommodationOption';
+import { AccommodationDesc } from '@components/init-registration/AccommodationDesc';
+import { Form } from 'antd';
 
 export const InitAccommodationRegistration = () => {
-  const isValid = false;
+  const isValid = true;
+
   return (
     <StyledWrapper color={colors.white}>
-      <ItemTypography text="숙소 유형을 선택해 주세요." />
-      <div>내용</div>
-      <ItemTypography text="숙소명" />
-      <div>내용</div>
-      <ItemTypography text="숙소 위치" />
-      <div>내용</div>
-      <ItemTypography text="숙소 대표 이미지" />
-      <div>내용</div>
-      <ItemTypography text="숙소 옵션" />
-      <div>내용</div>
-      <ItemTypography text="숙소 소개" />
-      <div>내용</div>
-      <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
+      {/*숙소 유형 선택 */}
+      <AccommodationCategory />
+      <Form>
+        {/*숙소명 */}
+        <AccommodationName />
+        {/*숙소 주소 */}
+        <AccommodationAddress />
+        {/*숙소 대표 이미지 */}
+        <AccommodationImage />
+        {/*숙소 옵션 */}
+        <AccommodationOption />
+        {/*숙소 소개 */}
+        <AccommodationDesc />
+        {/*버튼 */}
+        <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
+      </Form>
     </StyledWrapper>
   );
 };
