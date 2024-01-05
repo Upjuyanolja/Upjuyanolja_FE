@@ -1,4 +1,3 @@
-import TextBox from '@components/text-box';
 import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
@@ -8,6 +7,7 @@ import {
   StyledAccommodationWrapProps,
 } from './type';
 import { CheckCircleFilled, DownOutlined, UpOutlined } from '@ant-design/icons';
+import { TextBox } from '@components/text-box';
 
 export const AccommodationList = () => {
   const [clickedSelectBox, setClickedSelectBox] = useState(false);
