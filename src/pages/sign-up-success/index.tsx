@@ -14,7 +14,7 @@ export const SignUpSuccess = () => {
         <TextBox
           typography="h3"
           color={'black900'}
-          textalign="center"
+          textAlign="center"
           fontWeight={'500'}
         >
           회원가입이 완료되었습니다!
