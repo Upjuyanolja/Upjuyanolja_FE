@@ -1,8 +1,8 @@
 import { RoomForSale } from '../../components/room/room-for-sale';
-import { Card, Col, Typography, Button, Row, Space, Image } from 'antd';
+import { Card, Button, Row } from 'antd';
+import { TextBox } from '@components/text-box';
 
 const Room = () => {
-  const { Title } = Typography;
   return (
     <Card
       bodyStyle={{ padding: 0 }}
@@ -12,9 +12,12 @@ const Room = () => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          marginBottom: '16px',
         }}
       >
-        <Title level={4}>객실 관리</Title>
+        <TextBox typography="h4" color={'black900'} fontWeight={700}>
+          객실 관리
+        </TextBox>
         <Button
           type="primary"
           style={{

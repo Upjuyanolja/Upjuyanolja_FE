@@ -1,6 +1,6 @@
 import { Card, Col, Row, Typography, Button, Tag, Space, Image } from 'antd';
 import 'antd/dist/antd.css';
-import COUPON from '../../../assets/coupon.svg';
+import COUPON from '../../../assets/image/coupon.svg';
 
 import styled from 'styled-components';
 
@@ -42,6 +42,24 @@ export const RoomForSale = () => {
               style={{ borderRadius: 8, zIndex: 1 }}
               src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b"
             />
+            <div
+              style={{
+                position: 'absolute',
+                height: 24,
+                bottom: 0,
+                left: 0,
+                width: '100%',
+                backgroundColor: 'blue',
+                color: 'white',
+                textAlign: 'center',
+                textJustify: 'auto',
+                zIndex: 3,
+                borderBottomLeftRadius: '8px',
+                borderBottomRightRadius: '8px',
+              }}
+            >
+              판매중
+            </div>
           </div>
         </Col>
         <Col
