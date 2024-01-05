@@ -1,9 +1,16 @@
-import { TextBox } from '@components/text-box';
+import { styled } from 'styled-components';
 
-export const ItemTypography = ({ text }: { text: string }) => {
-  return (
-    <TextBox typography="h4" fontWeight={700}>
-      {text}
-    </TextBox>
-  );
+export const ItemTypography = ({
+  text,
+  labelName,
+}: {
+  text: string;
+  labelName: string;
+}) => {
+  return <StyledLabel htmlFor={labelName}>{text}</StyledLabel>;
 };
+
+const StyledLabel = styled.label`
+  font-size: 24px;
+  font-weight: 700;
+`;
