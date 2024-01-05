@@ -3,6 +3,11 @@
 */
 * {
   font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  box-sizing: border-box;
+}
+/*layout custom style*/
+.ant-layout {
+  background-color: white;
 }
 /*modal custom style*/
 .ant-modal-content {
