@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import { styled } from 'styled-components';
-import { FormErrorMessage } from './FormErrorMessage';
 import { Input, Form } from 'antd';
+import { FormErrorMessage } from '@components/init/FormErrorMessage';
 
 export const AccommodationName = () => {
   const [inputValue, setInputValue] = useState('');

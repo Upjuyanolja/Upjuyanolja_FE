@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
-import { FormErrorMessage } from '@components/init-registration/FormErrorMessage';
 import { useState, ChangeEvent } from 'react';
+import { FormErrorMessage } from '@components/init/FormErrorMessage';
 
 export const AccommodationDesc = () => {
   const [inputValue, setInputValue] = useState('');
