@@ -10,6 +10,7 @@ import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { ItemTypography } from '@components/init/ItemTypography';
+import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 
 interface ButtonClickedProps {
   $clicked?: boolean;
@@ -23,6 +24,9 @@ export const AccommodationCategory = () => {
       setClickedCategory(category);
     }
   };
+
+  const hotelCategory = ['호텔', '리조트', '관광호텔', '콘도', '레지던스'];
+  const guestHouseCategory = ['게스트하우스', '한옥'];
 
   return (
     <StyledInputWrapper>
@@ -88,10 +92,21 @@ export const AccommodationCategory = () => {
           </TextBox>
         </StyledButtonWrapper>
       </StyledButtonContainer>
-      <div>
-        <TextBox>상세 유형을 선택해 주세요.</TextBox>
-        <div>체크 체크 체크</div>
-      </div>
+      {clickedCategory === 'hotelResort' && (
+        <CheckBoxContainer
+          options={hotelCategory}
+          label="상세 유형을 선택해 주세요."
+          isAccommodationCategory={true}
+        />
+      )}
+
+      {clickedCategory === 'guestHouse' && (
+        <CheckBoxContainer
+          options={guestHouseCategory}
+          label="상세 유형을 선택해 주세요."
+          isAccommodationCategory={true}
+        />
+      )}
     </StyledInputWrapper>
   );
 };
