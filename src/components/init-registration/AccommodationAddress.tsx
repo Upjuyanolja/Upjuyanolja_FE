@@ -1,76 +1,99 @@
-import { ItemTypography } from './ItemTypography';
-import { Controller, Control } from 'react-hook-form';
 import { styled } from 'styled-components';
-import { Input, Button } from 'antd';
-import { FormInput } from './type';
+import { Input, Button, Form } from 'antd';
+import { useState, ChangeEvent } from 'react';
 
-export const AccommodationAddress = ({
-  control,
-}: {
-  control: Control<FormInput>;
-}) => {
+export const AccommodationAddress = () => {
+  const [inputPost, setInputPost] = useState('');
+  const [inputAddress, setInputAddress] = useState('');
+  const [inputDetailAddress, setInputDetailAddress] = useState('');
+
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    inputType: string,
+  ) => {
+    const inputValue = event.target.value;
+
+    switch (inputType) {
+      case 'accommodationPost':
+        setInputPost(inputValue);
+        break;
+      case 'accommodationAddress':
+        setInputAddress(inputValue);
+        break;
+      case 'accommodationDetailAddress':
+        setInputDetailAddress(inputValue);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <StyledInputWrapper>
-      <ItemTypography text="숙소 위치" labelName="accommodationAddress" />
-      <StyledAddressContainer>
-        <Controller
-          name="accommodationPost"
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { value } }) => (
-            <StyledInput
-              id="accommodationPost"
-              placeholder="우편번호"
-              value={value}
-            />
-          )}
+      <Form.Item rules={[{ required: true }]} label="숙소 위치" colon={false}>
+        <StyledInput
+          id="accommodationPost"
+          placeholder="우편번호"
+          value={inputPost}
+          onChange={(event) => handleInputChange(event, 'accommodationPost')}
         />
         <StyledAddressWrapper>
-          <Controller
-            name="accommodationAddress"
-            rules={{ required: true }}
-            control={control}
-            render={({ field: { value } }) => (
-              <StyledInput
-                id="accommodationAddress"
-                placeholder="주소"
-                value={value}
-              />
-            )}
+          <StyledInput
+            id="accommodationAddress"
+            placeholder="주소"
+            value={inputAddress}
+            onChange={(event) =>
+              handleInputChange(event, 'accommodationAddress')
+            }
           />
           <StyledAddressButton type="primary">
             우편번호 검색
           </StyledAddressButton>
         </StyledAddressWrapper>
-        <Controller
-          name="accommodationDetailAddress"
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { value } }) => (
-            <StyledInput
-              id="accommodationDetailAddress"
-              placeholder="상세주소"
-              value={value}
-            />
-          )}
+        <StyledInput
+          id="accommodationDetailAddress"
+          placeholder="상세주소"
+          value={inputDetailAddress}
+          onChange={(event) =>
+            handleInputChange(event, 'accommodationDetailAddress')
+          }
         />
-      </StyledAddressContainer>
+      </Form.Item>
     </StyledInputWrapper>
   );
 };
 
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
+
+  .ant-form-item-label {
+    label {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 36px;
+    }
+  }
+
+  .ant-form-item-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .ant-form-item-control {
+    width: 100%;
+  }
+
+  .ant-form-item-control-input-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 `;
 
 const StyledInput = styled(Input)`
   height: 40px;
-`;
-
-const StyledAddressContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 `;
 
 const StyledAddressWrapper = styled.div`
