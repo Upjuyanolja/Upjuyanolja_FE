@@ -1,5 +1,7 @@
 import { useCustomNavigate } from '../../hooks/sign-up/useSignUp';
 import React, { useState } from 'react';
+import { Button, Checkbox } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 export const SignInAgreement = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -40,7 +42,7 @@ export const SignInAgreement = () => {
   };
 
   // 체크 박스 모두 선택
-  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAllCheck = (e: CheckboxChangeEvent) => {
     if (e.target.checked) {
       const idArray: React.SetStateAction<number[]> = [];
       data.forEach((el) => idArray.push(el.id));
@@ -54,37 +56,40 @@ export const SignInAgreement = () => {
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Checkbox onChange={handleAllCheck} id="all" />
         <label htmlFor="all">모두 동의</label>
-        <input type="checkbox" onChange={handleAllCheck} id="all" />
       </div>
       <div>
         {data.map((data) => (
           <React.Fragment key={data.id}>
-            <label htmlFor={`${data.id}`}>{data.id}</label>
-            <input
-              type="checkbox"
-              onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
-              checked={isChecked.includes(data.id)}
-              id={`${data.id}`}
-            />
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Checkbox
+                onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
+                checked={isChecked.includes(data.id)}
+                id={`${data.id}`}
+              />
+              <label htmlFor={`${data.id}`}>
+                {data.condition} {data.title}
+              </label>
+            </div>
           </React.Fragment>
         ))}
       </div>
       <div>
-        <button
+        <Button
           data-testid="prevBtn"
           onClick={() => handleChangeUrl('/signin')}
         >
           이전
-        </button>
-        <button
+        </Button>
+        <Button
           data-testid="nextBtn"
           onClick={() => handleChangeUrl('/signup')}
           disabled={isDisabled}
         >
           다음
-        </button>
+        </Button>
       </div>
     </div>
   );
