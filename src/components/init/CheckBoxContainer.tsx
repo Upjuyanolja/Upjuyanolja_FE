@@ -16,7 +16,7 @@ export const CheckBoxContainer = ({
 }: {
   options: string[];
   label: string;
-  isAccommodationCategory: boolean;
+  isAccommodationCategory?: boolean;
 }) => {
   return (
     <StyledWrapper

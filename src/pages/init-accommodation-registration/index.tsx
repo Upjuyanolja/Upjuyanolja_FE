@@ -37,11 +37,7 @@ export const InitAccommodationRegistration = () => {
         <AccommodationImage />
         {/*숙소 옵션 */}
         <StyledInputWrapper>
-          <CheckBoxContainer
-            options={accommodationOptions}
-            label="숙소 옵션"
-            isAccommodationCategory={false}
-          />
+          <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
         </StyledInputWrapper>
         {/*숙소 소개 */}
         <AccommodationDesc />
