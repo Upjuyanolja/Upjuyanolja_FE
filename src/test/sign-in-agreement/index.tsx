@@ -1,4 +1,4 @@
-import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
+import { useCustomNavigate } from '../../hooks/sign-up/useSignUp';
 import React, { useState } from 'react';
 
 export const SignInAgreement = () => {
@@ -55,22 +55,20 @@ export const SignInAgreement = () => {
   return (
     <div>
       <div style={{ display: 'flex' }}>
-        <input type="checkbox" onChange={handleAllCheck} />
-        <label>모두 동의</label>
+        <label htmlFor="all">모두 동의</label>
+        <input type="checkbox" onChange={handleAllCheck} id="all" />
       </div>
       <div>
         {data.map((data) => (
-          <div key={data.id}>
+          <React.Fragment key={data.id}>
+            <label htmlFor={`${data.id}`}>{data.id}</label>
             <input
               type="checkbox"
-              name={`select-${data.id}`}
               onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
-              checked={isChecked.includes(data.id) ? true : false}
+              checked={isChecked.includes(data.id)}
+              id={`${data.id}`}
             />
-            <label>
-              {data.condition} {data.title}
-            </label>
-          </div>
+          </React.Fragment>
         ))}
       </div>
       <div>
