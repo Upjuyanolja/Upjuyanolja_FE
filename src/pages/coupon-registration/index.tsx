@@ -1,9 +1,9 @@
 import { CouponApplier } from '@components/coupon-registration/coupon-applier';
 import { CouponCard } from '@components/coupon-registration/coupon-card';
 import { CouponType } from '@components/coupon-registration/coupon-type';
+import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
-import { SpacingProps } from './type';
 
 export const CouponRegistration = () => {
   return (
@@ -25,8 +25,4 @@ export const CouponRegistration = () => {
 
 const Container = styled.section`
   margin: 32px 0 0 48px;
-`;
-
-const Spacing = styled.div<SpacingProps>`
-  height: ${(props) => props.space}px;
 `;
