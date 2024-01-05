@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -8,11 +9,16 @@ export const ButtonContainer = ({
   buttonStyle: 'navigate' | 'request' | 'edit';
   isValid: boolean;
 }) => {
+  const navigate = useNavigate();
+  const handlePreviousClick = () => {
+    navigate(-1);
+  };
+
   return (
     <StyledWrapper $buttonStyle={buttonStyle}>
       {buttonStyle === 'navigate' && (
         <>
-          <StyledButton type="primary" ghost>
+          <StyledButton type="primary" ghost onClick={handlePreviousClick}>
             이전
           </StyledButton>
           <StyledButton type="primary" disabled={!isValid}>
