@@ -1,26 +1,59 @@
-import { Button, Modal } from 'antd';
+import { MainChart } from '@components/main/main-chart';
+import { MainCouponStatusContainer } from '@components/main/main-coupon-status-container';
+import { MainNavigationContainer } from '@components/main/main-navigation-container';
+import promotionImage from '@assets/image/mainPromotionImage.png';
+import promotionImage2 from '@assets/image/mainPromotionImage2.png';
+import { Image, Layout } from 'antd';
 import styled from 'styled-components';
 
 export const Main = () => {
   return (
-    <>
-      <StyledModal title="Basic Modal" open={false}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </StyledModal>
-      <StyledButton type="primary">가나다라</StyledButton>
-    </>
+    <StyledMainLayout>
+      <StyledLayout>
+        <StyledMainContainer>
+          <MainCouponStatusContainer />
+          <MainChart />
+        </StyledMainContainer>
+        <StyledMainInfo>
+          <MainNavigationContainer></MainNavigationContainer>
+          <StyledImage src={promotionImage} preview={false} />
+          <StyledImage src={promotionImage2} preview={false} />
+        </StyledMainInfo>
+      </StyledLayout>
+    </StyledMainLayout>
   );
 };
 
-const StyledModal = styled(Modal)`
-  .ant-modal-header {
-    height: 400px;
-  }
+const StyledMainLayout = styled(Layout)`
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const StyledLayout = styled('div')`
+  display: flex;
+  flex-direction: row;
+
+  gap: 12px;
 `;
 
-const StyledButton = styled(Button)`
-  width: 100px;
-  height: 100px;
+const StyledMainContainer = styled('div')`
+  width: 692px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+const StyledMainInfo = styled('div')`
+  width: 224px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+const StyledImage = styled(Image)`
+  width: 224px;
+  height: 187px;
+  border-radius: 8px;
 `;
