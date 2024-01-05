@@ -1,20 +1,11 @@
-import {
-  Button,
-  Checkbox,
-  Modal,
-  Layout,
-  Typography,
-  // InputNumber,
-  Form,
-  Space,
-  Input,
-} from 'antd';
+import { Button, Checkbox, Modal, Layout, Form, Space, Input } from 'antd';
 
 import { useState } from 'react';
 import styled from 'styled-components';
 import { numberFormat, removeNumberFormat } from './numberFormat';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-// import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/text-box';
+import { colors } from '@/constants/colors';
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
 
@@ -28,6 +19,7 @@ export const PointDetail = () => {
   const [isPointState, setIsPointState] = useState<boolean>(true);
 
   const [isAgreementPoint, setIsAgreementPoint] = useState(false);
+  const [isInfoBoxState, setIsInfoBoxState] = useState(false);
 
   const handleChangePoint = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -90,12 +82,7 @@ export const PointDetail = () => {
         width={576}
       >
         <Layout>
-          <Form
-            form={form}
-            layout="vertical"
-            autoComplete="off"
-            style={{ backgroundColor: 'white' }}
-          >
+          <Form form={form} layout="vertical" autoComplete="off">
             <Form.Item name="point" label="충전할 포인트">
               <Input
                 style={{ width: '95%' }}
@@ -103,55 +90,94 @@ export const PointDetail = () => {
                 value={formattedValue}
                 onChange={handleChangePoint}
               />
-              <span style={{ marginLeft: '8px' }}>P</span>
-              <div>
-                <span>{pointErrorMessage}</span>
-              </div>
+
+              <TextBox
+                typography="h5"
+                color={'black900'}
+                bold={true}
+                style={{ marginLeft: '8px' }}
+              >
+                P
+              </TextBox>
+              <ErrorContainer>
+                <TextBox typography="body4" color={'error'}>
+                  {pointErrorMessage}
+                </TextBox>
+              </ErrorContainer>
             </Form.Item>
 
-            <Space className="point-buttonWrap">
+            <PointButtonWrap>
               <Button onClick={() => handleClickAddPoint(10000)}>+ 1만</Button>
               <Button onClick={() => handleClickAddPoint(50000)}>+ 5만</Button>
               <Button onClick={() => handleClickAddPoint(100000)}>
                 + 10만
               </Button>
-            </Space>
+            </PointButtonWrap>
 
-            <Space className="price-wrap">
-              {/* <InfoPriceContainer>
-                <TextBox>충전하시는 포인트에 따른 결제 금액입니다.</TextBox>
-                <TextBox>*포인트 환산 기준: 결제 금액 = 포인트</TextBox>
-              </InfoPriceContainer> */}
-              <ExclamationCircleOutlined />
-              <Typography>결제 금액 : {formattedValue}원</Typography>
-            </Space>
+            <PriceWrap>
+              {isInfoBoxState && (
+                <InfoPriceContainer direction="vertical" size={0}>
+                  <div>
+                    <TextBox
+                      typography="body3"
+                      color={'black900'}
+                      fontWeight={'400'}
+                    >
+                      충전하시는 포인트에 따른 결제 금액입니다.
+                    </TextBox>
+                  </div>
 
-            <Space className="agreement-wrap">
+                  <div>
+                    <TextBox
+                      typography="body3"
+                      color={'black900'}
+                      fontWeight={'400'}
+                      style={{ position: 'relative' }}
+                    >
+                      *포인트 환산 기준: 결제 금액 = 포인트
+                    </TextBox>
+                    <TailStyle></TailStyle>
+                  </div>
+                </InfoPriceContainer>
+              )}
+
+              <InfoButton
+                onClick={() => {
+                  setIsInfoBoxState(!isInfoBoxState);
+                }}
+              >
+                <ExclamationCircleOutlined />
+              </InfoButton>
+
+              <TextBox typography="h5" color={'primary'} bold={true}>
+                결제 금액 : {formattedValue}원
+              </TextBox>
+            </PriceWrap>
+
+            <AgreementWrap>
               <Checkbox
                 onChange={() => {
                   setIsAgreementPoint(!isAgreementPoint);
                 }}
               >
-                <Typography>
-                  주문 내용을 확인하였으며, 구매 약관 등에 동의합니다
-                </Typography>
+                <TextBox typography="body3" color={'black900'}>
+                  주문 내용을 확인하였으며,{' '}
+                  <TextBox typography="body3" color={'primaryHover'}>
+                    구매 약관
+                  </TextBox>
+                  등에 동의합니다
+                </TextBox>
               </Checkbox>
-            </Space>
+            </AgreementWrap>
 
-            <Button
+            <SubmitButton
               key="submit"
               type="primary"
               onClick={handleOk}
               disabled={isPointState || !isAgreementPoint}
-              style={{
-                width: '100%',
-                height: '46px',
-                marginTop: '8px',
-                padding: '8px 0px',
-              }}
             >
               결제하기
-            </Button>
+            </SubmitButton>
           </Form>
         </Layout>
       </CustomModal>
@@ -159,6 +185,9 @@ export const PointDetail = () => {
   );
 };
 const CustomModal = styled(Modal)`
+  .ant-layout {
+    background-color: #ffffff;
+  }
   .ant-modal-close {
     top: 2%;
   }
@@ -184,60 +213,102 @@ const CustomModal = styled(Modal)`
   .ant-input-number-input-wrap {
     margin-right: 8px;
   }
-  .ant-space {
-    display: flex;
 
-    button {
-      width: 64px;
-      height: 25px;
-
-      border: 1px solid #0351ff;
-      margin-right: 4px;
-
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 16px;
-      color: #0351ff;
-
-      padding: 4px 0px;
-    }
-  }
   .point-buttonWrap {
     margin-bottom: 221px;
   }
-  .price-wrap {
-    display: flex;
-    justify-content: end;
-    align-items: center;
+`;
+const PointButtonWrap = styled(Space)`
+  display: flex;
+  margin-bottom: 221px;
+  button {
+    width: 64px;
+    height: 25px;
 
-    border: 2px solid #0351ff;
-    padding: 4px 16px;
-    margin-bottom: 16px;
+    border: 1px solid #0351ff;
+    margin-right: 4px;
 
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
     color: #0351ff;
 
-    background: linear-gradient(268.34deg, #e0edff 1.74%, #ffffff 120.49%);
-  }
-  .agreement-wrap {
-    display: flex;
-    justify-content: center;
-    text-align: center;
+    padding: 4px 0px;
   }
 `;
+const PriceWrap = styled(Space)`
+  display: flex;
+  justify-content: end;
+  align-items: center;
 
-// const InfoPriceContainer = styled(Space)`
-//   position: absolute;
-//   top: 50px;
+  border: 2px solid #0351ff;
+  padding: 4px 16px;
+  margin-bottom: 16px;
 
-//   width: 266px;
-//   height: 56px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  color: #0351ff;
 
-//   border-radius: 2px;
+  background: linear-gradient(268.34deg, #e0edff 1.74%, #ffffff 120.49%);
+`;
+const ErrorContainer = styled('div')`
+  margin-top: 12px;
+`;
+const SubmitButton = styled(Button)`
+  width: 100%;
+  height: 46px;
+  margin-top: 8px;
+  padding: 8px 0px;
 
-//   padding: 6px 8px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
 
-//   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-// `;
+  &:disabled {
+    background-color: ${colors.black600};
+    color: white;
+  }
+`;
+const AgreementWrap = styled(Space)`
+  display: flex;
+  justify-content: center;
+  text-align: center;
+`;
+const InfoPriceContainer = styled(Space)`
+  position: absolute;
+  bottom: 196px;
+  right: 54px;
+
+  width: 266px;
+
+  border-radius: 2px;
+
+  padding: 6px 8px;
+
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+
+  text-align: center;
+
+  gap: 0px;
+`;
+const TailStyle = styled('div')`
+  width: 8px;
+  height: 8px;
+
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+
+  transform: rotate(45deg);
+  background-color: white;
+`;
+const InfoButton = styled('button')`
+  background: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+`;
