@@ -35,10 +35,17 @@ export const InitLayout = () => {
       <Layout.Header>Header</Layout.Header>
       <StyledHeadContent color={colors.white}>
         <StyledTextWrapper>
-          <TextBox typography="h2" color={'primary'} fontWeight={700}>
+          <TextBox
+            typography="h2"
+            color={'primary'}
+            fontWeight={700}
+            cursor="default"
+          >
             {pageName}
           </TextBox>
-          <TextBox typography="h4">{pageDesc}</TextBox>
+          <TextBox typography="h4" cursor="default">
+            {pageDesc}
+          </TextBox>
         </StyledTextWrapper>
       </StyledHeadContent>
       <StyledMainContent>
