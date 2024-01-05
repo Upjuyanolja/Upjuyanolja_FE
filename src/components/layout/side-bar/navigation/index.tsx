@@ -17,12 +17,7 @@ export const Navigation = () => {
             activeColor={colors.lightActive}
           >
             <Link to={link}>
-              <TextBox
-                typography="body2"
-                color={'black900'}
-                bold={true}
-                cursor="pointer"
-              >
+              <TextBox typography="body2" color={'black900'} bold={true}>
                 {label}
               </TextBox>
             </Link>
