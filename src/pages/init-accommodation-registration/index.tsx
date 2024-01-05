@@ -4,13 +4,25 @@ import { AccommodationCategory } from '@components/init-registration/Accommodati
 import { AccommodationName } from '@components/init-registration/AccommodationName';
 import { AccommodationAddress } from '@components/init-registration/AccommodationAddress';
 import { AccommodationImage } from '@components/init-registration/AccommodationImage';
-import { AccommodationOption } from '@components/init-registration/AccommodationOption';
 import { AccommodationDesc } from '@components/init-registration/AccommodationDesc';
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
+import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 
 export const InitAccommodationRegistration = () => {
   const isValid = true;
+
+  const accommodationOptions = [
+    '객실취사',
+    '주차시설',
+    '픽업 서비스',
+    '바베큐장',
+    '휘트니스센터',
+    '노래방',
+    '에어컨',
+    '사우나실',
+    '세미나실',
+  ];
 
   return (
     <StyledWrapper color={colors.white}>
@@ -24,7 +36,13 @@ export const InitAccommodationRegistration = () => {
         {/*숙소 대표 이미지 */}
         <AccommodationImage />
         {/*숙소 옵션 */}
-        <AccommodationOption />
+        <StyledInputWrapper>
+          <CheckBoxContainer
+            options={accommodationOptions}
+            label="숙소 옵션"
+            isAccommodationCategory={false}
+          />
+        </StyledInputWrapper>
         {/*숙소 소개 */}
         <AccommodationDesc />
         {/*버튼 */}
@@ -40,4 +58,8 @@ const StyledWrapper = styled.div`
   padding: 40px;
 
   border-radius: 8px;
+`;
+
+const StyledInputWrapper = styled.div`
+  margin-bottom: 48px;
 `;
