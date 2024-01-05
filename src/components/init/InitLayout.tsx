@@ -31,7 +31,7 @@ export const InitLayout = () => {
     routeConfig[currentRoute as keyof typeof routeConfig] || {};
 
   return (
-    <Layout>
+    <StyledLayout color={colors.midGray}>
       <Layout.Header>Header</Layout.Header>
       <StyledHeadContent color={colors.white}>
         <StyledTextWrapper>
@@ -44,9 +44,13 @@ export const InitLayout = () => {
       <StyledMainContent>
         <Outlet />
       </StyledMainContent>
-    </Layout>
+    </StyledLayout>
   );
 };
+
+const StyledLayout = styled(Layout)`
+  background-color: ${(props) => props.color};
+`;
 
 const StyledHeadContent = styled(Layout.Content)`
   height: 140px;
