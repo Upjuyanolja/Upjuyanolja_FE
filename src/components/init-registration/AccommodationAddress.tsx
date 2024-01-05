@@ -90,6 +90,10 @@ const StyledInputWrapper = styled.div`
     flex-direction: column;
     gap: 8px;
   }
+
+  .ant-input {
+    font-size: 16px;
+  }
 `;
 
 const StyledInput = styled(Input)`

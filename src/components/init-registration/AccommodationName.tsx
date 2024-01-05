@@ -36,9 +36,9 @@ export const AccommodationName = () => {
           onChange={handleInputChange}
           disabled={inputValue.length >= 30}
         />
-        <StyledCharacterCountWrapper>
+        <StyledErrorMessageWrapper>
           {error && <StyledFormErrorMessage errorMessage={error} />}
-        </StyledCharacterCountWrapper>
+        </StyledErrorMessageWrapper>
       </Form.Item>
     </StyledInputWrapper>
   );
@@ -65,9 +65,13 @@ const StyledInputWrapper = styled.div`
   .ant-form-item-control {
     width: 100%;
   }
+
+  .ant-input {
+    font-size: 16px;
+  }
 `;
 
-const StyledCharacterCountWrapper = styled.div`
+const StyledErrorMessageWrapper = styled.div`
   height: 18px;
 `;
 
