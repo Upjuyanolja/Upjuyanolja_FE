@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { navigationMap } from '@/constants/navigation';
-import TextBox from '@components/text-box';
+import { TextBox } from '@components/text-box';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { StyledNavItemProps } from './type';
@@ -17,12 +17,7 @@ export const Navigation = () => {
             activeColor={colors.lightActive}
           >
             <Link to={link}>
-              <TextBox
-                typography="body2"
-                color={'black900'}
-                bold={true}
-                cursor="pointer"
-              >
+              <TextBox typography="body2" color={'black900'} bold={true}>
                 {label}
               </TextBox>
             </Link>

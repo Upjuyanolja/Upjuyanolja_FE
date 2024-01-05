@@ -1,4 +1,4 @@
-import TextBox from '@components/text-box';
+import { TextBox } from '@components/text-box';
 import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
@@ -52,7 +52,7 @@ export const AccommodationList = () => {
     <Container>
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
-          <TextBox typography="body2" bold={true} cursor="pointer">
+          <TextBox typography="body2" bold={true}>
             {accommodationMap[0].name}
           </TextBox>
           {accommodationMap.map(
@@ -72,9 +72,7 @@ export const AccommodationList = () => {
             activeColor={colors.lightActive}
           >
             <StyledFlex>
-              <TextBox typography="body3" cursor="pointer">
-                {item.name}
-              </TextBox>
+              <TextBox typography="body3">{item.name}</TextBox>
               {item.test && (
                 <StyledCheckCircleFilled key={index} color={colors.primary} />
               )}

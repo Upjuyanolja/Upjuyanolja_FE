@@ -1,12 +1,12 @@
 import { LogoutOutlined } from '@ant-design/icons';
-import TextBox from '@components/text-box';
+import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 
 export const SignOutBtn = () => {
   return (
     <Container>
       <StyledLogoutOutlined />
-      <TextBox typography="body2" color="black700" cursor="pointer">
+      <TextBox typography="body2" color="black700">
         로그아웃
       </TextBox>
     </Container>
