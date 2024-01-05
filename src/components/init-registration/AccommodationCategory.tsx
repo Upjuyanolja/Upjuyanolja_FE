@@ -1,4 +1,3 @@
-import { ItemTypography } from './ItemTypography';
 import { styled } from 'styled-components';
 import primaryHotelResortIcon from '@assets/image/primaryHotel_resort.png';
 import primaryMotelIcon from '@assets/image/primaryMotel.png';
@@ -10,6 +9,7 @@ import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
+import { ItemTypography } from '@components/init/ItemTypography';
 
 interface ButtonClickedProps {
   $clicked?: boolean;
@@ -88,6 +88,10 @@ export const AccommodationCategory = () => {
           </TextBox>
         </StyledButtonWrapper>
       </StyledButtonContainer>
+      <div>
+        <TextBox>상세 유형을 선택해 주세요.</TextBox>
+        <div>체크 체크 체크</div>
+      </div>
     </StyledInputWrapper>
   );
 };

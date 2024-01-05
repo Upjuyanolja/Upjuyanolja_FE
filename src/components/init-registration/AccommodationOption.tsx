@@ -1,4 +1,4 @@
-import { ItemTypography } from './ItemTypography';
+import { ItemTypography } from '@components/init/ItemTypography';
 import { styled } from 'styled-components';
 
 export const AccommodationOption = () => {

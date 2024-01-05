@@ -1,5 +1,4 @@
 import { colors } from '@/constants/colors';
-import { ButtonContainer } from '@components/init-registration/ButtonContainer';
 import { styled } from 'styled-components';
 import { AccommodationCategory } from '@components/init-registration/AccommodationCategory';
 import { AccommodationName } from '@components/init-registration/AccommodationName';
@@ -8,6 +7,7 @@ import { AccommodationImage } from '@components/init-registration/AccommodationI
 import { AccommodationOption } from '@components/init-registration/AccommodationOption';
 import { AccommodationDesc } from '@components/init-registration/AccommodationDesc';
 import { Form } from 'antd';
+import { ButtonContainer } from '@components/init/ButtonContainer';
 
 export const InitAccommodationRegistration = () => {
   const isValid = true;
