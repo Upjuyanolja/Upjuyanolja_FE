@@ -2,10 +2,32 @@ import { Footer } from '@components/layout/footer';
 import { Layout } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
+import { TextBox } from '@components/text-box';
 export const SignInAgreement = () => {
   return (
     <StyledLayout>
-      <StyledContent>sign-in-agreement-page</StyledContent>
+      <StyledContent>
+        <TextContainer>
+          <TextBox
+            typography="h2"
+            cursor="default"
+            color={'primary'}
+            fontWeight={'700'}
+            textAlign="center"
+          >
+            서비스{' '}
+          </TextBox>
+          <TextBox
+            typography="h2"
+            cursor="default"
+            color={'black900'}
+            fontWeight={'700'}
+            textAlign="center"
+          >
+            이용 동의
+          </TextBox>
+        </TextContainer>
+      </StyledContent>
       <Footer />
     </StyledLayout>
   );
@@ -23,3 +45,5 @@ const StyledContent = styled(Layout.Content)`
   margin: 0 auto;
   height: 666px;
 `;
+
+const TextContainer = styled.div``;
