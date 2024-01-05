@@ -11,13 +11,10 @@ const MAXIMUM_PRICE = 10000000;
 
 export const PointDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [point, setPoint] = useState<number>();
-  const [formattedValue, setFormattedValue] = useState<string>();
+  const [formattedValue, setFormattedValue] = useState<string>('');
   const [pointErrorMessage, setPointErrorMessage] = useState<string>('');
   const [form] = Form.useForm<{ inputValue: string }>();
-
   const [isPointState, setIsPointState] = useState<boolean>(true);
-
   const [isAgreementPoint, setIsAgreementPoint] = useState(false);
   const [isInfoBoxState, setIsInfoBoxState] = useState(false);
 
@@ -65,6 +62,11 @@ export const PointDetail = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setFormattedValue('');
+    setPointErrorMessage('');
+    setIsPointState(true);
+    setIsAgreementPoint(false);
+    setIsInfoBoxState(false);
   };
 
   return (
@@ -159,6 +161,7 @@ export const PointDetail = () => {
                 onChange={() => {
                   setIsAgreementPoint(!isAgreementPoint);
                 }}
+                checked={isAgreementPoint}
               >
                 <TextBox typography="body3" color={'black900'}>
                   주문 내용을 확인하였으며,{' '}
