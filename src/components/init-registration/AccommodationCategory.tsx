@@ -9,7 +9,6 @@ import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
-import { ItemTypography } from '@components/init/ItemTypography';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 
 interface ButtonClickedProps {
@@ -30,10 +29,9 @@ export const AccommodationCategory = () => {
 
   return (
     <StyledInputWrapper>
-      <ItemTypography
-        text="숙소 유형을 선택해주세요."
-        labelName="accommodationCategory"
-      />
+      <TextBox typography="h4" fontWeight={700}>
+        숙소 유형을 선택해주세요.
+      </TextBox>
       <StyledButtonContainer>
         <StyledButtonWrapper
           onClick={() => handleButtonClick('hotelResort')}
@@ -113,6 +111,10 @@ export const AccommodationCategory = () => {
 
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 const StyledButtonContainer = styled.div`
