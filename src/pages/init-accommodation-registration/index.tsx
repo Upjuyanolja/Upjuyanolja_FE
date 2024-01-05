@@ -3,11 +3,11 @@ import { styled } from 'styled-components';
 import { AccommodationCategory } from '@components/init-registration/AccommodationCategory';
 import { AccommodationName } from '@components/init-registration/AccommodationName';
 import { AccommodationAddress } from '@components/init-registration/AccommodationAddress';
-import { AccommodationImage } from '@components/init-registration/AccommodationImage';
 import { AccommodationDesc } from '@components/init-registration/AccommodationDesc';
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
+import { AccommodationImage } from '@components/init/AccommodationImage';
 
 export const InitAccommodationRegistration = () => {
   const isValid = true;
