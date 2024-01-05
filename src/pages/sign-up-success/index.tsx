@@ -3,6 +3,7 @@ import { Layout, Button } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { Main } from '@components/sign-up';
+import { Footer } from '@components/layout/footer';
 
 export const SignUpSuccess = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -27,6 +28,7 @@ export const SignUpSuccess = () => {
           로그인 하러가기
         </StyledButton>
       </StyledContent>
+      <Footer />
     </StyledLayout>
   );
 };
