@@ -3,6 +3,7 @@ import { Layout, Button } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { Main } from '@components/sign-up';
+import { Footer } from '@components/layout/footer';
 
 export const SignUpSuccess = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -13,7 +14,7 @@ export const SignUpSuccess = () => {
         <TextBox
           typography="h3"
           color={'black900'}
-          textAlign="center"
+          textalign="center"
           fontWeight={'500'}
         >
           회원가입이 완료되었습니다!
@@ -26,6 +27,7 @@ export const SignUpSuccess = () => {
           로그인 하러가기
         </StyledButton>
       </StyledContent>
+      <Footer />
     </StyledLayout>
   );
 };

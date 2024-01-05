@@ -12,7 +12,7 @@ export const Footer = () => {
           <TextBox
             typography="body5"
             color={'black900'}
-            textAlign="center"
+            textalign="center"
             fontWeight={'400'}
             cursor="pointer"
           >
@@ -27,7 +27,7 @@ export const Footer = () => {
           <TextBox
             typography="body5"
             color={'black900'}
-            textAlign="center"
+            textalign="center"
             fontWeight={'700'}
           >
             |
@@ -35,7 +35,7 @@ export const Footer = () => {
           <TextBox
             typography="body5"
             color={'black900'}
-            textAlign="center"
+            textalign="center"
             fontWeight={'400'}
             cursor="pointer"
           >
@@ -51,7 +51,7 @@ export const Footer = () => {
           <TextBox
             typography="body5"
             color={'black600'}
-            textAlign="center"
+            textalign="center"
             fontWeight={'400'}
           >
             (주) 야놀자 Copyright © 2005-2023 Yanolja Co., Ltd. All rights

@@ -50,7 +50,7 @@ export type Typography = keyof typeof typographyMap;
 export type TextProps = {
   typography?: Typography;
   color?: Colors;
-  textAlign?: CSSProperties['textAlign'];
+  textalign?: CSSProperties['textAlign'];
   fontWeight?: CSSProperties['fontWeight'];
   bold?: boolean;
   cursor?: CSSProperties['cursor'];

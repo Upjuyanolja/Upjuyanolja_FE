@@ -14,14 +14,14 @@ export const Main = () => {
           typography="h2"
           color={'primary'}
           fontWeight={'700'}
-          textAlign="center"
+          textalign="center"
         >
           빨리잡아!
         </TextBox>
         <TextBox
           typography="h2"
           color="black900"
-          textAlign="center"
+          textalign="center"
           fontWeight={'700'}
         >
           {' '}
