@@ -2,25 +2,19 @@ import { TextBox } from '@components/text-box';
 import { Modal } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
-import { useState, ChangeEvent, useRef } from 'react';
-
-interface FileItem {
-  uid: number;
-  name: string;
-  url: string;
-  originFileObj?: File;
-}
+import { useState, useRef } from 'react';
+import { ImageUploadFileItem, ImageUploadHandleChangeProps } from './type';
 
 export const ImageUploadContainer = () => {
-  const [previewOpen, setPreviewOpen] = useState<boolean>(false);
-  const [previewTitle, setPreviewTitle] = useState<string>('');
-  const [fileList, setFileList] = useState<FileItem[]>([]);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewTitle, setPreviewTitle] = useState('');
+  const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleCancel = () => setPreviewOpen(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
+  const handleChange = ({ event }: ImageUploadHandleChangeProps) => {
+    const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
       setFileList((prevFileList) => [
@@ -51,18 +45,18 @@ export const ImageUploadContainer = () => {
         type="file"
         accept="image/*"
         ref={fileInputRef}
-        onChange={handleChange}
+        onChange={(event) => handleChange({ event })}
         style={{ display: 'none' }}
       />
     </StyledUploadButtonWrapper>
   );
 
-  const handleImageClick = (file: FileItem) => {
+  const handleImageClick = (file: ImageUploadFileItem) => {
     setPreviewOpen(true);
     setPreviewTitle(file.name);
   };
 
-  const handleRemove = (file: FileItem) => {
+  const handleRemove = (file: ImageUploadFileItem) => {
     const newFileList = fileList.filter((item) => item.uid !== file.uid);
     setFileList(newFileList);
   };

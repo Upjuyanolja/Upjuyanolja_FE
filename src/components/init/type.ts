@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react';
+
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
   isValid: boolean;
@@ -28,4 +30,15 @@ export type RouteConfigProps = {
     pageName: string;
     pageDesc: string;
   };
+};
+
+export type ImageUploadFileItem = {
+  uid: number;
+  name: string;
+  url: string;
+  originFileObj?: File;
+};
+
+export type ImageUploadHandleChangeProps = {
+  event: ChangeEvent<HTMLInputElement>;
 };
