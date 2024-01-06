@@ -2,23 +2,15 @@ import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
 import { Checkbox } from 'antd';
 import styled from 'styled-components';
-import { CheckBoxContainerProps, CheckBoxStyledWrapperProps } from './type';
+import { CheckBoxContainerProps } from './type';
 
 export const CheckBoxContainer = ({
   options,
   label,
-  isAccommodationCategory,
 }: CheckBoxContainerProps) => {
   return (
-    <StyledWrapper
-      color={isAccommodationCategory ? colors.white100 : colors.white}
-      $wrapperPadding={isAccommodationCategory ? '8px 24px' : '0'}
-      $wrapperGap={isAccommodationCategory ? '16px' : '8px'}
-    >
-      <TextBox
-        typography={isAccommodationCategory ? 'body1' : 'h4'}
-        fontWeight={700}
-      >
+    <StyledWrapper color={colors.white}>
+      <TextBox typography="h4" fontWeight={700}>
         {label}
       </TextBox>
       <StyledCheckboxGroup options={options}></StyledCheckboxGroup>
@@ -26,14 +18,14 @@ export const CheckBoxContainer = ({
   );
 };
 
-const StyledWrapper = styled.div<CheckBoxStyledWrapperProps>`
+const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.$wrapperGap};
+  gap: 8px;
 
   background-color: ${(props) => props.color};
 
-  padding: ${(props) => props.$wrapperPadding};
+  padding: 0;
 `;
 
 const StyledCheckboxGroup = styled(Checkbox.Group)`

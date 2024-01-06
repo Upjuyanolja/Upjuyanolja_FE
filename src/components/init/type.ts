@@ -12,13 +12,6 @@ export type ButtonContainerStyledWrapperProps = {
 export type CheckBoxContainerProps = {
   options: string[];
   label: string;
-  isAccommodationCategory?: boolean;
-};
-
-export type CheckBoxStyledWrapperProps = {
-  color: string;
-  $wrapperPadding: string;
-  $wrapperGap: string;
 };
 
 export type FormErrorMessageProps = {
