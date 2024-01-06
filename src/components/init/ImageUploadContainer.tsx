@@ -85,7 +85,7 @@ export const ImageUploadContainer = () => {
         {fileList.length < 5 && uploadButton}
       </StyledImageContainer>
       <Modal
-        visible={previewOpen}
+        open={previewOpen}
         title={previewTitle}
         footer={null}
         onCancel={handleCancel}
