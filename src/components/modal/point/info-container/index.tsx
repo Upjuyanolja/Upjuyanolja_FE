@@ -12,15 +12,10 @@ export const InfoContainer = () => {
       </div>
 
       <div>
-        <TextBox
-          typography="body3"
-          color={'black900'}
-          fontWeight={'400'}
-          style={{ position: 'relative' }}
-        >
+        <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
           *포인트 환산 기준: 결제 금액 = 포인트
         </TextBox>
-        <TailStyle></TailStyle>
+        <TailBox></TailBox>
       </div>
     </InfoPriceContainer>
   );
@@ -43,7 +38,7 @@ const InfoPriceContainer = styled(Space)`
 
   gap: 0px;
 `;
-const TailStyle = styled('div')`
+const TailBox = styled('div')`
   width: 8px;
   height: 8px;
 
