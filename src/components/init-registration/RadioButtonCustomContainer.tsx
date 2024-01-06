@@ -12,7 +12,7 @@ export const RadioButtonCustomContainer = ({
   options,
   icon,
 }: AccommodationDetailCategoryProps) => {
-  const [value, setValue] = useState(options[0]);
+  const [value, setValue] = useState('');
 
   const onChange = ({ event }: AccommodationDetailCategoryOnchangeProps) => {
     setValue(event.target.value);
