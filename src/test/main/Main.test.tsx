@@ -2,6 +2,9 @@ import { Main } from '@pages/main';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
+import { server } from 'src/mocks/browsers';
+import { HttpResponse, http } from 'msw';
+import staticsData from 'public/data/main/staticsData.json';
 
 jest.mock('@ant-design/plots', () => ({
   Column: () => null,
@@ -32,5 +35,24 @@ describe('Main', () => {
       userEvent.click(navigateButton);
     });
     expect(window.location.pathname).toBe('/coupon');
+  });
+  test('서버로부터 쿠폰 사용량을 응답 받으면 컴포넌트에 쿠폰 사용량이 출력된다', async () => {
+    server.use(
+      http.get('/api/coupons/backoffice/statistics', () => {
+        return HttpResponse.json(staticsData, { status: 200 });
+      }),
+    );
+    render(
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>,
+    );
+    const staticsValue = screen.getByTestId('발행 쿠폰(A)');
+    if (!staticsValue.textContent) {
+      expect(staticsValue.textContent).toBeInTheDocument();
+      return;
+    }
+    const value = parseInt(staticsValue.textContent);
+    expect(value).toBeGreaterThanOrEqual(0);
   });
 });
