@@ -9,6 +9,13 @@ export type AddressHandleInputChangeProps = {
   inputType: string;
 };
 
+export type AccommodationCategoryType =
+  | 'hotelResort'
+  | 'motel'
+  | 'pensionPool'
+  | 'guestHouse'
+  | null;
+
 export type HandleTextAreaChangeProps = {
   event: ChangeEvent<HTMLTextAreaElement>;
 };

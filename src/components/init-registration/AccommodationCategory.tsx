@@ -10,12 +10,13 @@ import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
-import { ButtonClickedProps } from './type';
+import { AccommodationCategoryType, ButtonClickedProps } from './type';
 
 export const AccommodationCategory = () => {
-  const [clickedCategory, setClickedCategory] = useState<string | null>(null);
+  const [clickedCategory, setClickedCategory] =
+    useState<AccommodationCategoryType>(null);
 
-  const handleButtonClick = (category: string | null) => {
+  const handleButtonClick = (category: AccommodationCategoryType) => {
     if (clickedCategory !== category) {
       setClickedCategory(category);
     }
