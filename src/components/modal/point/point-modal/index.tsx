@@ -10,7 +10,9 @@ import { PointModalProps } from './types';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
-
+const PRICE_10000 = 10000;
+const PRICE_50000 = 10000;
+const PRICE_100000 = 10000;
 export const PointModal = ({
   isModalOpen,
   setIsModalOpen,
@@ -109,9 +111,13 @@ export const PointModal = ({
             </Form.Item>
 
             <PointButtonWrap>
-              <Button onClick={() => handleClickAddPoint(10000)}>+ 1만</Button>
-              <Button onClick={() => handleClickAddPoint(50000)}>+ 5만</Button>
-              <Button onClick={() => handleClickAddPoint(100000)}>
+              <Button onClick={() => handleClickAddPoint(PRICE_10000)}>
+                + 1만
+              </Button>
+              <Button onClick={() => handleClickAddPoint(PRICE_50000)}>
+                + 5만
+              </Button>
+              <Button onClick={() => handleClickAddPoint(PRICE_100000)}>
                 + 10만
               </Button>
             </PointButtonWrap>
