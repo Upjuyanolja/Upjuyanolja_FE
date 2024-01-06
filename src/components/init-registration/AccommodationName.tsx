@@ -14,18 +14,22 @@ export const AccommodationName = () => {
   const MIN_LENGTH = 2;
   const MAX_LENGTH = 30;
 
+  const validateInput = ({ value }: ValidateInputProps) => {
+    const specialCharacterRegex = /^[ㄱ-ㅎ가-힣A-Za-z0-9]*$/;
+
+    if (value.length < MIN_LENGTH) {
+      setError(`숙소명은 최소 ${MIN_LENGTH}자 이상 작성해 주세요.`);
+    } else if (!specialCharacterRegex.test(value)) {
+      setError('한글, 영어, 숫자만 입력 가능합니다.');
+    } else {
+      setError(null);
+    }
+  };
+
   const handleInputChange = ({ event }: NameHandleInputChangeProps) => {
     const newValue = event.target.value.slice(0, MAX_LENGTH);
     setInputValue(newValue);
     validateInput({ value: newValue });
-  };
-
-  const validateInput = ({ value }: ValidateInputProps) => {
-    if (value.length < MIN_LENGTH) {
-      setError(`숙소명은 최소 ${MIN_LENGTH}자 이상 작성해 주세요.`);
-    } else {
-      setError(null);
-    }
   };
 
   return (
@@ -37,16 +41,17 @@ export const AccommodationName = () => {
           type="text"
           minLength={MIN_LENGTH}
           maxLength={MAX_LENGTH}
-          showCount
           style={{ height: 40 }}
           value={inputValue}
           onChange={(event) => handleInputChange({ event })}
           disabled={inputValue.length >= MAX_LENGTH}
           status={error ? 'error' : ''}
         />
-        <StyledErrorMessageWrapper>
-          {error && <StyledFormErrorMessage errorMessage={error} />}
-        </StyledErrorMessageWrapper>
+        {error && (
+          <StyledErrorMessageWrapper>
+            <StyledFormErrorMessage errorMessage={error} />
+          </StyledErrorMessageWrapper>
+        )}
       </Form.Item>
     </StyledInputWrapper>
   );
@@ -86,5 +91,3 @@ const StyledErrorMessageWrapper = styled.div`
 const StyledFormErrorMessage = styled(FormErrorMessage)`
   float: left;
 `;
-
-export default AccommodationName;
