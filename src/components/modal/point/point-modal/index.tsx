@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input, Layout, Modal, Space } from 'antd';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { numberFormat, removeNumberFormat } from '../numberFormat';
+import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { TextBox } from '@components/text-box';
 import { InfoContainer } from '../info-container';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
