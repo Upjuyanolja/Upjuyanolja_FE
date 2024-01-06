@@ -1,109 +1,107 @@
 import { TextBox } from '@components/text-box';
-import { Modal, Upload } from 'antd';
+import { Modal } from 'antd';
 import { styled } from 'styled-components';
-import { PlusOutlined } from '@ant-design/icons';
-import type { RcFile, UploadProps } from 'antd/es/upload';
-import type { UploadFile } from 'antd/es/upload/interface';
-import { useState } from 'react';
+import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { useState, ChangeEvent, useRef } from 'react';
 
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+interface FileItem {
+  uid: number;
+  name: string;
+  url: string;
+  originFileObj?: File;
+}
 
 export const ImageUploadContainer = () => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[]>([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-4',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-5',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ]);
+  const [previewOpen, setPreviewOpen] = useState<boolean>(false);
+  const [previewTitle, setPreviewTitle] = useState<string>('');
+  const [fileList, setFileList] = useState<FileItem[]>([]);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleCancel = () => setPreviewOpen(false);
 
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
 
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1),
-    );
+    if (selectedFile) {
+      setFileList((prevFileList) => [
+        ...prevFileList,
+        {
+          uid: Date.now(),
+          name: selectedFile.name,
+          url: URL.createObjectURL(selectedFile),
+          originFileObj: selectedFile,
+        },
+      ]);
+    }
   };
 
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
-    setFileList(newFileList);
+  const openFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   const uploadButton = (
-    <div>
+    <StyledUploadButtonWrapper onClick={openFileInput}>
       <PlusOutlined />
-      <div>Upload</div>
-    </div>
+      <TextBox typography="body3" color="black600">
+        이미지 추가하기
+      </TextBox>
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        onChange={handleChange}
+        style={{ display: 'none' }}
+      />
+    </StyledUploadButtonWrapper>
   );
+
+  const handleImageClick = (file: FileItem) => {
+    setPreviewOpen(true);
+    setPreviewTitle(file.name);
+  };
+
+  const handleRemove = (file: FileItem) => {
+    const newFileList = fileList.filter((item) => item.uid !== file.uid);
+    setFileList(newFileList);
+  };
 
   return (
     <StyledInputWrapper>
-      <>
-        <StyledHeadTextContainer>
-          <TextBox typography="h4" fontWeight={700}>
-            숙소 대표 이미지
-          </TextBox>
-          <TextBox color="black600" typography="body3">
-            이미지는 최대 5개까지 등록 가능합니다.
-          </TextBox>
-        </StyledHeadTextContainer>
-        <CustomUpload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          listType="picture-card"
-          fileList={fileList}
-          onPreview={handlePreview}
-          onChange={handleChange}
-        >
-          {fileList.length >= 5 ? null : uploadButton}
-        </CustomUpload>
-        <Modal
-          open={previewOpen}
-          title={previewTitle}
-          footer={null}
-          onCancel={handleCancel}
-        >
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
-        </Modal>
-      </>
+      <StyledHeadTextContainer>
+        <TextBox typography="h4" fontWeight={700}>
+          숙소 대표 이미지
+        </TextBox>
+        <TextBox color="black600" typography="body3">
+          이미지는 최대 5개까지 등록 가능합니다.
+        </TextBox>
+      </StyledHeadTextContainer>
+      <StyledImageContainer>
+        {fileList.map((file) => (
+          <div key={file.uid}>
+            <StyledCloseButton onClick={() => handleRemove(file)} />
+            <img
+              src={file.url}
+              alt={file.name}
+              onClick={() => handleImageClick(file)}
+            />
+          </div>
+        ))}
+        {fileList.length < 5 && uploadButton}
+      </StyledImageContainer>
+      <Modal
+        visible={previewOpen}
+        title={previewTitle}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <img
+          alt={previewTitle}
+          style={{ width: '100%' }}
+          src={fileList.find((file) => file.name === previewTitle)?.url}
+        />
+      </Modal>
     </StyledInputWrapper>
   );
 };
@@ -120,26 +118,54 @@ const StyledHeadTextContainer = styled.div`
   margin-bottom: 8px;
 `;
 
-const CustomUpload = styled(Upload)`
-  .ant-upload-list-item {
-    padding: 0;
+const StyledUploadButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
 
-    margin: 0 auto;
+  background-color: #fafafa;
+  border: 1.5px dashed #d9d9d9;
+
+  &:hover {
+    border: 1.5px dashed #0351ff;
+    transition: 0.4s;
   }
+`;
 
-  .ant-upload-list-picture-card-container {
+const StyledCloseButton = styled(CloseCircleFilled)`
+  font-size: 20px;
+  color: #9199a4;
+`;
+
+const StyledImageContainer = styled.div`
+  display: flex;
+
+  div {
+    position: relative;
     width: 150px;
     height: 100px;
+    margin-right: 8px;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-  }
+      cursor: pointer;
 
-  .ant-upload-select {
-    width: 150px;
-    height: 100px;
+      &:hover {
+        opacity: 80%;
+        transition: 0.4s;
+      }
+    }
+
+    ${StyledCloseButton} {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 1;
+    }
   }
 `;
