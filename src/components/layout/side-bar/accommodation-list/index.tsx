@@ -3,10 +3,7 @@ import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
 import { useState } from 'react';
-import {
-  StyledAccommodationItemProps,
-  StyledAccommodationWrapProps,
-} from './type';
+import { StyledAccommodationWrapProps } from './type';
 import { CheckCircleFilled, DownOutlined, UpOutlined } from '@ant-design/icons';
 
 export const AccommodationList = () => {
@@ -52,32 +49,24 @@ export const AccommodationList = () => {
     <Container>
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
-          <TextBox typography="body2" bold={true} cursor="pointer">
+          <TextBox typography="body2" fontWeight="bold">
             {accommodationMap[0].name}
           </TextBox>
           {accommodationMap.map(
             (item, index) =>
-              item.test && (
-                <StyledCheckCircleFilled key={index} color={colors.primary} />
-              ),
+              item.test && <StyledCheckCircleFilled key={index} />,
           )}
         </StyledFlex>
         {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
       </StyledButton>
-      <StyledAccommodationWrap height={clickedSelectBox ? 'auto' : '0'}>
+      <StyledAccommodationWrap className={clickedSelectBox ? 'active' : null}>
         {accommodationMap.map((item, index) => (
-          <StyledAccommodationItem
-            key={item.id}
-            hoverColor={colors.light}
-            activeColor={colors.lightActive}
-          >
+          <StyledAccommodationItem key={item.id}>
             <StyledFlex>
-              <TextBox typography="body3" cursor="pointer">
+              <TextBox typography="body3" fontWeight="bold">
                 {item.name}
               </TextBox>
-              {item.test && (
-                <StyledCheckCircleFilled key={index} color={colors.primary} />
-              )}
+              {item.test && <StyledCheckCircleFilled key={index} />}
             </StyledFlex>
           </StyledAccommodationItem>
         ))}
@@ -102,24 +91,27 @@ const StyledButton = styled(Button)`
 const StyledAccommodationWrap = styled.ul<StyledAccommodationWrapProps>`
   padding: 0;
   margin-bottom: 0;
-  height: ${(props) => props.height};
+  height: 0;
   overflow: hidden;
+  &.active {
+    height: auto;
+  }
 `;
 
-const StyledAccommodationItem = styled.li<StyledAccommodationItemProps>`
+const StyledAccommodationItem = styled.li`
   padding: 5px 0 5px 16px;
   cursor: pointer;
   &:hover {
-    background-color: ${(props) => props.hoverColor};
+    background-color: ${colors.lightHover};
   }
   &:active {
-    background-color: ${(props) => props.activeColor};
+    background-color: ${colors.lightActive};
   }
 `;
 
 const StyledCheckCircleFilled = styled(CheckCircleFilled)`
   font-size: 18px;
-  color: ${(props) => props.color};
+  color: ${colors.primary};
   margin-left: 4px;
 `;
 
