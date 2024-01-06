@@ -17,15 +17,21 @@ export const ImageUploadContainer = () => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
-      setFileList((prevFileList) => [
-        ...prevFileList,
-        {
-          uid: Date.now(),
-          name: selectedFile.name,
-          url: URL.createObjectURL(selectedFile),
-          originFileObj: selectedFile,
-        },
-      ]);
+      if (selectedFile.size <= 30 * 1024 * 1024) {
+        setFileList((prevFileList) => [
+          ...prevFileList,
+          {
+            uid: Date.now(),
+            name: selectedFile.name,
+            url: URL.createObjectURL(selectedFile),
+            originFileObj: selectedFile,
+          },
+        ]);
+      } else {
+        alert(
+          '업로드 가능한 최대 파일 크기는 30MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.',
+        );
+      }
     }
   };
 
@@ -43,7 +49,7 @@ export const ImageUploadContainer = () => {
       </TextBox>
       <input
         type="file"
-        accept="image/*"
+        accept=".png, .jpeg, .jpg"
         ref={fileInputRef}
         onChange={(event) => handleChange({ event })}
         style={{ display: 'none' }}
@@ -68,7 +74,8 @@ export const ImageUploadContainer = () => {
           숙소 대표 이미지
         </TextBox>
         <TextBox color="black600" typography="body3">
-          이미지는 최대 5개까지 등록 가능합니다.
+          이미지는 최대 5개까지, (.png, .jpeg, .jpg) 형식의 파일만 등록
+          가능합니다.
         </TextBox>
       </StyledHeadTextContainer>
       <StyledImageContainer>
