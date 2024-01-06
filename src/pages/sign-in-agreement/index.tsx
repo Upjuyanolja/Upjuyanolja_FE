@@ -30,7 +30,6 @@ export const SignInAgreement = () => {
     },
   ];
 
-  // 체크 박스 개별 선택
   const handleSingleCheck = (checked: boolean, id: number) => {
     if (checked) {
       setIsChecked((prev) => [...prev, id]);
@@ -45,7 +44,6 @@ export const SignInAgreement = () => {
     }
   };
 
-  // 체크 박스 모두 선택
   const handleAllCheck = (e: CheckboxChangeEvent) => {
     if (e.target.checked) {
       const idArray: React.SetStateAction<number[]> = [];
