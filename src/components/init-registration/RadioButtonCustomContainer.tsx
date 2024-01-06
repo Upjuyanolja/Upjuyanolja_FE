@@ -77,6 +77,7 @@ const CheckboxRadioGroup = styled(Radio.Group)`
   .ant-radio-inner {
     border-radius: 3px;
     border: 1px solid #d9d9d9;
+
     width: 16px;
     height: 16px;
 
