@@ -4,11 +4,12 @@ import { TextBox } from '@components/text-box';
 import { Layout } from 'antd';
 import { Outlet, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { RouteConfigProps } from './type';
 
 export const InitLayout = () => {
   const location = useLocation();
 
-  const routeConfig: Record<string, { pageName: string; pageDesc: string }> = {
+  const routeConfig: RouteConfigProps = {
     [ROUTES.INIT_ACCOMMODATION_REGISTRATION]: {
       pageName: '숙소 등록하기',
       pageDesc: '숙소 정보를 알려주세요.',

@@ -1,14 +1,15 @@
 import { Button } from 'antd';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import {
+  ButtonContainerProps,
+  ButtonContainerStyledWrapperProps,
+} from './type';
 
 export const ButtonContainer = ({
   buttonStyle,
   isValid,
-}: {
-  buttonStyle: 'navigate' | 'request' | 'edit';
-  isValid: boolean;
-}) => {
+}: ButtonContainerProps) => {
   const navigate = useNavigate();
   const handlePreviousClick = () => {
     navigate(-1);
@@ -40,24 +41,23 @@ export const ButtonContainer = ({
   );
 };
 
-const StyledWrapper = styled.div<{
-  $buttonStyle: 'navigate' | 'request' | 'edit';
-}>`
+export const StyledWrapper = styled.div<ButtonContainerStyledWrapperProps>`
   width: 100%;
 
-  display: ${({ $buttonStyle }) =>
-    $buttonStyle === 'navigate' || $buttonStyle === 'edit' ? 'grid' : 'block'};
-  grid-template-columns: ${({ $buttonStyle }) =>
-    $buttonStyle === 'navigate'
+  display: ${(props) =>
+    props.$buttonStyle === 'navigate' || props.$buttonStyle === 'edit'
+      ? 'grid'
+      : 'block'};
+  grid-template-columns: ${(props) =>
+    props.$buttonStyle === 'navigate'
       ? '1fr 2.5fr'
-      : $buttonStyle === 'edit'
+      : props.$buttonStyle === 'edit'
         ? 'auto'
         : 'none'};
-  gap: ${({ $buttonStyle }) => ($buttonStyle === 'navigate' ? '10px' : '0')};
+  gap: ${(props) => (props.$buttonStyle === 'navigate' ? '10px' : '0')};
 `;
 
-const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)`
   height: 62px;
-
   font-size: 20px;
 `;
