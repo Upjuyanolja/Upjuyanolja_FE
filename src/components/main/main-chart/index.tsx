@@ -154,8 +154,6 @@ const StyledLayout = styled('div')`
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 const StyledTitleContainer = styled(Space)`
@@ -190,7 +188,7 @@ const StyledCharLabelColor = styled('div')`
 `;
 
 const StyledResult = styled(Space)`
-  margin-top: 6px;
+  margin: 6px auto 0 auto;
   border-radius: 100px;
   padding: 0 12px;
 

@@ -15,7 +15,7 @@ export const Main = () => {
           <MainChart />
         </StyledMainContainer>
         <StyledMainInfo>
-          <MainNavigationContainer></MainNavigationContainer>
+          <MainNavigationContainer />
           <StyledImage src={promotionImage} preview={false} />
           <StyledImage src={promotionImage2} preview={false} />
         </StyledMainInfo>
