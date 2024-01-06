@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { server } from './mocks/browsers';
+import { server } from './mocks/server';
 
 beforeAll(() => server.listen()); // 서버 설정
 
