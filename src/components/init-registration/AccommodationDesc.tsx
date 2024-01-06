@@ -1,10 +1,11 @@
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
+import { HandleTextAreaChangeProps, ValidateInputProps } from './type';
 
 export const AccommodationDesc = () => {
-  const [inputValue, setInputValue] = useState('');
+  const [textAreaValue, setTextAreaValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   {
@@ -13,13 +14,13 @@ export const AccommodationDesc = () => {
   const MIN_LENGTH = 10;
   const MAX_LENGTH = 500;
 
-  const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextAreaChange = ({ event }: HandleTextAreaChangeProps) => {
     const newValue = event.target.value.slice(0, MAX_LENGTH);
-    setInputValue(newValue);
-    validateInput(newValue);
+    setTextAreaValue(newValue);
+    validateTextArea({ value: newValue });
   };
 
-  const validateInput = (value: string) => {
+  const validateTextArea = ({ value }: ValidateInputProps) => {
     if (value.length < MIN_LENGTH) {
       setError(`숙소 소개는 최소 ${MIN_LENGTH}자 이상 작성해 주세요.`);
     } else {
@@ -36,9 +37,9 @@ export const AccommodationDesc = () => {
           minLength={MIN_LENGTH}
           showCount
           maxLength={MAX_LENGTH}
-          disabled={inputValue.length >= MAX_LENGTH}
+          disabled={textAreaValue.length >= MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
-          onChange={handleInputChange}
+          onChange={(event) => handleTextAreaChange({ event })}
         />
         <StyledErrorMessageWrapper>
           {error && <StyledFormErrorMessage errorMessage={error} />}

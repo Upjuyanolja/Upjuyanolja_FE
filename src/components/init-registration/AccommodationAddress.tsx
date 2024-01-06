@@ -1,16 +1,17 @@
 import { styled } from 'styled-components';
 import { Input, Button, Form } from 'antd';
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
+import { AddressHandleInputChangeProps } from './type';
 
 export const AccommodationAddress = () => {
   const [inputPost, setInputPost] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [inputDetailAddress, setInputDetailAddress] = useState('');
 
-  const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    inputType: string,
-  ) => {
+  const handleInputChange = ({
+    event,
+    inputType,
+  }: AddressHandleInputChangeProps) => {
     const inputValue = event.target.value;
 
     switch (inputType) {
@@ -36,7 +37,9 @@ export const AccommodationAddress = () => {
             id="accommodationPost"
             placeholder="우편번호"
             value={inputPost}
-            onChange={(event) => handleInputChange(event, 'accommodationPost')}
+            onChange={(event) =>
+              handleInputChange({ event, inputType: 'accommodationPost' })
+            }
           />
           <StyledAddressButton type="primary">주소 검색</StyledAddressButton>
         </StyledAddressWrapper>
@@ -44,7 +47,9 @@ export const AccommodationAddress = () => {
           id="accommodationAddress"
           placeholder="주소"
           value={inputAddress}
-          onChange={(event) => handleInputChange(event, 'accommodationAddress')}
+          onChange={(event) =>
+            handleInputChange({ event, inputType: 'accommodationAddress' })
+          }
         />
 
         <StyledInput
@@ -52,7 +57,10 @@ export const AccommodationAddress = () => {
           placeholder="상세주소"
           value={inputDetailAddress}
           onChange={(event) =>
-            handleInputChange(event, 'accommodationDetailAddress')
+            handleInputChange({
+              event,
+              inputType: 'accommodationDetailAddress',
+            })
           }
         />
       </Form.Item>

@@ -10,10 +10,7 @@ import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
-
-interface ButtonClickedProps {
-  $clicked?: boolean;
-}
+import { ButtonClickedProps } from './type';
 
 export const AccommodationCategory = () => {
   const [clickedCategory, setClickedCategory] = useState<string | null>(null);
