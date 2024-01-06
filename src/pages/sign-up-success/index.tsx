@@ -16,6 +16,7 @@ export const SignUpSuccess = () => {
           color={'black900'}
           textAlign="center"
           fontWeight={'500'}
+          cursor="default"
         >
           회원가입이 완료되었습니다!
         </TextBox>

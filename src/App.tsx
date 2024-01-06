@@ -17,6 +17,7 @@ import { RoomRegistration } from './pages/room/room-registration';
 import { RoomUpdate } from './pages/room/room-update';
 import { RootLayout } from './layout';
 import './App.less';
+import { InitLayout } from '@components/init/InitLayout';
 
 function App() {
   return (
@@ -28,18 +29,20 @@ function App() {
         <Route path={ROUTES.SIGNUP} element={<SignUp />} />
         <Route path={ROUTES.SIGNUP_SUCCESS} element={<SignUpSuccess />} />
         <Route path={ROUTES.INIT} element={<Init />} />
-        <Route
-          path={ROUTES.INIT_ACCOMMODATION_REGISTRATION}
-          element={<InitAccommodationRegistration />}
-        />
-        <Route
-          path={ROUTES.INIT_ROOM_REGISTRATION}
-          element={<InitRoomRegistration />}
-        />
-        <Route
-          path={ROUTES.INIT_INFO_CONFIRMATION}
-          element={<InitInfoConfirmation />}
-        />
+        <Route element={<InitLayout />}>
+          <Route
+            path={ROUTES.INIT_ACCOMMODATION_REGISTRATION}
+            element={<InitAccommodationRegistration />}
+          />
+          <Route
+            path={ROUTES.INIT_ROOM_REGISTRATION}
+            element={<InitRoomRegistration />}
+          />
+          <Route
+            path={ROUTES.INIT_INFO_CONFIRMATION}
+            element={<InitInfoConfirmation />}
+          />
+        </Route>
         {/* 레이아웃 적용 페이지  */}
         <Route element={<RootLayout />}>
           <Route path={ROUTES.POINT_DETAIL} element={<PointDetail />} />
