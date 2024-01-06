@@ -26,22 +26,15 @@ export const InitAccommodationRegistration = () => {
 
   return (
     <StyledWrapper color={colors.white}>
-      {/*숙소 유형 선택 */}
       <AccommodationCategory />
       <Form>
-        {/*숙소명 */}
         <AccommodationName />
-        {/*숙소 주소 */}
         <AccommodationAddress />
-        {/*숙소 대표 이미지 */}
         <ImageUploadContainer />
-        {/*숙소 옵션 */}
         <StyledInputWrapper>
           <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
         </StyledInputWrapper>
-        {/*숙소 소개 */}
         <AccommodationDesc />
-        {/*버튼 */}
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
     </StyledWrapper>
