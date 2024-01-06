@@ -1,4 +1,6 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactElement } from 'react';
+import { RadioChangeEvent } from 'antd';
+import { IconBaseProps } from 'react-icons';
 
 export type ButtonClickedProps = {
   $clicked?: boolean;
@@ -9,7 +11,7 @@ export type AddressHandleInputChangeProps = {
   inputType: string;
 };
 
-export type AccommodationCategoryType =
+export type AccommodationCategoryProps =
   | 'hotelResort'
   | 'motel'
   | 'pensionPool'
@@ -26,4 +28,14 @@ export type ValidateInputProps = {
 
 export type NameHandleInputChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
+};
+
+export type AccommodationDetailCategoryProps = {
+  options: string[];
+  label: string;
+  icon?: ReactElement<IconBaseProps>;
+};
+
+export type AccommodationDetailCategoryOnchangeProps = {
+  event: RadioChangeEvent;
 };

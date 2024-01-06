@@ -9,14 +9,16 @@ import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
-import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
-import { AccommodationCategoryType, ButtonClickedProps } from './type';
+import { AccommodationCategoryProps, ButtonClickedProps } from './type';
+import { AccommodationDetailCategory } from './AccommodationDetailCategory';
+import { FaCheck } from 'react-icons/fa';
+import { colors } from '@/constants/colors';
 
 export const AccommodationCategory = () => {
   const [clickedCategory, setClickedCategory] =
-    useState<AccommodationCategoryType>(null);
+    useState<AccommodationCategoryProps>(null);
 
-  const handleButtonClick = (category: AccommodationCategoryType) => {
+  const handleButtonClick = (category: AccommodationCategoryProps) => {
     if (clickedCategory !== category) {
       setClickedCategory(category);
     }
@@ -89,18 +91,18 @@ export const AccommodationCategory = () => {
         </StyledButtonWrapper>
       </StyledButtonContainer>
       {clickedCategory === 'hotelResort' && (
-        <CheckBoxContainer
+        <AccommodationDetailCategory
           options={hotelCategory}
           label="상세 유형을 선택해 주세요."
-          isAccommodationCategory={true}
+          icon={<FaCheck size={15} color={colors.primary} />}
         />
       )}
 
       {clickedCategory === 'guestHouse' && (
-        <CheckBoxContainer
+        <AccommodationDetailCategory
           options={guestHouseCategory}
           label="상세 유형을 선택해 주세요."
-          isAccommodationCategory={true}
+          icon={<FaCheck size={15} color={colors.primary} />}
         />
       )}
     </StyledInputWrapper>
