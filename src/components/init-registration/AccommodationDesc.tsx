@@ -40,6 +40,7 @@ export const AccommodationDesc = () => {
           disabled={textAreaValue.length >= MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
           onChange={(event) => handleTextAreaChange({ event })}
+          status={error ? 'error' : ''}
         />
         <StyledErrorMessageWrapper>
           {error && <StyledFormErrorMessage errorMessage={error} />}
