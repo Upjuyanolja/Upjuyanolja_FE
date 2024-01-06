@@ -15,6 +15,7 @@ export const Main = () => {
           color={'primary'}
           fontWeight={'700'}
           textAlign="center"
+          cursor="default"
         >
           빨리잡아!
         </TextBox>
@@ -23,6 +24,7 @@ export const Main = () => {
           color="black900"
           textAlign="center"
           fontWeight={'700'}
+          cursor="default"
         >
           {' '}
           쿠폰센터
