@@ -10,9 +10,9 @@ import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { AccommodationCategoryProps, ButtonClickedProps } from './type';
-import { AccommodationDetailCategory } from './AccommodationDetailCategory';
 import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
+import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
 
 export const AccommodationCategory = () => {
   const [clickedCategory, setClickedCategory] =
@@ -91,7 +91,7 @@ export const AccommodationCategory = () => {
         </StyledButtonWrapper>
       </StyledButtonContainer>
       {clickedCategory === 'hotelResort' && (
-        <AccommodationDetailCategory
+        <RadioButtonCustomContainer
           options={hotelCategory}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
@@ -99,7 +99,7 @@ export const AccommodationCategory = () => {
       )}
 
       {clickedCategory === 'guestHouse' && (
-        <AccommodationDetailCategory
+        <RadioButtonCustomContainer
           options={guestHouseCategory}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Radio } from 'antd';
 import { useState } from 'react';
 
-export const AccommodationDetailCategory = ({
+export const RadioButtonCustomContainer = ({
   label,
   options,
   icon,
