@@ -21,4 +21,16 @@ describe('Main', () => {
     });
     expect(window.location.pathname).toBe('/coupon-registration');
   });
+  test('쿠폰 관리 바로가기 버튼 클릭 시 쿠폰 관리 페이지로 이동한다', () => {
+    render(
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>,
+    );
+    const navigateButton = screen.getByTestId('navigate-coupon');
+    act(() => {
+      userEvent.click(navigateButton);
+    });
+    expect(window.location.pathname).toBe('/coupon');
+  });
 });
