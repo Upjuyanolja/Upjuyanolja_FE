@@ -15,7 +15,7 @@ export const AccommodationName = () => {
   const MAX_LENGTH = 30;
 
   const validateInput = ({ value }: ValidateInputProps) => {
-    const specialCharacterRegex = /^[ㄱ-ㅎ가-힣A-Za-z0-9]*$/;
+    const specialCharacterRegex = /^[ㄱ-ㅎ가-힣A-Za-z0-9\s]*$/;
 
     if (value.length < MIN_LENGTH) {
       setError(`숙소명은 최소 ${MIN_LENGTH}자 이상 작성해 주세요.`);
