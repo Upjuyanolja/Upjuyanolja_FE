@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import '../matchMedia.mock';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 
-describe('InitAccommodationRegistration', () => {
+describe('ButtonContainer', () => {
   test('모든 필수 항목을 입력하면 다음 버튼이 활성화된다.', () => {
     render(
       <BrowserRouter>
