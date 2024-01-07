@@ -2,6 +2,7 @@ import { RoomCard } from '../../components/room/room-card';
 import { Card, Button, Row } from 'antd';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
+import { colors } from '@/constants/colors';
 
 const RoomManagement = () => {
   return (
@@ -37,7 +38,7 @@ const StyledTitleButton = styled(Row)`
 
 const StyledAddRoomButton = styled(Button)`
   border-radius: 2px;
-  background: var(--Foundation-Blue-Normal, #0351ff);
+  background: var(--Foundation-Blue-Normal, ${colors.primary});
   color: white;
   display: flex;
   align-items: center;

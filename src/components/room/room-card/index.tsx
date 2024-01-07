@@ -3,6 +3,7 @@ import COUPON from '../../../assets/image/coupon.svg';
 import { TextBox } from '@components/text-box';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import { colors } from '@/constants/colors';
 
 export const RoomCard = () => {
   return (
@@ -67,14 +68,20 @@ export const RoomCard = () => {
                 marginRight: '8px',
               }}
             >
-              <EditOutlined style={{ fontSize: '20px', color: '#5C656C' }} />
+              <EditOutlined
+                style={{ fontSize: '20px', color: colors.black700 }}
+              />
               <TextBox typography="body2" color="black700" fontWeight="bold">
                 수정
               </TextBox>
             </StyledEditDeleteButtons>
             <StyledEditDeleteButtons>
               <DeleteOutlined
-                style={{ fontSize: '20px', color: '#5C656C', marginTop: 2 }}
+                style={{
+                  fontSize: '20px',
+                  color: colors.black700,
+                  marginTop: 2,
+                }}
               />
               <TextBox typography="body2" color="black700" fontWeight="bold">
                 삭제
@@ -97,8 +104,8 @@ export const RoomCard = () => {
 
 const StyledCardContainer = styled(Card)`
   border-radius: 8px;
-  border: 2px solid var(--Foundation-Blue-Normal, #0351ff);
-  background: var(--white, #fff);
+  border: 2px solid var(--Foundation-Blue-Normal, ${colors.primary});
+  background: var(--white, ${colors.white});
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
   margin: 0px;
   max-width: 100%;
@@ -165,8 +172,8 @@ const StyledDetailsSpace = styled(Space)`
 `;
 
 const StyledOptionTag = styled(Tag)`
-  border: 1px solid #9199a4;
-  background-color: #ffffff;
+  border: 1px solid ${colors.black700};
+  background-color: ${colors.white};
   width: 56px;
   height: 22px;
   border-radius: 2px;
@@ -208,7 +215,7 @@ const StyledEditDeleteButtons = styled(Button)`
   height: 28px;
   border-radius: 2px;
   border-color: transparent;
-  background: var(--Mid-Gray, #f1f1f6);
+  background: var(--Mid-Gray, ${colors.midGray});
   display: flex;
   justify-content: center;
   align-items: center;
