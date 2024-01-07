@@ -41,10 +41,13 @@ export const AccommodationDesc = () => {
           style={{ height: 160, resize: 'none' }}
           onChange={(event) => handleTextAreaChange({ event })}
           status={error ? 'error' : ''}
+          data-testid="textarea-accommodation-desc"
         />
-        <StyledErrorMessageWrapper>
-          {error && <StyledFormErrorMessage errorMessage={error} />}
-        </StyledErrorMessageWrapper>
+        {error && (
+          <StyledErrorMessageWrapper data-testid="error-textarea-accommodation-desc">
+            <StyledFormErrorMessage errorMessage={error} />
+          </StyledErrorMessageWrapper>
+        )}
       </Form.Item>
     </StyledInputWrapper>
   );
