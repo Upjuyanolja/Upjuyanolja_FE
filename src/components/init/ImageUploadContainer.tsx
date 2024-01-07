@@ -41,22 +41,6 @@ export const ImageUploadContainer = () => {
     }
   };
 
-  const uploadButton = (
-    <StyledUploadButtonWrapper onClick={openFileInput}>
-      <PlusOutlined />
-      <TextBox typography="body3" color="black600">
-        이미지 추가하기
-      </TextBox>
-      <input
-        type="file"
-        accept=".png, .jpeg, .jpg"
-        ref={fileInputRef}
-        onChange={(event) => handleChange({ event })}
-        style={{ display: 'none' }}
-      />
-    </StyledUploadButtonWrapper>
-  );
-
   const handleImageClick = (file: ImageUploadFileItem) => {
     setPreviewOpen(true);
     setPreviewTitle(file.name);
@@ -89,7 +73,22 @@ export const ImageUploadContainer = () => {
             />
           </div>
         ))}
-        {fileList.length < 5 && uploadButton}
+        {fileList.length < 5 && (
+          <StyledUploadButtonWrapper onClick={openFileInput}>
+            <PlusOutlined />
+            <TextBox typography="body3" color="black600">
+              이미지 추가하기
+            </TextBox>
+            <input
+              type="file"
+              accept=".png, .jpeg, .jpg"
+              ref={fileInputRef}
+              onChange={(event) => handleChange({ event })}
+              style={{ display: 'none' }}
+              data-testid="file-input"
+            />
+          </StyledUploadButtonWrapper>
+        )}
       </StyledImageContainer>
       <Modal
         open={previewOpen}
