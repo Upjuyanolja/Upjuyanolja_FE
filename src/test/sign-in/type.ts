@@ -1,4 +1,4 @@
-export type memberInfo = {
+export type memberData = {
   accessToken: string;
   refreshToken: string;
   memberResponse: {
