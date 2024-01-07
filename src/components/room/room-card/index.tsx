@@ -1,27 +1,25 @@
-import { Card, Col, Row, Typography, Button, Space, Tag, Image } from 'antd';
+import { Card, Col, Row, Button, Space, Tag, Image } from 'antd';
 import COUPON from '../../../assets/image/coupon.svg';
 import { TextBox } from '@components/text-box';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-const { Title, Text } = Typography;
-
 export const RoomCard = () => {
   return (
     <CardContainer hoverable>
-      <StyledRow wrap={false}>
+      <ContentContainer wrap={false}>
         <ImageContainer>
-          <StyledImage src={COUPON} alt="Coupon" />
-          <StyledImageMain src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b" />
+          <CouponImage src={COUPON} alt="Coupon" />
+          <RoomImage src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b" />
           <SaleBanner>판매중</SaleBanner>
         </ImageContainer>
         <DetailsCol>
           <TextBox typography="h4" color="black900" fontWeight="bold">
             스탠다드 트윈룸
           </TextBox>
-          <FeaturesSpace direction="vertical">
+          <DetailsSpace direction="vertical">
             <Tags>
-              <FeatureTag>
+              <OptionTag>
                 <TextBox
                   typography="body4"
                   color="black900"
@@ -29,8 +27,8 @@ export const RoomCard = () => {
                 >
                   TV
                 </TextBox>
-              </FeatureTag>
-              <FeatureTag>
+              </OptionTag>
+              <OptionTag>
                 <TextBox
                   typography="body4"
                   color="black900"
@@ -38,9 +36,8 @@ export const RoomCard = () => {
                 >
                   에어컨
                 </TextBox>
-              </FeatureTag>
+              </OptionTag>
             </Tags>
-
             <CenterVertically>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,20 +51,17 @@ export const RoomCard = () => {
                   fill="black"
                 />
               </svg>
-              <Text>기준 2일 / 최대 4인</Text>
+              <TextBox typography="body3" color="black900" fontWeight="normal">
+                기준 2일 / 최대 4인
+              </TextBox>
             </CenterVertically>
-            <Text>체크인 15:00 / 체크아웃 11:00</Text>
-          </FeaturesSpace>
+            <TextBox typography="body3" color="black900" fontWeight="normal">
+              체크인 15:00 / 체크아웃 11:00
+            </TextBox>
+          </DetailsSpace>
         </DetailsCol>
-        <ActionsCol>
-          <Col
-            style={{
-              display: 'flex',
-              padding: '2px 4px',
-              alignItems: 'center',
-              gap: '4px',
-            }}
-          >
+        <RightContent>
+          <EditDeleteContainer>
             <EditDeleteButtons
               style={{
                 marginRight: '4px',
@@ -86,21 +80,17 @@ export const RoomCard = () => {
                 삭제
               </TextBox>
             </EditDeleteButtons>
-          </Col>
-          <Col
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-end',
-            }}
-          >
-            <Text>객실 수 : 10개</Text>
-            <Title level={4} style={{ margin: 0 }}>
+          </EditDeleteContainer>
+          <NumRoomPriceContainer>
+            <TextBox typography="body3" color="black900" fontWeight="normal">
+              객실 수 : 10개
+            </TextBox>
+            <TextBox typography="h5" color="black900" fontWeight="bold">
               65,000원
-            </Title>
-          </Col>
-        </ActionsCol>
-      </StyledRow>
+            </TextBox>
+          </NumRoomPriceContainer>
+        </RightContent>
+      </ContentContainer>
     </CardContainer>
   );
 };
@@ -114,8 +104,9 @@ const CardContainer = styled(Card)`
   max-width: 100%;
 `;
 
-const StyledRow = styled(Row)`
-  /* Add any additional styles if needed */
+const ContentContainer = styled(Row)`
+  wrap: false;
+  gutter={[16, 16]};
 `;
 
 const ImageContainer = styled(Col).attrs({
@@ -125,7 +116,7 @@ const ImageContainer = styled(Col).attrs({
   height: 144px;
 `;
 
-const StyledImage = styled(Image)`
+const CouponImage = styled(Image)`
   position: absolute;
   bottom: 50px;
   left: -8px;
@@ -134,7 +125,7 @@ const StyledImage = styled(Image)`
   z-index: 2;
 `;
 
-const StyledImageMain = styled(Image)`
+const RoomImage = styled(Image)`
   width: 224px;
   height: 144px;
   border-radius: 8px;
@@ -165,7 +156,7 @@ const DetailsCol = styled(Col).attrs({
   justify-content: space-between;
 `;
 
-const FeaturesSpace = styled(Space)`
+const DetailsSpace = styled(Space)`
   gap: 12px;
   display: flex;
   flex-direction: column;
@@ -173,7 +164,7 @@ const FeaturesSpace = styled(Space)`
   margin-bottom: 0px;
 `;
 
-const FeatureTag = styled(Tag)`
+const OptionTag = styled(Tag)`
   border: 1px solid #9199a4;
   background-color: #ffffff;
   width: 56px;
@@ -186,11 +177,24 @@ const FeatureTag = styled(Tag)`
   align-items: center;
 `;
 
-const ActionsCol = styled(Col)`
+const RightContent = styled(Col)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 144px;
+`;
+
+const EditDeleteContainer = styled(Col)`
+  display: flex;
+  padding: 2px 4px;
+  align-items: center
+  gap: 4px,
+`;
+
+const NumRoomPriceContainer = styled(Col)`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 const CenterVertically = styled.div`
