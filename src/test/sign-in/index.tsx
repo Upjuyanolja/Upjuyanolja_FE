@@ -79,7 +79,11 @@ export const SignIn = () => {
           size="large"
           placeholder="비밀번호 입력"
           iconRender={(visible) =>
-            visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
+            visible ? (
+              <EyeOutlined data-testid="visible" />
+            ) : (
+              <EyeInvisibleOutlined data-testid="invisible" />
+            )
           }
           data-testid="pwInput"
           name="password"
@@ -94,7 +98,7 @@ export const SignIn = () => {
             </TextBox>
           </div>
         )}
-        <Button data-testid="loginBtn" htmlType="submit">
+        <Button data-testid="signInBtn" htmlType="submit">
           로그인
         </Button>
         <Button
