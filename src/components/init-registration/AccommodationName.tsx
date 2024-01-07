@@ -46,9 +46,10 @@ export const AccommodationName = () => {
           onChange={(event) => handleInputChange({ event })}
           disabled={inputValue.length >= MAX_LENGTH}
           status={error ? 'error' : ''}
+          data-testid="input-accommodation-name"
         />
         {error && (
-          <StyledErrorMessageWrapper>
+          <StyledErrorMessageWrapper data-testid="error-input-accommodation-name">
             <StyledFormErrorMessage errorMessage={error} />
           </StyledErrorMessageWrapper>
         )}
