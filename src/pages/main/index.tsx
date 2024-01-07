@@ -5,17 +5,32 @@ import promotionImage from '@assets/image/mainPromotionImage.png';
 import promotionImage2 from '@assets/image/mainPromotionImage2.png';
 import { Image, Layout } from 'antd';
 import styled from 'styled-components';
+import { useMain } from '@hooks/main/useMain';
 
 export const Main = () => {
+  const {
+    navigateCoupon,
+    navigateCouponRegistration,
+    staticsData,
+    isStaticsError,
+  } = useMain();
+
+  if (!staticsData) return <></>;
+  if (isStaticsError) return <div>에러</div>;
   return (
     <StyledMainLayout>
       <StyledLayout>
         <StyledMainContainer>
-          <MainCouponStatusContainer />
+          <MainCouponStatusContainer
+            staticsData={staticsData}
+            navigateCoupon={navigateCoupon}
+          />
           <MainChart />
         </StyledMainContainer>
         <StyledMainInfo>
-          <MainNavigationContainer></MainNavigationContainer>
+          <MainNavigationContainer
+            navigateCouponRegistration={navigateCouponRegistration}
+          />
           <StyledImage src={promotionImage} preview={false} />
           <StyledImage src={promotionImage2} preview={false} />
         </StyledMainInfo>

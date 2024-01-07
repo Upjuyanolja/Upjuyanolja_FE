@@ -5,15 +5,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { RightOutlined } from '@ant-design/icons';
+import { mainNavigationContainerProps } from './type';
 
-export const MainNavigationContainer = () => {
+export const MainNavigationContainer = ({
+  navigateCouponRegistration,
+}: mainNavigationContainerProps) => {
   return (
     <StyledContainer color={colors.primary}>
       <Image width={50} height={50} src={coinImage} preview={false} />
       <TextBox typography="h5" color="white">
         지금 바로!
       </TextBox>
-      <StyledButton type="link">
+      <StyledButton type="link" onClick={navigateCouponRegistration}>
         쿠폰 만들기 <RightOutlined color="white" />
       </StyledButton>
     </StyledContainer>
