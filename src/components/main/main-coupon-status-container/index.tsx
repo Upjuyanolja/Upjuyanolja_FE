@@ -17,7 +17,11 @@ export const MainCouponStatusContainer = ({
   return (
     <StyledLayout color={colors.primary}>
       <StyledTitle color={colors.primary}>
-        <StyledButton type="link" onClick={navigateCoupon}>
+        <StyledButton
+          type="link"
+          onClick={navigateCoupon}
+          data-testid="navigate-coupon"
+        >
           쿠폰 관리 바로 가기
           <RightOutlined color="white" />
         </StyledButton>

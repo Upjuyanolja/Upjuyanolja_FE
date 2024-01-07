@@ -16,7 +16,11 @@ export const MainNavigationContainer = ({
       <TextBox typography="h5" color="white">
         지금 바로!
       </TextBox>
-      <StyledButton type="link" onClick={navigateCouponRegistration}>
+      <StyledButton
+        type="link"
+        onClick={navigateCouponRegistration}
+        data-testid="navigate-coupon-registration"
+      >
         쿠폰 만들기 <RightOutlined color="white" />
       </StyledButton>
     </StyledContainer>
