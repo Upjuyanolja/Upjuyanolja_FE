@@ -13,10 +13,12 @@ export const Main = () => {
     navigateCouponRegistration,
     staticsData,
     isStaticsError,
+    revenueData,
+    isRevenueError,
   } = useMain();
 
-  if (!staticsData) return <></>;
-  if (isStaticsError) return <div>에러</div>;
+  if (!staticsData || !revenueData) return <></>;
+  if (isStaticsError || isRevenueError) return <div>에러</div>;
   return (
     <StyledMainLayout>
       <StyledLayout>
@@ -25,7 +27,7 @@ export const Main = () => {
             staticsData={staticsData}
             navigateCoupon={navigateCoupon}
           />
-          <MainChart />
+          <MainChart revenueData={revenueData} />
         </StyledMainContainer>
         <StyledMainInfo>
           <MainNavigationContainer
