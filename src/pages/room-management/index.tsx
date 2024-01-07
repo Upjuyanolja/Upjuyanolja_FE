@@ -5,37 +5,37 @@ import styled from 'styled-components';
 
 const RoomManagement = () => {
   return (
-    <PageContainer bodyStyle={{ padding: 0 }}>
-      <TitleButton>
+    <StyledPageContainer bodyStyle={{ padding: 0 }}>
+      <StyledTitleButton>
         <TextBox typography="h4" color={'black900'} fontWeight={700}>
           객실 관리
         </TextBox>
-        <AddRoomButton type="primary">
+        <StyledAddRoomButton type="primary">
           <TextBox typography="body1" color={'white'} fontWeight={700}>
             + 객실추가
           </TextBox>
-        </AddRoomButton>
-      </TitleButton>
+        </StyledAddRoomButton>
+      </StyledTitleButton>
       <RoomCard />
-    </PageContainer>
+    </StyledPageContainer>
   );
 };
 
 export default RoomManagement;
 
-const PageContainer = styled(Card)`
+const StyledPageContainer = styled(Card)`
   padding: 16px 48px;
   border: none;
   margin: 0;
 `;
 
-const TitleButton = styled(Row)`
+const StyledTitleButton = styled(Row)`
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
 `;
 
-const AddRoomButton = styled(Button)`
+const StyledAddRoomButton = styled(Button)`
   border-radius: 2px;
   background: var(--Foundation-Blue-Normal, #0351ff);
   color: white;

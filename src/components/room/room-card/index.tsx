@@ -6,20 +6,20 @@ import styled from 'styled-components';
 
 export const RoomCard = () => {
   return (
-    <CardContainer hoverable>
-      <ContentContainer wrap={false}>
-        <ImageContainer>
-          <CouponImage src={COUPON} alt="Coupon" />
-          <RoomImage src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b" />
-          <SaleBanner>판매중</SaleBanner>
-        </ImageContainer>
-        <DetailsCol>
+    <StyledCardContainer hoverable>
+      <StyledContentContainer wrap={false}>
+        <StyledImageContainer>
+          <StyledCouponImage src={COUPON} alt="Coupon" />
+          <StyledRoomImage src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b" />
+          <StyledSaleBanner>판매중</StyledSaleBanner>
+        </StyledImageContainer>
+        <StyledDetailsCol>
           <TextBox typography="h4" color="black900" fontWeight="bold">
             스탠다드 트윈룸
           </TextBox>
-          <DetailsSpace direction="vertical">
-            <Tags>
-              <OptionTag>
+          <StyledDetailsSpace direction="vertical">
+            <StyledTags>
+              <StyledOptionTag>
                 <TextBox
                   typography="body4"
                   color="black900"
@@ -27,8 +27,8 @@ export const RoomCard = () => {
                 >
                   TV
                 </TextBox>
-              </OptionTag>
-              <OptionTag>
+              </StyledOptionTag>
+              <StyledOptionTag>
                 <TextBox
                   typography="body4"
                   color="black900"
@@ -36,9 +36,9 @@ export const RoomCard = () => {
                 >
                   에어컨
                 </TextBox>
-              </OptionTag>
-            </Tags>
-            <CenterVertically>
+              </StyledOptionTag>
+            </StyledTags>
+            <StyledCenterVertically>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -54,48 +54,48 @@ export const RoomCard = () => {
               <TextBox typography="body3" color="black900" fontWeight="normal">
                 기준 2일 / 최대 4인
               </TextBox>
-            </CenterVertically>
+            </StyledCenterVertically>
             <TextBox typography="body3" color="black900" fontWeight="normal">
               체크인 15:00 / 체크아웃 11:00
             </TextBox>
-          </DetailsSpace>
-        </DetailsCol>
-        <RightContent>
-          <EditDeleteContainer>
-            <EditDeleteButtons
+          </StyledDetailsSpace>
+        </StyledDetailsCol>
+        <StyledRightContent>
+          <StyledEditDeleteContainer>
+            <StyledEditDeleteButtons
               style={{
-                marginRight: '4px',
+                marginRight: '8px',
               }}
             >
               <EditOutlined style={{ fontSize: '20px', color: '#5C656C' }} />
               <TextBox typography="body2" color="black700" fontWeight="bold">
                 수정
               </TextBox>
-            </EditDeleteButtons>
-            <EditDeleteButtons>
+            </StyledEditDeleteButtons>
+            <StyledEditDeleteButtons>
               <DeleteOutlined
                 style={{ fontSize: '20px', color: '#5C656C', marginTop: 2 }}
               />
               <TextBox typography="body2" color="black700" fontWeight="bold">
                 삭제
               </TextBox>
-            </EditDeleteButtons>
-          </EditDeleteContainer>
-          <NumRoomPriceContainer>
+            </StyledEditDeleteButtons>
+          </StyledEditDeleteContainer>
+          <StyledNumRoomPriceContainer>
             <TextBox typography="body3" color="black900" fontWeight="normal">
               객실 수 : 10개
             </TextBox>
             <TextBox typography="h5" color="black900" fontWeight="bold">
               65,000원
             </TextBox>
-          </NumRoomPriceContainer>
-        </RightContent>
-      </ContentContainer>
-    </CardContainer>
+          </StyledNumRoomPriceContainer>
+        </StyledRightContent>
+      </StyledContentContainer>
+    </StyledCardContainer>
   );
 };
 
-const CardContainer = styled(Card)`
+const StyledCardContainer = styled(Card)`
   border-radius: 8px;
   border: 2px solid var(--Foundation-Blue-Normal, #0351ff);
   background: var(--white, #fff);
@@ -104,19 +104,19 @@ const CardContainer = styled(Card)`
   max-width: 100%;
 `;
 
-const ContentContainer = styled(Row)`
+const StyledContentContainer = styled(Row)`
   wrap: false;
   gutter={[16, 16]};
 `;
 
-const ImageContainer = styled(Col).attrs({
+const StyledImageContainer = styled(Col).attrs({
   flex: '224px',
 })`
   position: relative;
   height: 144px;
 `;
 
-const CouponImage = styled(Image)`
+const StyledCouponImage = styled(Image)`
   position: absolute;
   bottom: 50px;
   left: -8px;
@@ -125,14 +125,14 @@ const CouponImage = styled(Image)`
   z-index: 2;
 `;
 
-const RoomImage = styled(Image)`
+const StyledRoomImage = styled(Image)`
   width: 224px;
   height: 144px;
   border-radius: 8px;
   z-index: 1;
 `;
 
-const SaleBanner = styled.div`
+const StyledSaleBanner = styled.div`
   position: absolute;
   height: 24px;
   bottom: 0;
@@ -146,7 +146,7 @@ const SaleBanner = styled.div`
   border-bottom-right-radius: 8px;
 `;
 
-const DetailsCol = styled(Col).attrs({
+const StyledDetailsCol = styled(Col).attrs({
   flex: 'auto',
 })`
   margin-left: 16px;
@@ -156,7 +156,7 @@ const DetailsCol = styled(Col).attrs({
   justify-content: space-between;
 `;
 
-const DetailsSpace = styled(Space)`
+const StyledDetailsSpace = styled(Space)`
   gap: 12px;
   display: flex;
   flex-direction: column;
@@ -164,7 +164,7 @@ const DetailsSpace = styled(Space)`
   margin-bottom: 0px;
 `;
 
-const OptionTag = styled(Tag)`
+const StyledOptionTag = styled(Tag)`
   border: 1px solid #9199a4;
   background-color: #ffffff;
   width: 56px;
@@ -177,33 +177,33 @@ const OptionTag = styled(Tag)`
   align-items: center;
 `;
 
-const RightContent = styled(Col)`
+const StyledRightContent = styled(Col)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 144px;
 `;
 
-const EditDeleteContainer = styled(Col)`
+const StyledEditDeleteContainer = styled(Col)`
   display: flex;
   padding: 2px 4px;
   align-items: center
-  gap: 4px,
+  gap: 8px,
 `;
 
-const NumRoomPriceContainer = styled(Col)`
+const StyledNumRoomPriceContainer = styled(Col)`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `;
 
-const CenterVertically = styled.div`
+const StyledCenterVertically = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
 `;
 
-const EditDeleteButtons = styled(Button)`
+const StyledEditDeleteButtons = styled(Button)`
   width: 60px;
   height: 28px;
   border-radius: 2px;
@@ -217,7 +217,7 @@ const EditDeleteButtons = styled(Button)`
   padding: 2px 4px;
 `;
 
-const Tags = styled.div`
+const StyledTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
