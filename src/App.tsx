@@ -13,7 +13,7 @@ import { Coupon } from './pages/coupon';
 import { CouponRegistration } from './pages/coupon-registration';
 import { Main } from './pages/main';
 import Room from './pages/room-management';
-import { RoomRegistration } from './pages/room-registration';
+import RoomRegistration from './pages/room-registration';
 import { RoomUpdate } from './pages/room-update';
 import { RootLayout } from './layout';
 import './App.less';

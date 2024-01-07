@@ -1,11 +1,11 @@
 import { Card, Col, Row, Button, Space, Tag, Image } from 'antd';
-import COUPON from '../../../assets/image/coupon.svg';
+import COUPON from '@assets/image/coupon.svg';
 import { TextBox } from '@components/text-box';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
 
-export const RoomCard = () => {
+const RoomCard = () => {
   return (
     <StyledCardContainer hoverable>
       <StyledContentContainer wrap={false}>
@@ -102,10 +102,12 @@ export const RoomCard = () => {
   );
 };
 
+export default RoomCard;
+
 const StyledCardContainer = styled(Card)`
   border-radius: 8px;
-  border: 2px solid var(--Foundation-Blue-Normal, ${colors.primary});
-  background: var(--white, ${colors.white});
+  border: 2px solid ${colors.primary};
+  background: ${colors.white};
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
   margin: 0px;
   max-width: 100%;
@@ -215,7 +217,7 @@ const StyledEditDeleteButtons = styled(Button)`
   height: 28px;
   border-radius: 2px;
   border-color: transparent;
-  background: var(--Mid-Gray, ${colors.midGray});
+  background: ${colors.midGray};
   display: flex;
   justify-content: center;
   align-items: center;
