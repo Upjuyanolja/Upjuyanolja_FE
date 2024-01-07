@@ -22,7 +22,11 @@ export const ButtonContainer = ({
           <StyledButton type="primary" ghost onClick={handlePreviousClick}>
             이전
           </StyledButton>
-          <StyledButton type="primary" disabled={!isValid}>
+          <StyledButton
+            type="primary"
+            disabled={!isValid}
+            data-testid="accommodation-next-button"
+          >
             다음
           </StyledButton>
         </>
