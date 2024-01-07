@@ -1,0 +1,42 @@
+{
+  "message": "쿠폰 통계 조회에 성공했습니다.",
+  "data": {
+    "revenue": [
+      {
+        "day": "12/05",
+        "couponRevenue": 6748540,
+        "normalRevenue": 1348540
+      },
+      {
+        "day": "12/06",
+        "couponRevenue": 2748540,
+        "normalRevenue": 648540
+      },
+      {
+        "day": "12/08",
+        "couponRevenue": 3748540,
+        "normalRevenue": 848540
+      },
+      {
+        "day": "12/09",
+        "couponRevenue": 748540,
+        "normalRevenue": 768540
+      },
+      {
+        "day": "12/10",
+        "couponRevenue": 4748540,
+        "normalRevenue": 1648540
+      },
+      {
+        "day": "12/11",
+        "couponRevenue": 5748540,
+        "normalRevenue": 1548540
+      },
+      {
+        "day": "12/12",
+        "couponRevenue": 1748540,
+        "normalRevenue": 948540
+      }
+    ]
+  }
+}
