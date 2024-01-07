@@ -1,3 +1,5 @@
+import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
+import { useEffect } from 'react';
 export const setCookie = (name: string, value: string) => {
   try {
     if (name === 'accessToken') {
@@ -27,4 +29,28 @@ export const removeCookie = (name: string) => {
   } catch (e) {
     console.error(e);
   }
+};
+
+export const redirectSignIn = () => {
+  const { handleChangeUrl } = useCustomNavigate();
+
+  const accessToken = getCookie('accessToken');
+  useEffect(() => {
+    if (!accessToken) {
+      handleChangeUrl('/signin');
+    }
+  }, []);
+  return null;
+};
+
+export const redirectMain = () => {
+  const { handleChangeUrl } = useCustomNavigate();
+  const accessToken = getCookie('accessToken');
+
+  useEffect(() => {
+    if (accessToken) {
+      handleChangeUrl('/');
+    }
+  }, []);
+  return null;
 };
