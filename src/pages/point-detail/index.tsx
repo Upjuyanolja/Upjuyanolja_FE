@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import { useState } from 'react';
 
 import { PointModal } from '@components/modal/point/point-modal/index';
+import { ReceiptModal } from '@components/modal/payment/receipt';
 
 export const PointDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,10 +17,10 @@ export const PointDetail = () => {
       <Button type="primary" onClick={showModal}>
         Open Modal
       </Button>
-      <PointModal
+      <ReceiptModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      ></PointModal>
+      ></ReceiptModal>
     </>
   );
 };
