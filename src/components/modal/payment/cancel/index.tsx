@@ -12,9 +12,7 @@ export const CancelModal = ({
   isModalOpen,
   setIsModalOpen,
 }: PointModalProps) => {
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
+
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -22,18 +20,18 @@ export const CancelModal = ({
 
   return (
     <>
-      <CustomModal
+      <StyledModal
         title="결제 취소 요청"
         open={isModalOpen}
-        onOk={handleOk}
+
         onCancel={handleCancel}
         footer={[]}
         width={576}
       >
         <Layout>
-          <OrderInfo></OrderInfo>
-          <OrderPointInfo pointCharge={true}></OrderPointInfo>
-          <CompanyInfo></CompanyInfo>
+          <OrderInfo/>
+          <OrderPointInfo pointCharge={true}/>
+          <CompanyInfo/>
           <ModalFooterWrap>
             <h3>
               <ExclamationCircleFilled size={16} />
@@ -59,16 +57,16 @@ export const CancelModal = ({
             </li>
           </ModalFooterWrap>
 
-          <SubmitButton type="primary" onClick={handleOk}>
+          <SubmitButton type="primary" onClick={handleCancel}>
             취소 요청
           </SubmitButton>
         </Layout>
-      </CustomModal>
+      </StyledModal>
     </>
   );
 };
 
-const CustomModal = styled(Modal)`
+const StyledModal = styled(Modal)`
   .ant-layout {
     background-color: #ffffff;
 

@@ -15,9 +15,6 @@ export const ReceiptModal = ({
   isModalOpen,
   setIsModalOpen,
 }: PointModalProps) => {
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -25,22 +22,21 @@ export const ReceiptModal = ({
 
   return (
     <>
-      <CustomModal
+      <StyledModal
         title="쿠폰 결제 영수증"
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={[]}
         width={576}
       >
         <Layout>
-          <OrderInfo></OrderInfo>
-          <CouponInfo></CouponInfo>
+          <OrderInfo/>
+          <CouponInfo/>
           <OrderPointInfo
             pointCharge={true}
             status={'구매 확정'}
-          ></OrderPointInfo>
-          <CompanyInfo></CompanyInfo>
+          />
+          <CompanyInfo/>
           <ModalFooterWrap>
             <li>
               <TextBox typography="body5" color={'black900'} fontWeight={'400'}>
@@ -57,12 +53,12 @@ export const ReceiptModal = ({
             </li>
           </ModalFooterWrap>
         </Layout>
-      </CustomModal>
+      </StyledModal>
     </>
   );
 };
 
-const CustomModal = styled(Modal)`
+const StyledModal = styled(Modal)`
   .ant-layout {
     background-color: #ffffff;
 
