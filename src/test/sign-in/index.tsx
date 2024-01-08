@@ -3,15 +3,13 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { SIGN_IN_API } from '@api/sign-in';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
-import { Input, Button } from 'antd';
+import { Input, Button, message } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
-import Toast from '@components/layout/toast';
 import { TextBox } from '@components/text-box';
 import { memberData } from './type';
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const { showToast, ToastContainer } = Toast();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -32,7 +30,7 @@ export const SignIn = () => {
         const memberResponseString = JSON.stringify(signinData.memberResponse);
         localStorage.setItem('member', memberResponseString);
         try {
-          await await SIGN_IN_API.getAccomodations();
+          await SIGN_IN_API.getAccomodations();
           setTimeout(() => {
             handleChangeUrl('/');
           }, 1000);
@@ -42,11 +40,13 @@ export const SignIn = () => {
           }, 1000);
         }
       } catch (e) {
-        showToast({
-          theme: 'error',
-          message: '이메일과 비밀번호를 확인해주세요',
-          width: '346px',
-          height: '41px',
+        message.error({
+          content: '이메일과 비밀번호를 확인해 주세요.',
+          duration: 2,
+          style: {
+            width: '346px',
+            height: '41px',
+          },
         });
       }
     },
@@ -70,7 +70,7 @@ export const SignIn = () => {
         ></Input>
         {touched.email && errors.email && (
           <div>
-            <TextBox typography="body4" color="red">
+            <TextBox typography="body4" color="error">
               {errors.email}
             </TextBox>
           </div>
@@ -93,7 +93,7 @@ export const SignIn = () => {
         ></Input.Password>
         {touched.password && errors.password && (
           <div>
-            <TextBox typography="body4" color="red">
+            <TextBox typography="body4" color="error">
               {errors.password}
             </TextBox>
           </div>
@@ -108,7 +108,6 @@ export const SignIn = () => {
           회원가입
         </Button>
       </form>
-      <div data-testid="toast">{ToastContainer}</div>
     </div>
   );
 };
