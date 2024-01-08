@@ -32,7 +32,10 @@ export const InitAccommodationRegistration = () => {
         <AccommodationAddress />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <StyledInputWrapper>
-          <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
+          <CheckBoxContainer
+            options={accommodationOptions}
+            header="숙소 옵션"
+          />
         </StyledInputWrapper>
         <AccommodationDesc />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />

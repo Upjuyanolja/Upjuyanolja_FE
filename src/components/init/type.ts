@@ -11,7 +11,7 @@ export type ButtonContainerStyledWrapperProps = {
 
 export type CheckBoxContainerProps = {
   options: string[];
-  label: string;
+  header: string;
 };
 
 export type FormErrorMessageProps = {

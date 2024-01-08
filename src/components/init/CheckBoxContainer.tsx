@@ -6,12 +6,12 @@ import { CheckBoxContainerProps } from './type';
 
 export const CheckBoxContainer = ({
   options,
-  label,
+  header,
 }: CheckBoxContainerProps) => {
   return (
     <StyledWrapper color={colors.white}>
       <TextBox typography="h4" fontWeight={700}>
-        {label}
+        {header}
       </TextBox>
       <StyledCheckboxGroup options={options}></StyledCheckboxGroup>
     </StyledWrapper>
