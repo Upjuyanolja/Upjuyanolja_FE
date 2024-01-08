@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
 import { ImageUploadFileItem, ImageUploadHandleChangeProps } from './type';
+import { IMAGE_MAX_COUNT } from '@/constants/init';
 
 export const ImageUploadContainer = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -58,8 +59,8 @@ export const ImageUploadContainer = () => {
           숙소 대표 이미지
         </TextBox>
         <TextBox color="black600" typography="body3">
-          이미지는 최대 5개까지, (.png, .jpeg, .jpg) 형식의 파일만 등록
-          가능합니다.
+          이미지는 최대 {IMAGE_MAX_COUNT}개까지, (.png, .jpeg, .jpg) 형식의
+          파일만 등록 가능합니다.
         </TextBox>
       </StyledHeadTextContainer>
       <StyledImageContainer>
@@ -73,7 +74,7 @@ export const ImageUploadContainer = () => {
             />
           </div>
         ))}
-        {fileList.length < 5 && (
+        {fileList.length < IMAGE_MAX_COUNT && (
           <StyledUploadButtonWrapper onClick={openFileInput}>
             <PlusOutlined />
             <TextBox typography="body3" color="black600">
