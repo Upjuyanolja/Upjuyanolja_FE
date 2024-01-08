@@ -40,8 +40,14 @@ export const AccommodationAddress = () => {
             onChange={(event) =>
               handleInputChange({ event, inputType: 'accommodationPost' })
             }
+            data-testid="accommodation-post"
           />
-          <StyledAddressButton type="primary">주소 검색</StyledAddressButton>
+          <StyledAddressButton
+            type="primary"
+            data-testid="acccommodation-address-api-button"
+          >
+            주소 검색
+          </StyledAddressButton>
         </StyledAddressWrapper>
         <StyledInput
           id="accommodationAddress"
@@ -50,6 +56,7 @@ export const AccommodationAddress = () => {
           onChange={(event) =>
             handleInputChange({ event, inputType: 'accommodationAddress' })
           }
+          data-testid="accommodation-address"
         />
 
         <StyledInput
