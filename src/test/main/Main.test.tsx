@@ -33,7 +33,6 @@ describe('Main', () => {
     }, 5000);
   });
   test('쿠폰 관리 바로가기 버튼 클릭 시 쿠폰 관리 페이지로 이동한다', async () => {
-    const queryClient = new QueryClient();
     render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
@@ -50,7 +49,6 @@ describe('Main', () => {
     }, 5000);
   });
   test('서버로부터 쿠폰 사용량을 응답 받으면 컴포넌트에 쿠폰 사용량이 출력된다', async () => {
-    const queryClient = new QueryClient();
     server.use(
       http.get('/api/coupons/backoffice/statistics', () => {
         return HttpResponse.json(staticsData, { status: 200 });
