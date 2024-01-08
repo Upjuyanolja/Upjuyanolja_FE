@@ -1,11 +1,9 @@
-import { Button, Checkbox, Form, Input, Layout, Modal, Space } from 'antd';
-import { useState } from 'react';
+import { Layout, Modal } from 'antd';
+
 import styled from 'styled-components';
-import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
+
 import { TextBox } from '@components/text-box';
 
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { colors } from '@/constants/colors';
 import { PointModalProps } from '@components/modal/point/point-modal/types';
 
 import { OrderInfo } from '../common/order-info';
@@ -17,8 +15,6 @@ export const ReceiptModal = ({
   isModalOpen,
   setIsModalOpen,
 }: PointModalProps) => {
-  const [form] = Form.useForm<{ inputValue: string }>();
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
