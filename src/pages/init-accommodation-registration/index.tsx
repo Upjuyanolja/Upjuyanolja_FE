@@ -1,13 +1,13 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
 import { AccommodationCategory } from '@components/init/init-accommodation-registration/AccommodationCategory';
-import { AccommodationName } from '@components/init/init-accommodation-registration/AccommodationName';
 import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
 import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
+import { NameContainer } from '@components/init/NameContainer';
 
 export const InitAccommodationRegistration = () => {
   const isValid = true;
@@ -28,7 +28,7 @@ export const InitAccommodationRegistration = () => {
     <StyledWrapper color={colors.white}>
       <AccommodationCategory />
       <Form>
-        <AccommodationName />
+        <NameContainer labelText="숙소명" />
         <AccommodationAddress />
         <ImageUploadContainer />
         <StyledInputWrapper>

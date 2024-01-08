@@ -2,19 +2,16 @@ import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { useState } from 'react';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import { HandleTextAreaChangeProps, ValidateInputProps } from './type';
+import { HandleTextAreaChangeProps } from './type';
 import {
   ACCOMMODATION_DESC_MAX_LENGTH,
   ACCOMMODATION_DESC_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
+import { ValidateInputProps } from '../type';
 
 export const AccommodationDesc = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
   const [error, setError] = useState<string | null>(null);
-
-  {
-    /*최소,최대 글자 수 상수 */
-  }
 
   const handleTextAreaChange = ({ event }: HandleTextAreaChangeProps) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_DESC_MAX_LENGTH);

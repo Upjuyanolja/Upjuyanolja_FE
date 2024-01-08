@@ -2,21 +2,25 @@ import { useState } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import { NameHandleInputChangeProps, ValidateInputProps } from './type';
+import {
+  NameConatainerProps,
+  NameHandleInputChangeProps,
+  ValidateInputProps,
+} from './type';
 import {
   ACCOMMODATION_NAME_MAX_LENGTH,
   ACCOMMODATION_NAME_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
 import { NAME_REGEX } from '@/constants/init';
 
-export const AccommodationName = () => {
+export const NameContainer = ({ labelText }: NameConatainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
       setError(
-        `숙소명은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
+        `${labelText}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
     } else if (!NAME_REGEX.test(value)) {
       setError('한글, 영어, 숫자만 입력 가능합니다.');
@@ -33,22 +37,22 @@ export const AccommodationName = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item rules={[{ required: true }]} label="숙소명" colon={false}>
+      <Form.Item rules={[{ required: true }]} label={labelText} colon={false}>
         <Input
-          id="accommodationName"
-          placeholder="숙소명을 입력해 주세요."
+          id="name"
+          placeholder={`${labelText}을 입력해 주세요.`}
           type="text"
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
-          style={{ height: 40 }}
+          style={{ height: 40, width: labelText === '객실명' ? '440px' : '' }}
           value={inputValue}
           onChange={(event) => handleInputChange({ event })}
           disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
           status={error ? 'error' : ''}
-          data-testid="input-accommodation-name"
+          data-testid="input-name"
         />
         {error && (
-          <StyledErrorMessageWrapper data-testid="error-input-accommodation-name">
+          <StyledErrorMessageWrapper data-testid="error-input-name">
             <StyledFormErrorMessage errorMessage={error} />
           </StyledErrorMessageWrapper>
         )}

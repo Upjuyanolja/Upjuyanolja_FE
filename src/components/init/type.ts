@@ -28,3 +28,15 @@ export type ImageUploadFileItem = {
 export type ImageUploadHandleChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
 };
+
+export type NameConatainerProps = {
+  labelText: string;
+};
+
+export type ValidateInputProps = {
+  value: string;
+};
+
+export type NameHandleInputChangeProps = {
+  event: ChangeEvent<HTMLInputElement>;
+};
