@@ -2,9 +2,9 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import '../matchMedia.mock';
-import { AccommodationName } from '@components/init/init-registration/AccommodationName';
-import { AccommodationDesc } from '@components/init/init-registration/AccommodationDesc';
-import { AccommodationAddress } from '@components/init/init-registration/AccommodationAddress';
+import { AccommodationName } from '@components/init/init-accommodation-registration/AccommodationName';
+import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
+import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
 import axios from 'axios';
 
 describe('InitAccommodationRegistration', () => {
