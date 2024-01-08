@@ -4,6 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import '../../matchMedia.mock';
 import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
+import {
+  ACCOMMODATION_DESC_MAX_LENGTH,
+  ACCOMMODATION_DESC_MIN_LENGTH,
+} from '@/constants/init/init-accommodation-registration';
 
 jest.mock('react-daum-postcode', () => ({
   useDaumPostcodePopup: jest.fn(),
@@ -30,7 +34,7 @@ describe('InitAccommodationRegistration', () => {
     expect(mockOpenAddressPopup).toHaveBeenCalled();
   });
 
-  test('숙소소개에 10글자 미만 입력했을 때 에러메세지를 띄운다.', () => {
+  test(`숙소소개에 ${ACCOMMODATION_DESC_MIN_LENGTH}글자 미만 입력했을 때 에러메세지를 띄운다.`, () => {
     render(
       <BrowserRouter>
         <AccommodationDesc />
@@ -40,7 +44,10 @@ describe('InitAccommodationRegistration', () => {
       'textarea-accommodation-desc',
     );
     act(() => {
-      userEvent.type(testAreaAccommodationDesc, '안녕');
+      userEvent.type(
+        testAreaAccommodationDesc,
+        'A'.repeat(ACCOMMODATION_DESC_MIN_LENGTH - 1),
+      );
     });
     const errorMessage = screen.getByTestId(
       'error-textarea-accommodation-desc',
@@ -48,7 +55,7 @@ describe('InitAccommodationRegistration', () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  test('숙소소개에 500자를 초과해 입력했을 때 input을 막는다.', () => {
+  test(`숙소소개에 ${ACCOMMODATION_DESC_MAX_LENGTH}자를 초과해 입력했을 때 input을 막는다.`, () => {
     render(
       <BrowserRouter>
         <AccommodationDesc />
@@ -58,7 +65,10 @@ describe('InitAccommodationRegistration', () => {
       'textarea-accommodation-desc',
     );
     act(() => {
-      userEvent.type(testAreaAccommodationDesc, 'a'.repeat(501));
+      userEvent.type(
+        testAreaAccommodationDesc,
+        'a'.repeat(ACCOMMODATION_DESC_MAX_LENGTH + 1),
+      );
     });
 
     expect(testAreaAccommodationDesc).toHaveAttribute('disabled');
