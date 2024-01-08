@@ -28,7 +28,7 @@ export const InitAccommodationRegistration = () => {
     <StyledWrapper color={colors.white}>
       <Form>
         <AccommodationCategory />
-        <NameContainer label="숙소명" />
+        <NameContainer header="숙소명" />
         <AccommodationAddress />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <StyledInputWrapper>

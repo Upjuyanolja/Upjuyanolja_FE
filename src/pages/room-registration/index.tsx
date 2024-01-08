@@ -26,9 +26,9 @@ const RoomRegistration = () => {
 
   return (
     <StyledWrapper color={colors.white}>
-      <AccommodationCategory />
       <Form>
-        <NameContainer label="숙소명" />
+        <AccommodationCategory />
+        <NameContainer header="숙소명" />
         <AccommodationAddress />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <StyledInputWrapper>

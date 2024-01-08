@@ -34,7 +34,7 @@ export type ImageUploadHandleChangeProps = {
 };
 
 export type NameConatainerProps = {
-  label: string;
+  header: string;
 };
 
 export type ValidateInputProps = {
