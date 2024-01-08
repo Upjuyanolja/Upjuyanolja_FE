@@ -8,7 +8,7 @@ describe('ImageUploadContainer', () => {
   test('업로드한 이미지의 용량이 30MB를 넘으면 alert를 띄운다.', () => {
     render(
       <BrowserRouter>
-        <ImageUploadContainer />
+        <ImageUploadContainer label="숙소 대표 이미지 설정" />
       </BrowserRouter>,
     );
 
