@@ -1,9 +1,9 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
-import { AccommodationCategory } from '@components/init-registration/AccommodationCategory';
-import { AccommodationName } from '@components/init-registration/AccommodationName';
-import { AccommodationAddress } from '@components/init-registration/AccommodationAddress';
-import { AccommodationDesc } from '@components/init-registration/AccommodationDesc';
+import { AccommodationCategory } from '@components/init/init-registration/AccommodationCategory';
+import { AccommodationName } from '@components/init/init-registration/AccommodationName';
+import { AccommodationAddress } from '@components/init/init-registration/AccommodationAddress';
+import { AccommodationDesc } from '@components/init/init-registration/AccommodationDesc';
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
