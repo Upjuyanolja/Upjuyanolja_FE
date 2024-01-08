@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
 import { ImageUploadFileItem, ImageUploadHandleChangeProps } from './type';
+import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 
 export const ImageUploadContainer = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -14,23 +15,36 @@ export const ImageUploadContainer = () => {
   const handleCancel = () => setPreviewOpen(false);
 
   const handleChange = ({ event }: ImageUploadHandleChangeProps) => {
-    const selectedFile = event.target.files?.[0];
+    const inputElement = event.target;
+    const selectedFile = inputElement.files?.[0];
+
+    inputElement.value = '';
 
     if (selectedFile) {
-      if (selectedFile.size <= 30 * 1024 * 1024) {
-        setFileList((prevFileList) => [
-          ...prevFileList,
-          {
-            uid: Date.now(),
-            name: selectedFile.name,
-            url: URL.createObjectURL(selectedFile),
-            originFileObj: selectedFile,
-          },
-        ]);
-      } else {
+      if (
+        !selectedFile.type.includes('png') &&
+        !selectedFile.type.includes('jpeg') &&
+        !selectedFile.type.includes('jpg')
+      ) {
         alert(
-          '업로드 가능한 최대 파일 크기는 30MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.',
+          '해당 파일은 등록이 불가능합니다.\n이미지(JPG,JPEG,PNG) 형식의 파일을 업로드 해주세요.',
         );
+      } else {
+        if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+          setFileList((prevFileList) => [
+            ...prevFileList,
+            {
+              uid: Date.now(),
+              name: selectedFile.name,
+              url: URL.createObjectURL(selectedFile),
+              originFileObj: selectedFile,
+            },
+          ]);
+        } else {
+          alert(
+            `업로드 가능한 최대 파일 크기는 ${IMAGE_MAX_CAPACITY}MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.`,
+          );
+        }
       }
     }
   };
@@ -40,22 +54,6 @@ export const ImageUploadContainer = () => {
       fileInputRef.current.click();
     }
   };
-
-  const uploadButton = (
-    <StyledUploadButtonWrapper onClick={openFileInput}>
-      <PlusOutlined />
-      <TextBox typography="body3" color="black600">
-        이미지 추가하기
-      </TextBox>
-      <input
-        type="file"
-        accept=".png, .jpeg, .jpg"
-        ref={fileInputRef}
-        onChange={(event) => handleChange({ event })}
-        style={{ display: 'none' }}
-      />
-    </StyledUploadButtonWrapper>
-  );
 
   const handleImageClick = (file: ImageUploadFileItem) => {
     setPreviewOpen(true);
@@ -74,8 +72,8 @@ export const ImageUploadContainer = () => {
           숙소 대표 이미지
         </TextBox>
         <TextBox color="black600" typography="body3">
-          이미지는 최대 5개까지, (.png, .jpeg, .jpg) 형식의 파일만 등록
-          가능합니다.
+          이미지는 최대 {IMAGE_MAX_COUNT}개까지, (.png, .jpeg, .jpg) 형식의
+          파일만 등록 가능합니다.
         </TextBox>
       </StyledHeadTextContainer>
       <StyledImageContainer>
@@ -89,7 +87,22 @@ export const ImageUploadContainer = () => {
             />
           </div>
         ))}
-        {fileList.length < 5 && uploadButton}
+        {fileList.length < IMAGE_MAX_COUNT && (
+          <StyledUploadButtonWrapper onClick={openFileInput}>
+            <PlusOutlined />
+            <TextBox typography="body3" color="black600">
+              이미지 추가하기
+            </TextBox>
+            <input
+              type="file"
+              accept=".png, .jpeg, .jpg"
+              ref={fileInputRef}
+              onChange={(event) => handleChange({ event })}
+              style={{ display: 'none' }}
+              data-testid="file-input"
+            />
+          </StyledUploadButtonWrapper>
+        )}
       </StyledImageContainer>
       <Modal
         open={previewOpen}
