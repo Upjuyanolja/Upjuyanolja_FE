@@ -31,7 +31,12 @@ export const AccommodationAddress = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item rules={[{ required: true }]} label="숙소 위치" colon={false}>
+      <Form.Item
+        rules={[{ required: true }]}
+        label="숙소 위치"
+        colon={false}
+        htmlFor="accommodationDetailAddress"
+      >
         <StyledAddressWrapper>
           <StyledInput
             id="accommodationPost"
