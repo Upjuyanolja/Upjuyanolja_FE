@@ -6,6 +6,7 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
+import { PriceContainer } from '@components/room/price-container';
 
 const RoomRegistration = () => {
   const isValid = true;
@@ -26,6 +27,9 @@ const RoomRegistration = () => {
     <StyledWrapper color={colors.white}>
       <Form>
         <NameContainer labelText="객실명" />
+        <StyledInputWrapper>
+          <PriceContainer labelText="객실가격" />
+        </StyledInputWrapper>
         <ImageUploadContainer />
         <StyledInputWrapper>
           <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
@@ -41,9 +45,7 @@ export default RoomRegistration;
 
 const StyledWrapper = styled.div`
   background-color: ${(props) => props.color};
-
   padding: 40px;
-
   border-radius: 8px;
 `;
 
