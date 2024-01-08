@@ -23,7 +23,7 @@ export const getCookie = (name: string) => {
 
 export const removeCookie = (name: string) => {
   try {
-    document.cookie = `${name}=;expires=0;path=/`;
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
   } catch (e) {
     console.error(e);
   }
