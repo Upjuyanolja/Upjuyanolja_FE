@@ -1,10 +1,11 @@
 import { Card, Col, Row, Button, Space, Tag, Image } from 'antd';
-import COUPON from '../../../assets/image/coupon.svg';
+import COUPON from '@assets/image/coupon.svg';
 import { TextBox } from '@components/text-box';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import { colors } from '@/constants/colors';
 
-export const RoomCard = () => {
+const RoomCard = () => {
   return (
     <StyledCardContainer hoverable>
       <StyledContentContainer wrap={false}>
@@ -67,14 +68,20 @@ export const RoomCard = () => {
                 marginRight: '8px',
               }}
             >
-              <EditOutlined style={{ fontSize: '20px', color: '#5C656C' }} />
+              <EditOutlined
+                style={{ fontSize: '20px', color: colors.black700 }}
+              />
               <TextBox typography="body2" color="black700" fontWeight="bold">
                 수정
               </TextBox>
             </StyledEditDeleteButtons>
             <StyledEditDeleteButtons>
               <DeleteOutlined
-                style={{ fontSize: '20px', color: '#5C656C', marginTop: 2 }}
+                style={{
+                  fontSize: '20px',
+                  color: colors.black700,
+                  marginTop: 2,
+                }}
               />
               <TextBox typography="body2" color="black700" fontWeight="bold">
                 삭제
@@ -95,10 +102,12 @@ export const RoomCard = () => {
   );
 };
 
+export default RoomCard;
+
 const StyledCardContainer = styled(Card)`
   border-radius: 8px;
-  border: 2px solid var(--Foundation-Blue-Normal, #0351ff);
-  background: var(--white, #fff);
+  border: 2px solid ${colors.primary};
+  background: ${colors.white};
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
   margin: 0px;
   max-width: 100%;
@@ -106,12 +115,9 @@ const StyledCardContainer = styled(Card)`
 
 const StyledContentContainer = styled(Row)`
   wrap: false;
-  gutter={[16, 16]};
 `;
 
-const StyledImageContainer = styled(Col).attrs({
-  flex: '224px',
-})`
+const StyledImageContainer = styled(Col)`
   position: relative;
   height: 144px;
 `;
@@ -165,8 +171,8 @@ const StyledDetailsSpace = styled(Space)`
 `;
 
 const StyledOptionTag = styled(Tag)`
-  border: 1px solid #9199a4;
-  background-color: #ffffff;
+  border: 1px solid ${colors.black700};
+  background-color: ${colors.white};
   width: 56px;
   height: 22px;
   border-radius: 2px;
@@ -208,7 +214,7 @@ const StyledEditDeleteButtons = styled(Button)`
   height: 28px;
   border-radius: 2px;
   border-color: transparent;
-  background: var(--Mid-Gray, #f1f1f6);
+  background: ${colors.midGray};
   display: flex;
   justify-content: center;
   align-items: center;

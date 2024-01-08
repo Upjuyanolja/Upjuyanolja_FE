@@ -18,13 +18,6 @@ export type FormErrorMessageProps = {
   errorMessage: string;
 };
 
-export type RouteConfigProps = {
-  [key: string]: {
-    pageName: string;
-    pageDesc: string;
-  };
-};
-
 export type ImageUploadFileItem = {
   uid: number;
   name: string;
@@ -33,5 +26,17 @@ export type ImageUploadFileItem = {
 };
 
 export type ImageUploadHandleChangeProps = {
+  event: ChangeEvent<HTMLInputElement>;
+};
+
+export type NameConatainerProps = {
+  labelText: string;
+};
+
+export type ValidateInputProps = {
+  value: string;
+};
+
+export type NameHandleInputChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
 };

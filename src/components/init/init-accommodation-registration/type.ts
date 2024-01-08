@@ -22,14 +22,6 @@ export type HandleTextAreaChangeProps = {
   event: ChangeEvent<HTMLTextAreaElement>;
 };
 
-export type ValidateInputProps = {
-  value: string;
-};
-
-export type NameHandleInputChangeProps = {
-  event: ChangeEvent<HTMLInputElement>;
-};
-
 export type AccommodationDetailCategoryProps = {
   options: string[];
   label: string;
