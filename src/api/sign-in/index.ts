@@ -1,4 +1,4 @@
-import { memberData } from '@/test/sign-in/type';
+import { memberData } from '@api/sign-in/type';
 import { instance } from '..';
 import { signInData } from './type';
 import { Response } from '@/types/apis';

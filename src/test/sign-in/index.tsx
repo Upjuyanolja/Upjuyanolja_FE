@@ -7,9 +7,13 @@ import { Input, Button, message } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
 import { TextBox } from '@components/text-box';
-import { memberData } from './type';
+import { memberData } from '@api/sign-in/type';
+import { usePostLogin } from '@queries/sign-in';
+
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
+  const postLoginMutation = usePostLogin();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -20,15 +24,14 @@ export const SignIn = () => {
       try {
         removeCookie('accessToken');
         removeCookie('refreshToken');
-        const resSignIn = await SIGN_IN_API.postLogin({
-          email: values.email,
-          password: values.password,
-        });
+        const resSignIn = await postLoginMutation.mutateAsync(values);
         const signinData: memberData = resSignIn.data.data;
         setCookie('accessToken', signinData.accessToken);
         setCookie('refreshToken', signinData.refreshToken);
+
         const memberResponseString = JSON.stringify(signinData.memberResponse);
         localStorage.setItem('member', memberResponseString);
+
         try {
           await SIGN_IN_API.getAccomodations();
           setTimeout(() => {
