@@ -15,23 +15,36 @@ export const ImageUploadContainer = () => {
   const handleCancel = () => setPreviewOpen(false);
 
   const handleChange = ({ event }: ImageUploadHandleChangeProps) => {
-    const selectedFile = event.target.files?.[0];
+    const inputElement = event.target;
+    const selectedFile = inputElement.files?.[0];
+
+    inputElement.value = '';
 
     if (selectedFile) {
-      if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
-        setFileList((prevFileList) => [
-          ...prevFileList,
-          {
-            uid: Date.now(),
-            name: selectedFile.name,
-            url: URL.createObjectURL(selectedFile),
-            originFileObj: selectedFile,
-          },
-        ]);
-      } else {
+      if (
+        !selectedFile.type.includes('png') &&
+        !selectedFile.type.includes('jpeg') &&
+        !selectedFile.type.includes('jpg')
+      ) {
         alert(
-          `업로드 가능한 최대 파일 크기는 ${IMAGE_MAX_CAPACITY}MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.`,
+          '해당 파일은 등록이 불가능합니다.\n이미지(JPG,JPEG,PNG) 형식의 파일을 업로드 해주세요.',
         );
+      } else {
+        if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+          setFileList((prevFileList) => [
+            ...prevFileList,
+            {
+              uid: Date.now(),
+              name: selectedFile.name,
+              url: URL.createObjectURL(selectedFile),
+              originFileObj: selectedFile,
+            },
+          ]);
+        } else {
+          alert(
+            `업로드 가능한 최대 파일 크기는 ${IMAGE_MAX_CAPACITY}MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.`,
+          );
+        }
       }
     }
   };
