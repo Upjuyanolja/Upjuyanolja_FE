@@ -33,7 +33,7 @@ describe('NameContainer', () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  test('숙소명을 30자를 초과해 입력했을 때 input을 막는다.', () => {
+  test('숙소명을 15자를 초과해 입력했을 때 input을 막는다.', () => {
     render(
       <BrowserRouter>
         <NameContainer header="숙소명" />
@@ -41,7 +41,7 @@ describe('NameContainer', () => {
     );
     const inputAccommodationName = screen.getByTestId('input-name');
     act(() => {
-      userEvent.type(inputAccommodationName, 'a'.repeat(31));
+      userEvent.type(inputAccommodationName, 'a'.repeat(16));
     });
 
     expect(inputAccommodationName).toHaveAttribute('disabled');
