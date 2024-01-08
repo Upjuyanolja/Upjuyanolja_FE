@@ -2,9 +2,11 @@ import { styled } from 'styled-components';
 import { Input, Button, Form } from 'antd';
 import { useState } from 'react';
 import { AddressHandleInputChangeProps } from './type';
+import { AddressFormatProps } from '@components/init/init-accommodation-registration/type';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 export const AccommodationAddress = () => {
-  const [inputPost, setInputPost] = useState('');
+  const [inputPostCode, setInputPostCode] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [inputDetailAddress, setInputDetailAddress] = useState('');
 
@@ -15,18 +17,39 @@ export const AccommodationAddress = () => {
     const inputValue = event.target.value;
 
     switch (inputType) {
-      case 'accommodationPost':
-        setInputPost(inputValue);
-        break;
-      case 'accommodationAddress':
-        setInputAddress(inputValue);
-        break;
       case 'accommodationDetailAddress':
         setInputDetailAddress(inputValue);
         break;
       default:
         break;
     }
+  };
+
+  const openAddressPopup = useDaumPostcodePopup(
+    '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js',
+  );
+
+  const addressFormat = (data: AddressFormatProps) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+
+    setInputPostCode(data.zonecode);
+    setInputAddress(fullAddress);
+  };
+
+  const openAddressAPI = () => {
+    openAddressPopup({ onComplete: addressFormat });
   };
 
   return (
@@ -41,15 +64,16 @@ export const AccommodationAddress = () => {
           <StyledInput
             id="accommodationPost"
             placeholder="우편번호"
-            value={inputPost}
-            onChange={(event) =>
-              handleInputChange({ event, inputType: 'accommodationPost' })
-            }
+            value={inputPostCode}
             data-testid="accommodation-post"
+            readOnly={true}
+            style={{ cursor: 'default' }}
+            disabled={true}
           />
           <StyledAddressButton
             type="primary"
             data-testid="acccommodation-address-api-button"
+            onClick={openAddressAPI}
           >
             주소 검색
           </StyledAddressButton>
@@ -58,12 +82,11 @@ export const AccommodationAddress = () => {
           id="accommodationAddress"
           placeholder="주소"
           value={inputAddress}
-          onChange={(event) =>
-            handleInputChange({ event, inputType: 'accommodationAddress' })
-          }
           data-testid="accommodation-address"
+          readOnly={true}
+          style={{ cursor: 'default' }}
+          disabled={true}
         />
-
         <StyledInput
           id="accommodationDetailAddress"
           placeholder="상세주소"

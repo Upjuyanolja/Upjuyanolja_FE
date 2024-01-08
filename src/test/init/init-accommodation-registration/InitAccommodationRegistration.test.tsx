@@ -32,36 +32,38 @@ describe('InitAccommodationRegistration', () => {
       responseData.address,
     );
   });
-});
 
-test('숙소소개에 10글자 미만 입력했을 때 에러메세지를 띄운다.', () => {
-  render(
-    <BrowserRouter>
-      <AccommodationDesc />
-    </BrowserRouter>,
-  );
-  const testAreaAccommodationDesc = screen.getByTestId(
-    'textarea-accommodation-desc',
-  );
-  act(() => {
-    userEvent.type(testAreaAccommodationDesc, '안녕');
-  });
-  const errorMessage = screen.getByTestId('error-textarea-accommodation-desc');
-  expect(errorMessage).toBeInTheDocument();
-});
-
-test('숙소소개에 500자를 초과해 입력했을 때 input을 막는다.', () => {
-  render(
-    <BrowserRouter>
-      <AccommodationDesc />
-    </BrowserRouter>,
-  );
-  const testAreaAccommodationDesc = screen.getByTestId(
-    'textarea-accommodation-desc',
-  );
-  act(() => {
-    userEvent.type(testAreaAccommodationDesc, 'a'.repeat(501));
+  test('숙소소개에 10글자 미만 입력했을 때 에러메세지를 띄운다.', () => {
+    render(
+      <BrowserRouter>
+        <AccommodationDesc />
+      </BrowserRouter>,
+    );
+    const testAreaAccommodationDesc = screen.getByTestId(
+      'textarea-accommodation-desc',
+    );
+    act(() => {
+      userEvent.type(testAreaAccommodationDesc, '안녕');
+    });
+    const errorMessage = screen.getByTestId(
+      'error-textarea-accommodation-desc',
+    );
+    expect(errorMessage).toBeInTheDocument();
   });
 
-  expect(testAreaAccommodationDesc).toHaveAttribute('disabled');
+  test('숙소소개에 500자를 초과해 입력했을 때 input을 막는다.', () => {
+    render(
+      <BrowserRouter>
+        <AccommodationDesc />
+      </BrowserRouter>,
+    );
+    const testAreaAccommodationDesc = screen.getByTestId(
+      'textarea-accommodation-desc',
+    );
+    act(() => {
+      userEvent.type(testAreaAccommodationDesc, 'a'.repeat(501));
+    });
+
+    expect(testAreaAccommodationDesc).toHaveAttribute('disabled');
+  });
 });
