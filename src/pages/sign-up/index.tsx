@@ -1,10 +1,8 @@
 import { Footer } from '@components/layout/footer';
-import { redirectMain } from '@hooks/sign-in/useSignIn';
 import { Layout } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 export const SignUp = () => {
-  redirectMain();
   return (
     <StyledLayout>
       <StyledContent>sign-up-page</StyledContent>

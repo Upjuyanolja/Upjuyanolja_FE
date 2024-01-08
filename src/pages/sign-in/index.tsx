@@ -2,9 +2,7 @@ import { Layout } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
-import { redirectMain } from '@hooks/sign-in/useSignIn';
 export const SignIn = () => {
-  redirectMain();
   return (
     <StyledLayout>
       <StyledContent>sign-in-page</StyledContent>

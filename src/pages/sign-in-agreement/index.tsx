@@ -6,10 +6,8 @@ import { TextBox } from '@components/text-box';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { colors } from '@/constants/colors';
-import { redirectMain } from '@hooks/sign-in/useSignIn';
 
 export const SignInAgreement = () => {
-  redirectMain();
   const { handleChangeUrl } = useCustomNavigate();
   const [isChecked, setIsChecked] = useState<number[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);

@@ -4,11 +4,9 @@ import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { Main } from '@components/sign-up';
 import { Footer } from '@components/layout/footer';
-import { redirectMain } from '@hooks/sign-in/useSignIn';
 
 export const SignUpSuccess = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  redirectMain();
   return (
     <StyledLayout>
       <StyledContent>
