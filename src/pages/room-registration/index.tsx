@@ -30,7 +30,7 @@ const RoomRegistration = () => {
       <Form>
         <NameContainer label="숙소명" />
         <AccommodationAddress />
-        <ImageUploadContainer label="숙소 대표 이미지 설정" />
+        <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <StyledInputWrapper>
           <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
         </StyledInputWrapper>

@@ -26,7 +26,7 @@ export type ImageUploadFileItem = {
 };
 
 export type ImageUploadContainerProps = {
-  label: string;
+  header: string;
 };
 
 export type ImageUploadHandleChangeProps = {

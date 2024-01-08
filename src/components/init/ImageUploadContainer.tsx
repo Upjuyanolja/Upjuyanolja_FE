@@ -1,5 +1,5 @@
 import { TextBox } from '@components/text-box';
-import { Modal } from 'antd';
+import { Modal, Form } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
@@ -9,9 +9,8 @@ import {
   ImageUploadContainerProps,
 } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
-import { Form } from 'react-router-dom';
 
-export const ImageUploadContainer = ({ label }: ImageUploadContainerProps) => {
+export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
@@ -72,61 +71,73 @@ export const ImageUploadContainer = ({ label }: ImageUploadContainerProps) => {
 
   return (
     <StyledInputWrapper>
-      <StyledHeadTextContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          숙소 대표 이미지
-        </TextBox>
-        <TextBox color="black600" typography="body3">
-          이미지는 최대 {IMAGE_MAX_COUNT}개까지, (.png, .jpeg, .jpg) 형식의
-          파일만 등록 가능합니다.
-        </TextBox>
-      </StyledHeadTextContainer>
-      <StyledImageContainer>
-        {fileList.map((file) => (
-          <div key={file.uid}>
-            <StyledCloseButton onClick={() => handleRemove(file)} />
-            <img
-              src={file.url}
-              alt={file.name}
-              onClick={() => handleImageClick(file)}
-            />
-          </div>
-        ))}
-        {fileList.length < IMAGE_MAX_COUNT && (
-          <StyledUploadButtonWrapper onClick={openFileInput}>
-            <PlusOutlined />
-            <TextBox typography="body3" color="black600">
-              이미지 추가하기
-            </TextBox>
-            <input
-              type="file"
-              accept=".png, .jpeg, .jpg"
-              ref={fileInputRef}
-              onChange={(event) => handleChange({ event })}
-              style={{ display: 'none' }}
-              data-testid="file-input"
-            />
-          </StyledUploadButtonWrapper>
-        )}
-      </StyledImageContainer>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
+      <Form.Item
+        rules={[{ required: true }]}
+        label="file-input"
+        htmlFor="file-input"
+        colon={false}
       >
-        <img
-          alt={previewTitle}
-          style={{ width: '100%' }}
-          src={fileList.find((file) => file.name === previewTitle)?.url}
-        />
-      </Modal>
+        <StyledHeadTextContainer>
+          <TextBox typography="h4" fontWeight={700}>
+            {header}
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            이미지는 최대 {IMAGE_MAX_COUNT}개까지, (.png, .jpeg, .jpg) 형식의
+            파일만 등록 가능합니다.
+          </TextBox>
+        </StyledHeadTextContainer>
+        <StyledImageContainer>
+          {fileList.map((file) => (
+            <div key={file.uid}>
+              <StyledCloseButton onClick={() => handleRemove(file)} />
+              <img
+                src={file.url}
+                alt={file.name}
+                onClick={() => handleImageClick(file)}
+              />
+            </div>
+          ))}
+          {fileList.length < IMAGE_MAX_COUNT && (
+            <StyledUploadButtonWrapper onClick={openFileInput}>
+              <PlusOutlined />
+              <TextBox typography="body3" color="black600">
+                이미지 추가하기
+              </TextBox>
+              <input
+                id="file-input"
+                type="file"
+                accept=".png, .jpeg, .jpg"
+                ref={fileInputRef}
+                onChange={(event) => handleChange({ event })}
+                style={{ display: 'none' }}
+                data-testid="file-input"
+              />
+            </StyledUploadButtonWrapper>
+          )}
+        </StyledImageContainer>
+        <Modal
+          open={previewOpen}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <img
+            alt={previewTitle}
+            style={{ width: '100%' }}
+            src={fileList.find((file) => file.name === previewTitle)?.url}
+          />
+        </Modal>
+      </Form.Item>
     </StyledInputWrapper>
   );
 };
 
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
+
+  .ant-form-item-label {
+    display: none;
+  }
 `;
 
 const StyledHeadTextContainer = styled.div`
