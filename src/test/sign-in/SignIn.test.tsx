@@ -6,7 +6,6 @@ import { HttpResponse, http } from 'msw';
 import { server } from 'src/mocks/server';
 import signInData from '../../assets/data/signInData.json';
 import accomodationsData from '../../assets/data/accomodationsData.json';
-// import '@testing-library/jest-dom/extend-expect';
 
 const mockedUsedNavigate = jest.fn();
 const mockedNavigate = useNavigate as jest.Mock;
@@ -126,8 +125,9 @@ describe('로그인 테스트', () => {
         );
       }, 3000);
       setTimeout(async () => {
-        const toast = await screen.findByTestId('toast');
-        expect(toast).toBeInTheDocument();
+        const errorMessage =
+          screen.getByText(/이메일과 비밀번호르 확인해 주세요/i);
+        expect(errorMessage).toBeInTheDocument();
       }, 5000);
     });
   });
