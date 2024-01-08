@@ -31,7 +31,12 @@ export const AccommodationDesc = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item rules={[{ required: true }]} label="숙소 소개" colon={false}>
+      <Form.Item
+        rules={[{ required: true }]}
+        label="숙소 소개"
+        colon={false}
+        htmlFor="accommodationDesc"
+      >
         <Input.TextArea
           id="accommodationDesc"
           placeholder="고객에게 멋진 숙소를 소개해 주세요."
