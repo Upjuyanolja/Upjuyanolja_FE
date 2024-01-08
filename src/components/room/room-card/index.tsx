@@ -115,12 +115,9 @@ const StyledCardContainer = styled(Card)`
 
 const StyledContentContainer = styled(Row)`
   wrap: false;
-  gutter={[16, 16]};
 `;
 
-const StyledImageContainer = styled(Col).attrs({
-  flex: '224px',
-})`
+const StyledImageContainer = styled(Col)`
   position: relative;
   height: 144px;
 `;
