@@ -46,3 +46,36 @@
   background-color: #ffffff;
   color: black;
 }
+
+.ant-message-notice-content {
+  padding: 0;
+}
+.ant-message-success {
+  padding: 10px 16px;
+  background-color: #0cbc72;
+  color: white;
+}
+.ant-message-success .anticon {
+  color: white;
+}
+.ant-message-error {
+  padding: 10px 16px;
+  background-color: #fe395b;
+  color: white;
+}
+.ant-message-error .anticon {
+  color: white;
+}
+.ant-message-warning {
+  padding: 10px 16px;
+  background-color: #9199a4;
+  color: white;
+}
+.ant-message-warning .anticon {
+  color: white;
+}
+
+.ant-message-notice {
+  margin: 0 auto;
+  margin-top: 50px;
+}
