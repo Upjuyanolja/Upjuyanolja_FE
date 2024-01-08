@@ -17,9 +17,12 @@ module.exports = {
 
   setupFilesAfterEnv: ['./src/setupTest.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  testEnvironment: 'jsdom',
+  testEnvironment: './jsdom-extended.js',
   transform: {
     '^.+\\.jsx?$': require.resolve('babel-jest'),
     '^.+\\.tsx?$': 'ts-jest',
+  },
+  testEnvironmentOptions: {
+    customExportConditions: [''],
   },
 };

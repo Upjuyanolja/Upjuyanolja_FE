@@ -3,17 +3,25 @@ import { Button } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
+import { MainCouponStatusContainerProps } from './type';
 
-export const MainCouponStatusContainer = () => {
+export const MainCouponStatusContainer = ({
+  staticsData,
+  navigateCoupon,
+}: MainCouponStatusContainerProps) => {
   const items = [
-    { name: '발행 쿠폰(A)', value: 105 },
-    { name: '사용 완료 쿠폰(B)', value: 55 },
-    { name: '현재 보유 쿠폰(A-B)', value: 55 },
+    { name: '발행 쿠폰(A)', value: staticsData.total },
+    { name: '사용 완료 쿠폰(B)', value: staticsData.used },
+    { name: '현재 보유 쿠폰(A-B)', value: staticsData.stock },
   ];
   return (
     <StyledLayout color={colors.primary}>
       <StyledTitle color={colors.primary}>
-        <StyledButton type="link">
+        <StyledButton
+          type="link"
+          onClick={navigateCoupon}
+          data-testid="navigate-coupon"
+        >
           쿠폰 관리 바로 가기
           <RightOutlined color="white" />
         </StyledButton>
