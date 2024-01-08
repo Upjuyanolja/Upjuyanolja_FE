@@ -30,27 +30,3 @@ export const removeCookie = (name: string) => {
     console.error(e);
   }
 };
-
-export const redirectSignIn = () => {
-  const { handleChangeUrl } = useCustomNavigate();
-
-  const accessToken = getCookie('accessToken');
-  useEffect(() => {
-    if (!accessToken) {
-      handleChangeUrl('/signin');
-    }
-  }, []);
-  return null;
-};
-
-export const redirectMain = () => {
-  const { handleChangeUrl } = useCustomNavigate();
-  const accessToken = getCookie('accessToken');
-
-  useEffect(() => {
-    if (accessToken) {
-      handleChangeUrl('/');
-    }
-  }, []);
-  return null;
-};
