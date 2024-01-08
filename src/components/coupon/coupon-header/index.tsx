@@ -71,8 +71,7 @@ export const CouponHeader = () => {
 };
 
 const StyledLayout = styled.div`
-  margin: 32px 0 16px 0;
-  border: 1px solid red;
+  margin: 32px 0;
   height: 154px;
 
   display: flex;
