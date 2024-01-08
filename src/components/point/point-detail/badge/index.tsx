@@ -1,7 +1,6 @@
 import { colors } from '@/constants/colors';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { TextBox } from '@components/text-box';
 
 export const OrderStatusBadge = ({
   status,
