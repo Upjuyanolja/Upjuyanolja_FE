@@ -1,7 +1,7 @@
 import { TextBox } from '@components/text-box';
 import { Modal, Form, message } from 'antd';
 import { styled } from 'styled-components';
-import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
 import {
   ImageUploadFileItem,
@@ -9,6 +9,7 @@ import {
   ImageUploadContainerProps,
 } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
+import { colors } from '@/constants/colors';
 
 export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -85,10 +86,13 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
             이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
           </TextBox>
         </StyledHeadTextContainer>
-        <StyledImageContainer>
+        <StyledImageContainer $fileList={fileList}>
           {fileList.map((file) => (
             <div key={file.uid}>
-              <StyledCloseButton onClick={() => handleRemove(file)} />
+              <StyledCloseButton
+                onClick={() => handleRemove(file)}
+                twoToneColor={colors.black600}
+              />
               <img
                 src={file.url}
                 alt={file.name}
@@ -159,17 +163,16 @@ const StyledUploadButtonWrapper = styled.div`
   border: 1.5px dashed #d9d9d9;
 
   &:hover {
-    border: 1.5px dashed #0351ff;
+    border: 1.5px dashed ${colors.primary};
     transition: 0.4s;
   }
 `;
 
-const StyledCloseButton = styled(CloseCircleFilled)`
+const StyledCloseButton = styled(CloseCircleTwoTone)`
   font-size: 20px;
-  color: #9199a4;
 `;
 
-const StyledImageContainer = styled.div`
+const StyledImageContainer = styled.div<{ $fileList: ImageUploadFileItem[] }>`
   display: flex;
 
   div {
@@ -194,7 +197,27 @@ const StyledImageContainer = styled.div`
       position: absolute;
       top: 8px;
       right: 8px;
+
       z-index: 1;
+    }
+
+    &:first-child::before {
+      content: '대표 이미지';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+
+      background-color: ${colors.primary};
+
+      border-radius: 2px;
+      padding: 2px;
+
+      color: ${colors.white};
+      font-size: 10px;
+
+      z-index: 1;
+
+      display: ${(props) => (props.$fileList.length === 0 ? 'none' : 'block')};
     }
   }
 `;
