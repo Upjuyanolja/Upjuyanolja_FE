@@ -42,16 +42,19 @@ export const ReceiptModal = ({
           ></OrderPointInfo>
           <CompanyInfo></CompanyInfo>
           <ModalFooterWrap>
-            <TextBox typography="body5" color={'black900'} fontWeight={'400'}>
-              영수증은 세금계산서 등 세무상 증빙서류로 활용할 수 없으며,
-              거래내역 및 금액을 확인하는 용도로만 사용가능합니다
-            </TextBox>
+            <li>
+              <TextBox typography="body5" color={'black900'} fontWeight={'400'}>
+                영수증은 세금계산서 등 세무상 증빙서류로 활용할 수 없으며,
+                거래내역 및 금액을 확인하는 용도로만 사용가능합니다
+              </TextBox>
+            </li>
 
-            <br />
-            <TextBox typography="body5" color={'black900'} fontWeight={'400'}>
-              영수증은 세금계산서 등 세무상 증빙서류로 활용할 수 없으며,
-              거래내역 및 금액을 확인하는 용도로만 사용가능합니다
-            </TextBox>
+            <li>
+              <TextBox typography="body5" color={'black900'} fontWeight={'400'}>
+                영수증은 세금계산서 등 세무상 증빙서류로 활용할 수 없으며,
+                거래내역 및 금액을 확인하는 용도로만 사용가능합니다
+              </TextBox>
+            </li>
           </ModalFooterWrap>
         </Layout>
       </CustomModal>
@@ -98,8 +101,13 @@ const CustomModal = styled(Modal)`
   }
 `;
 
-const ModalFooterWrap = styled('div')`
+const ModalFooterWrap = styled('ul')`
   line-height: 15px;
 
   margin-bottom: 24px;
+  padding-left: 16px;
+
+  li::marker {
+    font-size: 12px;
+  }
 `;
