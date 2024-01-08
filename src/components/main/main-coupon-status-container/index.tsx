@@ -35,7 +35,12 @@ export const MainCouponStatusContainer = ({
             <TextBox typography="h5" fontWeight={700} color="blue">
               {item.name}
             </TextBox>
-            <TextBox typography="h2" fontWeight={700} color="black900">
+            <TextBox
+              typography="h2"
+              fontWeight={700}
+              color="black900"
+              data-testid={item.name}
+            >
               {item.value}
             </TextBox>
           </StyledSpace>
