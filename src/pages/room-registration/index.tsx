@@ -1,7 +1,5 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
-import { AccommodationCategory } from '@components/init/init-accommodation-registration/AccommodationCategory';
-import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
 import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
@@ -26,10 +24,8 @@ const RoomRegistration = () => {
 
   return (
     <StyledWrapper color={colors.white}>
-      <AccommodationCategory />
       <Form>
-        <NameContainer labelText="숙소명" />
-        <AccommodationAddress />
+        <NameContainer labelText="객실명" />
         <ImageUploadContainer />
         <StyledInputWrapper>
           <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
