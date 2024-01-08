@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
 import { ImageUploadFileItem, ImageUploadHandleChangeProps } from './type';
-import { IMAGE_MAX_COUNT } from '@/constants/init';
+import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 
 export const ImageUploadContainer = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -18,7 +18,7 @@ export const ImageUploadContainer = () => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
-      if (selectedFile.size <= 30 * 1024 * 1024) {
+      if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
         setFileList((prevFileList) => [
           ...prevFileList,
           {
@@ -30,7 +30,7 @@ export const ImageUploadContainer = () => {
         ]);
       } else {
         alert(
-          '업로드 가능한 최대 파일 크기는 30MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.',
+          `업로드 가능한 최대 파일 크기는 ${IMAGE_MAX_CAPACITY}MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.`,
         );
       }
     }
