@@ -36,7 +36,10 @@ export const ReceiptModal = ({
         <Layout>
           <OrderInfo></OrderInfo>
           <CouponInfo></CouponInfo>
-          <OrderPointInfo pointCharge={true}></OrderPointInfo>
+          <OrderPointInfo
+            pointCharge={true}
+            status={'구매 확정'}
+          ></OrderPointInfo>
           <CompanyInfo></CompanyInfo>
           <ModalFooterWrap>
             <TextBox typography="body5" color={'black900'} fontWeight={'400'}>
