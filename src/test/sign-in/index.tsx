@@ -108,7 +108,7 @@ export const SignIn = () => {
           회원가입
         </Button>
       </form>
-      {ToastContainer}
+      <div data-testid="toast">{ToastContainer}</div>
     </div>
   );
 };
