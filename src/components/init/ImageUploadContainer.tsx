@@ -1,5 +1,5 @@
 import { TextBox } from '@components/text-box';
-import { Modal, Form } from 'antd';
+import { Modal, Form, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
@@ -30,9 +30,9 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
         !selectedFile.type.includes('jpeg') &&
         !selectedFile.type.includes('jpg')
       ) {
-        alert(
-          '해당 파일은 등록이 불가능합니다.\n이미지(JPG,JPEG,PNG) 형식의 파일을 업로드 해주세요.',
-        );
+        message.error({
+          content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
+        });
       } else {
         if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
           setFileList((prevFileList) => [
@@ -45,9 +45,9 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
             },
           ]);
         } else {
-          alert(
-            `업로드 가능한 최대 파일 크기는 ${IMAGE_MAX_CAPACITY}MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.`,
-          );
+          message.error({
+            content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+          });
         }
       }
     }
@@ -82,8 +82,7 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
             {header}
           </TextBox>
           <TextBox color="black600" typography="body3">
-            이미지는 최대 {IMAGE_MAX_COUNT}개까지, (.png, .jpeg, .jpg) 형식의
-            파일만 등록 가능합니다.
+            이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
           </TextBox>
         </StyledHeadTextContainer>
         <StyledImageContainer>
