@@ -3,10 +3,15 @@ import { Modal } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
-import { ImageUploadFileItem, ImageUploadHandleChangeProps } from './type';
+import {
+  ImageUploadFileItem,
+  ImageUploadHandleChangeProps,
+  ImageUploadContainerProps,
+} from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
+import { Form } from 'react-router-dom';
 
-export const ImageUploadContainer = () => {
+export const ImageUploadContainer = ({ label }: ImageUploadContainerProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);

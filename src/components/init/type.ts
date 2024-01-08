@@ -25,12 +25,16 @@ export type ImageUploadFileItem = {
   originFileObj?: File;
 };
 
+export type ImageUploadContainerProps = {
+  label: string;
+};
+
 export type ImageUploadHandleChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
 };
 
 export type NameConatainerProps = {
-  labelText: string;
+  label: string;
 };
 
 export type ValidateInputProps = {

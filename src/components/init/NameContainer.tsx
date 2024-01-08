@@ -13,14 +13,14 @@ import {
 } from '@/constants/init/init-accommodation-registration';
 import { NAME_REGEX } from '@/constants/init';
 
-export const NameContainer = ({ labelText }: NameConatainerProps) => {
+export const NameContainer = ({ label }: NameConatainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
       setError(
-        `${labelText}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
+        `${label}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
     } else if (!NAME_REGEX.test(value)) {
       setError('한글, 영어, 숫자만 입력 가능합니다.');
@@ -37,14 +37,14 @@ export const NameContainer = ({ labelText }: NameConatainerProps) => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item rules={[{ required: true }]} label={labelText} colon={false}>
+      <Form.Item rules={[{ required: true }]} label={label} colon={false}>
         <Input
           id="name"
-          placeholder={`${labelText}을 입력해 주세요.`}
+          placeholder={`${label}을 입력해 주세요.`}
           type="text"
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
-          style={{ height: 40, width: labelText === '객실명' ? '440px' : '' }}
+          style={{ height: 40, width: label === '객실명' ? '440px' : '' }}
           value={inputValue}
           onChange={(event) => handleInputChange({ event })}
           disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
