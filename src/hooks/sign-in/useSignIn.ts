@@ -1,5 +1,3 @@
-import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
-import { useEffect } from 'react';
 export const setCookie = (name: string, value: string) => {
   try {
     if (name === 'accessToken') {
