@@ -7,11 +7,9 @@ import { colors } from '@/constants/colors';
 export const OrderPointInfo = ({
   pointCharge,
   status,
-}: {
-  pointCharge: boolean;
-
-  status?: '결제 완료' | '취소 완료' | '구매 확정';
-}) => {
+}: 
+  orderInfoProps
+) => {
   const [isCancelStatus, setIscancelStatus] = useState<boolean>(false);
 
   useEffect(() => {
