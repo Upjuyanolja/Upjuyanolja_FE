@@ -1,5 +1,5 @@
 import { Space, Divider } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
@@ -9,12 +9,13 @@ export const OrderPointInfo = ({
   status,
 }: {
   pointCharge: boolean;
-  status: '결제 완료' | '취소 완료' | '구매 확정';
+
+  status?: '결제 완료' | '취소 완료' | '구매 확정';
 }) => {
   const [isCancelStatus, setIscancelStatus] = useState<boolean>(false);
 
   useEffect(() => {
-    if (status === '구매 확정') {
+    if (status === '취소 완료') {
       setIscancelStatus(true);
     }
   }, []);

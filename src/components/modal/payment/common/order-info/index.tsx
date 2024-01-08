@@ -1,5 +1,5 @@
 import { Space } from 'antd';
-import React from 'react';
+
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 

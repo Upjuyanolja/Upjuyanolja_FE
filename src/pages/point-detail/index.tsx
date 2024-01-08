@@ -3,23 +3,35 @@ import { Button } from 'antd';
 import { useState } from 'react';
 
 import { ReceiptModal } from '@components/modal/payment/receipt';
+import { CancelModal } from '@components/modal/payment/cancel';
 
 export const PointDetail = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
+  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
+
+  const showReceiptModal = () => {
+    setIsReceiptModalOpen(true);
   };
-
+  const showCancelModal = () => {
+    setIsCancelModalOpen(true);
+  };
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
+      <Button type="primary" onClick={showReceiptModal}>
+        결제 영수증
+      </Button>
+      <Button type="primary" onClick={showCancelModal}>
+        결제 취소
       </Button>
       <ReceiptModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isReceiptModalOpen}
+        setIsModalOpen={setIsReceiptModalOpen}
       ></ReceiptModal>
+      <CancelModal
+        isModalOpen={isCancelModalOpen}
+        setIsModalOpen={setIsCancelModalOpen}
+      ></CancelModal>
     </>
   );
 };
