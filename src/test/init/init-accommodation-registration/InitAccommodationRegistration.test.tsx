@@ -1,36 +1,33 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import '../matchMedia.mock';
+import '../../matchMedia.mock';
 import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
-import axios from 'axios';
+
+jest.mock('react-daum-postcode', () => ({
+  useDaumPostcodePopup: jest.fn(),
+}));
 
 describe('InitAccommodationRegistration', () => {
-  test('주소 검색 버튼을 누르면 주소 api를 호출하고, 데이터를 state로 설정해 출력한다.', () => {
+  test('주소 검색 버튼을 누르면 API 팝업이 열린다.', () => {
+    const mockOpenAddressPopup = jest.fn();
+
+    jest
+      .requireMock('react-daum-postcode')
+      .useDaumPostcodePopup.mockReturnValue(mockOpenAddressPopup);
+
     render(
       <BrowserRouter>
         <AccommodationAddress />
       </BrowserRouter>,
     );
-    const accommodationAddressAPIButton = screen.getByTestId(
-      'acccommodation-address-api-button',
-    );
-
-    const responseData = { post: '12345', address: '경기도 구리시' };
-    const axiosMock = jest.spyOn(axios, 'get');
-    axiosMock.mockResolvedValue({ data: responseData });
 
     act(() => {
-      userEvent.click(accommodationAddressAPIButton);
+      fireEvent.click(screen.getByTestId('acccommodation-address-api-button'));
     });
 
-    expect(screen.getByTestId('accommodation-post')).toHaveValue(
-      responseData.post,
-    );
-    expect(screen.getByTestId('accommodation-address')).toHaveValue(
-      responseData.address,
-    );
+    expect(mockOpenAddressPopup).toHaveBeenCalled();
   });
 
   test('숙소소개에 10글자 미만 입력했을 때 에러메세지를 띄운다.', () => {
