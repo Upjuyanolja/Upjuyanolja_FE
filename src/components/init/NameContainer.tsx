@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
 import {
-  NameConatainerProps,
+  NameContainerProps,
   NameHandleInputChangeProps,
   ValidateInputProps,
 } from './type';
@@ -13,7 +13,7 @@ import {
 } from '@/constants/init/init-accommodation-registration';
 import { NAME_REGEX } from '@/constants/init';
 
-export const NameContainer = ({ header }: NameConatainerProps) => {
+export const NameContainer = ({ header }: NameContainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 

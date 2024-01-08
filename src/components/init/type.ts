@@ -33,7 +33,7 @@ export type ImageUploadHandleChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
 };
 
-export type NameConatainerProps = {
+export type NameContainerProps = {
   header: string;
 };
 
