@@ -26,8 +26,8 @@ export const InitAccommodationRegistration = () => {
 
   return (
     <StyledWrapper color={colors.white}>
-      <AccommodationCategory />
       <Form>
+        <AccommodationCategory />
         <NameContainer labelText="숙소명" />
         <AccommodationAddress />
         <ImageUploadContainer />
