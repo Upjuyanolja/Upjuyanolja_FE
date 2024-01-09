@@ -9,7 +9,7 @@ import {
 } from '@/constants/init/init-accommodation-registration';
 import { ValidateInputProps } from '../type';
 import { useRecoilState } from 'recoil';
-import { userInputValueState } from '@stores/init/userInputValueState';
+import { userInputValueState } from '@stores/init/atoms';
 import { TextBox } from '@components/text-box';
 
 export const AccommodationDesc = () => {
