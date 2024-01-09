@@ -1,0 +1,8 @@
+{
+  "message": "포인트 요약 조회에 성공 했습니다.",
+  "data": {
+    "chargePoint": 30000,
+    "usePoint": 15000,
+    "currentPoint": 15000
+  }
+}

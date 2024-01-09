@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { HttpResponse, http } from 'msw';
 import { server } from 'src/mocks/server';
 import signInData from '../../assets/data/signInData.json';
-import accomodationsData from '../../assets/data/accomodationsData.json';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import accommodationsData from '@assets/data/accommodationsData.json';
 
 const mockedNavigate = useNavigate as jest.Mock;
 
@@ -166,7 +166,7 @@ describe('로그인 테스트', () => {
         );
         server.use(
           http.get('/api/auth/owner/signin', () => {
-            return HttpResponse.json(accomodationsData, { status: 200 });
+            return HttpResponse.json(accommodationsData, { status: 200 });
           }),
         );
       }, 3000);
@@ -198,7 +198,7 @@ describe('로그인 테스트', () => {
         );
         server.use(
           http.get('/api/auth/owner/signin', () => {
-            return HttpResponse.json(accomodationsData, { status: 400 });
+            return HttpResponse.json(accommodationsData, { status: 400 });
           }),
         );
       }, 3000);
