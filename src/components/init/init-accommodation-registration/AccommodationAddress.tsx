@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AddressHandleInputChangeProps } from './type';
 import { AddressFormatProps } from '@components/init/init-accommodation-registration/type';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { ADDRESS_TYPE_ROAD } from '@/constants/init/init-accommodation-registration';
 
 export const AccommodationAddress = () => {
   const [inputPostCode, setInputPostCode] = useState('');
@@ -33,7 +34,7 @@ export const AccommodationAddress = () => {
     let fullAddress = data.address;
     let extraAddress = '';
 
-    if (data.addressType === 'R') {
+    if (data.addressType === ADDRESS_TYPE_ROAD) {
       if (data.bname !== '') {
         extraAddress += data.bname;
       }
