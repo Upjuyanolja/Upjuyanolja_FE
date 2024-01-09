@@ -31,9 +31,9 @@ export const RadioButtonCustomContainer = ({
           onChange={(event) => onChange({ event })}
           value={value}
         >
-          {options.map((option, index) => (
-            <StyledCheckboxRadio value={option} key={index}>
-              {option}
+          {Object.entries(options).map(([korean, english]) => (
+            <StyledCheckboxRadio value={english} key={english}>
+              {korean}
             </StyledCheckboxRadio>
           ))}
         </StyledCheckboxRadioGroup>

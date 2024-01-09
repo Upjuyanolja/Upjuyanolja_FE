@@ -19,7 +19,7 @@ export type HandleTextAreaChangeProps = {
 };
 
 export type AccommodationDetailCategoryProps = {
-  options: string[];
+  options: { [key: string]: string };
   label: string;
   icon?: ReactElement<IconBaseProps>;
 };
@@ -34,6 +34,10 @@ export type AddressFormatProps = {
   bname: string;
   buildingName: string;
   zonecode: string;
+};
+
+export type formValues = {
+  [key: string]: string;
 };
 
 /**request 타입 */
