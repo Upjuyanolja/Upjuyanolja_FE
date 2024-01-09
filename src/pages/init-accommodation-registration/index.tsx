@@ -8,9 +8,11 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
+import { useEffect, useState } from 'react';
+import { isUploadedImage } from '@stores/init/atoms';
 
 export const InitAccommodationRegistration = () => {
-  const isValid = true;
+  const [isValid, setIsValid] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -29,6 +31,18 @@ export const InitAccommodationRegistration = () => {
   const onFinish = (values: any) => {
     console.log(values);
   };
+
+  useEffect(() => {
+    const areFormFieldsValid =
+      form.getFieldValue('accommodation-category') &&
+      form.getFieldValue('accommodation-name') &&
+      form.getFieldValue('accommodation-postCode') &&
+      form.getFieldValue('accommodation-address') &&
+      form.getFieldValue('accommodation-detailAddress') &&
+      isUploadedImage;
+
+    setIsValid(areFormFieldsValid);
+  }, [form, isUploadedImage]);
 
   return (
     <StyledWrapper color={colors.white}>

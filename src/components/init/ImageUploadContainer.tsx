@@ -2,7 +2,7 @@ import { TextBox } from '@components/text-box';
 import { Modal, Form, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   ImageUploadFileItem,
   ImageUploadHandleChangeProps,
@@ -10,12 +10,16 @@ import {
 } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
+import { useSetRecoilState } from 'recoil';
+import { isUploadedImage } from '@stores/init/atoms';
 
 export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const setIsUploadedImage = useSetRecoilState(isUploadedImage);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -69,6 +73,10 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
     const newFileList = fileList.filter((item) => item.uid !== file.uid);
     setFileList(newFileList);
   };
+
+  useEffect(() => {
+    setIsUploadedImage(fileList.length !== 0);
+  }, [fileList]);
 
   return (
     <StyledInputWrapper>

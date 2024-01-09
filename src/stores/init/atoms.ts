@@ -50,3 +50,8 @@ export const userInputValueState = atom<UserInputValue[]>({
   ],
   effects_UNSTABLE: [persistAtom],
 });
+
+export const isUploadedImage = atom({
+  key: 'isUploadedImage',
+  default: false,
+});
