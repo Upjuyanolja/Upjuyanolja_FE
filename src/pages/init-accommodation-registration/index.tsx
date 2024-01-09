@@ -14,7 +14,7 @@ import {
   isUploadedImage,
   nameErrorMessage,
 } from '@stores/init/atoms';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 export const InitAccommodationRegistration = () => {
   const [isValid, setIsValid] = useState(false);
