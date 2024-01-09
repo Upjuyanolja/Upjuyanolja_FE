@@ -15,6 +15,7 @@ import {
   nameErrorMessage,
 } from '@stores/init/atoms';
 import { useRecoilValue } from 'recoil';
+import { formValues } from '@components/init/init-accommodation-registration/type';
 
 export const InitAccommodationRegistration = () => {
   const [isValid, setIsValid] = useState(false);
@@ -33,7 +34,7 @@ export const InitAccommodationRegistration = () => {
     '세미나실',
   ];
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: formValues) => {
     console.log(values);
   };
 

@@ -36,6 +36,10 @@ export type AddressFormatProps = {
   zonecode: string;
 };
 
+export type formValues = {
+  [key: string]: string;
+};
+
 /**request 타입 */
 
 type Image = {
