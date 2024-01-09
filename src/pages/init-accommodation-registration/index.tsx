@@ -13,8 +13,9 @@ import {
   descErrorMessage,
   isUploadedImage,
   nameErrorMessage,
+  userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const InitAccommodationRegistration = () => {
   const [isValid, setIsValid] = useState(false);
@@ -33,8 +34,22 @@ export const InitAccommodationRegistration = () => {
     '세미나실',
   ];
 
+  const setUserInputValueState = useSetRecoilState(userInputValueState);
+
   const onFinish = (values: any) => {
-    console.log(values);
+    setUserInputValueState((prevUserInputValueState) => {
+      const [userInputValue] = prevUserInputValueState;
+      const updatedUserInputValue = {
+        ...userInputValue,
+        id: Math.floor(Math.random() * 1000000),
+        type: values['accommodation-category'],
+        name: values['accommodation-name'],
+        address: values['accommodation-address'],
+        detailAddress: values['accommodation-detailAddress'],
+        description: values['accommodation-desc'],
+      };
+      return [updatedUserInputValue];
+    });
   };
 
   const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
