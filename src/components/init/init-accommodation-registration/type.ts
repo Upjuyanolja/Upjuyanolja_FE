@@ -19,7 +19,7 @@ export type HandleTextAreaChangeProps = {
 };
 
 export type AccommodationDetailCategoryProps = {
-  options: string[];
+  options: { [key: string]: string };
   label: string;
   icon?: ReactElement<IconBaseProps>;
 };
