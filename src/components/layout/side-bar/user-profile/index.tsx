@@ -5,20 +5,25 @@ import { colors } from '@/constants/colors';
 import { PointModal } from '@components/modal/point/point-modal';
 import { useState } from 'react';
 import { UserProfileProps } from './type';
+import { numberFormat } from '@/utils/Format/numberFormat';
 
-export const UserProfile = ({ userInfoData }: UserProfileProps) => {
+export const UserProfile = ({
+  userInfoData,
+  pointSummaryData,
+}: UserProfileProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   return (
     <StyledSpace direction="vertical" align="center">
       <TextBox typography="h5" color="primary" fontWeight="bold">
         {userInfoData.name} 님
       </TextBox>
       <TextBox typography="h3" color="black900" fontWeight="bold">
-        330,000 P
+        {numberFormat(pointSummaryData.currentPoint)} P
       </TextBox>
       <StyledButton type="primary" size="large" onClick={showModal}>
         포인트 추가하기
