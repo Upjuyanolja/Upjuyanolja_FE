@@ -145,4 +145,5 @@ const StyledInput = styled(Input)`
 const StyledRow = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 8;
 `;

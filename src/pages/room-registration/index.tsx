@@ -7,7 +7,7 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { PriceContainer } from '@components/room/price-container';
 import { CapacityContainer } from '@components/room/capacity-container';
-import { TextBox } from '@components/text-box';
+import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
 
 const RoomRegistration = () => {
   const isValid = true;
@@ -21,11 +21,11 @@ const RoomRegistration = () => {
           <PriceContainer header="객실 가격" />
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />
-        <TextBox typography="h4" fontWeight={700}>
-          객실 인원
-        </TextBox>
         <StyledInputWrapper>
-          <CapacityContainer />
+          <NumOfRoomsContainer header="객실 수" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <CapacityContainer header="인원" />
         </StyledInputWrapper>
         <StyledInputWrapper>
           <CheckBoxContainer options={roomOptions} header="객실 옵션" />
