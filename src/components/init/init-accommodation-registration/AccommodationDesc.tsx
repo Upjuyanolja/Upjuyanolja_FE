@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { Input, Form } from 'antd';
+import { Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
 import { HandleTextAreaChangeProps } from './type';
