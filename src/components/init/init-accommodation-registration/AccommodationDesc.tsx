@@ -31,14 +31,9 @@ export const AccommodationDesc = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item
-        rules={[{ required: true }]}
-        label="숙소 소개"
-        colon={false}
-        htmlFor="accommodationDesc"
-      >
+      <Form.Item label="숙소 소개" colon={false} name="accommodation-desc">
         <Input.TextArea
-          id="accommodationDesc"
+          id="accommodation-desc"
           placeholder="고객에게 멋진 숙소를 소개해 주세요."
           minLength={ACCOMMODATION_DESC_MIN_LENGTH}
           showCount
@@ -49,12 +44,12 @@ export const AccommodationDesc = () => {
           status={error ? 'error' : ''}
           data-testid="textarea-accommodation-desc"
         />
-        {error && (
-          <StyledErrorMessageWrapper data-testid="error-textarea-accommodation-desc">
-            <StyledFormErrorMessage errorMessage={error} />
-          </StyledErrorMessageWrapper>
-        )}
       </Form.Item>
+      {error && (
+        <StyledErrorMessageWrapper data-testid="error-textarea-accommodation-desc">
+          <StyledFormErrorMessage errorMessage={error} />
+        </StyledErrorMessageWrapper>
+      )}
     </StyledInputWrapper>
   );
 };
@@ -83,6 +78,10 @@ const StyledInputWrapper = styled.div`
 
   .ant-input {
     font-size: 16px;
+  }
+
+  .ant-form-item {
+    margin-bottom: 0;
   }
 `;
 

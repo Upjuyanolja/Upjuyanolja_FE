@@ -37,14 +37,9 @@ export const NameContainer = ({ header }: NameContainerProps) => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item
-        rules={[{ required: true }]}
-        label={header}
-        colon={false}
-        htmlFor="input-name"
-      >
+      <Form.Item label={header} colon={false} name="accommodation-name">
         <Input
-          id="input-name"
+          id="accommodation-name"
           placeholder={`${header}을 입력해 주세요.`}
           type="text"
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
@@ -57,12 +52,12 @@ export const NameContainer = ({ header }: NameContainerProps) => {
           data-testid="input-name"
           autoComplete="on"
         />
-        {error && (
-          <StyledErrorMessageWrapper data-testid="error-input-name">
-            <StyledFormErrorMessage errorMessage={error} />
-          </StyledErrorMessageWrapper>
-        )}
       </Form.Item>
+      {error && (
+        <StyledErrorMessageWrapper data-testid="error-input-name">
+          <StyledFormErrorMessage errorMessage={error} />
+        </StyledErrorMessageWrapper>
+      )}
     </StyledInputWrapper>
   );
 };
@@ -91,6 +86,10 @@ const StyledInputWrapper = styled.div`
 
   .ant-input {
     font-size: 16px;
+  }
+
+  .ant-form-item {
+    margin-bottom: 0;
   }
 `;
 
