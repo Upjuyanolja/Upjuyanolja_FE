@@ -4,6 +4,8 @@ export const colors = {
   white200: '#F1F5F8',
   white300: '#E5E9ED',
   white400: '#D0DAE3',
+  black100: '#F9F9FA',
+  black300: '#E5E9ED',
   black500: '#B4BCC6',
   black600: '#9199A4',
   black700: '#5C656C',
@@ -24,6 +26,6 @@ export const colors = {
   darkHover: '#023199',
   darkActive: '#012473',
   darker: '#011c59',
-  subOrange: '#EF5320',
   neutral5: '#D9D9D9',
+  orange: '#EF5320',
 };
