@@ -13,18 +13,19 @@ export const CheckBoxContainer = ({
       <TextBox typography="h4" fontWeight={700}>
         {header}
       </TextBox>
-      <StyledCheckboxContainer>
-        {options.map((option, index) => (
-          <Form.Item
-            key={index}
-            name={`checkbox-option-${index}`}
-            valuePropName="checked"
-            rules={[{ required: false }]}
-          >
-            <Checkbox id={`checkbox-option-${index}`}>{option}</Checkbox>
-          </Form.Item>
-        ))}
-      </StyledCheckboxContainer>
+      <Form.Item
+        name="accommodation-options"
+        valuePropName="checked"
+        rules={[{ required: false }]}
+      >
+        <StyledCheckboxContainer>
+          {options.map((option, index) => (
+            <Checkbox id={index.toString()} key={index}>
+              {option}
+            </Checkbox>
+          ))}
+        </StyledCheckboxContainer>
+      </Form.Item>
     </StyledWrapper>
   );
 };
@@ -38,33 +39,22 @@ const StyledWrapper = styled.div`
 
   padding: 0;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
-
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
   .ant-form-item-control {
     width: 100%;
+  }
+
+  .ant-checkbox-wrapper-in-form-item {
+    font-size: 16px;
+  }
+
+  .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0;
   }
 `;
 
 const StyledCheckboxContainer = styled.div`
   line-height: 24px;
   font-weight: 700;
-
-  .ant-checkbox-group-item {
-    font-size: 16px;
-  }
 
   display: grid;
   grid-template-columns: repeat(5, 1fr);
