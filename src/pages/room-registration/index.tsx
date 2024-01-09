@@ -15,13 +15,13 @@ const RoomRegistration = () => {
   return (
     <StyledWrapper color={colors.white}>
       <Form>
-        <NameContainer labelText="객실명" />
+        <NameContainer header="객실명" />
         <StyledInputWrapper>
           <PriceContainer labelText="객실 가격" />
         </StyledInputWrapper>
-        <ImageUploadContainer />
+        <ImageUploadContainer header="객실 사진" />
         <StyledInputWrapper>
-          <CheckBoxContainer options={roomOptions} label="객실 옵션" />
+          <CheckBoxContainer options={roomOptions} header="객실 옵션" />
         </StyledInputWrapper>
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>

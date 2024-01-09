@@ -26,6 +26,7 @@ export const ButtonContainer = ({
             type="primary"
             disabled={!isValid}
             data-testid="accommodation-next-button"
+            htmlType="submit"
           >
             다음
           </StyledButton>

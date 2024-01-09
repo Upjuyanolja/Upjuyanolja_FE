@@ -1,3 +1,4 @@
+import { SignIn } from '@/test/sign-in';
 import { Footer } from '@components/layout/footer';
 import { Layout } from 'antd';
 import React from 'react';
@@ -7,6 +8,7 @@ export const SignUp = () => {
     <StyledLayout>
       <StyledContent>sign-up-page</StyledContent>
       <Footer />
+      <SignIn />
     </StyledLayout>
   );
 };

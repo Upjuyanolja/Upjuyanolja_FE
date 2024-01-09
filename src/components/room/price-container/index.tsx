@@ -8,7 +8,7 @@ import {
   ValidateInputProps,
 } from '../type';
 import {
-  PRICE_REGEX,
+  NUMBER_REGEX,
   MAX_PRICE,
   MIN_PRICE,
   MAX_PRICE_LENGTH,
@@ -23,7 +23,7 @@ export const PriceContainer = ({ labelText }: PriceContainerProps) => {
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value < MIN_PRICE || value > MAX_PRICE) {
       setError('10,000~1,000,000까지만 입력 가능합니다.');
-    } else if (!PRICE_REGEX.test(value.toString())) {
+    } else if (!NUMBER_REGEX.test(value.toString())) {
       setError('숫자만 입력 가능합니다.');
     } else {
       setError(null);
@@ -84,9 +84,8 @@ export const PriceContainer = ({ labelText }: PriceContainerProps) => {
 };
 
 const StyledInputWrapper = styled.div`
-  width: 160px;
-  height: 40px;
-  margin-bottom: 48px !important;
+  margin-bottom: 48px;
+  position: relative;
 
   .ant-form-item-label {
     label {
@@ -114,11 +113,17 @@ const StyledInputWrapper = styled.div`
 
 const StyledErrorMessageWrapper = styled.div`
   height: 18px;
-  margin-bottom: 48px;
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  width: 100%;
 `;
 
 const StyledFormErrorMessage = styled(FormErrorMessage)`
   float: left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `;
 
 const StyledTextBoxWrapper = styled.div`
@@ -129,9 +134,9 @@ const StyledTextBoxWrapper = styled.div`
 `;
 
 const StyledInput = styled(Input)`
+  width: 160px;
   height: 40px;
   font-size: 16px;
-  flex: 1;
 `;
 
 const StyledRow = styled.div`

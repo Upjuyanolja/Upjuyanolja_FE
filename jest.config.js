@@ -15,7 +15,7 @@ module.exports = {
     ...pathsToModuleNameMapper(compilerOptions.paths),
   },
 
-  setupFilesAfterEnv: ['./src/setupTest.ts'],
+  setupFilesAfterEnv: ['./src/setupTest.ts', './jsdom-extended.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: './jsdom-extended.js',
   transform: {
