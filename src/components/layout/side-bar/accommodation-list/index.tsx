@@ -13,6 +13,7 @@ export const AccommodationList = ({
   const { accommodations } = accommodationListData;
 
   const handleSelectBox = () => {
+    if (accommodations.length <= 1) return;
     setClickedSelectBox(!clickedSelectBox);
   };
 
