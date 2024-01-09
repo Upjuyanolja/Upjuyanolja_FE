@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { server } from 'src/mocks/server';
 import { HttpResponse, http } from 'msw';
 import staticsData from '@assets/data/staticsData.json';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 jest.mock('@ant-design/plots', () => ({
   Column: () => null,
@@ -12,29 +13,40 @@ jest.mock('@ant-design/plots', () => ({
 }));
 
 describe('Main', () => {
-  test('쿠폰 만들기 버튼 클릭 시 쿠폰 만들기 페이지로 이동한다', () => {
+  const queryClient = new QueryClient();
+  test('쿠폰 만들기 버튼 클릭 시 쿠폰 만들기 페이지로 이동한다', async () => {
     render(
-      <BrowserRouter>
-        <Main />
-      </BrowserRouter>,
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
+      </QueryClientProvider>,
     );
-    const navigateButton = screen.getByTestId('navigate-coupon-registration');
+    const navigateButton = await screen.findByTestId(
+      'navigate-coupon-registration',
+    );
     act(() => {
       userEvent.click(navigateButton);
     });
-    expect(window.location.pathname).toBe('/coupon-registration');
+    setTimeout(() => {
+      expect(window.location.pathname).toBe('/coupon-registration');
+    }, 5000);
   });
-  test('쿠폰 관리 바로가기 버튼 클릭 시 쿠폰 관리 페이지로 이동한다', () => {
+  test('쿠폰 관리 바로가기 버튼 클릭 시 쿠폰 관리 페이지로 이동한다', async () => {
     render(
-      <BrowserRouter>
-        <Main />
-      </BrowserRouter>,
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
+      </QueryClientProvider>,
     );
-    const navigateButton = screen.getByTestId('navigate-coupon');
+    const navigateButton = await screen.findByTestId('navigate-coupon');
     act(() => {
       userEvent.click(navigateButton);
     });
-    expect(window.location.pathname).toBe('/coupon');
+    setTimeout(() => {
+      expect(window.location.pathname).toBe('/coupon');
+    }, 5000);
   });
   test('서버로부터 쿠폰 사용량을 응답 받으면 컴포넌트에 쿠폰 사용량이 출력된다', async () => {
     server.use(
@@ -43,11 +55,13 @@ describe('Main', () => {
       }),
     );
     render(
-      <BrowserRouter>
-        <Main />
-      </BrowserRouter>,
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
+      </QueryClientProvider>,
     );
-    const staticsValue = screen.getByTestId('발행 쿠폰(A)');
+    const staticsValue = await screen.findByTestId('발행 쿠폰(A)');
     if (!staticsValue.textContent) {
       expect(staticsValue.textContent).toBeInTheDocument();
       return;

@@ -11,18 +11,11 @@ export type ButtonContainerStyledWrapperProps = {
 
 export type CheckBoxContainerProps = {
   options: string[];
-  label: string;
+  header: string;
 };
 
 export type FormErrorMessageProps = {
   errorMessage: string;
-};
-
-export type RouteConfigProps = {
-  [key: string]: {
-    pageName: string;
-    pageDesc: string;
-  };
 };
 
 export type ImageUploadFileItem = {
@@ -32,6 +25,22 @@ export type ImageUploadFileItem = {
   originFileObj?: File;
 };
 
+export type ImageUploadContainerProps = {
+  header: string;
+};
+
 export type ImageUploadHandleChangeProps = {
+  event: ChangeEvent<HTMLInputElement>;
+};
+
+export type NameContainerProps = {
+  header: string;
+};
+
+export type ValidateInputProps = {
+  value: string;
+};
+
+export type NameHandleInputChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
 };

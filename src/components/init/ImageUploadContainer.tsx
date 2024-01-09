@@ -1,11 +1,17 @@
 import { TextBox } from '@components/text-box';
-import { Modal } from 'antd';
+import { Modal, Form, message } from 'antd';
 import { styled } from 'styled-components';
-import { CloseCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef } from 'react';
-import { ImageUploadFileItem, ImageUploadHandleChangeProps } from './type';
+import {
+  ImageUploadFileItem,
+  ImageUploadHandleChangeProps,
+  ImageUploadContainerProps,
+} from './type';
+import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
+import { colors } from '@/constants/colors';
 
-export const ImageUploadContainer = () => {
+export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
@@ -14,23 +20,36 @@ export const ImageUploadContainer = () => {
   const handleCancel = () => setPreviewOpen(false);
 
   const handleChange = ({ event }: ImageUploadHandleChangeProps) => {
-    const selectedFile = event.target.files?.[0];
+    const inputElement = event.target;
+    const selectedFile = inputElement.files?.[0];
+
+    inputElement.value = '';
 
     if (selectedFile) {
-      if (selectedFile.size <= 30 * 1024 * 1024) {
-        setFileList((prevFileList) => [
-          ...prevFileList,
-          {
-            uid: Date.now(),
-            name: selectedFile.name,
-            url: URL.createObjectURL(selectedFile),
-            originFileObj: selectedFile,
-          },
-        ]);
+      if (
+        !selectedFile.type.includes('png') &&
+        !selectedFile.type.includes('jpeg') &&
+        !selectedFile.type.includes('jpg')
+      ) {
+        message.error({
+          content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
+        });
       } else {
-        alert(
-          '업로드 가능한 최대 파일 크기는 30MB입니다. 파일 크기를 확인하신 후 다시 업로드해주세요.',
-        );
+        if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+          setFileList((prevFileList) => [
+            ...prevFileList,
+            {
+              uid: Date.now(),
+              name: selectedFile.name,
+              url: URL.createObjectURL(selectedFile),
+              originFileObj: selectedFile,
+            },
+          ]);
+        } else {
+          message.error({
+            content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+          });
+        }
       }
     }
   };
@@ -40,22 +59,6 @@ export const ImageUploadContainer = () => {
       fileInputRef.current.click();
     }
   };
-
-  const uploadButton = (
-    <StyledUploadButtonWrapper onClick={openFileInput}>
-      <PlusOutlined />
-      <TextBox typography="body3" color="black600">
-        이미지 추가하기
-      </TextBox>
-      <input
-        type="file"
-        accept=".png, .jpeg, .jpg"
-        ref={fileInputRef}
-        onChange={(event) => handleChange({ event })}
-        style={{ display: 'none' }}
-      />
-    </StyledUploadButtonWrapper>
-  );
 
   const handleImageClick = (file: ImageUploadFileItem) => {
     setPreviewOpen(true);
@@ -69,46 +72,75 @@ export const ImageUploadContainer = () => {
 
   return (
     <StyledInputWrapper>
-      <StyledHeadTextContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          숙소 대표 이미지
-        </TextBox>
-        <TextBox color="black600" typography="body3">
-          이미지는 최대 5개까지, (.png, .jpeg, .jpg) 형식의 파일만 등록
-          가능합니다.
-        </TextBox>
-      </StyledHeadTextContainer>
-      <StyledImageContainer>
-        {fileList.map((file) => (
-          <div key={file.uid}>
-            <StyledCloseButton onClick={() => handleRemove(file)} />
-            <img
-              src={file.url}
-              alt={file.name}
-              onClick={() => handleImageClick(file)}
-            />
-          </div>
-        ))}
-        {fileList.length < 5 && uploadButton}
-      </StyledImageContainer>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
+      <Form.Item
+        rules={[{ required: true }]}
+        label="file-input"
+        htmlFor="file-input"
+        colon={false}
       >
-        <img
-          alt={previewTitle}
-          style={{ width: '100%' }}
-          src={fileList.find((file) => file.name === previewTitle)?.url}
-        />
-      </Modal>
+        <StyledHeadTextContainer>
+          <TextBox typography="h4" fontWeight={700}>
+            {header}
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
+          </TextBox>
+        </StyledHeadTextContainer>
+        <StyledImageContainer $fileList={fileList}>
+          {fileList.map((file) => (
+            <div key={file.uid}>
+              <StyledCloseButton
+                onClick={() => handleRemove(file)}
+                twoToneColor={colors.black600}
+              />
+              <img
+                src={file.url}
+                alt={file.name}
+                onClick={() => handleImageClick(file)}
+              />
+            </div>
+          ))}
+          {fileList.length < IMAGE_MAX_COUNT && (
+            <StyledUploadButtonWrapper onClick={openFileInput}>
+              <PlusOutlined />
+              <TextBox typography="body3" color="black600">
+                이미지 추가하기
+              </TextBox>
+              <input
+                id="file-input"
+                type="file"
+                accept=".png, .jpeg, .jpg"
+                ref={fileInputRef}
+                onChange={(event) => handleChange({ event })}
+                style={{ display: 'none' }}
+                data-testid="file-input"
+              />
+            </StyledUploadButtonWrapper>
+          )}
+        </StyledImageContainer>
+        <Modal
+          open={previewOpen}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <img
+            alt={previewTitle}
+            style={{ width: '100%' }}
+            src={fileList.find((file) => file.name === previewTitle)?.url}
+          />
+        </Modal>
+      </Form.Item>
     </StyledInputWrapper>
   );
 };
 
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
+
+  .ant-form-item-label {
+    display: none;
+  }
 `;
 
 const StyledHeadTextContainer = styled.div`
@@ -131,17 +163,16 @@ const StyledUploadButtonWrapper = styled.div`
   border: 1.5px dashed #d9d9d9;
 
   &:hover {
-    border: 1.5px dashed #0351ff;
+    border: 1.5px dashed ${colors.primary};
     transition: 0.4s;
   }
 `;
 
-const StyledCloseButton = styled(CloseCircleFilled)`
+const StyledCloseButton = styled(CloseCircleTwoTone)`
   font-size: 20px;
-  color: #9199a4;
 `;
 
-const StyledImageContainer = styled.div`
+const StyledImageContainer = styled.div<{ $fileList: ImageUploadFileItem[] }>`
   display: flex;
 
   div {
@@ -166,7 +197,27 @@ const StyledImageContainer = styled.div`
       position: absolute;
       top: 8px;
       right: 8px;
+
       z-index: 1;
+    }
+
+    &:first-child::before {
+      content: '대표 이미지';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+
+      background-color: ${colors.primary};
+
+      border-radius: 2px;
+      padding: 2px;
+
+      color: ${colors.white};
+      font-size: 10px;
+
+      z-index: 1;
+
+      display: ${(props) => (props.$fileList.length === 0 ? 'none' : 'block')};
     }
   }
 `;

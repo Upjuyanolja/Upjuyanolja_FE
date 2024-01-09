@@ -1,10 +1,6 @@
-/**
- * @jest-environment jsdom
- */
 import { fireEvent, render, screen } from '@testing-library/react';
 import { SignInAgreement } from '.';
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 
 const mockedUsedNavigate = jest.fn();
 
