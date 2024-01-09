@@ -33,4 +33,4 @@ export const RESPONSE_CODE = {
   REQUEST_BODY_ERROR: 9001,
   SERVER_ERROR: 9002,
   INVALID_DATE: 9003,
-};
+} as const;
