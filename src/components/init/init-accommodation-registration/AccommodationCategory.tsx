@@ -25,8 +25,18 @@ export const AccommodationCategory = () => {
     }
   };
 
-  const hotelCategory = ['호텔', '리조트', '관광호텔', '콘도', '레지던스'];
-  const guestHouseCategory = ['게스트하우스', '한옥'];
+  const hotelResortDetailCategoryMapping = {
+    호텔: 'HOTEL',
+    리조트: 'RESORT',
+    관광호텔: 'TOURIST_HOTEL',
+    콘도: 'CONDO',
+    레지던스: 'RESIDENCE',
+  };
+
+  const guestHouseDetailCategoryMapping = {
+    게스트하우스: 'GUEST_HOUSE',
+    한옥: 'HANOK',
+  };
 
   return (
     <StyledInputWrapper>
@@ -113,14 +123,14 @@ export const AccommodationCategory = () => {
       </Form.Item>
       {clickedCategory === 'hotelResort' && (
         <RadioButtonCustomContainer
-          options={hotelCategory}
+          options={hotelResortDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
         />
       )}
       {clickedCategory === 'guestHouse' && (
         <RadioButtonCustomContainer
-          options={guestHouseCategory}
+          options={guestHouseDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
         />
