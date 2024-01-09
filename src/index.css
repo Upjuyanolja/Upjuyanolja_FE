@@ -74,6 +74,7 @@
 .ant-message-warning .anticon {
   color: white;
 }
+
 .ant-message-notice {
-  margin-top: 50px;
+  margin: 0 auto;
 }
