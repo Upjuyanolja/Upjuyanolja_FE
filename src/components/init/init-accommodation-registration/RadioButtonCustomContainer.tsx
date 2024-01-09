@@ -4,7 +4,7 @@ import {
   AccommodationDetailCategoryProps,
 } from './type';
 import styled from 'styled-components';
-import { Radio } from 'antd';
+import { Form, Radio } from 'antd';
 import { useState } from 'react';
 
 export const RadioButtonCustomContainer = ({
@@ -26,16 +26,18 @@ export const RadioButtonCustomContainer = ({
           {label}
         </TextBox>
       </StyledTextContainer>
-      <CheckboxRadioGroup
-        onChange={(event) => onChange({ event })}
-        value={value}
-      >
-        {options.map((option, index) => (
-          <CheckboxRadio value={option} key={index}>
-            {option}
-          </CheckboxRadio>
-        ))}
-      </CheckboxRadioGroup>
+      <Form.Item name="accommodation-category">
+        <StyledCheckboxRadioGroup
+          onChange={(event) => onChange({ event })}
+          value={value}
+        >
+          {options.map((option, index) => (
+            <StyledCheckboxRadio value={option} key={index}>
+              {option}
+            </StyledCheckboxRadio>
+          ))}
+        </StyledCheckboxRadioGroup>
+      </Form.Item>
     </StyledWrapper>
   );
 };
@@ -61,7 +63,7 @@ const StyledTextContainer = styled.div`
   gap: 8px;
 `;
 
-const CheckboxRadioGroup = styled(Radio.Group)`
+const StyledCheckboxRadioGroup = styled(Radio.Group)`
   .ant-radio-wrapper {
     font-size: 16px;
     font-weight: 700;
@@ -105,6 +107,6 @@ const CheckboxRadioGroup = styled(Radio.Group)`
   }
 `;
 
-const CheckboxRadio = styled(Radio)`
+const StyledCheckboxRadio = styled(Radio)`
   display: block;
 `;
