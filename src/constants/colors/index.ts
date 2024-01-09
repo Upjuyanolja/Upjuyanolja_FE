@@ -25,4 +25,5 @@ export const colors = {
   darkActive: '#012473',
   darker: '#011c59',
   subOrange: '#EF5320',
+  neutral5: '#D9D9D9',
 };
