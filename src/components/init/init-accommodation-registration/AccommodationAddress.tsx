@@ -5,6 +5,7 @@ import { AddressHandleInputChangeProps } from './type';
 import { AddressFormatProps } from '@components/init/init-accommodation-registration/type';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { ADDRESS_TYPE_ROAD } from '@/constants/init/init-accommodation-registration';
+import { TextBox } from '@components/text-box';
 
 export const AccommodationAddress = () => {
   const [inputPostCode, setInputPostCode] = useState('');
@@ -55,47 +56,45 @@ export const AccommodationAddress = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item
-        rules={[{ required: true }]}
-        label="숙소 위치"
-        colon={false}
-        htmlFor="accommodationDetailAddress"
-      >
-        <StyledAddressWrapper>
-          <StyledInput
-            id="accommodationPost"
-            placeholder="우편번호"
-            value={inputPostCode}
-            data-testid="accommodation-post"
-            readOnly={true}
-            style={{ cursor: 'default' }}
-            disabled={true}
-          />
-          <StyledAddressButton
-            type="primary"
-            data-testid="acccommodation-address-api-button"
-            onClick={openAddressAPI}
-          >
-            주소 검색
-          </StyledAddressButton>
-        </StyledAddressWrapper>
+      <TextBox typography="h4" fontWeight={700}>
+        숙소 위치
+      </TextBox>
+      <StyledAddressWrapper>
         <StyledInput
-          id="accommodationAddress"
-          placeholder="주소"
-          value={inputAddress}
-          data-testid="accommodation-address"
+          id="accommodation-postCode"
+          placeholder="우편번호"
+          value={inputPostCode}
+          data-testid="accommodation-post"
           readOnly={true}
           style={{ cursor: 'default' }}
           disabled={true}
         />
+        <StyledAddressButton
+          type="primary"
+          data-testid="acccommodation-address-api-button"
+          onClick={openAddressAPI}
+        >
+          주소 검색
+        </StyledAddressButton>
+      </StyledAddressWrapper>
+      <StyledInput
+        id="accommodation-address"
+        placeholder="주소"
+        value={inputAddress}
+        data-testid="accommodation-address"
+        readOnly={true}
+        style={{ cursor: 'default' }}
+        disabled={true}
+      />
+      <Form.Item name="accommodation-detailAddress">
         <StyledInput
-          id="accommodationDetailAddress"
+          id="accommodation-detailAddress"
           placeholder="상세주소"
           value={inputDetailAddress}
           onChange={(event) =>
             handleInputChange({
               event,
-              inputType: 'accommodationDetailAddress',
+              inputType: 'accommodation-detailAddress',
             })
           }
         />
@@ -107,32 +106,12 @@ export const AccommodationAddress = () => {
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .ant-form-item-control {
-    width: 100%;
-  }
-
-  .ant-form-item-control-input-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .ant-input {
+  .ant-form-item {
+    margin-bottom: 0;
     font-size: 16px;
   }
 `;
