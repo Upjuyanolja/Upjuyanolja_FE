@@ -3,6 +3,7 @@ import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { TextBox } from '@components/text-box';
 import { Button, DatePicker, Select } from 'antd';
 import { RangePickerProps } from 'antd/lib/date-picker';
+import { ReactComponent as Logo } from '@assets/image/smallLogo.svg';
 import moment from 'moment';
 import styled from 'styled-components';
 
@@ -60,6 +61,7 @@ export const CouponHeader = () => {
             </TextBox>
           </StyledDeleteButton>
           <StyledPurchaseButton>
+            <Logo />
             <TextBox typography="body2" fontWeight={700} color="white">
               추가 구매
             </TextBox>
@@ -112,7 +114,7 @@ const StyledDeleteButton = styled(Button)`
   background-color: ${colors.midGray};
   border: 1px solid ${colors.black300};
   color: ${colors.black700};
-  padding: 0 8px;
+  padding: 2px 8px;
   border-radius: 2px;
 
   &.ant-btn:hover,
@@ -130,6 +132,12 @@ const StyledDeleteButton = styled(Button)`
 const StyledPurchaseButton = styled(Button)`
   background-color: ${colors.dark};
   border-radius: 2px;
+  padding: 4px 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 
   &.ant-btn:hover {
     background-color: ${colors.darkHover};
