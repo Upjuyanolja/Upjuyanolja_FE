@@ -12,6 +12,8 @@ import { NameContainer } from '@components/init/NameContainer';
 const RoomRegistration = () => {
   const isValid = true;
 
+  const [form] = Form.useForm();
+
   const accommodationOptions = [
     '객실취사',
     '주차시설',
@@ -26,10 +28,10 @@ const RoomRegistration = () => {
 
   return (
     <StyledWrapper color={colors.white}>
-      <Form>
+      <Form form={form}>
         <AccommodationCategory />
         <NameContainer header="숙소명" />
-        <AccommodationAddress />
+        <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <StyledInputWrapper>
           <CheckBoxContainer

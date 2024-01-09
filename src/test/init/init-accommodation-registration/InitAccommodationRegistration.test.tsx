@@ -8,6 +8,7 @@ import {
   ACCOMMODATION_DESC_MAX_LENGTH,
   ACCOMMODATION_DESC_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
+import { Form } from 'antd';
 
 jest.mock('react-daum-postcode', () => ({
   useDaumPostcodePopup: jest.fn(),
@@ -15,6 +16,7 @@ jest.mock('react-daum-postcode', () => ({
 
 describe('InitAccommodationRegistration', () => {
   test('주소 검색 버튼을 누르면 API 팝업이 열린다.', () => {
+    const [form] = Form.useForm();
     const mockOpenAddressPopup = jest.fn();
 
     jest
@@ -23,7 +25,7 @@ describe('InitAccommodationRegistration', () => {
 
     render(
       <BrowserRouter>
-        <AccommodationAddress />
+        <AccommodationAddress form={form} />
       </BrowserRouter>,
     );
 

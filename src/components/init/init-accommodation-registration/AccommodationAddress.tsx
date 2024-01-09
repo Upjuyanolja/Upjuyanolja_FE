@@ -5,8 +5,13 @@ import { AddressHandleInputChangeProps } from './type';
 import { AddressFormatProps } from '@components/init/init-accommodation-registration/type';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { ADDRESS_TYPE_ROAD } from '@/constants/init/init-accommodation-registration';
+import { TextBox } from '@components/text-box';
 
-export const AccommodationAddress = () => {
+export const AccommodationAddress = ({
+  form,
+}: {
+  form: import('antd').FormInstance;
+}) => {
   const [inputPostCode, setInputPostCode] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [inputDetailAddress, setInputDetailAddress] = useState('');
@@ -47,6 +52,11 @@ export const AccommodationAddress = () => {
 
     setInputPostCode(data.zonecode);
     setInputAddress(fullAddress);
+
+    form.setFieldsValue({
+      'accommodation-postCode': data.zonecode,
+      'accommodation-address': fullAddress,
+    });
   };
 
   const openAddressAPI = () => {
@@ -55,15 +65,13 @@ export const AccommodationAddress = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item
-        rules={[{ required: true }]}
-        label="숙소 위치"
-        colon={false}
-        htmlFor="accommodationDetailAddress"
-      >
-        <StyledAddressWrapper>
+      <TextBox typography="h4" fontWeight={700}>
+        숙소 위치
+      </TextBox>
+      <StyledAddressWrapper>
+        <Form.Item name="accommodation-postCode">
           <StyledInput
-            id="accommodationPost"
+            id="accommodation-postCode"
             placeholder="우편번호"
             value={inputPostCode}
             data-testid="accommodation-post"
@@ -71,16 +79,18 @@ export const AccommodationAddress = () => {
             style={{ cursor: 'default' }}
             disabled={true}
           />
-          <StyledAddressButton
-            type="primary"
-            data-testid="acccommodation-address-api-button"
-            onClick={openAddressAPI}
-          >
-            주소 검색
-          </StyledAddressButton>
-        </StyledAddressWrapper>
+        </Form.Item>
+        <StyledAddressButton
+          type="primary"
+          data-testid="acccommodation-address-api-button"
+          onClick={openAddressAPI}
+        >
+          주소 검색
+        </StyledAddressButton>
+      </StyledAddressWrapper>
+      <Form.Item name="accommodation-address">
         <StyledInput
-          id="accommodationAddress"
+          id="accommodation-address"
           placeholder="주소"
           value={inputAddress}
           data-testid="accommodation-address"
@@ -88,14 +98,16 @@ export const AccommodationAddress = () => {
           style={{ cursor: 'default' }}
           disabled={true}
         />
+      </Form.Item>
+      <Form.Item name="accommodation-detailAddress">
         <StyledInput
-          id="accommodationDetailAddress"
+          id="accommodation-detailAddress"
           placeholder="상세주소"
           value={inputDetailAddress}
           onChange={(event) =>
             handleInputChange({
               event,
-              inputType: 'accommodationDetailAddress',
+              inputType: 'accommodation-detailAddress',
             })
           }
         />
@@ -107,32 +119,12 @@ export const AccommodationAddress = () => {
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .ant-form-item-control {
-    width: 100%;
-  }
-
-  .ant-form-item-control-input-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .ant-input {
+  .ant-form-item {
+    margin-bottom: 0;
     font-size: 16px;
   }
 `;
