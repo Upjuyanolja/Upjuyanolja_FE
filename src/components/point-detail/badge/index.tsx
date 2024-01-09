@@ -1,12 +1,9 @@
 import { colors } from '@/constants/colors';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { badgeProps } from './types';
 
-export const OrderStatusBadge = ({
-  status,
-}: {
-  status: '구매 확정' | '결제 완료' | '취소 완료';
-}) => {
+export const OrderStatusBadge = ({ status }: badgeProps) => {
   const [color, setColor] = useState('');
 
   useEffect(() => {
