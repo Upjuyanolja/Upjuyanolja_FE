@@ -26,7 +26,7 @@ export const InitAccommodationRegistration = () => {
     '세미나실',
   ];
 
-  const onFinish = (values) => {
+  const onFinish = (values: any) => {
     console.log(values);
   };
 
@@ -37,12 +37,7 @@ export const InitAccommodationRegistration = () => {
         <NameContainer header="숙소명" />
         <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
-        <StyledInputWrapper>
-          <CheckBoxContainer
-            options={accommodationOptions}
-            header="숙소 옵션"
-          />
-        </StyledInputWrapper>
+        <CheckBoxContainer options={accommodationOptions} header="숙소 옵션" />
         <AccommodationDesc />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
@@ -56,8 +51,4 @@ const StyledWrapper = styled.div`
   padding: 40px;
 
   border-radius: 8px;
-`;
-
-const StyledInputWrapper = styled.div`
-  margin-bottom: 48px;
 `;

@@ -35,6 +35,8 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
 
+  margin-bottom: 48px;
+
   background-color: ${(props) => props.color};
 
   padding: 0;
