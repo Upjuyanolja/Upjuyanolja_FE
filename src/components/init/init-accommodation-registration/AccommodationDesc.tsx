@@ -10,10 +10,12 @@ import {
 import { ValidateInputProps } from '../type';
 
 import { TextBox } from '@components/text-box';
+import { useRecoilState } from 'recoil';
+import { descErrorMessage } from '@stores/init/atoms';
 
 export const AccommodationDesc = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useRecoilState(descErrorMessage);
 
   const handleTextAreaChange = ({ event }: HandleTextAreaChangeProps) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_DESC_MAX_LENGTH);
@@ -23,11 +25,11 @@ export const AccommodationDesc = () => {
 
   const validateTextArea = ({ value }: ValidateInputProps) => {
     if (value.length < ACCOMMODATION_DESC_MIN_LENGTH) {
-      setError(
+      setErrorMessage(
         `숙소 소개는 최소 ${ACCOMMODATION_DESC_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
     } else {
-      setError(null);
+      setErrorMessage('');
     }
   };
 
@@ -46,12 +48,12 @@ export const AccommodationDesc = () => {
           disabled={textAreaValue.length >= ACCOMMODATION_DESC_MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
           onChange={(event) => handleTextAreaChange({ event })}
-          status={error ? 'error' : ''}
+          status={errorMessage ? 'error' : ''}
           data-testid="textarea-accommodation-desc"
         />
       </Form.Item>
       <StyledErrorMessageWrapper data-testid="error-textarea-accommodation-desc">
-        {error && <StyledFormErrorMessage errorMessage={error} />}
+        {errorMessage && <StyledFormErrorMessage errorMessage={errorMessage} />}
       </StyledErrorMessageWrapper>
     </StyledInputWrapper>
   );

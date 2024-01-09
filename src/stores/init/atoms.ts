@@ -55,3 +55,13 @@ export const isUploadedImage = atom({
   key: 'isUploadedImage',
   default: false,
 });
+
+export const nameErrorMessage = atom({
+  key: 'nameErrorMessage',
+  default: '',
+});
+
+export const descErrorMessage = atom({
+  key: 'descErrorMessage',
+  default: '',
+});

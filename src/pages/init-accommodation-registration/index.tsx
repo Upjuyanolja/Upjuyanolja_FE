@@ -9,7 +9,12 @@ import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
-import { isUploadedImage } from '@stores/init/atoms';
+import {
+  descErrorMessage,
+  isUploadedImage,
+  nameErrorMessage,
+} from '@stores/init/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export const InitAccommodationRegistration = () => {
   const [isValid, setIsValid] = useState(false);
@@ -32,6 +37,9 @@ export const InitAccommodationRegistration = () => {
     console.log(values);
   };
 
+  const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
+  const accommodationnDescErrorMessage = useRecoilValue(descErrorMessage);
+
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
     return (
@@ -41,7 +49,9 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-address'] &&
       values['accommodation-detailAddress'] &&
       values['accommodation-desc'] &&
-      isUploadedImage
+      isUploadedImage &&
+      accommodationNameErrorMessage === '' &&
+      accommodationnDescErrorMessage === ''
     );
   };
 
