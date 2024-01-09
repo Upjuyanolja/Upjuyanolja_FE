@@ -15,7 +15,7 @@ export const OrderStatusBadge = ({
         setColor(colors.primary);
         break;
       case '결제 완료':
-        setColor(colors.subOrange);
+        setColor(colors.orange);
         break;
       case '취소 완료':
         setColor(colors.black500);
