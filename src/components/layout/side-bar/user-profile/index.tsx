@@ -2,8 +2,15 @@ import { Button, Space } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
+import { PointModal } from '@components/modal/point/point-modal';
+import { useState } from 'react';
 
 export const UserProfile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
   return (
     <StyledSpace direction="vertical" align="center">
       <TextBox typography="h5" color="primary" fontWeight="bold">
@@ -12,9 +19,10 @@ export const UserProfile = () => {
       <TextBox typography="h3" color="black900" fontWeight="bold">
         330,000 P
       </TextBox>
-      <StyledButton type="primary" size="large">
+      <StyledButton type="primary" size="large" onClick={showModal}>
         포인트 추가하기
       </StyledButton>
+      <PointModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </StyledSpace>
   );
 };

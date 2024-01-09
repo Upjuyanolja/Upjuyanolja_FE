@@ -1,7 +1,7 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
-import { CouponPreviewItem } from './coupoin-preview-item';
+import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { useEffect, useState } from 'react';
 import { Button, Checkbox } from 'antd';
