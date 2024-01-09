@@ -7,7 +7,11 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { ADDRESS_TYPE_ROAD } from '@/constants/init/init-accommodation-registration';
 import { TextBox } from '@components/text-box';
 
-export const AccommodationAddress = () => {
+export const AccommodationAddress = ({
+  form,
+}: {
+  form: import('antd').FormInstance;
+}) => {
   const [inputPostCode, setInputPostCode] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [inputDetailAddress, setInputDetailAddress] = useState('');
@@ -48,6 +52,11 @@ export const AccommodationAddress = () => {
 
     setInputPostCode(data.zonecode);
     setInputAddress(fullAddress);
+
+    form.setFieldsValue({
+      'accommodation-postCode': data.zonecode,
+      'accommodation-address': fullAddress,
+    });
   };
 
   const openAddressAPI = () => {
@@ -60,15 +69,17 @@ export const AccommodationAddress = () => {
         숙소 위치
       </TextBox>
       <StyledAddressWrapper>
-        <StyledInput
-          id="accommodation-postCode"
-          placeholder="우편번호"
-          value={inputPostCode}
-          data-testid="accommodation-post"
-          readOnly={true}
-          style={{ cursor: 'default' }}
-          disabled={true}
-        />
+        <Form.Item name="accommodation-postCode">
+          <StyledInput
+            id="accommodation-postCode"
+            placeholder="우편번호"
+            value={inputPostCode}
+            data-testid="accommodation-post"
+            readOnly={true}
+            style={{ cursor: 'default' }}
+            disabled={true}
+          />
+        </Form.Item>
         <StyledAddressButton
           type="primary"
           data-testid="acccommodation-address-api-button"
@@ -77,15 +88,17 @@ export const AccommodationAddress = () => {
           주소 검색
         </StyledAddressButton>
       </StyledAddressWrapper>
-      <StyledInput
-        id="accommodation-address"
-        placeholder="주소"
-        value={inputAddress}
-        data-testid="accommodation-address"
-        readOnly={true}
-        style={{ cursor: 'default' }}
-        disabled={true}
-      />
+      <Form.Item name="accommodation-address">
+        <StyledInput
+          id="accommodation-address"
+          placeholder="주소"
+          value={inputAddress}
+          data-testid="accommodation-address"
+          readOnly={true}
+          style={{ cursor: 'default' }}
+          disabled={true}
+        />
+      </Form.Item>
       <Form.Item name="accommodation-detailAddress">
         <StyledInput
           id="accommodation-detailAddress"
