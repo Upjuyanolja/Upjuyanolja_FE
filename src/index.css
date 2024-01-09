@@ -74,8 +74,10 @@
 .ant-message-warning .anticon {
   color: white;
 }
+
 .ant-message-notice {
-  margin-top: 50vh;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 
 .ant-table-row-selected td[rowspan] {
