@@ -5,6 +5,22 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('네비게이션', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: jest.fn().mockImplementation((query) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    });
+  });
+
   const queryClient = new QueryClient();
   test('렌더링 테스트', () => {
     render(
@@ -31,6 +47,7 @@ describe('네비게이션', () => {
       userEvent.click(chargePointButton);
     });
     const modalText = await screen.findByText('포인트 충전');
+
     expect(modalText).toBeInTheDocument();
   });
 });
