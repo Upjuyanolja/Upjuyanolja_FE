@@ -1,6 +1,6 @@
 import { HttpResponse } from 'msw';
-import accommodationListData from '@assets/data/accommodationListData.json';
+import accommodationsData from '@assets/data/accommodationsData.json';
 
-export const getAccommodationListResolver = () => {
-  return HttpResponse.json(accommodationListData, { status: 200 });
+export const getAccommodationsResolver = () => {
+  return HttpResponse.json(accommodationsData, { status: 200 });
 };
