@@ -15,9 +15,8 @@ export const SideBar = () => {
     isAccommodationListError,
   } = useSideBar();
 
-  if (!userInfoData) return <div>로딩</div>;
-  if (!pointSummaryData) return <div>로딩</div>;
-  if (!accommodationListData) return <div>로딩</div>;
+  if (!userInfoData || !pointSummaryData || !accommodationListData)
+    return <div>로딩</div>;
   if (isUserInfoError || isPointSummaryError || isAccommodationListError)
     return <div>에러</div>;
 

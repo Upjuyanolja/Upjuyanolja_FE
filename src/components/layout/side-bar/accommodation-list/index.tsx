@@ -26,7 +26,8 @@ export const AccommodationList = ({
           </TextBox>
           <StyledCheckCircleFilled />
         </StyledFlex>
-        {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
+        {accommodations.length > 1 &&
+          (clickedSelectBox ? <UpOutlined /> : <DownOutlined />)}
       </StyledButton>
       <StyledAccommodationWrap className={clickedSelectBox ? 'active' : null}>
         {accommodations.map((item, index) => (
