@@ -1,12 +1,10 @@
-export type StyledAccommodationItemProps = {
-  hoverColor?: string;
-  activeColor?: string;
-};
+import { AccommodationListData } from '@api/accommodation/type';
 
 export type StyledAccommodationWrapProps = {
-  height?: string;
+  $height?: string;
+  className: string | null;
 };
 
-export type StyledCheckCircleFilled = {
-  color?: string;
+export type AccommodationListProps = {
+  accommodationListData: AccommodationListData;
 };

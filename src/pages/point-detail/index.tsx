@@ -1,5 +1,18 @@
-import React from 'react';
+import { Layout } from 'antd';
+
+import styled from 'styled-components';
+
+import { PointBox } from '@components/point-detail/point-box';
+import { PointDetailComp } from '@components/point-detail';
 
 export const PointDetail = () => {
-  return <div>point detail page</div>;
+  return (
+    <StyledLayout>
+      <PointBox />
+      <PointDetailComp />
+    </StyledLayout>
+  );
 };
+const StyledLayout = styled(Layout)`
+  padding: 32px 48px;
+`;

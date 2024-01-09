@@ -1,50 +1,23 @@
+<<<<<<< HEAD
+=======
+import { TextBox } from '@components/text-box';
+>>>>>>> 93e2adaac3290917ce64c64dda3d136db332c867
 import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
 import { useState } from 'react';
-import {
-  StyledAccommodationItemProps,
-  StyledAccommodationWrapProps,
-} from './type';
+import { AccommodationListProps, StyledAccommodationWrapProps } from './type';
 import { CheckCircleFilled, DownOutlined, UpOutlined } from '@ant-design/icons';
 import { TextBox } from '@components/text-box';
 
-export const AccommodationList = () => {
+export const AccommodationList = ({
+  accommodationListData,
+}: AccommodationListProps) => {
   const [clickedSelectBox, setClickedSelectBox] = useState(false);
-  const accommodationMap = [
-    {
-      name: '패캠스테이 삼성점',
-      id: 'accommodation1',
-      icon: null,
-      test: true,
-    },
-    {
-      name: '패캠스테이 수원점',
-      id: 'accommodation2',
-      icon: null,
-      test: false,
-    },
-    {
-      name: '패캠스테이 천안점',
-      id: 'accommodation3',
-      icon: null,
-      test: false,
-    },
-    {
-      name: '패캠스테이 인천점',
-      id: 'accommodation4',
-      icon: null,
-      test: false,
-    },
-    {
-      name: '패캠스테이 부산점',
-      id: 'accommodation5',
-      icon: null,
-      test: false,
-    },
-  ];
+  const { accommodations } = accommodationListData;
 
   const handleSelectBox = () => {
+    if (accommodations.length <= 1) return;
     setClickedSelectBox(!clickedSelectBox);
   };
 
@@ -52,32 +25,22 @@ export const AccommodationList = () => {
     <Container>
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
-          <TextBox typography="body2" bold={true} cursor="pointer">
-            {accommodationMap[0].name}
+          <TextBox typography="body2" fontWeight="bold">
+            {accommodations[0].name}
           </TextBox>
-          {accommodationMap.map(
-            (item, index) =>
-              item.test && (
-                <StyledCheckCircleFilled key={index} color={colors.primary} />
-              ),
-          )}
+          <StyledCheckCircleFilled />
         </StyledFlex>
-        {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
+        {accommodations.length > 1 &&
+          (clickedSelectBox ? <UpOutlined /> : <DownOutlined />)}
       </StyledButton>
-      <StyledAccommodationWrap height={clickedSelectBox ? 'auto' : '0'}>
-        {accommodationMap.map((item, index) => (
-          <StyledAccommodationItem
-            key={item.id}
-            hoverColor={colors.light}
-            activeColor={colors.lightActive}
-          >
+      <StyledAccommodationWrap className={clickedSelectBox ? 'active' : null}>
+        {accommodations.map((item, index) => (
+          <StyledAccommodationItem key={item.id}>
             <StyledFlex>
-              <TextBox typography="body3" cursor="pointer">
+              <TextBox typography="body3" fontWeight="bold">
                 {item.name}
               </TextBox>
-              {item.test && (
-                <StyledCheckCircleFilled key={index} color={colors.primary} />
-              )}
+              <StyledCheckCircleFilled key={index} />
             </StyledFlex>
           </StyledAccommodationItem>
         ))}
@@ -102,24 +65,27 @@ const StyledButton = styled(Button)`
 const StyledAccommodationWrap = styled.ul<StyledAccommodationWrapProps>`
   padding: 0;
   margin-bottom: 0;
-  height: ${(props) => props.height};
+  height: 0;
   overflow: hidden;
+  &.active {
+    height: auto;
+  }
 `;
 
-const StyledAccommodationItem = styled.li<StyledAccommodationItemProps>`
+const StyledAccommodationItem = styled.li`
   padding: 5px 0 5px 16px;
   cursor: pointer;
   &:hover {
-    background-color: ${(props) => props.hoverColor};
+    background-color: ${colors.lightHover};
   }
   &:active {
-    background-color: ${(props) => props.activeColor};
+    background-color: ${colors.lightActive};
   }
 `;
 
 const StyledCheckCircleFilled = styled(CheckCircleFilled)`
   font-size: 18px;
-  color: ${(props) => props.color};
+  color: ${colors.primary};
   margin-left: 4px;
 `;
 

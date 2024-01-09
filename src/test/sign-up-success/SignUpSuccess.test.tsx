@@ -1,9 +1,7 @@
-/**
- * @jest-environment jsdom
- */
 import { fireEvent, render, screen } from '@testing-library/react';
 import SignUpSuccess from '.';
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 const mockedUsedNavigate = jest.fn();
 
@@ -14,7 +12,11 @@ jest.mock('react-router-dom', () => ({
 
 test('로그인 하러 가기 버튼 테스트', async () => {
   // 1. Arrange
-  render(<SignUpSuccess />);
+  render(
+    <BrowserRouter>
+      <SignUpSuccess></SignUpSuccess>
+    </BrowserRouter>,
+  );
 
   // 2. Act
   const btn = await screen.findByTestId('btn');
