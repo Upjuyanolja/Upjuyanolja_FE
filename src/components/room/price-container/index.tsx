@@ -6,7 +6,7 @@ import {
   PriceContainerProps,
   PriceHandleInputChangeProps,
   ValidateInputProps,
-} from '../type';
+} from './type';
 import {
   NUMBER_REGEX,
   MAX_PRICE,
@@ -16,7 +16,7 @@ import {
 } from '@/constants/room/room-registration';
 import { TextBox } from '@components/text-box';
 
-export const PriceContainer = ({ labelText }: PriceContainerProps) => {
+export const PriceContainer = ({ header }: PriceContainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
@@ -41,10 +41,12 @@ export const PriceContainer = ({ labelText }: PriceContainerProps) => {
     <StyledInputWrapper>
       <Form.Item
         rules={[{ required: true }]}
-        label={labelText}
         colon={false}
         style={{ marginBottom: 0 }}
       >
+        <TextBox typography="h4" fontWeight={700}>
+          {header}
+        </TextBox>
         <StyledRow>
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
@@ -59,7 +61,7 @@ export const PriceContainer = ({ labelText }: PriceContainerProps) => {
             maxLength={MAX_PRICE_LENGTH}
             style={{
               height: 40,
-              width: labelText === '' ? '440px' : '',
+              width: header === '' ? '440px' : '',
             }}
             value={inputValue.toString()}
             onChange={(event) => handleInputChange({ event })}
@@ -87,8 +89,8 @@ const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
   position: relative;
 
-  .ant-form-item-label {
-    label {
+  .ant-form-item-header {
+    header {
       font-size: 24px;
       font-weight: 700;
       line-height: 36px;
@@ -113,10 +115,10 @@ const StyledInputWrapper = styled.div`
 
 const StyledErrorMessageWrapper = styled.div`
   height: 18px;
+  width: 100%;
   position: absolute;
   bottom: -24px;
   left: 0;
-  width: 100%;
 `;
 
 const StyledFormErrorMessage = styled(FormErrorMessage)`
@@ -137,6 +139,7 @@ const StyledInput = styled(Input)`
   width: 160px;
   height: 40px;
   font-size: 16px;
+  margin-right: 4px;
 `;
 
 const StyledRow = styled.div`

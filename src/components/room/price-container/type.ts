@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 export type PriceContainerProps = {
-  labelText: string;
+  header: string;
 };
 
 export type PriceHandleInputChangeProps = {

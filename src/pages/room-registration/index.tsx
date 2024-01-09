@@ -6,10 +6,11 @@ import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { PriceContainer } from '@components/room/price-container';
+import { CapacityContainer } from '@components/room/capacity-container';
+import { TextBox } from '@components/text-box';
 
 const RoomRegistration = () => {
   const isValid = true;
-
   const roomOptions = ['TV', '에어컨', '인터넷'];
 
   return (
@@ -17,9 +18,15 @@ const RoomRegistration = () => {
       <Form>
         <NameContainer header="객실명" />
         <StyledInputWrapper>
-          <PriceContainer labelText="객실 가격" />
+          <PriceContainer header="객실 가격" />
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />
+        <TextBox typography="h4" fontWeight={700}>
+          객실 인원
+        </TextBox>
+        <StyledInputWrapper>
+          <CapacityContainer />
+        </StyledInputWrapper>
         <StyledInputWrapper>
           <CheckBoxContainer options={roomOptions} header="객실 옵션" />
         </StyledInputWrapper>

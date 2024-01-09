@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 export type CapacityContainerProps = {
-  labelText: string;
+  header: string;
 };
 
 export type CapacityHandleInputChangeProps = {
