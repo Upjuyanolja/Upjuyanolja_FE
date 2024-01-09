@@ -12,6 +12,7 @@ import {
   ACCOMMODATION_NAME_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
 import { NAME_REGEX } from '@/constants/init';
+import { TextBox } from '@components/text-box';
 
 export const NameContainer = ({ header }: NameContainerProps) => {
   const [inputValue, setInputValue] = useState('');
@@ -37,7 +38,10 @@ export const NameContainer = ({ header }: NameContainerProps) => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item label={header} colon={false} name="accommodation-name">
+      <TextBox typography="h4" fontWeight={700}>
+        {header}
+      </TextBox>
+      <Form.Item name="accommodation-name">
         <Input
           id="accommodation-name"
           placeholder={`${header}을 입력해 주세요.`}
@@ -53,11 +57,10 @@ export const NameContainer = ({ header }: NameContainerProps) => {
           autoComplete="on"
         />
       </Form.Item>
-      {error && (
-        <StyledErrorMessageWrapper data-testid="error-input-name">
-          <StyledFormErrorMessage errorMessage={error} />
-        </StyledErrorMessageWrapper>
-      )}
+
+      <StyledErrorMessageWrapper data-testid="error-input-name">
+        {error && <StyledFormErrorMessage errorMessage={error} />}
+      </StyledErrorMessageWrapper>
     </StyledInputWrapper>
   );
 };
@@ -65,24 +68,9 @@ export const NameContainer = ({ header }: NameContainerProps) => {
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
-
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .ant-form-item-control {
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
   .ant-input {
     font-size: 16px;
