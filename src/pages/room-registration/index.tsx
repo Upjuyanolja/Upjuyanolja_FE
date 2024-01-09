@@ -1,6 +1,5 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
-import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
@@ -11,30 +10,19 @@ import { PriceContainer } from '@components/room/price-container';
 const RoomRegistration = () => {
   const isValid = true;
 
-  const accommodationOptions = [
-    '객실취사',
-    '주차시설',
-    '픽업 서비스',
-    '바베큐장',
-    '휘트니스센터',
-    '노래방',
-    '에어컨',
-    '사우나실',
-    '세미나실',
-  ];
+  const roomOptions = ['TV', '에어컨', '인터넷'];
 
   return (
     <StyledWrapper color={colors.white}>
       <Form>
         <NameContainer labelText="객실명" />
         <StyledInputWrapper>
-          <PriceContainer labelText="객실가격" />
+          <PriceContainer labelText="객실 가격" />
         </StyledInputWrapper>
         <ImageUploadContainer />
         <StyledInputWrapper>
-          <CheckBoxContainer options={accommodationOptions} label="숙소 옵션" />
+          <CheckBoxContainer options={roomOptions} label="객실 옵션" />
         </StyledInputWrapper>
-        <AccommodationDesc />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
     </StyledWrapper>
