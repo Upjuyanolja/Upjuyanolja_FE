@@ -32,21 +32,34 @@ export const InitAccommodationRegistration = () => {
     console.log(values);
   };
 
-  useEffect(() => {
-    const areFormFieldsValid =
-      form.getFieldValue('accommodation-category') &&
-      form.getFieldValue('accommodation-name') &&
-      form.getFieldValue('accommodation-postCode') &&
-      form.getFieldValue('accommodation-address') &&
-      form.getFieldValue('accommodation-detailAddress') &&
-      isUploadedImage;
+  const areFormFieldsValid = () => {
+    const values = form.getFieldsValue();
+    return (
+      values['accommodation-category'] &&
+      values['accommodation-name'] &&
+      values['accommodation-postCode'] &&
+      values['accommodation-address'] &&
+      values['accommodation-detailAddress'] &&
+      values['accommodation-desc'] &&
+      isUploadedImage
+    );
+  };
 
-    setIsValid(areFormFieldsValid);
+  useEffect(() => {
+    setIsValid(areFormFieldsValid());
   }, [form, isUploadedImage]);
+
+  const handleFormValuesChange = () => {
+    setIsValid(areFormFieldsValid());
+  };
 
   return (
     <StyledWrapper color={colors.white}>
-      <Form onFinish={onFinish} form={form}>
+      <Form
+        onFinish={onFinish}
+        form={form}
+        onValuesChange={handleFormValuesChange}
+      >
         <AccommodationCategory />
         <NameContainer header="숙소명" />
         <AccommodationAddress form={form} />

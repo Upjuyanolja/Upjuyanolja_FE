@@ -1,5 +1,5 @@
 import { TextBox } from '@components/text-box';
-import { Modal, Form, message } from 'antd';
+import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef, useEffect } from 'react';
@@ -80,75 +80,64 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item
-        rules={[{ required: true }]}
-        label="file-input"
-        htmlFor="file-input"
-        colon={false}
+      <StyledHeadTextContainer>
+        <TextBox typography="h4" fontWeight={700}>
+          {header}
+        </TextBox>
+        <TextBox color="black600" typography="body3">
+          이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
+        </TextBox>
+      </StyledHeadTextContainer>
+      <StyledImageContainer $fileList={fileList}>
+        {fileList.map((file) => (
+          <div key={file.uid}>
+            <StyledCloseButton
+              onClick={() => handleRemove(file)}
+              twoToneColor={colors.black600}
+            />
+            <img
+              src={file.url}
+              alt={file.name}
+              onClick={() => handleImageClick(file)}
+            />
+          </div>
+        ))}
+        {fileList.length < IMAGE_MAX_COUNT && (
+          <StyledUploadButtonWrapper onClick={openFileInput}>
+            <PlusOutlined />
+            <TextBox typography="body3" color="black600">
+              이미지 추가하기
+            </TextBox>
+            <input
+              id="file-input"
+              type="file"
+              accept=".png, .jpeg, .jpg"
+              ref={fileInputRef}
+              onChange={(event) => handleChange({ event })}
+              style={{ display: 'none' }}
+              data-testid="file-input"
+            />
+          </StyledUploadButtonWrapper>
+        )}
+      </StyledImageContainer>
+      <Modal
+        open={previewOpen}
+        title={previewTitle}
+        footer={null}
+        onCancel={handleCancel}
       >
-        <StyledHeadTextContainer>
-          <TextBox typography="h4" fontWeight={700}>
-            {header}
-          </TextBox>
-          <TextBox color="black600" typography="body3">
-            이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
-          </TextBox>
-        </StyledHeadTextContainer>
-        <StyledImageContainer $fileList={fileList}>
-          {fileList.map((file) => (
-            <div key={file.uid}>
-              <StyledCloseButton
-                onClick={() => handleRemove(file)}
-                twoToneColor={colors.black600}
-              />
-              <img
-                src={file.url}
-                alt={file.name}
-                onClick={() => handleImageClick(file)}
-              />
-            </div>
-          ))}
-          {fileList.length < IMAGE_MAX_COUNT && (
-            <StyledUploadButtonWrapper onClick={openFileInput}>
-              <PlusOutlined />
-              <TextBox typography="body3" color="black600">
-                이미지 추가하기
-              </TextBox>
-              <input
-                id="file-input"
-                type="file"
-                accept=".png, .jpeg, .jpg"
-                ref={fileInputRef}
-                onChange={(event) => handleChange({ event })}
-                style={{ display: 'none' }}
-                data-testid="file-input"
-              />
-            </StyledUploadButtonWrapper>
-          )}
-        </StyledImageContainer>
-        <Modal
-          open={previewOpen}
-          title={previewTitle}
-          footer={null}
-          onCancel={handleCancel}
-        >
-          <img
-            alt={previewTitle}
-            style={{ width: '100%' }}
-            src={fileList.find((file) => file.name === previewTitle)?.url}
-          />
-        </Modal>
-      </Form.Item>
+        <img
+          alt={previewTitle}
+          style={{ width: '100%' }}
+          src={fileList.find((file) => file.name === previewTitle)?.url}
+        />
+      </Modal>
     </StyledInputWrapper>
   );
 };
 
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
-
-  .ant-form-item-label {
-    display: none;
-  }
 `;
 
 const StyledHeadTextContainer = styled.div`

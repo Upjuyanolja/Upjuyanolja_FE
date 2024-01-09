@@ -57,7 +57,6 @@ export const NameContainer = ({ header }: NameContainerProps) => {
           autoComplete="on"
         />
       </Form.Item>
-
       <StyledErrorMessageWrapper data-testid="error-input-name">
         {error && <StyledFormErrorMessage errorMessage={error} />}
       </StyledErrorMessageWrapper>
