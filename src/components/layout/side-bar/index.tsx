@@ -11,12 +11,15 @@ export const SideBar = () => {
     isUserInfoError,
     pointSummaryData,
     isPointSummaryError,
+    accommodationListData,
+    isAccommodationListError,
   } = useSideBar();
 
-  if (!userInfoData) return <div>에러</div>;
-  if (!pointSummaryData) return <div>에러</div>;
-  if (isUserInfoError) return <div>에러</div>;
-  if (isPointSummaryError) return <div>에러</div>;
+  if (!userInfoData) return <div>로딩</div>;
+  if (!pointSummaryData) return <div>로딩</div>;
+  if (!accommodationListData) return <div>로딩</div>;
+  if (isUserInfoError || isPointSummaryError || isAccommodationListError)
+    return <div>에러</div>;
 
   return (
     <Container>
@@ -25,7 +28,7 @@ export const SideBar = () => {
           userInfoData={userInfoData}
           pointSummaryData={pointSummaryData}
         />
-        <AccommodationList />
+        <AccommodationList accommodationListData={accommodationListData} />
         <Navigation />
       </div>
       <SignOutBtn />

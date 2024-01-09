@@ -3,43 +3,14 @@ import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
 import { useState } from 'react';
-import { StyledAccommodationWrapProps } from './type';
+import { AccommodationListProps, StyledAccommodationWrapProps } from './type';
 import { CheckCircleFilled, DownOutlined, UpOutlined } from '@ant-design/icons';
 
-export const AccommodationList = () => {
+export const AccommodationList = ({
+  accommodationListData,
+}: AccommodationListProps) => {
   const [clickedSelectBox, setClickedSelectBox] = useState(false);
-  const accommodationMap = [
-    {
-      name: '패캠스테이 삼성점',
-      id: 'accommodation1',
-      icon: null,
-      test: true,
-    },
-    {
-      name: '패캠스테이 수원점',
-      id: 'accommodation2',
-      icon: null,
-      test: false,
-    },
-    {
-      name: '패캠스테이 천안점',
-      id: 'accommodation3',
-      icon: null,
-      test: false,
-    },
-    {
-      name: '패캠스테이 인천점',
-      id: 'accommodation4',
-      icon: null,
-      test: false,
-    },
-    {
-      name: '패캠스테이 부산점',
-      id: 'accommodation5',
-      icon: null,
-      test: false,
-    },
-  ];
+  const { accommodations } = accommodationListData;
 
   const handleSelectBox = () => {
     setClickedSelectBox(!clickedSelectBox);
@@ -50,23 +21,20 @@ export const AccommodationList = () => {
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
           <TextBox typography="body2" fontWeight="bold">
-            {accommodationMap[0].name}
+            {accommodations[0].name}
           </TextBox>
-          {accommodationMap.map(
-            (item, index) =>
-              item.test && <StyledCheckCircleFilled key={index} />,
-          )}
+          <StyledCheckCircleFilled />
         </StyledFlex>
         {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
       </StyledButton>
       <StyledAccommodationWrap className={clickedSelectBox ? 'active' : null}>
-        {accommodationMap.map((item, index) => (
+        {accommodations.map((item, index) => (
           <StyledAccommodationItem key={item.id}>
             <StyledFlex>
               <TextBox typography="body3" fontWeight="bold">
                 {item.name}
               </TextBox>
-              {item.test && <StyledCheckCircleFilled key={index} />}
+              <StyledCheckCircleFilled key={index} />
             </StyledFlex>
           </StyledAccommodationItem>
         ))}
