@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const JSDOMEnvironment = require('jest-environment-jsdom').default; // or import JSDOMEnvironment from 'jest-environment-jsdom' if you are using ESM modules
-
+const FileMock = require('./src/mocks/fileMock');
 class JSDOMEnvironmentExtended extends JSDOMEnvironment {
   constructor(...args) {
     super(...args);
@@ -10,7 +10,7 @@ class JSDOMEnvironmentExtended extends JSDOMEnvironment {
     this.global.TextEncoder = TextEncoder;
 
     this.global.Blob = Blob;
-    this.global.File = File;
+    this.global.File = FileMock;
     this.global.Headers = Headers;
     this.global.FormData = FormData;
     this.global.Request = Request;

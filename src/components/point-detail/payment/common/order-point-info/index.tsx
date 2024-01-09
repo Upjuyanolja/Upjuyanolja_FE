@@ -3,13 +3,9 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
+import { orderInfoProps } from './types';
 
-export const OrderPointInfo = ({
-  pointCharge,
-  status,
-}: 
-  orderInfoProps
-) => {
+export const OrderPointInfo = ({ pointCharge, status }: orderInfoProps) => {
   const [isCancelStatus, setIscancelStatus] = useState<boolean>(false);
 
   useEffect(() => {

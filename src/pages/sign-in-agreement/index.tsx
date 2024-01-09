@@ -249,4 +249,7 @@ const StyledPrevButton = styled(Button)`
 
 const StyledNextButton = styled(StyledPrevButton)`
   width: 258px;
+  &:disabled {
+    background-color: ${colors.black600};
+  }
 `;
