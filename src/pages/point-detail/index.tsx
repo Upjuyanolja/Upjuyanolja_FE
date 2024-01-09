@@ -1,37 +1,18 @@
-import { Button } from 'antd';
+import { Layout } from 'antd';
 
-import { useState } from 'react';
+import styled from 'styled-components';
 
-import { ReceiptModal } from '@components/modal/payment/receipt';
-import { CancelModal } from '@components/modal/payment/cancel';
+import { PointBox } from '@components/point-detail/point-box';
+import { PointDetailComp } from '@components/point-detail';
 
 export const PointDetail = () => {
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-
-  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
-
-  const showReceiptModal = () => {
-    setIsReceiptModalOpen(true);
-  };
-  const showCancelModal = () => {
-    setIsCancelModalOpen(true);
-  };
   return (
-    <>
-      <Button type="primary" onClick={showReceiptModal}>
-        결제 영수증
-      </Button>
-      <Button type="primary" onClick={showCancelModal}>
-        결제 취소
-      </Button>
-      <ReceiptModal
-        isModalOpen={isReceiptModalOpen}
-        setIsModalOpen={setIsReceiptModalOpen}
-      ></ReceiptModal>
-      <CancelModal
-        isModalOpen={isCancelModalOpen}
-        setIsModalOpen={setIsCancelModalOpen}
-      ></CancelModal>
-    </>
+    <StyledLayout>
+      <PointBox />
+      <PointDetailComp />
+    </StyledLayout>
   );
 };
+const StyledLayout = styled(Layout)`
+  padding: 32px 48px;
+`;
