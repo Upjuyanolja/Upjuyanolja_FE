@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { TableProps, tableData } from './type';
 import { TextBox } from '@components/text-box';
 import { ColumnsType } from 'antd/lib/table';
+import { CouponStatusTag } from '@components/coupon/coupon-status-tag';
 
 const columns: ColumnsType<tableData> = [
   {
@@ -33,23 +34,17 @@ const columns: ColumnsType<tableData> = [
   {
     title: '쿠폰 상태',
     dataIndex: 'status',
-    render: (text: string) => {
-      return (
-        <StyledStatusBox>
-          <TextBox fontWeight={700} typography="body2">
-            {text}
-          </TextBox>
-        </StyledStatusBox>
-      );
+    render: (status: string) => {
+      return <CouponStatusTag status={status} />;
     },
   },
   {
     title: '쿠폰 종류',
     dataIndex: 'name',
-    render: () => (
+    render: (text: string) => (
       <StyledCouponNameContainer>
         <TextBox fontWeight={700} typography="body2">
-          1,000원 쿠폰
+          {text}
         </TextBox>
         <TextBox color="black600" typography="body4" fontWeight={400}>
           (적용가 99,000원)
@@ -136,7 +131,7 @@ const data: tableData[] = [
     room: { name: '트윈 룸', price: '10,000원' },
     key: '4',
     status: '발급 중지',
-    name: '2,000원 쿠폰',
+    name: '100,000원 쿠폰',
     dayLimit: 5,
     quantity: 45,
     couponType: '휴일',
@@ -144,7 +139,7 @@ const data: tableData[] = [
   {
     room: { name: '트윈 룸', price: '10,000원' },
     key: '5',
-    status: '발급 중',
+    status: '소진',
     name: '1,000원 쿠폰',
     dayLimit: 3,
     quantity: 35,
@@ -188,18 +183,6 @@ const StyledTable = styled(Table)<TableProps>`
   .ant-checkbox-inner {
     border: 1px solid ${colors.primary};
   }
-`;
-
-const StyledStatusBox = styled.div`
-  background-color: ${colors.primary};
-  width: 75px;
-  height: 28px;
-  color: white;
-  border-radius: 2px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const StyledRoomContainer = styled.div`

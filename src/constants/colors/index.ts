@@ -26,4 +26,5 @@ export const colors = {
   darkHover: '#023199',
   darkActive: '#012473',
   darker: '#011c59',
+  orange: '#EF5320',
 };
