@@ -1,11 +1,13 @@
 import { colors } from '@/constants/colors';
 import { CouponHeader } from '@components/coupon/coupon-header';
-import { Input, Select, Table } from 'antd';
+import { Input, Modal, Select, Table } from 'antd';
 import styled from 'styled-components';
 import { TableProps, tableData } from './type';
 import { TextBox } from '@components/text-box';
 import { ColumnsType } from 'antd/lib/table';
 import { CouponStatusTag } from '@components/coupon/coupon-status-tag';
+import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase-footer';
+import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
 
 const columns: ColumnsType<tableData> = [
   {
@@ -167,6 +169,14 @@ export const Coupon = () => {
         dataSource={data}
         pagination={false}
       />
+
+      <StyledModal
+        open={true}
+        title="추가 구매"
+        footer={<AdditionalPurchaseFooter />}
+      >
+        <AdditionalPurchaseContent />
+      </StyledModal>
     </>
   );
 };
@@ -196,4 +206,42 @@ const StyledCouponNameContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+`;
+
+const StyledModal = styled(Modal)`
+  .ant-modal-content {
+    width: 576px;
+  }
+  .ant-modal-footer {
+    height: 177px;
+    padding: 24px;
+  }
+  .ant-modal-body {
+    height: 364px;
+    overflow-y: auto;
+    padding: 24px;
+  }
+  .ant-modal-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ant-modal-header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ant-modal-close {
+    top: 10px;
+  }
+  .ant-modal-title {
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .ant-modal-close-icon {
+    width: 20px;
+    height: 20px;
+    color: ${colors.black900};
+  }
 `;
