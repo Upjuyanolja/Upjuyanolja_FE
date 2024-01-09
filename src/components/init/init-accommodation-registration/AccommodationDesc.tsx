@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
 import { HandleTextAreaChangeProps } from './type';
 import {
@@ -8,16 +8,30 @@ import {
   ACCOMMODATION_DESC_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
 import { ValidateInputProps } from '../type';
+import { useRecoilState } from 'recoil';
+import { userInputValueState } from '@stores/init/userInputValueState';
+import { TextBox } from '@components/text-box';
 
 export const AccommodationDesc = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
   const [error, setError] = useState<string | null>(null);
 
   const handleTextAreaChange = ({ event }: HandleTextAreaChangeProps) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_DESC_MAX_LENGTH);
     setTextAreaValue(newValue);
     validateTextArea({ value: newValue });
+    !error &&
+      setUserInputValue((prevValue) => ({
+        ...prevValue,
+        description: textAreaValue,
+      }));
   };
+
+  useEffect(() => {
+    console.log(userInputValue);
+  }, [userInputValue]);
 
   const validateTextArea = ({ value }: ValidateInputProps) => {
     if (value.length < ACCOMMODATION_DESC_MIN_LENGTH) {
@@ -31,20 +45,21 @@ export const AccommodationDesc = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item label="숙소 소개" colon={false} name="accommodation-desc">
-        <Input.TextArea
-          id="accommodation-desc"
-          placeholder="고객에게 멋진 숙소를 소개해 주세요."
-          minLength={ACCOMMODATION_DESC_MIN_LENGTH}
-          showCount
-          maxLength={ACCOMMODATION_DESC_MAX_LENGTH}
-          disabled={textAreaValue.length >= ACCOMMODATION_DESC_MAX_LENGTH}
-          style={{ height: 160, resize: 'none' }}
-          onChange={(event) => handleTextAreaChange({ event })}
-          status={error ? 'error' : ''}
-          data-testid="textarea-accommodation-desc"
-        />
-      </Form.Item>
+      <TextBox typography="h4" fontWeight={700}>
+        숙소 소개
+      </TextBox>
+      <Input.TextArea
+        id="accommodation-desc"
+        placeholder="고객에게 멋진 숙소를 소개해 주세요."
+        minLength={ACCOMMODATION_DESC_MIN_LENGTH}
+        showCount
+        maxLength={ACCOMMODATION_DESC_MAX_LENGTH}
+        disabled={textAreaValue.length >= ACCOMMODATION_DESC_MAX_LENGTH}
+        style={{ height: 160, resize: 'none' }}
+        onChange={(event) => handleTextAreaChange({ event })}
+        status={error ? 'error' : ''}
+        data-testid="textarea-accommodation-desc"
+      />
       {error && (
         <StyledErrorMessageWrapper data-testid="error-textarea-accommodation-desc">
           <StyledFormErrorMessage errorMessage={error} />
@@ -57,31 +72,12 @@ export const AccommodationDesc = () => {
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
-
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .ant-form-item-control {
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
   .ant-input {
     font-size: 16px;
-  }
-
-  .ant-form-item {
-    margin-bottom: 0;
   }
 `;
 
