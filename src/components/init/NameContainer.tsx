@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
 import {
-  NameConatainerProps,
+  NameContainerProps,
   NameHandleInputChangeProps,
   ValidateInputProps,
 } from './type';
@@ -13,14 +13,14 @@ import {
 } from '@/constants/init/init-accommodation-registration';
 import { NAME_REGEX } from '@/constants/init';
 
-export const NameContainer = ({ labelText }: NameConatainerProps) => {
+export const NameContainer = ({ header }: NameContainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
       setError(
-        `${labelText}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
+        `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
     } else if (!NAME_REGEX.test(value)) {
       setError('한글, 영어, 숫자만 입력 가능합니다.');
@@ -37,26 +37,27 @@ export const NameContainer = ({ labelText }: NameConatainerProps) => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item rules={[{ required: true }]} label={labelText} colon={false}>
+      <Form.Item label={header} colon={false} name="accommodation-name">
         <Input
-          id="name"
-          placeholder={`${labelText}을 입력해 주세요.`}
+          id="accommodation-name"
+          placeholder={`${header}을 입력해 주세요.`}
           type="text"
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
-          style={{ height: 40, width: labelText === '객실명' ? '440px' : '' }}
+          style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
           value={inputValue}
           onChange={(event) => handleInputChange({ event })}
           disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
           status={error ? 'error' : ''}
           data-testid="input-name"
+          autoComplete="on"
         />
-        {error && (
-          <StyledErrorMessageWrapper data-testid="error-input-name">
-            <StyledFormErrorMessage errorMessage={error} />
-          </StyledErrorMessageWrapper>
-        )}
       </Form.Item>
+      {error && (
+        <StyledErrorMessageWrapper data-testid="error-input-name">
+          <StyledFormErrorMessage errorMessage={error} />
+        </StyledErrorMessageWrapper>
+      )}
     </StyledInputWrapper>
   );
 };
@@ -85,6 +86,10 @@ const StyledInputWrapper = styled.div`
 
   .ant-input {
     font-size: 16px;
+  }
+
+  .ant-form-item {
+    margin-bottom: 0;
   }
 `;
 

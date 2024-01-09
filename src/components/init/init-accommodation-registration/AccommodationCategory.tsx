@@ -13,6 +13,7 @@ import { AccommodationCategoryProps, ButtonClickedProps } from './type';
 import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
+import { Form } from 'antd';
 
 export const AccommodationCategory = () => {
   const [clickedCategory, setClickedCategory] =
@@ -29,82 +30,88 @@ export const AccommodationCategory = () => {
 
   return (
     <StyledInputWrapper>
-      <TextBox typography="h4" fontWeight={700}>
-        숙소 유형을 선택해주세요.
-      </TextBox>
-      <StyledButtonContainer>
-        <StyledButtonWrapper
-          onClick={() => handleButtonClick('hotelResort')}
-          $clicked={clickedCategory === 'hotelResort'}
-        >
-          <StyledHotelResortIcon $clicked={clickedCategory === 'hotelResort'} />
-          <TextBox
-            typography="h4"
-            fontWeight={700}
-            color="black600"
-            className="accommodation-category-text"
+      <Form.Item
+        rules={[{ required: true }]}
+        label="숙소 유형을 선택해주세요."
+        colon={false}
+      >
+        <StyledButtonContainer>
+          <StyledButtonWrapper
+            onClick={() => handleButtonClick('hotelResort')}
+            $clicked={clickedCategory === 'hotelResort'}
           >
-            호텔/리조트
-          </TextBox>
-        </StyledButtonWrapper>
-        <StyledButtonWrapper
-          onClick={() => handleButtonClick('motel')}
-          $clicked={clickedCategory === 'motel'}
-        >
-          <StyledMotelIcon $clicked={clickedCategory === 'motel'} />
-          <TextBox
-            typography="h4"
-            fontWeight={700}
-            color="black600"
-            className="accommodation-category-text"
+            <StyledHotelResortIcon
+              $clicked={clickedCategory === 'hotelResort'}
+            />
+            <TextBox
+              typography="h4"
+              fontWeight={700}
+              color="black600"
+              className="accommodation-category-text"
+            >
+              호텔/리조트
+            </TextBox>
+          </StyledButtonWrapper>
+          <StyledButtonWrapper
+            onClick={() => handleButtonClick('motel')}
+            $clicked={clickedCategory === 'motel'}
           >
-            모텔
-          </TextBox>
-        </StyledButtonWrapper>
-        <StyledButtonWrapper
-          onClick={() => handleButtonClick('pensionPool')}
-          $clicked={clickedCategory === 'pensionPool'}
-        >
-          <StyledPensionPoolIcon $clicked={clickedCategory === 'pensionPool'} />
-          <TextBox
-            typography="h4"
-            fontWeight={700}
-            color="black600"
-            className="accommodation-category-text"
+            <StyledMotelIcon $clicked={clickedCategory === 'motel'} />
+            <TextBox
+              typography="h4"
+              fontWeight={700}
+              color="black600"
+              className="accommodation-category-text"
+            >
+              모텔
+            </TextBox>
+          </StyledButtonWrapper>
+          <StyledButtonWrapper
+            onClick={() => handleButtonClick('pensionPool')}
+            $clicked={clickedCategory === 'pensionPool'}
           >
-            펜션/풀빌라
-          </TextBox>
-        </StyledButtonWrapper>
-        <StyledButtonWrapper
-          onClick={() => handleButtonClick('guestHouse')}
-          $clicked={clickedCategory === 'guestHouse'}
-        >
-          <StyledGuestHouseIcon $clicked={clickedCategory === 'guestHouse'} />
-          <TextBox
-            typography="h4"
-            fontWeight={700}
-            color="black600"
-            className="accommodation-category-text"
+            <StyledPensionPoolIcon
+              $clicked={clickedCategory === 'pensionPool'}
+            />
+            <TextBox
+              typography="h4"
+              fontWeight={700}
+              color="black600"
+              className="accommodation-category-text"
+            >
+              펜션/풀빌라
+            </TextBox>
+          </StyledButtonWrapper>
+          <StyledButtonWrapper
+            onClick={() => handleButtonClick('guestHouse')}
+            $clicked={clickedCategory === 'guestHouse'}
           >
-            게스트하우스
-          </TextBox>
-        </StyledButtonWrapper>
-      </StyledButtonContainer>
-      {clickedCategory === 'hotelResort' && (
-        <RadioButtonCustomContainer
-          options={hotelCategory}
-          label="상세 유형을 선택해 주세요."
-          icon={<FaCheck size={15} color={colors.primary} />}
-        />
-      )}
-
-      {clickedCategory === 'guestHouse' && (
-        <RadioButtonCustomContainer
-          options={guestHouseCategory}
-          label="상세 유형을 선택해 주세요."
-          icon={<FaCheck size={15} color={colors.primary} />}
-        />
-      )}
+            <StyledGuestHouseIcon $clicked={clickedCategory === 'guestHouse'} />
+            <TextBox
+              typography="h4"
+              fontWeight={700}
+              color="black600"
+              className="accommodation-category-text"
+            >
+              게스트하우스
+            </TextBox>
+          </StyledButtonWrapper>
+        </StyledButtonContainer>
+        {clickedCategory === 'hotelResort' && (
+          <RadioButtonCustomContainer
+            options={hotelCategory}
+            label="상세 유형을 선택해 주세요."
+            icon={<FaCheck size={15} color={colors.primary} />}
+          />
+        )}
+        {clickedCategory === 'guestHouse' && (
+          <RadioButtonCustomContainer
+            options={guestHouseCategory}
+            label="상세 유형을 선택해 주세요."
+            icon={<FaCheck size={15} color={colors.primary} />}
+          />
+        )}
+      </Form.Item>
     </StyledInputWrapper>
   );
 };
@@ -115,6 +122,25 @@ const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  .ant-form-item-label {
+    label {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 36px;
+    }
+  }
+
+  .ant-form-item-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .ant-form-item-control {
+    width: 100%;
+  }
 `;
 
 const StyledButtonContainer = styled.div`

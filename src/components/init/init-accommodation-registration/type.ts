@@ -31,3 +31,11 @@ export type AccommodationDetailCategoryProps = {
 export type AccommodationDetailCategoryOnchangeProps = {
   event: RadioChangeEvent;
 };
+
+export type AddressFormatProps = {
+  address: string;
+  addressType: string;
+  bname: string;
+  buildingName: string;
+  zonecode: string;
+};
