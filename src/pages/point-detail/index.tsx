@@ -2,8 +2,8 @@ import { Layout } from 'antd';
 
 import styled from 'styled-components';
 
-import { PointBox } from '@components/point/point-box';
-import { PointDetailComp } from '@components/point/point-detail';
+import { PointBox } from '@components/point-detail/point-box';
+import { PointDetailComp } from '@components/point-detail';
 
 export const PointDetail = () => {
   return (
