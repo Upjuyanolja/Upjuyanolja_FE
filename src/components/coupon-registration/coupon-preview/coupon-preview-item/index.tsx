@@ -66,8 +66,7 @@ const StyledCouponInfoItemWrap = styled.div`
 `;
 
 const StyledDivider = styled(Divider)`
-  margin: 0;
-  margin-top: 8px;
+  margin: 8px 0 0 0;
   color: ${colors.black600};
 `;
 

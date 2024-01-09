@@ -9,11 +9,11 @@ import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
-import { AccommodationCategoryProps, ButtonClickedProps } from './type';
+import { AccommodationCategoryProps } from './type';
 import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
-import { Form } from 'antd';
+import { Form, Radio } from 'antd';
 
 export const AccommodationCategory = () => {
   const [clickedCategory, setClickedCategory] =
@@ -30,88 +30,101 @@ export const AccommodationCategory = () => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item
-        rules={[{ required: true }]}
-        label="숙소 유형을 선택해주세요."
-        colon={false}
-      >
-        <StyledButtonContainer>
-          <StyledButtonWrapper
+      <TextBox typography="h4" fontWeight={700}>
+        숙소 유형을 선택해주세요.
+      </TextBox>
+      <Form.Item name="accommodation-category">
+        <StyledRadioGroup>
+          <StyledRadioButton
+            value="HOTEL/RESORT"
             onClick={() => handleButtonClick('hotelResort')}
-            $clicked={clickedCategory === 'hotelResort'}
           >
-            <StyledHotelResortIcon
-              $clicked={clickedCategory === 'hotelResort'}
+            <img
+              src={
+                clickedCategory === 'hotelResort'
+                  ? primaryHotelResortIcon
+                  : grayHotelResortIcon
+              }
             />
             <TextBox
               typography="h4"
               fontWeight={700}
-              color="black600"
-              className="accommodation-category-text"
+              color={clickedCategory === 'hotelResort' ? 'primary' : 'black600'}
             >
               호텔/리조트
             </TextBox>
-          </StyledButtonWrapper>
-          <StyledButtonWrapper
+          </StyledRadioButton>
+          <StyledRadioButton
+            value="MOTEL"
             onClick={() => handleButtonClick('motel')}
-            $clicked={clickedCategory === 'motel'}
           >
-            <StyledMotelIcon $clicked={clickedCategory === 'motel'} />
-            <TextBox
-              typography="h4"
-              fontWeight={700}
-              color="black600"
-              className="accommodation-category-text"
-            >
-              모텔
-            </TextBox>
-          </StyledButtonWrapper>
-          <StyledButtonWrapper
-            onClick={() => handleButtonClick('pensionPool')}
-            $clicked={clickedCategory === 'pensionPool'}
-          >
-            <StyledPensionPoolIcon
-              $clicked={clickedCategory === 'pensionPool'}
+            <img
+              src={
+                clickedCategory === 'motel' ? primaryMotelIcon : grayMotelIcon
+              }
             />
             <TextBox
               typography="h4"
               fontWeight={700}
-              color="black600"
-              className="accommodation-category-text"
+              color={clickedCategory === 'motel' ? 'primary' : 'black600'}
             >
-              펜션/풀빌라
+              모텔
             </TextBox>
-          </StyledButtonWrapper>
-          <StyledButtonWrapper
-            onClick={() => handleButtonClick('guestHouse')}
-            $clicked={clickedCategory === 'guestHouse'}
+          </StyledRadioButton>
+          <StyledRadioButton
+            value="PENSION/POOL"
+            onClick={() => handleButtonClick('pensionPool')}
           >
-            <StyledGuestHouseIcon $clicked={clickedCategory === 'guestHouse'} />
+            <img
+              src={
+                clickedCategory === 'pensionPool'
+                  ? primaryPensionPoolIcon
+                  : grayPensionPoolIcon
+              }
+            />
             <TextBox
               typography="h4"
               fontWeight={700}
-              color="black600"
-              className="accommodation-category-text"
+              color={clickedCategory === 'pensionPool' ? 'primary' : 'black600'}
+            >
+              펜션/풀빌라
+            </TextBox>
+          </StyledRadioButton>
+          <StyledRadioButton
+            value="GUEST"
+            onClick={() => handleButtonClick('guestHouse')}
+          >
+            <img
+              src={
+                clickedCategory === 'guestHouse'
+                  ? primaryGuestHouseIcon
+                  : grayGuestHouseIcon
+              }
+            />
+            <TextBox
+              typography="h4"
+              fontWeight={700}
+              color={clickedCategory === 'guestHouse' ? 'primary' : 'black600'}
             >
               게스트하우스
             </TextBox>
-          </StyledButtonWrapper>
-        </StyledButtonContainer>
-        {clickedCategory === 'hotelResort' && (
-          <RadioButtonCustomContainer
-            options={hotelCategory}
-            label="상세 유형을 선택해 주세요."
-            icon={<FaCheck size={15} color={colors.primary} />}
-          />
-        )}
-        {clickedCategory === 'guestHouse' && (
-          <RadioButtonCustomContainer
-            options={guestHouseCategory}
-            label="상세 유형을 선택해 주세요."
-            icon={<FaCheck size={15} color={colors.primary} />}
-          />
-        )}
+          </StyledRadioButton>
+        </StyledRadioGroup>
       </Form.Item>
+      {clickedCategory === 'hotelResort' && (
+        <RadioButtonCustomContainer
+          options={hotelCategory}
+          label="상세 유형을 선택해 주세요."
+          icon={<FaCheck size={15} color={colors.primary} />}
+        />
+      )}
+      {clickedCategory === 'guestHouse' && (
+        <RadioButtonCustomContainer
+          options={guestHouseCategory}
+          label="상세 유형을 선택해 주세요."
+          icon={<FaCheck size={15} color={colors.primary} />}
+        />
+      )}
     </StyledInputWrapper>
   );
 };
@@ -123,78 +136,52 @@ const StyledInputWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
+  .ant-radio-button-wrapper {
+    border: 0;
+
+    span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+
+      border: 0;
     }
+
+    padding: 33px 44px;
+
+    height: 200px;
   }
 
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  .ant-radio-button-wrapper-checked:not(
+      .ant-radio-button-wrapper-disabled
+    ):focus-within {
+    box-shadow: none;
   }
 
-  .ant-form-item-control {
-    width: 100%;
+  .ant-radio-button-wrapper:not(:first-child)::before {
+    display: none;
+  }
+
+  .ant-radio-button-checked {
+    &:hover {
+      color: ${colors.primary};
+    }
   }
 `;
 
-const StyledButtonContainer = styled.div`
+const StyledRadioGroup = styled(Radio.Group)`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-  padding: 33px;
+  gap: 16px;
 `;
 
-const StyledButtonWrapper = styled.div<ButtonClickedProps>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
+const StyledRadioButton = styled(Radio.Button)`
+  border: 0;
+  color: ${colors.black600};
 
-  cursor: pointer;
-
-  .accommodation-category-text {
-    color: ${({ $clicked: clicked }) => (clicked ? '#0351ff' : '#9199A4')};
+  &:hover {
+    color: ${colors.black600};
   }
-`;
-
-const StyledHotelResortIcon = styled.div<ButtonClickedProps>`
-  background-image: ${({ $clicked: clicked }) =>
-    clicked ? `url(${primaryHotelResortIcon})` : `url(${grayHotelResortIcon})`};
-  background-size: cover;
-
-  width: 80px;
-  height: 80px;
-`;
-
-const StyledMotelIcon = styled.div<ButtonClickedProps>`
-  background-image: ${({ $clicked: clicked }) =>
-    clicked ? `url(${primaryMotelIcon})` : `url(${grayMotelIcon})`};
-  background-size: cover;
-
-  width: 80px;
-  height: 80px;
-`;
-
-const StyledPensionPoolIcon = styled.div<ButtonClickedProps>`
-  background-image: ${({ $clicked: clicked }) =>
-    clicked ? `url(${primaryPensionPoolIcon})` : `url(${grayPensionPoolIcon})`};
-  background-size: cover;
-
-  width: 80px;
-  height: 80px;
-`;
-
-const StyledGuestHouseIcon = styled.div<ButtonClickedProps>`
-  background-image: ${({ $clicked: clicked }) =>
-    clicked ? `url(${primaryGuestHouseIcon})` : `url(${grayGuestHouseIcon})`};
-  background-size: cover;
-
-  width: 80px;
-  height: 80px;
 `;

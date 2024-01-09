@@ -1,0 +1,9 @@
+{
+  "message": "성공적으로 회원 정보를 조회했습니다.",
+  "data": {
+    "id": 1,
+    "email": "test123@mail.com",
+    "name": "홍길동",
+    "phoneNumber": "010-1234-1234"
+  }
+}
