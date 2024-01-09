@@ -1,45 +1,35 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
-import { AccommodationCategory } from '@components/init/init-accommodation-registration/AccommodationCategory';
-import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
-import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { Form } from 'antd';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
+import { PriceContainer } from '@components/room/price-container';
+import { CapacityContainer } from '@components/room/capacity-container';
+import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
 
 const RoomRegistration = () => {
   const isValid = true;
-
-  const [form] = Form.useForm();
-
-  const accommodationOptions = [
-    '객실취사',
-    '주차시설',
-    '픽업 서비스',
-    '바베큐장',
-    '휘트니스센터',
-    '노래방',
-    '에어컨',
-    '사우나실',
-    '세미나실',
-  ];
+  const roomOptions = ['TV', '에어컨', '인터넷'];
 
   return (
     <StyledWrapper color={colors.white}>
-      <Form form={form}>
-        <AccommodationCategory />
-        <NameContainer header="숙소명" />
-        <AccommodationAddress form={form} />
-        <ImageUploadContainer header="숙소 대표 이미지 설정" />
+      <Form>
+        <NameContainer header="객실명" />
         <StyledInputWrapper>
-          <CheckBoxContainer
-            options={accommodationOptions}
-            header="숙소 옵션"
-          />
+          <PriceContainer header="객실 가격" />
         </StyledInputWrapper>
-        <AccommodationDesc />
+        <ImageUploadContainer header="객실 사진" />
+        <StyledInputWrapper>
+          <NumOfRoomsContainer header="객실 수" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <CapacityContainer header="인원" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <CheckBoxContainer options={roomOptions} header="객실 옵션" />
+        </StyledInputWrapper>
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
     </StyledWrapper>
@@ -50,9 +40,7 @@ export default RoomRegistration;
 
 const StyledWrapper = styled.div`
   background-color: ${(props) => props.color};
-
   padding: 40px;
-
   border-radius: 8px;
 `;
 
