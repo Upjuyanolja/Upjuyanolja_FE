@@ -3,12 +3,18 @@ import { UserProfile } from './user-profile';
 import { Navigation } from './navigation';
 import { SignOutBtn } from './signout-btn';
 import styled from 'styled-components';
+import { useSideBar } from '@hooks/side-bar/useSideBar';
 
 export const SideBar = () => {
+  const { userInfoData, isUserInfoError } = useSideBar();
+
+  if (!userInfoData) return <div>에러</div>;
+  if (isUserInfoError) return <div>에러</div>;
+
   return (
     <Container>
       <div>
-        <UserProfile />
+        <UserProfile userInfoData={userInfoData} />
         <AccommodationList />
         <Navigation />
       </div>

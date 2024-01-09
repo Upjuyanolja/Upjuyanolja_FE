@@ -4,8 +4,9 @@ import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
 import { PointModal } from '@components/modal/point/point-modal';
 import { useState } from 'react';
+import { UserProfileProps } from './type';
 
-export const UserProfile = () => {
+export const UserProfile = ({ userInfoData }: UserProfileProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -14,7 +15,7 @@ export const UserProfile = () => {
   return (
     <StyledSpace direction="vertical" align="center">
       <TextBox typography="h5" color="primary" fontWeight="bold">
-        김업주 님
+        {userInfoData.name} 님
       </TextBox>
       <TextBox typography="h3" color="black900" fontWeight="bold">
         330,000 P
