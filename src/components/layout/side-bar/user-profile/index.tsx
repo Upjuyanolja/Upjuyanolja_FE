@@ -29,7 +29,7 @@ export const UserProfile = ({
         type="primary"
         size="large"
         onClick={showModal}
-        data-testid={'charge-point-button'}
+        data-testid="charge-point-button"
       >
         포인트 추가하기
       </StyledButton>
