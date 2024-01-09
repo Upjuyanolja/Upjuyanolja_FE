@@ -30,8 +30,8 @@ export const RadioButtonCustomContainer = ({
         onChange={(event) => onChange({ event })}
         value={value}
       >
-        {options.map((option) => (
-          <CheckboxRadio value={option} key={options.indexOf(option)}>
+        {options.map((option, index) => (
+          <CheckboxRadio value={option} key={index}>
             {option}
           </CheckboxRadio>
         ))}
