@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-=======
 import { TextBox } from '@components/text-box';
->>>>>>> 93e2adaac3290917ce64c64dda3d136db332c867
 import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
 import { useState } from 'react';
 import { AccommodationListProps, StyledAccommodationWrapProps } from './type';
 import { CheckCircleFilled, DownOutlined, UpOutlined } from '@ant-design/icons';
-import { TextBox } from '@components/text-box';
 
 export const AccommodationList = ({
   accommodationListData,
