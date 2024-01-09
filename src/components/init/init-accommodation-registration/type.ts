@@ -2,10 +2,6 @@ import { ChangeEvent, ReactElement } from 'react';
 import { RadioChangeEvent } from 'antd';
 import { IconBaseProps } from 'react-icons';
 
-export type ButtonClickedProps = {
-  $clicked?: boolean;
-};
-
 export type AddressHandleInputChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
   inputType: string;
