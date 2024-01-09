@@ -38,7 +38,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 269px;
-  height: 130px;
+  height: 134px;
 `;
 
 const LogoContainer = styled.div`
