@@ -8,6 +8,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { CouponStatusTag } from '@components/coupon/coupon-status-tag';
 import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase-footer';
 import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
+import { useCoupon } from '@hooks/coupon/useCoupon';
 
 const columns: ColumnsType<tableData> = [
   {
@@ -160,9 +161,15 @@ const rowSelection = {
 };
 
 export const Coupon = () => {
+  const { couponData, couponStatusOption } = useCoupon();
+  if (!couponData) return <div>로딩 중</div>;
+
   return (
     <>
-      <CouponHeader />
+      <CouponHeader
+        expiry={couponData.expiry}
+        couponStatusOption={couponStatusOption}
+      />
       <StyledTable
         rowSelection={rowSelection}
         columns={columns}
@@ -171,7 +178,7 @@ export const Coupon = () => {
       />
 
       <StyledModal
-        open={true}
+        open={false}
         title="추가 구매"
         footer={<AdditionalPurchaseFooter />}
       >
@@ -188,6 +195,7 @@ const StyledTable = styled(Table)<TableProps>`
       color: ${colors.primary};
       font-weight: 700;
       font-size: 16px;
+      padding: 8px;
     }
   }
   .ant-checkbox-inner {

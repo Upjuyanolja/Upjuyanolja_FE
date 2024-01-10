@@ -1,3 +1,7 @@
+import {
+  COUPON_STATUS_DISABLE,
+  COUPON_STATUS_ENABLE,
+} from '@/constants/coupon';
 import { useGetCoupon } from '@queries/coupon';
 
 export const useCoupon = () => {
@@ -7,8 +11,14 @@ export const useCoupon = () => {
     },
   });
 
+  const couponStatusOption = [
+    { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
+    { value: COUPON_STATUS_DISABLE.value, label: COUPON_STATUS_DISABLE.label },
+  ];
+
   return {
     couponData,
     isGetCouponError,
+    couponStatusOption,
   };
 };
