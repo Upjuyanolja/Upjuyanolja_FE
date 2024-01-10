@@ -56,7 +56,6 @@ export const NameContainer = ({ header }: NameContainerProps) => {
           disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
           status={errorMessage ? 'error' : ''}
           data-testid="input-name"
-          autoComplete="on"
         />
       </Form.Item>
       <StyledErrorMessageWrapper data-testid="error-input-name">
