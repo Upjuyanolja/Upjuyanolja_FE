@@ -68,6 +68,8 @@ export const InitAccommodationRegistration = () => {
   const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
   const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
 
+  const uploadedImage = useRecoilValue(isUploadedImage);
+
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
     const isNameValid = !accommodationNameErrorMessage;
@@ -81,7 +83,7 @@ export const InitAccommodationRegistration = () => {
       isDescValid &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
-      isUploadedImage;
+      uploadedImage;
 
     const hotelResortConditions =
       values['accommodation-category'] === 'HOTEL/RESORT' &&
@@ -97,7 +99,7 @@ export const InitAccommodationRegistration = () => {
     setIsValid(areFormFieldsValid());
   }, [
     form,
-    isUploadedImage,
+    uploadedImage,
     accommodationNameErrorMessage,
     accommodationDescErrorMessage,
     selectedOptions,
