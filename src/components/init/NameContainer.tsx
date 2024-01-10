@@ -12,7 +12,11 @@ import { TextBox } from '@components/text-box';
 import { useRecoilState } from 'recoil';
 import { nameErrorMessage } from '@stores/init/atoms';
 
-export const NameContainer = ({ header, placeholder }: NameContainerProps) => {
+export const NameContainer = ({
+  header,
+  placeholder,
+  form,
+}: NameContainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
@@ -21,8 +25,6 @@ export const NameContainer = ({ header, placeholder }: NameContainerProps) => {
       setErrorMessage(
         `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
-    } else if (!NAME_REGEX.test(value)) {
-      setErrorMessage('한글, 영어, 숫자만 입력 가능합니다.');
     } else {
       setErrorMessage('');
     }
@@ -30,6 +32,10 @@ export const NameContainer = ({ header, placeholder }: NameContainerProps) => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_NAME_MAX_LENGTH);
+    if (!NAME_REGEX.test(newValue)) {
+      form.setFieldValue('accommodation-name', '');
+      return;
+    }
     setInputValue(newValue);
     validateInput({ value: newValue });
   };

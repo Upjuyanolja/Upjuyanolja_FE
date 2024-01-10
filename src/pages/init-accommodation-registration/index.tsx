@@ -121,7 +121,11 @@ export const InitAccommodationRegistration = () => {
         onValuesChange={handleFormValuesChange}
       >
         <AccommodationCategory form={form} />
-        <NameContainer header="숙소명" placeholder="숙소명을 입력해 주세요." />
+        <NameContainer
+          header="숙소명"
+          placeholder="숙소명을 입력해 주세요."
+          form={form}
+        />
         <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <CheckBoxContainer options={accommodationOptions} header="숙소 옵션" />

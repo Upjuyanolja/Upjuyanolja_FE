@@ -1,3 +1,5 @@
+import { FormInstance } from 'antd';
+
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
   isValid: boolean;
@@ -30,6 +32,7 @@ export type ImageUploadContainerProps = {
 export type NameContainerProps = {
   header: string;
   placeholder: string;
+  form: FormInstance;
 };
 
 export type ValidateInput = {

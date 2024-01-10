@@ -20,6 +20,8 @@ const RoomRegistration = () => {
     internet: '인터넷',
   };
 
+  const [form] = Form.useForm();
+
   return (
     <StyledFullContainer>
       <StyledHeaderContainer>
@@ -36,6 +38,7 @@ const RoomRegistration = () => {
           <NameContainer
             header="객실명"
             placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
+            form={form}
           />
           <StyledInputWrapper>
             <PriceContainer header="객실 가격" />
