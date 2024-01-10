@@ -26,17 +26,17 @@ export const InitAccommodationRegistration = () => {
 
   const [form] = Form.useForm();
 
-  const accommodationOptions = [
-    '객실취사',
-    '주차시설',
-    '픽업 서비스',
-    '바베큐장',
-    '휘트니스센터',
-    '노래방',
-    '에어컨',
-    '사우나실',
-    '세미나실',
-  ];
+  const accommodationOptions = {
+    cooking: '객실취사',
+    parking: '주차시설',
+    pickup: '픽업 서비스',
+    barbecue: '바베큐장',
+    fitness: '휘트니스센터',
+    karaoke: '노래방',
+    sports: '스포츠 시설',
+    sauna: '사우나실',
+    seminar: '세미나실',
+  };
 
   const setUserInputValueState = useSetRecoilState(userInputValueState);
 
@@ -59,26 +59,33 @@ export const InitAccommodationRegistration = () => {
   };
 
   const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
-  const accommodationnDescErrorMessage = useRecoilValue(descErrorMessage);
+  const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
 
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
+    const isNameValid = !accommodationNameErrorMessage;
+    const isDescValid = !accommodationDescErrorMessage;
     return (
       values['accommodation-category'] &&
-      values['accommodation-name'] &&
+      values['accommodation-desc'] &&
       values['accommodation-postCode'] &&
       values['accommodation-address'] &&
+      isNameValid &&
+      isDescValid &&
       values['accommodation-detailAddress'] &&
-      values['accommodation-desc'] &&
-      isUploadedImage &&
-      accommodationNameErrorMessage === '' &&
-      accommodationnDescErrorMessage === ''
+      values['accommodation-name'] &&
+      isUploadedImage
     );
   };
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, isUploadedImage]);
+  }, [
+    form,
+    isUploadedImage,
+    accommodationNameErrorMessage,
+    accommodationDescErrorMessage,
+  ]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
