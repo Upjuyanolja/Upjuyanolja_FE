@@ -17,8 +17,11 @@ import {
 } from '@stores/init/atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { formValues } from '@components/init/init-accommodation-registration/type';
+import { ROUTES } from '@/constants/routes';
+import { useNavigate } from 'react-router-dom';
 
 export const InitAccommodationRegistration = () => {
+  const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
 
   const [form] = Form.useForm();
@@ -51,6 +54,8 @@ export const InitAccommodationRegistration = () => {
       };
       return [updatedUserInputValue];
     });
+
+    navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
 
   const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
