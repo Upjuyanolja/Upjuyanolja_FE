@@ -32,9 +32,10 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
 
     if (selectedFile) {
       if (
-        !selectedFile.type.includes('png') &&
-        !selectedFile.type.includes('jpeg') &&
-        !selectedFile.type.includes('jpg')
+        !selectedFile.type ||
+        (!selectedFile.type.includes('png') &&
+          !selectedFile.type.includes('jpeg') &&
+          !selectedFile.type.includes('jpg'))
       ) {
         message.error({
           content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
