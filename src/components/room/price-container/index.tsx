@@ -44,9 +44,14 @@ export const PriceContainer = ({ header }: PriceContainerProps) => {
         colon={false}
         style={{ marginBottom: 0 }}
       >
-        <TextBox typography="h4" fontWeight={700}>
-          {header}
-        </TextBox>
+        <StyledDesc>
+          <TextBox typography="h4" fontWeight={700}>
+            {header}
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            10,000~1,000,000까지만 입력 가능합니다.
+          </TextBox>
+        </StyledDesc>
         <StyledRow>
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
@@ -145,4 +150,10 @@ const StyledRow = styled.div`
   display: flex;
   align-items: center;
   margin-top: 8;
+`;
+
+const StyledDesc = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;

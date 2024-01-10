@@ -17,9 +17,6 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
     setError(null);
     if (value < MIN_CAPACITY || value > MAX_CAPACITY) {
       setError('1~15까지만 입력 가능합니다.');
-      // } else if (!NUMBER_REGEX.test(value.toString())) {
-      //   setError('숫자만 입력 가능합니다.');
-      // 다른 예외 처리는 내일 담당 PM분과 상의 후 처리 할 예정입니다.
     }
   };
 
@@ -34,9 +31,14 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
   return (
     <StyledInputWrapper>
       <StyledHeadTextContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          {header}
-        </TextBox>
+        <StyledDesc>
+          <TextBox typography="h4" fontWeight={700}>
+            {header}
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            1~15까지만 가능합니다.
+          </TextBox>
+        </StyledDesc>
       </StyledHeadTextContainer>
       <StyledCol>
         <StyledRow>
@@ -129,6 +131,10 @@ const StyledInputNumber = styled(InputNumber)`
     text-align: right;
     padding-right: 34px;
   }
+
+  .ant-input-number-handler-wrap {
+    opacity: 1 !important;
+  }
 `;
 
 const StyledTextBoxWrapper = styled.div`
@@ -170,4 +176,10 @@ const StyledInputWrapper = styled.div`
   .ant-input {
     font-size: 16px;
   }
+`;
+
+const StyledDesc = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;

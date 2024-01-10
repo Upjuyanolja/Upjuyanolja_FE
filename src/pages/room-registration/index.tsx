@@ -1,7 +1,7 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
 import { Form } from 'antd';
-import { ButtonContainer } from '@components/init/ButtonContainer';
+import { ButtonContainer } from '@components/room/room-buttons';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
@@ -34,7 +34,7 @@ const RoomRegistration = () => {
         <StyledInputWrapper>
           <CheckBoxContainer options={roomOptions} header="객실 옵션" />
         </StyledInputWrapper>
-        <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
+        <ButtonContainer buttonStyle={'register'} isValid={isValid} />
       </Form>
     </StyledWrapper>
   );

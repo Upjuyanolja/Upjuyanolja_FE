@@ -34,9 +34,14 @@ export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
   return (
     <StyledInputWrapper>
       <StyledHeadTextContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          {header}
-        </TextBox>
+        <StyledDesc>
+          <TextBox typography="h4" fontWeight={700}>
+            {header}
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            1~100까지만 가능합니다.
+          </TextBox>
+        </StyledDesc>
       </StyledHeadTextContainer>
       <StyledRow>
         <StyledTextBoxWrapper>
@@ -102,6 +107,10 @@ const StyledInputNumber = styled(InputNumber)`
     text-align: right;
     padding-right: 34px;
   }
+
+  .ant-input-number-handler-wrap {
+    opacity: 1 !important;
+  }
 `;
 
 const StyledTextBoxWrapper = styled.div`
@@ -143,8 +152,10 @@ const StyledInputWrapper = styled.div`
   .ant-input {
     font-size: 16px;
   }
+`;
 
-  .ant-input-number-handler-wrap {
-    opacity: 1 !important;
-  }
+const StyledDesc = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;

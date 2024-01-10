@@ -24,12 +24,8 @@ export const RoomLayout = () => {
     (route) => location.pathname === route,
   );
 
-  const { pageTitle = '숙소 등록하기' } =
+  const { pageTitle = '객실 추가 등록' } =
     routeConfig[currentRoute as keyof typeof routeConfig] || {};
-
-  console.log(routeConfig);
-  console.log(ROUTES.ROOM_REGISTRATION);
-  console.log(currentRoute);
 
   return (
     <StyledFullContainer>
@@ -77,32 +73,3 @@ const StyledContentArea = styled.div`
   padding: 0px 48px 32px 48px;
   box-sizing: border-box;
 `;
-
-// const StyledLayout = styled(Layout)`
-//   background-color: ${(props) => props.color};
-// `;
-
-// const StyledHeadContent = styled(Layout.Content)`
-//   height: 140px;
-//   width: 100%;
-
-//   background-color: ${(props) => props.color};
-
-//   margin: 0 auto;
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const StyledTextWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-
-//   margin-left: 67px;
-// `;
-
-// const StyledMainContent = styled(Layout.Content)`
-//   max-width: 1024px;
-//   width: 1024px;
-
-//   margin: 40px auto;
-// `;
