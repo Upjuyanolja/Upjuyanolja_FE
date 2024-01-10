@@ -21,6 +21,7 @@ export const useCouponProvider = () => {
   const { percent } = useParams();
   const [searchParams] = useSearchParams();
 
+  // 할인 쿠폰 타입 선택
   useEffect(() => {
     if (selectedDiscountType === DISCOUNT_PRICE) {
       navigate(ROUTES.COUPON_REGISTRATION);
@@ -32,6 +33,7 @@ export const useCouponProvider = () => {
     setErrorMessage('');
   }, [selectedDiscountType]);
 
+  // searchParams
   useEffect(() => {
     if (searchParams.size === DISCOUNT_VALUE_INIT) {
       return;
@@ -47,6 +49,7 @@ export const useCouponProvider = () => {
     setDiscountValue(searchParamsValue);
   }, [searchParams]);
 
+  // 할인가 변경
   useEffect(() => {
     if (!discountValue) {
       setIsValidDiscountRange(true);
@@ -60,6 +63,7 @@ export const useCouponProvider = () => {
     }
   }, [discountValue]);
 
+  // 할인가 변경 시 parameter로 할인가 정보 넣는 함수
   const handleNavigate = (discountValue: string) => {
     if (percent) {
       navigate(
@@ -70,6 +74,7 @@ export const useCouponProvider = () => {
     }
   };
 
+  // input blur 시 실행되는 함수
   const handleBlur = async (discountValue: string) => {
     if (!discountValue) {
       return;
@@ -79,6 +84,7 @@ export const useCouponProvider = () => {
     await setDiscountValue(formattedValue);
   };
 
+  // 할인가 유효성 검사 후 에러메시지 핸들링 함수
   const handleDiscountPriceErrorMessage = (discountValue: string) => {
     if (
       parseInt(discountValue) < DISCOUNT_PRICE_NUM.min ||
