@@ -9,9 +9,13 @@ import {
 } from '@/constants/init/init-accommodation-registration';
 import { ValidateInputProps } from '../type';
 
+import { TextBox } from '@components/text-box';
+import { useRecoilState } from 'recoil';
+import { descErrorMessage } from '@stores/init/atoms';
+
 export const AccommodationDesc = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useRecoilState(descErrorMessage);
 
   const handleTextAreaChange = ({ event }: HandleTextAreaChangeProps) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_DESC_MAX_LENGTH);
@@ -21,17 +25,20 @@ export const AccommodationDesc = () => {
 
   const validateTextArea = ({ value }: ValidateInputProps) => {
     if (value.length < ACCOMMODATION_DESC_MIN_LENGTH) {
-      setError(
+      setErrorMessage(
         `숙소 소개는 최소 ${ACCOMMODATION_DESC_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
     } else {
-      setError(null);
+      setErrorMessage('');
     }
   };
 
   return (
     <StyledInputWrapper>
-      <Form.Item label="숙소 소개" colon={false} name="accommodation-desc">
+      <TextBox typography="h4" fontWeight={700}>
+        숙소 소개
+      </TextBox>
+      <Form.Item name="accommodation-desc">
         <Input.TextArea
           id="accommodation-desc"
           placeholder="고객에게 멋진 숙소를 소개해 주세요."
@@ -41,15 +48,13 @@ export const AccommodationDesc = () => {
           disabled={textAreaValue.length >= ACCOMMODATION_DESC_MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
           onChange={(event) => handleTextAreaChange({ event })}
-          status={error ? 'error' : ''}
+          status={errorMessage ? 'error' : ''}
           data-testid="textarea-accommodation-desc"
         />
       </Form.Item>
-      {error && (
-        <StyledErrorMessageWrapper data-testid="error-textarea-accommodation-desc">
-          <StyledFormErrorMessage errorMessage={error} />
-        </StyledErrorMessageWrapper>
-      )}
+      <StyledErrorMessageWrapper data-testid="error-textarea-accommodation-desc">
+        {errorMessage && <StyledFormErrorMessage errorMessage={errorMessage} />}
+      </StyledErrorMessageWrapper>
     </StyledInputWrapper>
   );
 };
@@ -57,24 +62,9 @@ export const AccommodationDesc = () => {
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
-
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .ant-form-item-control {
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
   .ant-input {
     font-size: 16px;

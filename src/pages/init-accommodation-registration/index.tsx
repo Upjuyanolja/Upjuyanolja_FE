@@ -8,9 +8,18 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
+import { useEffect, useState } from 'react';
+import {
+  descErrorMessage,
+  isUploadedImage,
+  nameErrorMessage,
+} from '@stores/init/atoms';
+import { useRecoilValue } from 'recoil';
 
 export const InitAccommodationRegistration = () => {
-  const isValid = true;
+  const [isValid, setIsValid] = useState(false);
+
+  const [form] = Form.useForm();
 
   const accommodationOptions = [
     '객실취사',
@@ -24,19 +33,48 @@ export const InitAccommodationRegistration = () => {
     '세미나실',
   ];
 
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
+
+  const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
+  const accommodationnDescErrorMessage = useRecoilValue(descErrorMessage);
+
+  const areFormFieldsValid = () => {
+    const values = form.getFieldsValue();
+    return (
+      values['accommodation-category'] &&
+      values['accommodation-name'] &&
+      values['accommodation-postCode'] &&
+      values['accommodation-address'] &&
+      values['accommodation-detailAddress'] &&
+      values['accommodation-desc'] &&
+      isUploadedImage &&
+      accommodationNameErrorMessage === '' &&
+      accommodationnDescErrorMessage === ''
+    );
+  };
+
+  useEffect(() => {
+    setIsValid(areFormFieldsValid());
+  }, [form, isUploadedImage]);
+
+  const handleFormValuesChange = () => {
+    setIsValid(areFormFieldsValid());
+  };
+
   return (
     <StyledWrapper color={colors.white}>
-      <Form>
+      <Form
+        onFinish={onFinish}
+        form={form}
+        onValuesChange={handleFormValuesChange}
+      >
         <AccommodationCategory />
         <NameContainer header="숙소명" />
-        <AccommodationAddress />
+        <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
-        <StyledInputWrapper>
-          <CheckBoxContainer
-            options={accommodationOptions}
-            header="숙소 옵션"
-          />
-        </StyledInputWrapper>
+        <CheckBoxContainer options={accommodationOptions} header="숙소 옵션" />
         <AccommodationDesc />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
@@ -50,8 +88,4 @@ const StyledWrapper = styled.div`
   padding: 40px;
 
   border-radius: 8px;
-`;
-
-const StyledInputWrapper = styled.div`
-  margin-bottom: 48px;
 `;

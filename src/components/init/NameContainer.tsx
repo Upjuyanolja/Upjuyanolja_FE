@@ -12,20 +12,23 @@ import {
   ACCOMMODATION_NAME_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
 import { NAME_REGEX } from '@/constants/init';
+import { TextBox } from '@components/text-box';
+import { useRecoilState } from 'recoil';
+import { nameErrorMessage } from '@stores/init/atoms';
 
 export const NameContainer = ({ header }: NameContainerProps) => {
   const [inputValue, setInputValue] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
-      setError(
+      setErrorMessage(
         `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
     } else if (!NAME_REGEX.test(value)) {
-      setError('한글, 영어, 숫자만 입력 가능합니다.');
+      setErrorMessage('한글, 영어, 숫자만 입력 가능합니다.');
     } else {
-      setError(null);
+      setErrorMessage('');
     }
   };
 
@@ -37,7 +40,10 @@ export const NameContainer = ({ header }: NameContainerProps) => {
 
   return (
     <StyledInputWrapper>
-      <Form.Item label={header} colon={false} name="accommodation-name">
+      <TextBox typography="h4" fontWeight={700}>
+        {header}
+      </TextBox>
+      <Form.Item name="accommodation-name">
         <Input
           id="accommodation-name"
           placeholder={`${header}을 입력해 주세요.`}
@@ -48,16 +54,14 @@ export const NameContainer = ({ header }: NameContainerProps) => {
           value={inputValue}
           onChange={(event) => handleInputChange({ event })}
           disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
-          status={error ? 'error' : ''}
+          status={errorMessage ? 'error' : ''}
           data-testid="input-name"
           autoComplete="on"
         />
       </Form.Item>
-      {error && (
-        <StyledErrorMessageWrapper data-testid="error-input-name">
-          <StyledFormErrorMessage errorMessage={error} />
-        </StyledErrorMessageWrapper>
-      )}
+      <StyledErrorMessageWrapper data-testid="error-input-name">
+        {errorMessage && <StyledFormErrorMessage errorMessage={errorMessage} />}
+      </StyledErrorMessageWrapper>
     </StyledInputWrapper>
   );
 };
@@ -65,24 +69,9 @@ export const NameContainer = ({ header }: NameContainerProps) => {
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
 
-  .ant-form-item-label {
-    label {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
-
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .ant-form-item-control {
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
   .ant-input {
     font-size: 16px;
