@@ -66,7 +66,6 @@ export const SignIn = () => {
 
         try {
           const res = isAccomodationList();
-          console.log(res);
           if (res === true) {
             setTimeout(() => {
               handleChangeUrl('/');
