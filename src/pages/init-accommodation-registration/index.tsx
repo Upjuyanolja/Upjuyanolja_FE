@@ -51,7 +51,11 @@ export const InitAccommodationRegistration = () => {
       const updatedUserInputValue = {
         ...userInputValue,
         id: Math.floor(Math.random() * 1000000),
-        type: values['accommodation-category'],
+        type: values['accommodation-hotel-category']
+          ? values['accommodation-hotel-category']
+          : values['accommodation-category']
+            ? values['accommodation-category']
+            : values['accommodation-guest-category'],
         name: values['accommodation-name'],
         address: values['accommodation-address'],
         detailAddress: values['accommodation-detailAddress'],
@@ -78,12 +82,11 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-category'] &&
       values['accommodation-desc'] &&
       values['accommodation-postCode'] &&
-      values['accommodation-address'] &&
-      isNameValid &&
       isDescValid &&
+      isNameValid &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
-      uploadedImage;
+      isUploadedImage;
 
     const hotelResortConditions =
       values['accommodation-category'] === 'HOTEL/RESORT' &&

@@ -5,7 +5,7 @@ import {
 } from './type';
 import styled from 'styled-components';
 import { Form, Radio } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const RadioButtonCustomContainer = ({
   label,
@@ -17,6 +17,10 @@ export const RadioButtonCustomContainer = ({
   const onChange = ({ event }: AccommodationDetailCategoryOnchangeProps) => {
     setValue(event.target.value);
   };
+
+  useEffect(() => {
+    setValue('');
+  }, []);
 
   return (
     <StyledWrapper>
