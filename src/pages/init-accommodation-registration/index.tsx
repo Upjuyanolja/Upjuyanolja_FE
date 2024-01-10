@@ -14,6 +14,7 @@ import {
   descErrorMessage,
   isUploadedImage,
   nameErrorMessage,
+  selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -42,6 +43,7 @@ export const InitAccommodationRegistration = () => {
   const setUserInputValueState = useSetRecoilState(userInputValueState);
 
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
+  const selectedImages = useRecoilValue(selectedAccommodationFilesState);
 
   const onFinish = (values: formValues) => {
     setUserInputValueState((prevUserInputValueState) => {
@@ -55,6 +57,7 @@ export const InitAccommodationRegistration = () => {
         detailAddress: values['accommodation-detailAddress'],
         description: values['accommodation-desc'],
         options: selectedOptions,
+        images: selectedImages,
       };
       return [updatedUserInputValue];
     });

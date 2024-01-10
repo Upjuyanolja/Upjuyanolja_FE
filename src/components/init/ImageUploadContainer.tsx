@@ -11,7 +11,10 @@ import {
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
-import { isUploadedImage } from '@stores/init/atoms';
+import {
+  isUploadedImage,
+  selectedAccommodationFilesState,
+} from '@stores/init/atoms';
 
 export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -20,6 +23,8 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const setIsUploadedImage = useSetRecoilState(isUploadedImage);
+
+  const setSelectedFiles = useSetRecoilState(selectedAccommodationFilesState);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -48,6 +53,11 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
               url: URL.createObjectURL(selectedFile),
               originFileObj: selectedFile,
             },
+          ]);
+
+          setSelectedFiles((prevSelectedFiles) => [
+            ...prevSelectedFiles,
+            { url: URL.createObjectURL(selectedFile) },
           ]);
         } else {
           message.error({

@@ -42,7 +42,7 @@ export type formValues = {
 
 /**request 타입 */
 
-type Image = {
+export type Image = {
   url: string;
 };
 
