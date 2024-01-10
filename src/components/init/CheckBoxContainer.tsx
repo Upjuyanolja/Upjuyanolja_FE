@@ -27,9 +27,12 @@ export const CheckBoxContainer = ({
   return (
     <StyledWrapper color={colors.white}>
       <TextBox typography="h4" fontWeight={700}>
-        {header}
+        {header} 옵션
       </TextBox>
-      <Form.Item name="accommodation-options" valuePropName="checked">
+      <Form.Item
+        name={header === '숙소' ? 'accommodation-options' : 'room-options'}
+        valuePropName="checked"
+      >
         <StyledCheckboxContainer>
           {Object.entries(options).map(([english, korean]) => (
             <Checkbox

@@ -54,7 +54,7 @@ const RoomRegistration = () => {
             <CapacityContainer header="인원" />
           </StyledInputWrapper>
           <StyledInputWrapper>
-            <CheckBoxContainer options={roomOptions} header="객실 옵션" />
+            <CheckBoxContainer options={roomOptions} header="객실" />
           </StyledInputWrapper>
           <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
         </Form>
