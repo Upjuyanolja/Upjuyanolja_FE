@@ -1,7 +1,6 @@
 import { ValidateSchema } from '@/utils/sign-in/ValidateSchema';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
-import { SIGN_IN_API } from '@api/sign-in';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { Input, Button, message } from 'antd';
 import { useFormik } from 'formik';
@@ -9,10 +8,23 @@ import React from 'react';
 import { TextBox } from '@components/text-box';
 import { memberData } from '@api/sign-in/type';
 import { usePostLogin } from '@queries/sign-in';
+import { useSideBar } from '@hooks/side-bar/useSideBar';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const postLoginMutation = usePostLogin();
+  const { accommodationListData } = useSideBar();
+
+  const isAccomodationList = () => {
+    if (
+      accommodationListData?.accommodations &&
+      accommodationListData.accommodations.length > 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -33,14 +45,26 @@ export const SignIn = () => {
         localStorage.setItem('member', memberResponseString);
 
         try {
-          await SIGN_IN_API.getAccomodations();
-          setTimeout(() => {
-            handleChangeUrl('/');
-          }, 1000);
+          const res = isAccomodationList();
+          console.log(res);
+          if (res === true) {
+            setTimeout(() => {
+              handleChangeUrl('/');
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              handleChangeUrl('/init');
+            }, 1000);
+          }
         } catch (e) {
-          setTimeout(() => {
-            handleChangeUrl('/init');
-          }, 1000);
+          message.error({
+            content: '여기 수정할 부분 입니다.',
+            duration: 2,
+            style: {
+              width: '346px',
+              height: '41px',
+            },
+          });
         }
       } catch (e) {
         message.error({
