@@ -1,52 +1,92 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { StyledDiscountButtonProps } from './type';
 import { Input } from 'antd';
+import { numberFormat } from '@/utils/Format/numberFormat';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 export const CouponType = () => {
-  const [selectedButton, setSelectedButton] = useState('discountPrice');
+  const DISCOUNT_PRICE = 'price';
+  const DISCOUNT_RATE = 'percent';
+
+  const [selectedButton, setSelectedButton] = useState(DISCOUNT_PRICE);
+  const [discountValue, setDiscountValue] = useState('');
+  const navigate = useNavigate();
+  const { percent } = useParams();
 
   const handleButtonClick = (buttonType: string) => {
     setSelectedButton(buttonType);
+  };
+
+  useEffect(() => {
+    if (selectedButton === DISCOUNT_PRICE) {
+      navigate(ROUTES.COUPON_REGISTRATION);
+    }
+    if (selectedButton === DISCOUNT_RATE) {
+      navigate(`${ROUTES.COUPON_REGISTRATION}/percent`);
+    }
+  }, [selectedButton]);
+
+  useEffect(() => {
+    if (!percent) {
+      return;
+    }
+    console.log('퍼센트');
+  }, [percent]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDiscountValue(e.target.value);
+  };
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!discountValue) {
+      return;
+    }
+    setDiscountValue(numberFormat(e.target.value));
   };
 
   return (
     <Container>
       <StyledButtonWrap>
         <StyledDiscountButton
-          onClick={() => handleButtonClick('discountPrice')}
+          onClick={() => handleButtonClick(DISCOUNT_PRICE)}
           className={`price ${
-            selectedButton === 'discountPrice' ? 'active' : null
+            selectedButton === DISCOUNT_PRICE ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
-            color={selectedButton === 'discountPrice' ? 'primary' : 'black900'}
+            color={selectedButton === DISCOUNT_PRICE ? 'primary' : 'black900'}
           >
             할인가(원)
           </TextBox>
         </StyledDiscountButton>
         <StyledDiscountButton
-          onClick={() => handleButtonClick('discountRate')}
+          onClick={() => handleButtonClick(DISCOUNT_RATE)}
           className={`rate ${
-            selectedButton === 'discountRate' ? 'active' : null
+            selectedButton === DISCOUNT_RATE ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
-            color={selectedButton === 'discountRate' ? 'primary' : 'black900'}
+            color={selectedButton === DISCOUNT_RATE ? 'primary' : 'black900'}
           >
             할인율(%)
           </TextBox>
         </StyledDiscountButton>
       </StyledButtonWrap>
       <StyledInputWrap>
-        <StyledInput />
+        <StyledInput
+          onChange={handleChange}
+          value={discountValue}
+          onBlur={handleBlur}
+        />
         <StyledTextWrap>
           <TextBox typography="body2" fontWeight="bold">
-            {selectedButton === 'discountPrice' ? '원 할인' : '% 할인'}
+            {selectedButton === DISCOUNT_PRICE ? '원 할인' : '% 할인'}
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>
@@ -97,6 +137,7 @@ const StyledInputWrap = styled.div`
 
 const StyledInput = styled(Input)`
   width: 160px;
+  height: 40px;
 `;
 
 const StyledTextWrap = styled.div`
