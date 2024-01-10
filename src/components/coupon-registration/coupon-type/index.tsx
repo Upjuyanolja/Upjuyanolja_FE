@@ -1,78 +1,53 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { StyledDiscountButtonProps } from './type';
 import { Input } from 'antd';
-import { numberFormat } from '@/utils/Format/numberFormat';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
+import { useCouponProvider } from '@hooks/coupon/useCouponProvider';
 
 export const CouponType = () => {
-  const DISCOUNT_PRICE = 'price';
-  const DISCOUNT_RATE = 'percent';
-
-  const [selectedButton, setSelectedButton] = useState(DISCOUNT_PRICE);
-  const [discountValue, setDiscountValue] = useState('');
-  const navigate = useNavigate();
-  const { percent } = useParams();
-
-  const handleButtonClick = (buttonType: string) => {
-    setSelectedButton(buttonType);
-  };
-
-  useEffect(() => {
-    if (selectedButton === DISCOUNT_PRICE) {
-      navigate(ROUTES.COUPON_REGISTRATION);
-    }
-    if (selectedButton === DISCOUNT_RATE) {
-      navigate(`${ROUTES.COUPON_REGISTRATION}/percent`);
-    }
-  }, [selectedButton]);
-
-  useEffect(() => {
-    if (!percent) {
-      return;
-    }
-    console.log('퍼센트');
-  }, [percent]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDiscountValue(e.target.value);
-  };
-
-  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!discountValue) {
-      return;
-    }
-    setDiscountValue(numberFormat(e.target.value));
-  };
+  const {
+    DISCOUNT_PRICE,
+    DISCOUNT_RATE,
+    selectedDiscountType,
+    errorMessage,
+    handleNavigate,
+    discountValue,
+    handleDiscountType,
+    handleDiscountInputChange,
+    isValidDiscountRange,
+    handleBlur,
+  } = useCouponProvider();
 
   return (
     <Container>
       <StyledButtonWrap>
         <StyledDiscountButton
-          onClick={() => handleButtonClick(DISCOUNT_PRICE)}
+          onClick={() => handleDiscountType(DISCOUNT_PRICE)}
           className={`price ${
-            selectedButton === DISCOUNT_PRICE ? 'active' : null
+            selectedDiscountType === DISCOUNT_PRICE ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
-            color={selectedButton === DISCOUNT_PRICE ? 'primary' : 'black900'}
+            color={
+              selectedDiscountType === DISCOUNT_PRICE ? 'primary' : 'black900'
+            }
           >
             할인가(원)
           </TextBox>
         </StyledDiscountButton>
         <StyledDiscountButton
-          onClick={() => handleButtonClick(DISCOUNT_RATE)}
+          onClick={() => handleDiscountType(DISCOUNT_RATE)}
           className={`rate ${
-            selectedButton === DISCOUNT_RATE ? 'active' : null
+            selectedDiscountType === DISCOUNT_RATE ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
-            color={selectedButton === DISCOUNT_RATE ? 'primary' : 'black900'}
+            color={
+              selectedDiscountType === DISCOUNT_RATE ? 'primary' : 'black900'
+            }
           >
             할인율(%)
           </TextBox>
@@ -80,16 +55,23 @@ export const CouponType = () => {
       </StyledButtonWrap>
       <StyledInputWrap>
         <StyledInput
-          onChange={handleChange}
-          value={discountValue}
-          onBlur={handleBlur}
+          onChange={handleDiscountInputChange}
+          value={discountValue || ''}
+          onBlur={() => handleBlur(discountValue)}
+          placeholder={
+            selectedDiscountType === DISCOUNT_PRICE
+              ? '1,000~50,000 까지'
+              : '1~50까지'
+          }
+          status={isValidDiscountRange ? '' : 'error'}
         />
         <StyledTextWrap>
           <TextBox typography="body2" fontWeight="bold">
-            {selectedButton === DISCOUNT_PRICE ? '원 할인' : '% 할인'}
+            {selectedDiscountType === DISCOUNT_PRICE ? '원 할인' : '% 할인'}
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>
+      <p>{errorMessage ? errorMessage : null}</p>
     </Container>
   );
 };
