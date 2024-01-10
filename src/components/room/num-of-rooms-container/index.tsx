@@ -143,4 +143,8 @@ const StyledInputWrapper = styled.div`
   .ant-input {
     font-size: 16px;
   }
+
+  .ant-input-number-handler-wrap {
+    opacity: 1 !important;
+  }
 `;

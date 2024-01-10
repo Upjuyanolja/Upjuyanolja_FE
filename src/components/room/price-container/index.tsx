@@ -18,13 +18,13 @@ import { TextBox } from '@components/text-box';
 
 export const PriceContainer = ({ header }: PriceContainerProps) => {
   const [inputValue, setInputValue] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [outOfRangeError, setOutOfRangeError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value < MIN_PRICE || value > MAX_PRICE) {
-      setError('10,000~1,000,000까지만 입력 가능합니다.');
+      setOutOfRangeError('10,000~1,000,000까지만 입력 가능합니다.');
     } else {
-      setError(null);
+      setOutOfRangeError(null);
     }
   };
 
@@ -66,12 +66,12 @@ export const PriceContainer = ({ header }: PriceContainerProps) => {
             value={inputValue.toString()}
             onChange={(event) => handleInputChange({ event })}
             disabled={inputValue.toString().length >= MAX_PRICE_LENGTH}
-            status={error ? 'error' : ''}
+            status={outOfRangeError ? 'error' : ''}
             data-testid="input-price"
           />
-          {error && (
+          {outOfRangeError && (
             <StyledErrorMessageWrapper data-testid="error-input-price">
-              <StyledFormErrorMessage errorMessage={error} />
+              <StyledFormErrorMessage errorMessage={outOfRangeError} />
             </StyledErrorMessageWrapper>
           )}
           <StyledTextBoxWrapper>

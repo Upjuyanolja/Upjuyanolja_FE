@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
 import { TimeContainerProps } from './type';
-import {
-  MIN_NUM_OF_ROOMS,
-  MAX_NUM_OF_ROOMS,
-} from '@/constants/room/room-registration/';
 
 const generateTimeOptions = () => {
   const times = [];
