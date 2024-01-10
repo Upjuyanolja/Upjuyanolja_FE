@@ -51,11 +51,12 @@ export const InitAccommodationRegistration = () => {
       const updatedUserInputValue = {
         ...userInputValue,
         id: Math.floor(Math.random() * 1000000),
-        type: values['accommodation-hotel-category']
-          ? values['accommodation-hotel-category']
-          : values['accommodation-category']
-            ? values['accommodation-category']
-            : values['accommodation-guest-category'],
+        type:
+          values['accommodation-category'] === 'HOTEL/RESORT'
+            ? values['accommodation-hotel-category']
+            : values['accommodation-category'] === 'GUEST'
+              ? values['accommodation-guest-category']
+              : values['accommodation-category'],
         name: values['accommodation-name'],
         address: values['accommodation-address'],
         detailAddress: values['accommodation-detailAddress'],
@@ -119,7 +120,7 @@ export const InitAccommodationRegistration = () => {
         form={form}
         onValuesChange={handleFormValuesChange}
       >
-        <AccommodationCategory />
+        <AccommodationCategory form={form} />
         <NameContainer header="숙소명" placeholder="숙소명을 입력해 주세요." />
         <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />

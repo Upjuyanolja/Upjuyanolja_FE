@@ -11,6 +11,7 @@ export const RadioButtonCustomContainer = ({
   label,
   options,
   icon,
+  form,
 }: AccommodationDetailCategoryProps) => {
   const [value, setValue] = useState('');
 
@@ -20,6 +21,9 @@ export const RadioButtonCustomContainer = ({
 
   useEffect(() => {
     setValue('');
+    '호텔' in options
+      ? form.setFieldValue('accommodation-hotel-category', '')
+      : form.setFieldValue('accommodation-guest-category', '');
   }, []);
 
   return (
@@ -36,6 +40,7 @@ export const RadioButtonCustomContainer = ({
             ? 'accommodation-hotel-category'
             : 'accommodation-guest-category'
         }
+        initialValue=""
       >
         <StyledCheckboxRadioGroup
           onChange={(event) => onChange({ event })}

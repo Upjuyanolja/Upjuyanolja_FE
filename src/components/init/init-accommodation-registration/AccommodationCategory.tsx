@@ -15,7 +15,11 @@ import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
 import { Form, Radio } from 'antd';
 
-export const AccommodationCategory = () => {
+export const AccommodationCategory = ({
+  form,
+}: {
+  form: import('antd').FormInstance;
+}) => {
   const [clickedCategory, setClickedCategory] =
     useState<AccommodationCategoryProps>(null);
 
@@ -123,6 +127,7 @@ export const AccommodationCategory = () => {
       </Form.Item>
       {clickedCategory === 'hotelResort' && (
         <RadioButtonCustomContainer
+          form={form}
           options={hotelResortDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
@@ -130,6 +135,7 @@ export const AccommodationCategory = () => {
       )}
       {clickedCategory === 'guestHouse' && (
         <RadioButtonCustomContainer
+          form={form}
           options={guestHouseDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}

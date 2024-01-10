@@ -1,6 +1,7 @@
 import { ChangeEvent, ReactElement } from 'react';
 import { RadioChangeEvent } from 'antd';
 import { IconBaseProps } from 'react-icons';
+import { FormInstance } from 'antd/es/form/Form';
 
 export type AddressHandleInputChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
@@ -22,6 +23,7 @@ export type AccommodationDetailCategoryProps = {
   options: { [key: string]: string };
   label: string;
   icon?: ReactElement<IconBaseProps>;
+  form: FormInstance;
 };
 
 export type AccommodationDetailCategoryOnchangeProps = {
