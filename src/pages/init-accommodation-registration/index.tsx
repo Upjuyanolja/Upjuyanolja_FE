@@ -80,13 +80,12 @@ export const InitAccommodationRegistration = () => {
     const isNameValid = !accommodationNameErrorMessage;
     const isDescValid = !accommodationDescErrorMessage;
     const commonConditions =
-      values['accommodation-category'] &&
-      values['accommodation-desc'] &&
       values['accommodation-postCode'] &&
       isDescValid &&
       isNameValid &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
+      values['accommodation-desc'] &&
       isUploadedImage;
 
     const hotelResortConditions =
@@ -96,7 +95,12 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-category'] === 'GUEST' &&
       values['accommodation-guest-category'];
 
-    return commonConditions && (hotelResortConditions || guestConditions);
+    return (
+      commonConditions &&
+      (values['accommodation-category'] ||
+        hotelResortConditions ||
+        guestConditions)
+    );
   };
 
   useEffect(() => {

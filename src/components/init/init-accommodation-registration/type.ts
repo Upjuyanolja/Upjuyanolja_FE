@@ -3,10 +3,10 @@ import { IconBaseProps } from 'react-icons';
 import { FormInstance } from 'antd/es/form/Form';
 
 export type AccommodationCategoryType =
-  | 'hotelResort'
-  | 'motel'
-  | 'pensionPool'
-  | 'guestHouse'
+  | 'HOTEL/RESORT'
+  | 'MOTEL'
+  | 'PENSION/POOL'
+  | 'GUEST'
   | null;
 
 export type HandleTextAreaChange = {

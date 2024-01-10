@@ -8,7 +8,7 @@ import grayMotelIcon from '@assets/image/grayMotel.png';
 import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AccommodationCategoryType, formType } from './type';
 import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
@@ -38,6 +38,10 @@ export const AccommodationCategory = ({ form }: formType) => {
     한옥: 'HANOK',
   };
 
+  useEffect(() => {
+    form.setFieldValue('accommodation-category', clickedCategory);
+  }, [clickedCategory, form]);
+
   return (
     <StyledInputWrapper>
       <TextBox typography="h4" fontWeight={700}>
@@ -47,11 +51,11 @@ export const AccommodationCategory = ({ form }: formType) => {
         <StyledRadioGroup>
           <StyledRadioButton
             value="HOTEL/RESORT"
-            onClick={() => handleButtonClick('hotelResort')}
+            onClick={() => handleButtonClick('HOTEL/RESORT')}
           >
             <img
               src={
-                clickedCategory === 'hotelResort'
+                clickedCategory === 'HOTEL/RESORT'
                   ? primaryHotelResortIcon
                   : grayHotelResortIcon
               }
@@ -59,35 +63,37 @@ export const AccommodationCategory = ({ form }: formType) => {
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'hotelResort' ? 'primary' : 'black600'}
+              color={
+                clickedCategory === 'HOTEL/RESORT' ? 'primary' : 'black600'
+              }
             >
               호텔/리조트
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
             value="MOTEL"
-            onClick={() => handleButtonClick('motel')}
+            onClick={() => handleButtonClick('MOTEL')}
           >
             <img
               src={
-                clickedCategory === 'motel' ? primaryMotelIcon : grayMotelIcon
+                clickedCategory === 'MOTEL' ? primaryMotelIcon : grayMotelIcon
               }
             />
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'motel' ? 'primary' : 'black600'}
+              color={clickedCategory === 'MOTEL' ? 'primary' : 'black600'}
             >
               모텔
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
             value="PENSION/POOL"
-            onClick={() => handleButtonClick('pensionPool')}
+            onClick={() => handleButtonClick('PENSION/POOL')}
           >
             <img
               src={
-                clickedCategory === 'pensionPool'
+                clickedCategory === 'PENSION/POOL'
                   ? primaryPensionPoolIcon
                   : grayPensionPoolIcon
               }
@@ -95,18 +101,20 @@ export const AccommodationCategory = ({ form }: formType) => {
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'pensionPool' ? 'primary' : 'black600'}
+              color={
+                clickedCategory === 'PENSION/POOL' ? 'primary' : 'black600'
+              }
             >
               펜션/풀빌라
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
             value="GUEST"
-            onClick={() => handleButtonClick('guestHouse')}
+            onClick={() => handleButtonClick('GUEST')}
           >
             <img
               src={
-                clickedCategory === 'guestHouse'
+                clickedCategory === 'GUEST'
                   ? primaryGuestHouseIcon
                   : grayGuestHouseIcon
               }
@@ -114,14 +122,14 @@ export const AccommodationCategory = ({ form }: formType) => {
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'guestHouse' ? 'primary' : 'black600'}
+              color={clickedCategory === 'GUEST' ? 'primary' : 'black600'}
             >
               게스트하우스
             </TextBox>
           </StyledRadioButton>
         </StyledRadioGroup>
       </Form.Item>
-      {clickedCategory === 'hotelResort' && (
+      {clickedCategory === 'HOTEL/RESORT' && (
         <RadioButtonCustomContainer
           form={form}
           options={hotelResortDetailCategoryMapping}
@@ -129,7 +137,7 @@ export const AccommodationCategory = ({ form }: formType) => {
           icon={<FaCheck size={15} color={colors.primary} />}
         />
       )}
-      {clickedCategory === 'guestHouse' && (
+      {clickedCategory === 'GUEST' && (
         <RadioButtonCustomContainer
           form={form}
           options={guestHouseDetailCategoryMapping}
