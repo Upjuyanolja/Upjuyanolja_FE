@@ -23,18 +23,18 @@ export const PriceContainer = ({ header }: PriceContainerProps) => {
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value < MIN_PRICE || value > MAX_PRICE) {
       setError('10,000~1,000,000까지만 입력 가능합니다.');
-    } else if (!NUMBER_REGEX.test(value.toString())) {
-      setError('숫자만 입력 가능합니다.');
     } else {
       setError(null);
     }
   };
 
   const handleInputChange = ({ event }: PriceHandleInputChangeProps) => {
-    const stringValue = event.target.value.slice(0, MAX_PRICE_LENGTH);
-    setInputValue(stringValue);
-    const numericValue = Number(stringValue);
-    validateInput({ value: numericValue });
+    const stringValue = event.target.value;
+    if (stringValue === '' || NUMBER_REGEX.test(stringValue)) {
+      setInputValue(stringValue.slice(0, MAX_PRICE_LENGTH));
+      const numericValue = Number(stringValue);
+      validateInput({ value: numericValue });
+    }
   };
 
   return (
