@@ -1,8 +1,12 @@
 import { SideBar } from '@components/layout/side-bar';
 import { Layout } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { ROUTES } from './constants/routes';
 
 export const RootLayout = () => {
+  const location = useLocation();
+  const currentRoute = location.pathname;
+
   return (
     <Layout>
       <Layout.Header>Header</Layout.Header>
@@ -12,7 +16,8 @@ export const RootLayout = () => {
         </Layout.Sider>
         <Layout.Content
           style={{
-            maxWidth: '1024px',
+            maxWidth:
+              currentRoute === ROUTES.ROOM_REGISTRATION ? 'auto' : '1024px',
             margin: '0 auto',
           }}
         >

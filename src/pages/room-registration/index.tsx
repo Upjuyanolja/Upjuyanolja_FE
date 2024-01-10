@@ -44,8 +44,8 @@ export default RoomRegistration;
 
 const StyledWrapper = styled.div`
   border-radius: 8px;
-  padding: 40px;
   width: 100%;
+  padding: 40px;
   background-color: ${(props) => props.color};
 `;
 

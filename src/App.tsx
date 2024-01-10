@@ -25,6 +25,7 @@ import './App.less';
 import { InitLayout } from '@components/init/init-button/InitLayout';
 import { RoomLayout } from '@components/room/room-layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
+
 function App() {
   const accessToken = getCookie('accessToken');
   return (
