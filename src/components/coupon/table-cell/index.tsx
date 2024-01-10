@@ -1,19 +1,20 @@
 import { TextBox } from '@components/text-box';
 import { Input } from 'antd';
 import styled from 'styled-components';
+import {
+  couponNameContainerProps,
+  dayLimitInputProps,
+  roomContainerProps,
+} from './type';
 
-export const RoomContainer = ({
-  room,
-}: {
-  room: { name: string; price: string };
-}) => {
+export const RoomContainer = ({ room }: roomContainerProps) => {
   return (
     <StyledRoomContainer>
       <TextBox fontWeight={700} typography="body2">
         {room.name}
       </TextBox>
       <TextBox fontWeight={400} typography="body4">
-        {room.price}
+        {room.price.toLocaleString()}원
       </TextBox>
     </StyledRoomContainer>
   );
@@ -25,14 +26,21 @@ const StyledRoomContainer = styled.div`
   justify-content: center;
 `;
 
-export const CouponNameContainer = ({ text }: { text: string }) => {
+export const CouponNameContainer = ({
+  info,
+  isSoldOut,
+}: couponNameContainerProps) => {
   return (
     <StyledCouponNameContainer>
-      <TextBox fontWeight={700} typography="body2">
-        {text}
+      <TextBox
+        fontWeight={700}
+        typography="body2"
+        color={isSoldOut ? 'black600' : 'black900'}
+      >
+        {info.name}
       </TextBox>
       <TextBox color="black600" typography="body4" fontWeight={400}>
-        (적용가 99,000원)
+        (적용가 {info.appliedPrice.toLocaleString()}원)
       </TextBox>
     </StyledCouponNameContainer>
   );
@@ -43,11 +51,18 @@ const StyledCouponNameContainer = styled.div`
   gap: 4px;
 `;
 
-export const DayLimitInput = ({ text }: { text: string }) => {
+export const DayLimitInput = ({ dayLimit, isSoldOut }: dayLimitInputProps) => {
   return (
     <>
-      <StyledInput defaultValue={text} />
-      <TextBox typography="body2" fontWeight={400}>
+      <StyledInput
+        defaultValue={dayLimit === -1 ? '-' : dayLimit}
+        disabled={isSoldOut}
+      />
+      <TextBox
+        typography="body2"
+        fontWeight={400}
+        color={isSoldOut ? 'black600' : 'black900'}
+      >
         장
       </TextBox>
     </>
@@ -55,4 +70,5 @@ export const DayLimitInput = ({ text }: { text: string }) => {
 };
 const StyledInput = styled(Input)`
   width: 56px;
+  margin-right: 4px;
 `;
