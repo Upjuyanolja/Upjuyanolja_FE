@@ -26,7 +26,13 @@ export const RadioButtonCustomContainer = ({
           {label}
         </TextBox>
       </StyledTextContainer>
-      <Form.Item name="accommodation-category">
+      <Form.Item
+        name={
+          '호텔' in options
+            ? 'accommodation-hotel-category'
+            : 'accommodation-guest-category'
+        }
+      >
         <StyledCheckboxRadioGroup
           onChange={(event) => onChange({ event })}
           value={value}

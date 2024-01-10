@@ -72,7 +72,7 @@ export const InitAccommodationRegistration = () => {
     const values = form.getFieldsValue();
     const isNameValid = !accommodationNameErrorMessage;
     const isDescValid = !accommodationDescErrorMessage;
-    return (
+    const commonConditions =
       values['accommodation-category'] &&
       values['accommodation-desc'] &&
       values['accommodation-postCode'] &&
@@ -81,8 +81,16 @@ export const InitAccommodationRegistration = () => {
       isDescValid &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
-      isUploadedImage
-    );
+      isUploadedImage;
+
+    const hotelResortConditions =
+      values['accommodation-category'] === 'HOTEL/RESORT' &&
+      values['accommodation-hotel-category'];
+    const guestConditions =
+      values['accommodation-category'] === 'GUEST' &&
+      values['accommodation-guest-category'];
+
+    return commonConditions && (hotelResortConditions || guestConditions);
   };
 
   useEffect(() => {
