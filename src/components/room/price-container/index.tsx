@@ -65,7 +65,6 @@ export const PriceContainer = ({ header }: PriceContainerProps) => {
             }}
             value={inputValue.toString()}
             onChange={(event) => handleInputChange({ event })}
-            disabled={inputValue.toString().length >= MAX_PRICE_LENGTH}
             status={outOfRangeError ? 'error' : ''}
             data-testid="input-price"
           />
