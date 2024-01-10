@@ -1,5 +1,3 @@
-import { ChangeEvent } from 'react';
-
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
   isValid: boolean;
@@ -36,8 +34,4 @@ export type NameContainerProps = {
 
 export type ValidateInput = {
   value: string;
-};
-
-export type NameHandleInputChangeProps = {
-  event: ChangeEvent<HTMLInputElement>;
 };

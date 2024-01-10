@@ -1,12 +1,8 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import {
-  NameContainerProps,
-  NameHandleInputChangeProps,
-  ValidateInput,
-} from './type';
+import { NameContainerProps, ValidateInput } from './type';
 import {
   ACCOMMODATION_NAME_MAX_LENGTH,
   ACCOMMODATION_NAME_MIN_LENGTH,
@@ -32,7 +28,7 @@ export const NameContainer = ({ header, placeholder }: NameContainerProps) => {
     }
   };
 
-  const handleInputChange = ({ event }: NameHandleInputChangeProps) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_NAME_MAX_LENGTH);
     setInputValue(newValue);
     validateInput({ value: newValue });
@@ -52,7 +48,7 @@ export const NameContainer = ({ header, placeholder }: NameContainerProps) => {
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
           style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
           value={inputValue}
-          onChange={(event) => handleInputChange({ event })}
+          onChange={handleInputChange}
           disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
           status={errorMessage ? 'error' : ''}
           data-testid="input-name"
