@@ -43,8 +43,8 @@ export const useCouponProvider = () => {
       handleDiscountPriceErrorMessage(discountValue);
     }
 
-    const parsedDiscountValue = searchParams.get('discount') || '';
-    setDiscountValue(parsedDiscountValue);
+    const searchParamsValue = searchParams.get('discount') || '';
+    setDiscountValue(searchParamsValue);
   }, [searchParams]);
 
   useEffect(() => {
