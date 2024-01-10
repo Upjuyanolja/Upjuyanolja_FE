@@ -30,7 +30,10 @@ const RoomRegistration = () => {
     <StyledWrapper color={colors.white}>
       <Form form={form}>
         <AccommodationCategory />
-        <NameContainer header="숙소명" />
+        <NameContainer
+          header="객실명"
+          placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
+        />
         <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <StyledInputWrapper>
