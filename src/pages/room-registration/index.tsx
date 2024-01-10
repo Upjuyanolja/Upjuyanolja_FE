@@ -8,6 +8,7 @@ import { NameContainer } from '@components/init/NameContainer';
 import { PriceContainer } from '@components/room/price-container';
 import { CapacityContainer } from '@components/room/capacity-container';
 import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
+import { TimeContainer } from '@components/room/time-container';
 
 const RoomRegistration = () => {
   const isValid = true;
@@ -23,6 +24,9 @@ const RoomRegistration = () => {
         <ImageUploadContainer header="객실 사진" />
         <StyledInputWrapper>
           <NumOfRoomsContainer header="객실 수" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <TimeContainer header="시간" />
         </StyledInputWrapper>
         <StyledInputWrapper>
           <CapacityContainer header="인원" />
