@@ -45,9 +45,11 @@ export const NameContainer = ({
       <TextBox typography="h4" fontWeight={700}>
         {header}
       </TextBox>
-      <Form.Item name="accommodation-name">
+      <Form.Item
+        name={header === '숙소명' ? 'accommodation-name' : 'room-name'}
+      >
         <Input
-          id="accommodation-name"
+          id={header === '숙소명' ? 'accommodation-name' : 'room-name'}
           placeholder={placeholder}
           type="text"
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
