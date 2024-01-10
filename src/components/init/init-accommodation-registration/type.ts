@@ -46,7 +46,7 @@ type Image = {
   url: string;
 };
 
-type Options = {
+export type Options = {
   cooking: boolean;
   parking: boolean;
   pickup: boolean;

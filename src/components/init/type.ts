@@ -10,7 +10,7 @@ export type ButtonContainerStyledWrapperProps = {
 };
 
 export type CheckBoxContainerProps = {
-  options: string[];
+  options: { [key: string]: string };
   header: string;
 };
 

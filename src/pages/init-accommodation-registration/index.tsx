@@ -10,6 +10,7 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
+  checkedAccommodationOptions,
   descErrorMessage,
   isUploadedImage,
   nameErrorMessage,
@@ -40,6 +41,8 @@ export const InitAccommodationRegistration = () => {
 
   const setUserInputValueState = useSetRecoilState(userInputValueState);
 
+  const selectedOptions = useRecoilValue(checkedAccommodationOptions);
+
   const onFinish = (values: formValues) => {
     setUserInputValueState((prevUserInputValueState) => {
       const [userInputValue] = prevUserInputValueState;
@@ -51,6 +54,7 @@ export const InitAccommodationRegistration = () => {
         address: values['accommodation-address'],
         detailAddress: values['accommodation-detailAddress'],
         description: values['accommodation-desc'],
+        options: selectedOptions,
       };
       return [updatedUserInputValue];
     });
@@ -85,6 +89,7 @@ export const InitAccommodationRegistration = () => {
     isUploadedImage,
     accommodationNameErrorMessage,
     accommodationDescErrorMessage,
+    selectedOptions,
   ]);
 
   const handleFormValuesChange = () => {

@@ -1,4 +1,7 @@
-import { UserInputValue } from '@components/init/init-accommodation-registration/type';
+import {
+  Options,
+  UserInputValue,
+} from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
@@ -64,4 +67,19 @@ export const nameErrorMessage = atom({
 export const descErrorMessage = atom({
   key: 'descErrorMessage',
   default: '',
+});
+
+export const checkedAccommodationOptions = atom<Options>({
+  key: 'checkedAccommodationOptions',
+  default: {
+    cooking: false,
+    parking: false,
+    pickup: false,
+    barbecue: false,
+    fitness: false,
+    karaoke: false,
+    sauna: false,
+    sports: false,
+    seminar: false,
+  },
 });
