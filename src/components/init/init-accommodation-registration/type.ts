@@ -1,12 +1,6 @@
 import { ChangeEvent, ReactElement } from 'react';
-import { RadioChangeEvent } from 'antd';
 import { IconBaseProps } from 'react-icons';
 import { FormInstance } from 'antd/es/form/Form';
-
-export type AddressHandleInputChange = {
-  event: ChangeEvent<HTMLInputElement>;
-  inputType: string;
-};
 
 export type AccommodationCategoryType =
   | 'hotelResort'

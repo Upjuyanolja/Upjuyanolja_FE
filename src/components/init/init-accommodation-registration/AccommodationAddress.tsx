@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { Input, Button, Form } from 'antd';
-import { useState } from 'react';
-import { AddressHandleInputChange, formType } from './type';
+import { ChangeEvent, useState } from 'react';
+import { formType } from './type';
 import { AddressFormat } from '@components/init/init-accommodation-registration/type';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { ADDRESS_TYPE_ROAD } from '@/constants/init/init-accommodation-registration';
@@ -12,19 +12,9 @@ export const AccommodationAddress = ({ form }: formType) => {
   const [inputAddress, setInputAddress] = useState('');
   const [inputDetailAddress, setInputDetailAddress] = useState('');
 
-  const handleInputChange = ({
-    event,
-    inputType,
-  }: AddressHandleInputChange) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-
-    switch (inputType) {
-      case 'accommodationDetailAddress':
-        setInputDetailAddress(inputValue);
-        break;
-      default:
-        break;
-    }
+    setInputDetailAddress(inputValue);
   };
 
   const openAddressPopup = useDaumPostcodePopup(
@@ -100,12 +90,7 @@ export const AccommodationAddress = ({ form }: formType) => {
           id="accommodation-detailAddress"
           placeholder="상세주소"
           value={inputDetailAddress}
-          onChange={(event) =>
-            handleInputChange({
-              event,
-              inputType: 'accommodation-detailAddress',
-            })
-          }
+          onChange={handleInputChange}
         />
       </Form.Item>
     </StyledInputWrapper>
