@@ -16,7 +16,7 @@ import { TextBox } from '@components/text-box';
 import { useRecoilState } from 'recoil';
 import { nameErrorMessage } from '@stores/init/atoms';
 
-export const NameContainer = ({ header }: NameContainerProps) => {
+export const NameContainer = ({ header, placeholder }: NameContainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
@@ -46,7 +46,7 @@ export const NameContainer = ({ header }: NameContainerProps) => {
       <Form.Item name="accommodation-name">
         <Input
           id="accommodation-name"
-          placeholder={`${header}을 입력해 주세요.`}
+          placeholder={placeholder}
           type="text"
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
