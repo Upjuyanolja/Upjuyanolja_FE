@@ -9,6 +9,7 @@ import {
   ACCOMMODATION_DESC_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
 import { Form } from 'antd';
+import { RecoilRoot } from 'recoil';
 
 jest.mock('react-daum-postcode', () => ({
   useDaumPostcodePopup: jest.fn(),
@@ -16,18 +17,23 @@ jest.mock('react-daum-postcode', () => ({
 
 describe('InitAccommodationRegistration', () => {
   test('주소 검색 버튼을 누르면 API 팝업이 열린다.', () => {
-    const [form] = Form.useForm();
     const mockOpenAddressPopup = jest.fn();
 
     jest
       .requireMock('react-daum-postcode')
       .useDaumPostcodePopup.mockReturnValue(mockOpenAddressPopup);
 
-    render(
-      <BrowserRouter>
-        <AccommodationAddress form={form} />
-      </BrowserRouter>,
-    );
+    const TestComponent = () => {
+      const [form] = Form.useForm();
+
+      return (
+        <BrowserRouter>
+          <AccommodationAddress form={form} />
+        </BrowserRouter>
+      );
+    };
+
+    render(<TestComponent />);
 
     act(() => {
       fireEvent.click(screen.getByTestId('acccommodation-address-api-button'));
@@ -39,7 +45,11 @@ describe('InitAccommodationRegistration', () => {
   test(`숙소소개에 ${ACCOMMODATION_DESC_MIN_LENGTH}글자 미만 입력했을 때 에러메세지를 띄운다.`, () => {
     render(
       <BrowserRouter>
-        <AccommodationDesc />
+        <RecoilRoot>
+          <Form>
+            <AccommodationDesc />
+          </Form>
+        </RecoilRoot>
       </BrowserRouter>,
     );
     const testAreaAccommodationDesc = screen.getByTestId(
@@ -60,7 +70,11 @@ describe('InitAccommodationRegistration', () => {
   test(`숙소소개에 ${ACCOMMODATION_DESC_MAX_LENGTH}자를 초과해 입력했을 때 input을 막는다.`, () => {
     render(
       <BrowserRouter>
-        <AccommodationDesc />
+        <RecoilRoot>
+          <Form>
+            <AccommodationDesc />
+          </Form>
+        </RecoilRoot>
       </BrowserRouter>,
     );
     const testAreaAccommodationDesc = screen.getByTestId(
