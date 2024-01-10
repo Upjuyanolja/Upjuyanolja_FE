@@ -25,7 +25,12 @@ export const UserProfile = ({
       <TextBox typography="h3" color="black900" fontWeight="bold">
         {numberFormat(pointSummaryData.currentPoint)} P
       </TextBox>
-      <StyledButton type="primary" size="large" onClick={showModal}>
+      <StyledButton
+        type="primary"
+        size="large"
+        onClick={showModal}
+        data-testid="charge-point-button"
+      >
         포인트 추가하기
       </StyledButton>
       {isModalOpen && (
