@@ -15,12 +15,12 @@ export const CheckBoxContainer = ({
   const [selectedAccommodationOptions, setSelectedAccommodationOptions] =
     useRecoilState(checkedAccommodationOptions);
 
-  const handleCheckboxChange = (e: CheckboxChangeEvent) => {
-    const checkedOption = e.target.value;
+  const handleCheckboxChange = (event: CheckboxChangeEvent) => {
+    const checkedOption = event.target.value;
 
     setSelectedAccommodationOptions((prev) => ({
       ...prev,
-      [checkedOption]: e.target.checked,
+      [checkedOption]: event.target.checked,
     }));
   };
 

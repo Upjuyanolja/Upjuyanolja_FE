@@ -3,19 +3,19 @@ import { RadioChangeEvent } from 'antd';
 import { IconBaseProps } from 'react-icons';
 import { FormInstance } from 'antd/es/form/Form';
 
-export type AddressHandleInputChangeProps = {
+export type AddressHandleInputChange = {
   event: ChangeEvent<HTMLInputElement>;
   inputType: string;
 };
 
-export type AccommodationCategoryProps =
+export type AccommodationCategoryType =
   | 'hotelResort'
   | 'motel'
   | 'pensionPool'
   | 'guestHouse'
   | null;
 
-export type HandleTextAreaChangeProps = {
+export type HandleTextAreaChange = {
   event: ChangeEvent<HTMLTextAreaElement>;
 };
 
@@ -26,11 +26,7 @@ export type AccommodationDetailCategoryProps = {
   form: FormInstance;
 };
 
-export type AccommodationDetailCategoryOnchangeProps = {
-  event: RadioChangeEvent;
-};
-
-export type AddressFormatProps = {
+export type AddressFormat = {
   address: string;
   addressType: string;
   bname: string;
@@ -40,6 +36,10 @@ export type AddressFormatProps = {
 
 export type formValues = {
   [key: string]: string;
+};
+
+export type formType = {
+  form: FormInstance;
 };
 
 /**request 타입 */

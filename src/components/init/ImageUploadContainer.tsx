@@ -2,12 +2,8 @@ import { TextBox } from '@components/text-box';
 import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef, useEffect } from 'react';
-import {
-  ImageUploadFileItem,
-  ImageUploadHandleChangeProps,
-  ImageUploadContainerProps,
-} from './type';
+import { useState, useRef, useEffect, ChangeEvent } from 'react';
+import { ImageUploadFileItem, ImageUploadContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
@@ -28,7 +24,7 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
 
   const handleCancel = () => setPreviewOpen(false);
 
-  const handleChange = ({ event }: ImageUploadHandleChangeProps) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
     const selectedFile = inputElement.files?.[0];
 
@@ -123,7 +119,7 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
               type="file"
               accept=".png, .jpeg, .jpg"
               ref={fileInputRef}
-              onChange={(event) => handleChange({ event })}
+              onChange={handleChange}
               style={{ display: 'none' }}
               data-testid="file-input"
             />

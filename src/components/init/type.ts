@@ -29,16 +29,12 @@ export type ImageUploadContainerProps = {
   header: string;
 };
 
-export type ImageUploadHandleChangeProps = {
-  event: ChangeEvent<HTMLInputElement>;
-};
-
 export type NameContainerProps = {
   header: string;
   placeholder: string;
 };
 
-export type ValidateInputProps = {
+export type ValidateInput = {
   value: string;
 };
 

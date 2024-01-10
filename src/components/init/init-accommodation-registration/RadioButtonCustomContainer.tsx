@@ -1,10 +1,7 @@
 import { TextBox } from '@components/text-box';
-import {
-  AccommodationDetailCategoryOnchangeProps,
-  AccommodationDetailCategoryProps,
-} from './type';
+import { AccommodationDetailCategoryProps } from './type';
 import styled from 'styled-components';
-import { Form, Radio } from 'antd';
+import { Form, Radio, RadioChangeEvent } from 'antd';
 import { useEffect, useState } from 'react';
 
 export const RadioButtonCustomContainer = ({
@@ -15,7 +12,7 @@ export const RadioButtonCustomContainer = ({
 }: AccommodationDetailCategoryProps) => {
   const [value, setValue] = useState('');
 
-  const onChange = ({ event }: AccommodationDetailCategoryOnchangeProps) => {
+  const onChange = (event: RadioChangeEvent) => {
     setValue(event.target.value);
   };
 
@@ -42,10 +39,7 @@ export const RadioButtonCustomContainer = ({
         }
         initialValue=""
       >
-        <StyledCheckboxRadioGroup
-          onChange={(event) => onChange({ event })}
-          value={value}
-        >
+        <StyledCheckboxRadioGroup onChange={onChange} value={value}>
           {Object.entries(options).map(([korean, english]) => (
             <StyledCheckboxRadio value={english} key={english}>
               {korean}

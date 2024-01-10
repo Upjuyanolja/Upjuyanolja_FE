@@ -1,17 +1,13 @@
 import { styled } from 'styled-components';
 import { Input, Button, Form } from 'antd';
 import { useState } from 'react';
-import { AddressHandleInputChangeProps } from './type';
-import { AddressFormatProps } from '@components/init/init-accommodation-registration/type';
+import { AddressHandleInputChange, formType } from './type';
+import { AddressFormat } from '@components/init/init-accommodation-registration/type';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { ADDRESS_TYPE_ROAD } from '@/constants/init/init-accommodation-registration';
 import { TextBox } from '@components/text-box';
 
-export const AccommodationAddress = ({
-  form,
-}: {
-  form: import('antd').FormInstance;
-}) => {
+export const AccommodationAddress = ({ form }: formType) => {
   const [inputPostCode, setInputPostCode] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [inputDetailAddress, setInputDetailAddress] = useState('');
@@ -19,7 +15,7 @@ export const AccommodationAddress = ({
   const handleInputChange = ({
     event,
     inputType,
-  }: AddressHandleInputChangeProps) => {
+  }: AddressHandleInputChange) => {
     const inputValue = event.target.value;
 
     switch (inputType) {
@@ -35,7 +31,7 @@ export const AccommodationAddress = ({
     '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js',
   );
 
-  const addressFormat = (data: AddressFormatProps) => {
+  const addressFormat = (data: AddressFormat) => {
     let fullAddress = data.address;
     let extraAddress = '';
 

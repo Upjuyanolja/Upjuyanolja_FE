@@ -9,21 +9,17 @@ import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
-import { AccommodationCategoryProps } from './type';
+import { AccommodationCategoryType, formType } from './type';
 import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
 import { Form, Radio } from 'antd';
 
-export const AccommodationCategory = ({
-  form,
-}: {
-  form: import('antd').FormInstance;
-}) => {
+export const AccommodationCategory = ({ form }: formType) => {
   const [clickedCategory, setClickedCategory] =
-    useState<AccommodationCategoryProps>(null);
+    useState<AccommodationCategoryType>(null);
 
-  const handleButtonClick = (category: AccommodationCategoryProps) => {
+  const handleButtonClick = (category: AccommodationCategoryType) => {
     if (clickedCategory !== category) {
       setClickedCategory(category);
     }
