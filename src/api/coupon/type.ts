@@ -21,6 +21,7 @@ export type coupon = {
   appliedPrice: number;
   dayLimit: number;
   quantity: number;
+  discount: number;
   couponType: 'WEEKDAYS' | 'WEEKENDS' | 'ALL_DAYS';
 };
 export type room = {
