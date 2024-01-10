@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input, Layout, Modal, Space } from 'antd';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { TextBox } from '@components/text-box';
@@ -8,11 +8,22 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { colors } from '@/constants/colors';
 import { PointModalProps } from './types';
 
+import { nanoid } from 'nanoid';
+import {
+  PaymentWidgetInstance,
+  loadPaymentWidget,
+} from '@tosspayments/payment-widget-sdk';
+
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
 const PRICE_10000 = 10000;
 const PRICE_50000 = 10000;
 const PRICE_100000 = 10000;
+
+const selector = '#payment-widget';
+const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
+const customerKey = 'YbX2HuSlsC9uVJW6NMRMj';
+
 export const PointModal = ({
   isModalOpen,
   setIsModalOpen,
@@ -23,6 +34,38 @@ export const PointModal = ({
   const [isPointState, setIsPointState] = useState<boolean>(true);
   const [isAgreementPoint, setIsAgreementPoint] = useState(false);
   const [isInfoBoxState, setIsInfoBoxState] = useState(false);
+
+  const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
+  const paymentMethodsWidgetRef = useRef<ReturnType<
+    PaymentWidgetInstance['renderPaymentMethods']
+  > | null>(null);
+
+  const [price, setPrice] = useState(1_000);
+
+  useEffect(() => {
+    (async () => {
+      const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
+
+      const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
+        selector,
+        { value: price, currency: 'KRW', country: 'KR' },
+        { variantKey: 'DEFAULT' },
+      );
+
+      paymentWidgetRef.current = paymentWidget;
+      paymentMethodsWidgetRef.current = paymentMethodsWidget;
+    })();
+  }, [paymentWidgetRef, price]);
+
+  useEffect(() => {
+    const paymentMethodsWidget = paymentMethodsWidgetRef.current;
+
+    if (paymentMethodsWidget == null) {
+      return;
+    }
+
+    paymentMethodsWidget.updateAmount(price);
+  }, [price]);
 
   const handleChangePoint = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -75,6 +118,29 @@ export const PointModal = ({
     setIsInfoBoxState(false);
   };
 
+  const handleClickPayment = async () => {
+    const paymentWidget = paymentWidgetRef.current;
+    console.log(paymentWidget);
+    console.log('클릭');
+    try {
+      console.log('실행중');
+
+      await paymentWidget?.requestPayment({
+        orderId: nanoid(),
+        orderName: '토스 티셔츠 외 2건',
+        customerName: '김토스',
+        customerEmail: 'customer123@gmail.com',
+        successUrl: `${window.location.origin}/success`,
+        failUrl: `${window.location.origin}/fail`,
+      });
+      // -> 서버한테 API 요청을 합니다. (결제 확정을 위한 API요청.)
+
+      //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <CustomModal
@@ -122,6 +188,8 @@ export const PointModal = ({
               </Button>
             </PointButtonWrap>
 
+            <div id="payment-widget" />
+
             <PriceWrap>
               {isInfoBoxState && <InfoContainer />}
 
@@ -158,7 +226,7 @@ export const PointModal = ({
             <SubmitButton
               key="submit"
               type="primary"
-              onClick={handleOk}
+              onClick={handleClickPayment}
               disabled={isPointState || !isAgreementPoint}
             >
               결제하기
@@ -206,7 +274,7 @@ const CustomModal = styled(Modal)`
 `;
 const PointButtonWrap = styled(Space)`
   display: flex;
-  margin-bottom: 221px;
+  margin-bottom: 8px;
   button {
     width: 64px;
     height: 25px;

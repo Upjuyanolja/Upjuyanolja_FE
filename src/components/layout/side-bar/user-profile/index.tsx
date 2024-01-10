@@ -28,7 +28,9 @@ export const UserProfile = ({
       <StyledButton type="primary" size="large" onClick={showModal}>
         포인트 추가하기
       </StyledButton>
-      <PointModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      {isModalOpen && (
+        <PointModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      )}
     </StyledSpace>
   );
 };
