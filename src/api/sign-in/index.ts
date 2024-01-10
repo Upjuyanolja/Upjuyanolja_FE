@@ -8,5 +8,4 @@ export const SIGN_IN_API = {
     instance.post<Response<memberData>>('/api/auth/owner/signin', {
       data,
     }),
-  getAccomodations: () => instance.get('/api/accommodations/backoffice'),
 };

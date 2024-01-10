@@ -64,6 +64,8 @@ export const Footer = () => {
 };
 
 const StyledLayout = styled(Layout)`
+  position: absolute;
+  bottom: 0;
   width: 100%;
   background-color: ${colors.midGray};
 `;
