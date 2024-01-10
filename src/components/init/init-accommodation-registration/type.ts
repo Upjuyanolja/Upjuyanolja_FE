@@ -41,7 +41,6 @@ export type formValues = {
 };
 
 /**request 타입 */
-
 export type Image = {
   url: string;
 };
