@@ -11,7 +11,7 @@ import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
-export const useCouponProvider = () => {
+export const useCouponRegistrationProvider = () => {
   const [selectedDiscountType, setSelectedDiscountType] =
     useState(DISCOUNT_PRICE);
   const [errorMessage, setErrorMessage] = useState('');

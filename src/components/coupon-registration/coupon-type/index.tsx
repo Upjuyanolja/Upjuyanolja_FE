@@ -3,7 +3,7 @@ import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { StyledDiscountButtonProps } from './type';
 import { Input } from 'antd';
-import { useCouponProvider } from '@hooks/coupon/useCouponProvider';
+import { useCouponRegistrationProvider } from '@hooks/coupon-registration/useCouponRegistrationProvider';
 
 export const CouponType = () => {
   const {
@@ -17,7 +17,7 @@ export const CouponType = () => {
     handleDiscountInputChange,
     isValidDiscountRange,
     handleBlur,
-  } = useCouponProvider();
+  } = useCouponRegistrationProvider();
 
   return (
     <Container>
