@@ -17,9 +17,6 @@ export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
     setError(null);
     if (value < MIN_NUM_OF_ROOMS || value > MAX_NUM_OF_ROOMS) {
       setError('1~100까지만 입력 가능합니다.');
-      // } else if (!NUMBER_REGEX.test(value.toString())) {
-      //   setError('숫자만 입력 가능합니다.');
-      // 다른 예외 처리는 내일 담당 PM분과 상의 후 처리 할 예정입니다.
     }
   };
 
@@ -34,9 +31,14 @@ export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
   return (
     <StyledInputWrapper>
       <StyledHeadTextContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          {header}
-        </TextBox>
+        <StyledDesc>
+          <TextBox typography="h4" fontWeight={700}>
+            {header}
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            1~100까지만 가능합니다.
+          </TextBox>
+        </StyledDesc>
       </StyledHeadTextContainer>
       <StyledRow>
         <StyledTextBoxWrapper>
@@ -102,6 +104,10 @@ const StyledInputNumber = styled(InputNumber)`
     text-align: right;
     padding-right: 34px;
   }
+
+  .ant-input-number-handler-wrap {
+    opacity: 1;
+  }
 `;
 
 const StyledTextBoxWrapper = styled.div`
@@ -143,8 +149,10 @@ const StyledInputWrapper = styled.div`
   .ant-input {
     font-size: 16px;
   }
+`;
 
-  .ant-input-number-handler-wrap {
-    opacity: 1 !important;
-  }
+const StyledDesc = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;

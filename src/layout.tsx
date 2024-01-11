@@ -1,12 +1,24 @@
 import { SideBar } from '@components/layout/side-bar';
 import { Layout } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { ROUTES } from './constants/routes';
+import { colors } from '@/constants/colors';
 
 export const RootLayout = () => {
+  const location = useLocation();
+  const currentRoute = location.pathname;
+
   return (
     <Layout>
       <Layout.Header>Header</Layout.Header>
-      <Layout>
+      <Layout
+        style={{
+          backgroundColor:
+            currentRoute === ROUTES.ROOM_REGISTRATION
+              ? colors.midGray
+              : 'white',
+        }}
+      >
         <Layout.Sider width="256" theme={'light'}>
           <SideBar />
         </Layout.Sider>

@@ -23,7 +23,9 @@ import { RoomUpdate } from './pages/room-update';
 import { RootLayout } from './layout';
 import './App.less';
 import { InitLayout } from '@components/init/init-button/InitLayout';
+import { RoomLayout } from '@components/room/room-layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
+
 function App() {
   const accessToken = getCookie('accessToken');
   return (
@@ -75,10 +77,12 @@ function App() {
           />
           <Route path={ROUTES.MAIN} element={<Main />} />
           <Route path={ROUTES.ROOM} element={<Room />} />
-          <Route
-            path={ROUTES.ROOM_REGISTRATION}
-            element={<RoomRegistration />}
-          />
+          <Route element={<RoomLayout />}>
+            <Route
+              path={ROUTES.ROOM_REGISTRATION}
+              element={<RoomRegistration />}
+            />
+          </Route>
           <Route path={ROUTES.ROOM_UPDATE} element={<RoomUpdate />} />
         </Route>
       </Routes>
