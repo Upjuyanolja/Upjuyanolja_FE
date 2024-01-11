@@ -2,7 +2,12 @@ import { COUPON_API } from '@api/coupon';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Response } from '@/types/api';
-import { dailyRevenue, revenueData, staticsData } from '@api/coupon/type';
+import {
+  coupons,
+  dailyRevenue,
+  revenueData,
+  staticsData,
+} from '@api/coupon/type';
 
 export const useGetStatics = (
   options?: UseQueryOptions<
@@ -30,4 +35,18 @@ export const useGetRevenue = (
     AxiosError,
     dailyRevenue[]
   >(['getRevenue'], () => COUPON_API.getRevenue(), { ...options });
+};
+
+export const useGetCoupon = (
+  options?: UseQueryOptions<
+    AxiosResponse<Response<coupons>>,
+    AxiosError,
+    coupons
+  >,
+) => {
+  return useQuery<AxiosResponse<Response<coupons>>, AxiosError, coupons>(
+    ['getCoupon'],
+    () => COUPON_API.getCoupon(),
+    { ...options },
+  );
 };
