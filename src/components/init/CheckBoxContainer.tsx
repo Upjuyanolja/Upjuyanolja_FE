@@ -3,25 +3,45 @@ import { TextBox } from '@components/text-box';
 import { Checkbox, Form } from 'antd';
 import styled from 'styled-components';
 import { CheckBoxContainerProps } from './type';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { useRecoilState } from 'recoil';
+import { checkedAccommodationOptions } from '@stores/init/atoms';
+import { Options } from './init-accommodation-registration/type';
 
 export const CheckBoxContainer = ({
   options,
   header,
 }: CheckBoxContainerProps) => {
+  const [selectedAccommodationOptions, setSelectedAccommodationOptions] =
+    useRecoilState(checkedAccommodationOptions);
+
+  const handleCheckboxChange = (event: CheckboxChangeEvent) => {
+    const checkedOption = event.target.value;
+
+    setSelectedAccommodationOptions((prev) => ({
+      ...prev,
+      [checkedOption]: event.target.checked,
+    }));
+  };
+
   return (
     <StyledWrapper color={colors.white}>
       <TextBox typography="h4" fontWeight={700}>
-        {header}
+        {header} 옵션
       </TextBox>
       <Form.Item
-        name="accommodation-options"
+        name={header === '숙소' ? 'accommodation-options' : 'room-options'}
         valuePropName="checked"
-        rules={[{ required: false }]}
       >
         <StyledCheckboxContainer>
-          {options.map((option, index) => (
-            <Checkbox id={index.toString()} key={index}>
-              {option}
+          {Object.entries(options).map(([english, korean]) => (
+            <Checkbox
+              value={english}
+              key={english}
+              onChange={handleCheckboxChange}
+              checked={selectedAccommodationOptions[english as keyof Options]}
+            >
+              {korean}
             </Checkbox>
           ))}
         </StyledCheckboxContainer>

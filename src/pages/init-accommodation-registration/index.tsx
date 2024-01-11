@@ -10,54 +10,116 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
+  checkedAccommodationOptions,
   descErrorMessage,
   isUploadedImage,
   nameErrorMessage,
+  selectedAccommodationFilesState,
+  userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { formValues } from '@components/init/init-accommodation-registration/type';
+import { ROUTES } from '@/constants/routes';
+import { useNavigate } from 'react-router-dom';
 
 export const InitAccommodationRegistration = () => {
+  const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
 
   const [form] = Form.useForm();
 
-  const accommodationOptions = [
-    '객실취사',
-    '주차시설',
-    '픽업 서비스',
-    '바베큐장',
-    '휘트니스센터',
-    '노래방',
-    '에어컨',
-    '사우나실',
-    '세미나실',
-  ];
+  const accommodationOptions = {
+    cooking: '객실취사',
+    parking: '주차시설',
+    pickup: '픽업 서비스',
+    barbecue: '바베큐장',
+    fitness: '휘트니스센터',
+    karaoke: '노래방',
+    sports: '스포츠 시설',
+    sauna: '사우나실',
+    seminar: '세미나실',
+  };
 
-  const onFinish = (values: any) => {
-    console.log(values);
+  const setUserInputValueState = useSetRecoilState(userInputValueState);
+
+  const selectedOptions = useRecoilValue(checkedAccommodationOptions);
+  const selectedImages = useRecoilValue(selectedAccommodationFilesState);
+
+  const onFinish = (values: formValues) => {
+    setUserInputValueState((prevUserInputValueState) => {
+      const [userInputValue] = prevUserInputValueState;
+
+      let type;
+      switch (values['accommodation-category']) {
+        case 'HOTEL/RESORT':
+          type = values['accommodation-hotel-category'];
+          break;
+        case 'GUEST':
+          type = values['accommodation-guest-category'];
+          break;
+        default:
+          type = values['accommodation-category'];
+      }
+
+      const updatedUserInputValue = {
+        ...userInputValue,
+        id: Math.floor(Math.random() * 1000000),
+        type,
+        name: values['accommodation-name'],
+        address: values['accommodation-address'],
+        detailAddress: values['accommodation-detailAddress'],
+        description: values['accommodation-desc'],
+        options: selectedOptions,
+        images: selectedImages,
+      };
+      return [updatedUserInputValue];
+    });
+
+    navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
 
   const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
-  const accommodationnDescErrorMessage = useRecoilValue(descErrorMessage);
+  const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
+
+  const uploadedImage = useRecoilValue(isUploadedImage);
 
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
-    return (
-      values['accommodation-category'] &&
-      values['accommodation-name'] &&
+    const isNameValid = !accommodationNameErrorMessage;
+    const isDescValid = !accommodationDescErrorMessage;
+    const commonConditions =
       values['accommodation-postCode'] &&
-      values['accommodation-address'] &&
+      isDescValid &&
+      isNameValid &&
       values['accommodation-detailAddress'] &&
+      values['accommodation-name'] &&
       values['accommodation-desc'] &&
-      isUploadedImage &&
-      accommodationNameErrorMessage === '' &&
-      accommodationnDescErrorMessage === ''
+      isUploadedImage;
+
+    const hotelResortConditions =
+      values['accommodation-category'] === 'HOTEL/RESORT' &&
+      values['accommodation-hotel-category'];
+    const guestConditions =
+      values['accommodation-category'] === 'GUEST' &&
+      values['accommodation-guest-category'];
+
+    return (
+      commonConditions &&
+      (values['accommodation-category'] ||
+        hotelResortConditions ||
+        guestConditions)
     );
   };
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, isUploadedImage]);
+  }, [
+    form,
+    uploadedImage,
+    accommodationNameErrorMessage,
+    accommodationDescErrorMessage,
+    selectedOptions,
+  ]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
@@ -70,11 +132,15 @@ export const InitAccommodationRegistration = () => {
         form={form}
         onValuesChange={handleFormValuesChange}
       >
-        <AccommodationCategory />
-        <NameContainer header="숙소명" />
+        <AccommodationCategory form={form} />
+        <NameContainer
+          header="숙소명"
+          placeholder="숙소명을 입력해 주세요."
+          form={form}
+        />
         <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
-        <CheckBoxContainer options={accommodationOptions} header="숙소 옵션" />
+        <CheckBoxContainer options={accommodationOptions} header="숙소" />
         <AccommodationDesc />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
