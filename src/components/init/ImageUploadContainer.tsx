@@ -40,30 +40,29 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
         !selectedFile.type.includes('jpeg') &&
         !selectedFile.type.includes('jpg'))
     ) {
-      message.error({
+      return message.error({
         content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
       });
-    } else {
-      if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
-        setFileList((prevFileList) => [
-          ...prevFileList,
-          {
-            uid: Date.now(),
-            name: selectedFile.name,
-            url: URL.createObjectURL(selectedFile),
-            originFileObj: selectedFile,
-          },
-        ]);
+    }
+    if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+      setFileList((prevFileList) => [
+        ...prevFileList,
+        {
+          uid: Date.now(),
+          name: selectedFile.name,
+          url: URL.createObjectURL(selectedFile),
+          originFileObj: selectedFile,
+        },
+      ]);
 
-        setSelectedFiles((prevSelectedFiles) => [
-          ...prevSelectedFiles,
-          { url: URL.createObjectURL(selectedFile) },
-        ]);
-      } else {
-        message.error({
-          content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
-        });
-      }
+      setSelectedFiles((prevSelectedFiles) => [
+        ...prevSelectedFiles,
+        { url: URL.createObjectURL(selectedFile) },
+      ]);
+    } else {
+      message.error({
+        content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+      });
     }
   };
 
