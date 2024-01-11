@@ -1,19 +1,19 @@
 import { Response } from '@/types/api';
 import { MEMBER_API } from '@api/member';
-import { userInfoData } from '@api/member/type';
+import { UserInfoData } from '@api/member/type';
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 
 export const useGetUserInfo = (
   options?: UseQueryOptions<
-    AxiosResponse<Response<userInfoData>>,
+    AxiosResponse<Response<UserInfoData>>,
     AxiosError,
-    userInfoData
+    UserInfoData
   >,
 ) => {
   return useQuery<
-    AxiosResponse<Response<userInfoData>>,
+    AxiosResponse<Response<UserInfoData>>,
     AxiosError,
-    userInfoData
+    UserInfoData
   >(['getUserInfo'], () => MEMBER_API.getUserInfo(), { ...options });
 };

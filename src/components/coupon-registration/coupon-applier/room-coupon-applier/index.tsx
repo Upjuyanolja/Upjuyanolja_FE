@@ -8,16 +8,12 @@ export const RoomCouponApplier = ({
   roomName,
   index,
 }: RoomCouponApplierProps) => {
-  const { checkedRoomQuantity, handleIsCheckedRoomQuantity } =
+  const { roomQuantityValue, handleRoomQuantityValueChange } =
     useCouponRoomProvider();
   return (
     <Container>
       <StyledLeftWrap>
-        <Checkbox
-          id={`checkbox${index}`}
-          checked={checkedRoomQuantity}
-          onChange={handleIsCheckedRoomQuantity}
-        />
+        <Checkbox id={`checkbox${index}`} />
         <label htmlFor={`checkbox${index}`}>
           <TextBox typography="h5" fontWeight="bold" color="black900">
             {roomName}
@@ -25,11 +21,7 @@ export const RoomCouponApplier = ({
         </label>
       </StyledLeftWrap>
       <StyledRightWrap>
-        <StyledInput
-          size="small"
-          maxLength={4}
-          disabled={!checkedRoomQuantity}
-        />
+        <StyledInput size="small" maxLength={4} value={roomQuantityValue} />
         <TextBox typography="body1" color="black900">
           장
         </TextBox>

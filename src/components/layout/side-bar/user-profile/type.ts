@@ -1,7 +1,7 @@
-import { userInfoData } from '@api/member/type';
+import { UserInfoData } from '@api/member/type';
 import { pointSummaryData } from '@api/point/type';
 
 export type UserProfileProps = {
-  userInfoData: userInfoData;
+  userInfoData: UserInfoData;
   pointSummaryData: pointSummaryData;
 };

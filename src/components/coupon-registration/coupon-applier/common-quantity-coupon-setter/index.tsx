@@ -4,16 +4,12 @@ import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 
 export const CommonQuantityCouponSetter = () => {
-  const {
-    handleIsAllQuantityChange,
-    isCheckedAllQuantity,
-    handleIsCheckedAllQuantity,
-    allQuantityValue,
-  } = useCouponRoomProvider();
+  const { allQuantityValue, handleAllQuantityValueChange } =
+    useCouponRoomProvider();
   return (
     <Container>
       <StyledCheckBoxWrap>
-        <Checkbox id="checkboxAll" onChange={handleIsCheckedAllQuantity} />
+        <Checkbox id="checkboxAll" />
         <label htmlFor="checkboxAll">
           <TextBox typography="h5" color="primaryHover" fontWeight="bold">
             수량 일괄 적용
@@ -24,9 +20,8 @@ export const CommonQuantityCouponSetter = () => {
         <StyledInput
           size="small"
           maxLength={4}
-          disabled={isCheckedAllQuantity}
           value={allQuantityValue}
-          onChange={handleIsAllQuantityChange}
+          onChange={handleAllQuantityValueChange}
         />
         <TextBox typography="body1" color="black900">
           장

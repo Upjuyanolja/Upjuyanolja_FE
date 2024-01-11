@@ -1,0 +1,21 @@
+{
+  "message": "쿠폰 조회에 성공했습니다.",
+  "data": {
+    "accommodationId": 1,
+    "accommodationName": "패캠 럭셔리 호텔 상설점",
+    "rooms": [
+      {
+        "roomId": 1,
+        "roomName": "스탠다드 트윈"
+      },
+      {
+        "roomId": 2,
+        "roomName": "디럭스 더블"
+      },
+      {
+        "roomId": 3,
+        "roomName": "스위트 룸"
+      }
+    ]
+  }
+}

@@ -107,7 +107,7 @@ const StyledTitleWrap = styled.div`
 const StyledCouponTotalPrice = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 12px 16px 12px 0;
+  padding: 4px 16px 4px 0;
   margin: 0 12px;
   border: 2px solid ${colors.primary};
   border-radius: 2px;

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { StyledDiscountButtonProps } from './type';
 import { Input } from 'antd';
 import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
+import { Spacing } from '@components/spacing';
 
 export const CouponType = () => {
   const {
@@ -58,6 +59,7 @@ export const CouponType = () => {
           </TextBox>
         </StyledDiscountButton>
       </StyledButtonWrap>
+      <Spacing space="32" />
       <StyledInputWrap>
         <StyledInput
           onChange={handleDiscountInputChange}
@@ -80,7 +82,12 @@ export const CouponType = () => {
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>
-      <p>{errorMessage ? errorMessage : null}</p>
+      <StyledErrorMessage>
+        <Spacing space="4" />
+        <TextBox typography="body4" color="error">
+          {errorMessage ? errorMessage : null}
+        </TextBox>
+      </StyledErrorMessage>
     </Container>
   );
 };
@@ -89,7 +96,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 32px;
 `;
 
 const StyledButtonWrap = styled.div`
@@ -134,3 +140,5 @@ const StyledInput = styled(Input)`
 const StyledTextWrap = styled.div`
   width: 47px;
 `;
+
+const StyledErrorMessage = styled.div``;

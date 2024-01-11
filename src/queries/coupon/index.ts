@@ -3,6 +3,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Response } from '@/types/api';
 import {
+  CouponRoomList,
   coupons,
   dailyRevenue,
   revenueData,
@@ -49,4 +50,20 @@ export const useGetCoupon = (
     () => COUPON_API.getCoupon(),
     { ...options },
   );
+};
+
+export const useGetCouponRoomList = (
+  options?: UseQueryOptions<
+    AxiosResponse<Response<CouponRoomList>>,
+    AxiosError,
+    CouponRoomList
+  >,
+) => {
+  return useQuery<
+    AxiosResponse<Response<CouponRoomList>>,
+    AxiosError,
+    CouponRoomList
+  >(['getCouponRoomList'], () => COUPON_API.getCouponRoomList(), {
+    ...options,
+  });
 };
