@@ -17,6 +17,10 @@
   border-radius: 16px 16px 0 0;
 }
 
+.ant-modal-footer {
+  border: none;
+}
+
 /*confirm modal style*/
 .ant-modal-confirm-body {
   display: flex;
