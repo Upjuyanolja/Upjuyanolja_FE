@@ -17,6 +17,7 @@ export const useSideBar = () => {
       },
       staleTime: 60 * 60 * 1000,
     });
+
   const { data: accommodationListData, isError: isAccommodationListError } =
     useGetAccommodationList({
       select(data) {
@@ -24,6 +25,7 @@ export const useSideBar = () => {
       },
       staleTime: 60 * 60 * 1000,
     });
+
   return {
     userInfoData,
     isUserInfoError,

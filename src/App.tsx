@@ -71,6 +71,10 @@ function App() {
             path={ROUTES.COUPON_REGISTRATION}
             element={<CouponRegistration />}
           />
+          <Route
+            path={`${ROUTES.COUPON_REGISTRATION}/:percent`}
+            element={<CouponRegistration />}
+          />
           <Route path={ROUTES.MAIN} element={<Main />} />
           <Route path={ROUTES.ROOM} element={<Room />} />
           <Route element={<RoomLayout />}>

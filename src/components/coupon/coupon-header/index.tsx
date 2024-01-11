@@ -6,9 +6,13 @@ import { RangePickerProps } from 'antd/lib/date-picker';
 import { ReactComponent as Logo } from '@assets/image/smallLogo.svg';
 import moment from 'moment';
 import styled from 'styled-components';
+import { couponHeaderProps } from './type';
+import { DATE_FORMAT } from '@/constants/date';
 
-export const CouponHeader = () => {
-  const dateFormat = 'YYYY/MM/DD';
+export const CouponHeader = ({
+  expiry,
+  couponStatusOption,
+}: couponHeaderProps) => {
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     return current < moment().startOf('day');
   };
@@ -32,7 +36,7 @@ export const CouponHeader = () => {
           <InfoCircleOutlined width="18px" height="18px" color="blue" />
         </StyledDateText>
         <DatePicker
-          defaultValue={moment('2024/01/01', dateFormat)}
+          defaultValue={moment(expiry, DATE_FORMAT)}
           disabledDate={disabledDate}
         />
         <TextBox typography="body1" fontWeight={700} color="black700">
@@ -40,19 +44,7 @@ export const CouponHeader = () => {
         </TextBox>
       </StyledDateContainer>
       <StyledContentLayout>
-        <Select
-          defaultValue="상태 변경"
-          options={[
-            {
-              value: '발급 중',
-              label: '발급 중',
-            },
-            {
-              value: '발급 중지',
-              label: '발급 중지',
-            },
-          ]}
-        />
+        <Select defaultValue="상태 변경" options={couponStatusOption} />
         <StyledButtonContainer>
           <StyledDeleteButton>
             <DeleteOutlined width="20px" height="20px" />
