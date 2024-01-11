@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export type CustomButtonProps = {
   text: string;
   icon: ReactNode;
+  onClick?: () => void;
 };
 
 export type RoomData = {

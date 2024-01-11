@@ -3,8 +3,12 @@ import { Button } from 'antd';
 import styled from 'styled-components';
 import { CustomButtonProps } from './type';
 
-export const CustomButton = ({ text, icon }: CustomButtonProps) => {
-  return <StyledButton icon={icon}>{text}</StyledButton>;
+export const CustomButton = ({ text, icon, onClick }: CustomButtonProps) => {
+  return (
+    <StyledButton icon={icon} onClick={onClick}>
+      {text}
+    </StyledButton>
+  );
 };
 
 const StyledButton = styled(Button)`

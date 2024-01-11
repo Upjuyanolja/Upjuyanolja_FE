@@ -1,5 +1,5 @@
 import { TextBox } from '@components/text-box';
-import { Tag } from 'antd';
+import { Modal, Tag } from 'antd';
 import styled from 'styled-components';
 import { RoomData } from './type';
 import { colors } from '@/constants/colors';
@@ -9,6 +9,19 @@ import { BsPeopleFill } from 'react-icons/bs';
 import { ImageCarousel } from './ImageCarousel';
 
 export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
+  const confirm = () => {
+    Modal.confirm({
+      title: '해당 객실을 삭제하시겠습니까?',
+      okText: '삭제',
+      cancelText: '취소',
+      icon: '',
+      width: '494px',
+      bodyStyle: { height: '216px', width: '494px' },
+      centered: true,
+      maskClosable: true,
+    });
+  };
+
   return (
     <>
       {roomData.map((room) => (
@@ -21,7 +34,11 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
               </TextBox>
               <StyledButtonContainer>
                 <CustomButton text="수정" icon={<EditOutlined />} />
-                <CustomButton text="삭제" icon={<DeleteOutlined />} />
+                <CustomButton
+                  text="삭제"
+                  icon={<DeleteOutlined />}
+                  onClick={confirm}
+                />
               </StyledButtonContainer>
             </StyledRoomInfoHeadContainer>
             <StyledRoomInfoMainContainer>
@@ -79,6 +96,10 @@ const StyledRoomItemContainer = styled.div`
   border: 2px solid ${colors.primary};
 
   background-color: ${colors.white};
+
+  .ant-tag {
+    margin-right: 0;
+  }
 `;
 
 const StyledRoomInfoContainer = styled.div`
@@ -115,6 +136,7 @@ const StyledRoomInfoMainLeft = styled.div`
 
 const StyledTagContainer = styled.div`
   display: flex;
+  gap: 4px;
 `;
 
 const StyledTag = styled(Tag)`
