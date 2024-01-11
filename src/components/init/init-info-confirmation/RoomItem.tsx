@@ -6,22 +6,14 @@ import { colors } from '@/constants/colors';
 import { CustomButton } from './CustomButton';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { BsPeopleFill } from 'react-icons/bs';
+import { ImageCarousel } from './ImageCarousel';
 
 export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
   return (
     <>
       {roomData.map((room) => (
         <StyledRoomItemContainer key={room.name}>
-          <div
-            style={{
-              width: '224px',
-              height: '144px',
-              backgroundColor: 'pink',
-              borderRadius: '8px',
-            }}
-          >
-            이미지
-          </div>
+          <ImageCarousel images={room.images} />
           <StyledRoomInfoContainer>
             <StyledRoomInfoHeadContainer>
               <TextBox typography="h4" fontWeight={700}>
