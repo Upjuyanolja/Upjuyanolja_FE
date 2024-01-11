@@ -46,8 +46,14 @@ export const useCouponTypeProvider = () => {
 
     await handleDiscountErrorMessage(discountValue, discountType);
     await checkDiscountValidity(discountValue, discountType);
-    const formattedValue = numberFormat(discountValue);
+    const removeFormattedValue = removeNumberFormat(discountValue);
+    const formattedValue = numberFormat(removeFormattedValue);
     await setDiscountValue(formattedValue);
+  };
+
+  const handleFocus = (discountValue: string) => {
+    const removeFormattedValue = removeNumberFormat(discountValue);
+    setDiscountValue(removeFormattedValue);
   };
 
   const handleErrorDisplay = (
@@ -110,7 +116,7 @@ export const useCouponTypeProvider = () => {
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleBlur(discountValue, selectedDiscountType);
+      e.currentTarget.blur();
     }
   };
 
@@ -126,5 +132,6 @@ export const useCouponTypeProvider = () => {
     isValidDiscountRange,
     handleBlur,
     handleEnterKeyDown,
+    handleFocus,
   };
 };

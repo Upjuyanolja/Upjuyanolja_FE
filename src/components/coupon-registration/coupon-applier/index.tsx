@@ -25,9 +25,9 @@ export const CouponApplier = () => {
     <Container>
       <CommonQuantityCouponSetter />
       <StyledRoomCouponApplierWrap>
-        {roomMap.map((item) => (
+        {roomMap.map((item, index) => (
           <div key={item.label}>
-            <RoomCouponApplier roomName={item.label} />
+            <RoomCouponApplier roomName={item.label} index={index} />
           </div>
         ))}
       </StyledRoomCouponApplierWrap>

@@ -17,6 +17,7 @@ export const CouponType = () => {
     isValidDiscountRange,
     handleBlur,
     handleEnterKeyDown,
+    handleFocus,
   } = useCouponTypeProvider();
 
   return (
@@ -62,6 +63,7 @@ export const CouponType = () => {
           onChange={handleDiscountInputChange}
           value={discountValue || ''}
           onBlur={() => handleBlur(discountValue, selectedDiscountType)}
+          onFocus={() => handleFocus(discountValue)}
           placeholder={
             selectedDiscountType.typeName === DISCOUNT_PRICE
               ? '1,000~50,000 까지'

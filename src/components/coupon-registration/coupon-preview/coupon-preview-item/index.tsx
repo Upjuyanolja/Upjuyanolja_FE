@@ -49,6 +49,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 24px 12px;
   border-bottom: 12px solid ${colors.white200};
+  max-height: 80vh;
 `;
 
 const StyledCouponInfo = styled.div`

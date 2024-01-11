@@ -47,9 +47,11 @@ export const CouponPreview = () => {
             {couponMap.label}
           </TextBox>
         </StyledTitleWrap>
-        {couponMap.coupons.map((item, index) => (
-          <CouponPreviewItem data={item} key={index} />
-        ))}
+        <StyledPreviewItemWrap>
+          {couponMap.coupons.map((item, index) => (
+            <CouponPreviewItem data={item} key={index} />
+          ))}
+        </StyledPreviewItemWrap>
         <Spacing space="16" />
         <StyledCouponTotalPrice>
           <TextBox typography="h5" fontWeight="bold" color="primary">
@@ -132,4 +134,8 @@ const StyledButton = styled(Button)`
   &:active {
     background-color: ${colors.primaryActive};
   }
+`;
+
+const StyledPreviewItemWrap = styled.div`
+  overflow-y: auto;
 `;
