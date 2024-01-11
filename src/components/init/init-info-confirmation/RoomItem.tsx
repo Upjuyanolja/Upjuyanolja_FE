@@ -18,7 +18,6 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
       width: '494px',
       bodyStyle: { height: '216px' },
       centered: true,
-      maskClosable: true,
     });
   };
 
