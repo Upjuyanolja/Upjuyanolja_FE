@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { InputNumber, Select } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
-import { FormErrorMessage } from '@components/init/FormErrorMessage';
 import { TimeContainerProps } from './type';
 
 const generateTimeOptions = () => {

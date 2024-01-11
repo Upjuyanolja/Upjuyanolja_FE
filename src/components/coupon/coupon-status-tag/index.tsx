@@ -2,18 +2,28 @@ import styled from 'styled-components';
 import { CouponTagProps, StyledCouponTagProps } from './type';
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
+import {
+  COUPON_STATUS_DISABLE,
+  COUPON_STATUS_ENABLE,
+  COUPON_STATUS_SOLD_OUT,
+} from '@/constants/coupon';
 
 export const CouponStatusTag = ({ status }: CouponTagProps) => {
   let borderColor = '';
   let backgroundColor = colors.primary;
   let color = colors.white;
-  if (status === '소진') {
+  let text: string = COUPON_STATUS_ENABLE.label;
+
+  if (status === COUPON_STATUS_SOLD_OUT.value) {
     borderColor = colors.orange;
     backgroundColor = colors.white;
     color = colors.orange;
+    text = COUPON_STATUS_SOLD_OUT.label;
   }
-  if (status === '발급 중지') {
+
+  if (status === COUPON_STATUS_DISABLE.value) {
     backgroundColor = colors.black600;
+    text = COUPON_STATUS_DISABLE.label;
   }
   return (
     <StyledLayout
@@ -22,7 +32,7 @@ export const CouponStatusTag = ({ status }: CouponTagProps) => {
       color={color}
     >
       <TextBox typography="body2" fontWeight={700}>
-        {status}
+        {text}
       </TextBox>
     </StyledLayout>
   );

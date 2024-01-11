@@ -2,16 +2,15 @@ import { TextBox } from '@components/text-box';
 import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef, useEffect } from 'react';
-import {
-  ImageUploadFileItem,
-  ImageUploadHandleChangeProps,
-  ImageUploadContainerProps,
-} from './type';
+import { useState, useRef, useEffect, ChangeEvent } from 'react';
+import { ImageUploadFileItem, ImageUploadContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
-import { isUploadedImage } from '@stores/init/atoms';
+import {
+  isUploadedImage,
+  selectedAccommodationFilesState,
+} from '@stores/init/atoms';
 
 export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -21,39 +20,49 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
 
   const setIsUploadedImage = useSetRecoilState(isUploadedImage);
 
+  const setSelectedFiles = useSetRecoilState(selectedAccommodationFilesState);
+
   const handleCancel = () => setPreviewOpen(false);
 
-  const handleChange = ({ event }: ImageUploadHandleChangeProps) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
     const selectedFile = inputElement.files?.[0];
 
     inputElement.value = '';
 
-    if (selectedFile) {
-      if (
-        !selectedFile.type.includes('png') &&
+    if (!selectedFile) {
+      return;
+    }
+
+    if (
+      !selectedFile.type ||
+      (!selectedFile.type.includes('png') &&
         !selectedFile.type.includes('jpeg') &&
-        !selectedFile.type.includes('jpg')
-      ) {
-        message.error({
-          content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
-        });
+        !selectedFile.type.includes('jpg'))
+    ) {
+      message.error({
+        content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
+      });
+    } else {
+      if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+        setFileList((prevFileList) => [
+          ...prevFileList,
+          {
+            uid: Date.now(),
+            name: selectedFile.name,
+            url: URL.createObjectURL(selectedFile),
+            originFileObj: selectedFile,
+          },
+        ]);
+
+        setSelectedFiles((prevSelectedFiles) => [
+          ...prevSelectedFiles,
+          { url: URL.createObjectURL(selectedFile) },
+        ]);
       } else {
-        if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
-          setFileList((prevFileList) => [
-            ...prevFileList,
-            {
-              uid: Date.now(),
-              name: selectedFile.name,
-              url: URL.createObjectURL(selectedFile),
-              originFileObj: selectedFile,
-            },
-          ]);
-        } else {
-          message.error({
-            content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
-          });
-        }
+        message.error({
+          content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+        });
       }
     }
   };
@@ -113,7 +122,7 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
               type="file"
               accept=".png, .jpeg, .jpg"
               ref={fileInputRef}
-              onChange={(event) => handleChange({ event })}
+              onChange={handleChange}
               style={{ display: 'none' }}
               data-testid="file-input"
             />

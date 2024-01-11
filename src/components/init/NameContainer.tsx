@@ -1,12 +1,8 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import {
-  NameContainerProps,
-  NameHandleInputChangeProps,
-  ValidateInputProps,
-} from './type';
+import { NameContainerProps, ValidateInput } from './type';
 import {
   ACCOMMODATION_NAME_MAX_LENGTH,
   ACCOMMODATION_NAME_MIN_LENGTH,
@@ -16,24 +12,31 @@ import { TextBox } from '@components/text-box';
 import { useRecoilState } from 'recoil';
 import { nameErrorMessage } from '@stores/init/atoms';
 
-export const NameContainer = ({ header }: NameContainerProps) => {
+export const NameContainer = ({
+  header,
+  placeholder,
+  form,
+}: NameContainerProps) => {
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
-  const validateInput = ({ value }: ValidateInputProps) => {
+  const validateInput = ({ value }: ValidateInput) => {
     if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
       setErrorMessage(
         `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
       );
-    } else if (!NAME_REGEX.test(value)) {
-      setErrorMessage('한글, 영어, 숫자만 입력 가능합니다.');
     } else {
       setErrorMessage('');
     }
   };
 
-  const handleInputChange = ({ event }: NameHandleInputChangeProps) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_NAME_MAX_LENGTH);
+    if (!NAME_REGEX.test(newValue)) {
+      if (header === '숙소명') form.setFieldValue('accommodation-name', '');
+      else if (header === '객실명') form.setFieldValue('room-name', '');
+      return;
+    }
     setInputValue(newValue);
     validateInput({ value: newValue });
   };
@@ -43,20 +46,21 @@ export const NameContainer = ({ header }: NameContainerProps) => {
       <TextBox typography="h4" fontWeight={700}>
         {header}
       </TextBox>
-      <Form.Item name="accommodation-name">
+      <Form.Item
+        name={header === '숙소명' ? 'accommodation-name' : 'room-name'}
+      >
         <Input
-          id="accommodation-name"
-          placeholder={`${header}을 입력해 주세요.`}
+          id={header === '숙소명' ? 'accommodation-name' : 'room-name'}
+          placeholder={placeholder}
           type="text"
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
           style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
           value={inputValue}
-          onChange={(event) => handleInputChange({ event })}
+          onChange={handleInputChange}
           disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
           status={errorMessage ? 'error' : ''}
           data-testid="input-name"
-          autoComplete="on"
         />
       </Form.Item>
       <StyledErrorMessageWrapper data-testid="error-input-name">

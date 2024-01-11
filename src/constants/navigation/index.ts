@@ -19,7 +19,7 @@ export const navigationMap = {
   },
   RoomUpdate: {
     label: '객실 관리',
-    link: ROUTES.ROOM_UPDATE,
+    link: ROUTES.ROOM,
   },
   UseGuide: {
     label: '이용 가이드',
