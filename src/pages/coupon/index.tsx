@@ -13,22 +13,28 @@ export const Coupon = () => {
     couponData,
     couponStatusOption,
     couponTypeOption,
-    processCouponTableData,
+    couponTableData,
+    handleStatusSelect,
+    handleSelectRecord,
+    handleSelectCouponType,
   } = useCoupon();
   if (!couponData) return <div>로딩 중</div>;
 
-  const couponTableData = processCouponTableData(couponData.rooms);
+  console.log(couponTableData);
 
   return (
     <>
       <CouponHeader
         expiry={couponData.expiry}
         couponStatusOption={couponStatusOption}
+        handleStatusSelect={handleStatusSelect}
       />
 
       <CouponTable
         couponTypeOption={couponTypeOption}
         couponTableData={couponTableData}
+        handleSelectRecord={handleSelectRecord}
+        handleSelectCouponType={handleSelectCouponType}
       />
       <StyledModal
         open={false}

@@ -1,4 +1,4 @@
-export type couponHeaderProps = {
+export type CouponHeaderProps = {
   expiry: string;
   couponStatusOption: (
     | {
@@ -10,4 +10,6 @@ export type couponHeaderProps = {
         label: '발급 중지';
       }
   )[];
+  // eslint-disable-next-line no-unused-vars
+  handleStatusSelect: (value: string) => void;
 };

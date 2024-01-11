@@ -18,6 +18,8 @@ import {
 export const CouponTable = ({
   couponTypeOption,
   couponTableData,
+  handleSelectRecord,
+  handleSelectCouponType,
 }: couponTableProps) => {
   const columns: ColumnsType<tableData> = [
     {
@@ -74,20 +76,17 @@ export const CouponTable = ({
           style={{ width: 70 }}
           options={couponTypeOption}
           disabled={record.isSoldOut}
+          onChange={(value: string) => {
+            handleSelectCouponType(value, record.key);
+          }}
         />
       ),
     },
   ];
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: tableData[]) => {
-      // console.log(
-      //   `selectedRowKeys: ${selectedRowKeys}`,
-      //   'selectedRows: ',
-      //   selectedRows,
-      // );
-      // 이 부분은 로직 구현하면서 수정 할 예정이라 남기겠습니다!
-    },
+    onChange: handleSelectRecord,
   };
+
   return (
     <StyledTable
       rowSelection={rowSelection}
