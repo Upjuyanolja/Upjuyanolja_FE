@@ -39,7 +39,7 @@ export const InitRoomRegistration = () => {
           <h1>인원</h1>
           <div>내용</div>
         </div>
-        <CheckBoxContainer options={roomOptions} header="객실 옵션" />
+        <CheckBoxContainer options={roomOptions} header="객실" />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
     </StyledWrapper>
