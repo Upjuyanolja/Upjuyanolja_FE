@@ -1,34 +1,26 @@
 import { ChangeEvent, ReactElement } from 'react';
-import { RadioChangeEvent } from 'antd';
 import { IconBaseProps } from 'react-icons';
+import { FormInstance } from 'antd/es/form/Form';
 
-export type AddressHandleInputChangeProps = {
-  event: ChangeEvent<HTMLInputElement>;
-  inputType: string;
-};
-
-export type AccommodationCategoryProps =
-  | 'hotelResort'
-  | 'motel'
-  | 'pensionPool'
-  | 'guestHouse'
+export type AccommodationCategoryType =
+  | 'HOTEL/RESORT'
+  | 'MOTEL'
+  | 'PENSION/POOL'
+  | 'GUEST'
   | null;
 
-export type HandleTextAreaChangeProps = {
+export type HandleTextAreaChange = {
   event: ChangeEvent<HTMLTextAreaElement>;
 };
 
 export type AccommodationDetailCategoryProps = {
-  options: string[];
+  options: { [key: string]: string };
   label: string;
   icon?: ReactElement<IconBaseProps>;
+  form: FormInstance;
 };
 
-export type AccommodationDetailCategoryOnchangeProps = {
-  event: RadioChangeEvent;
-};
-
-export type AddressFormatProps = {
+export type AddressFormat = {
   address: string;
   addressType: string;
   bname: string;
@@ -36,13 +28,20 @@ export type AddressFormatProps = {
   zonecode: string;
 };
 
-/**request 타입 */
+export type formValues = {
+  [key: string]: string;
+};
 
-type Image = {
+export type formType = {
+  form: FormInstance;
+};
+
+/**request 타입 */
+export type Image = {
   url: string;
 };
 
-type Options = {
+export type Options = {
   cooking: boolean;
   parking: boolean;
   pickup: boolean;

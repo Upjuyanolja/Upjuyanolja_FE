@@ -1,22 +1,27 @@
 import { TextBox } from '@components/text-box';
-import {
-  AccommodationDetailCategoryOnchangeProps,
-  AccommodationDetailCategoryProps,
-} from './type';
+import { AccommodationDetailCategoryProps } from './type';
 import styled from 'styled-components';
-import { Form, Radio } from 'antd';
-import { useState } from 'react';
+import { Form, Radio, RadioChangeEvent } from 'antd';
+import { useEffect, useState } from 'react';
 
 export const RadioButtonCustomContainer = ({
   label,
   options,
   icon,
+  form,
 }: AccommodationDetailCategoryProps) => {
   const [value, setValue] = useState('');
 
-  const onChange = ({ event }: AccommodationDetailCategoryOnchangeProps) => {
+  const onChange = (event: RadioChangeEvent) => {
     setValue(event.target.value);
   };
+
+  useEffect(() => {
+    setValue('');
+    '호텔' in options
+      ? form.setFieldValue('accommodation-hotel-category', '')
+      : form.setFieldValue('accommodation-guest-category', '');
+  }, []);
 
   return (
     <StyledWrapper>
@@ -26,14 +31,18 @@ export const RadioButtonCustomContainer = ({
           {label}
         </TextBox>
       </StyledTextContainer>
-      <Form.Item name="accommodation-category">
-        <StyledCheckboxRadioGroup
-          onChange={(event) => onChange({ event })}
-          value={value}
-        >
-          {options.map((option, index) => (
-            <StyledCheckboxRadio value={option} key={index}>
-              {option}
+      <Form.Item
+        name={
+          '호텔' in options
+            ? 'accommodation-hotel-category'
+            : 'accommodation-guest-category'
+        }
+        initialValue=""
+      >
+        <StyledCheckboxRadioGroup onChange={onChange} value={value}>
+          {Object.entries(options).map(([korean, english]) => (
+            <StyledCheckboxRadio value={english} key={english}>
+              {korean}
             </StyledCheckboxRadio>
           ))}
         </StyledCheckboxRadioGroup>
