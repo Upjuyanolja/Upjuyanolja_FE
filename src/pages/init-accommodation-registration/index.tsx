@@ -48,15 +48,23 @@ export const InitAccommodationRegistration = () => {
   const onFinish = (values: formValues) => {
     setUserInputValueState((prevUserInputValueState) => {
       const [userInputValue] = prevUserInputValueState;
+
+      let type;
+      switch (values['accommodation-category']) {
+        case 'HOTEL/RESORT':
+          type = values['accommodation-hotel-category'];
+          break;
+        case 'GUEST':
+          type = values['accommodation-guest-category'];
+          break;
+        default:
+          type = values['accommodation-category'];
+      }
+
       const updatedUserInputValue = {
         ...userInputValue,
         id: Math.floor(Math.random() * 1000000),
-        type:
-          values['accommodation-category'] === 'HOTEL/RESORT'
-            ? values['accommodation-hotel-category']
-            : values['accommodation-category'] === 'GUEST'
-              ? values['accommodation-guest-category']
-              : values['accommodation-category'],
+        type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],
         detailAddress: values['accommodation-detailAddress'],
