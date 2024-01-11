@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import { NameContainerProps, ValidateInput } from './type';
+import { NameContainerProps } from './type';
 import {
   ACCOMMODATION_NAME_MAX_LENGTH,
   ACCOMMODATION_NAME_MIN_LENGTH,
@@ -20,7 +20,7 @@ export const NameContainer = ({
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
-  const validateInput = ({ value }: ValidateInput) => {
+  const validateInput = ({ value }: { value: string }) => {
     if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
       setErrorMessage(
         `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,

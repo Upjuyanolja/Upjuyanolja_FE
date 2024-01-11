@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FormInstance } from 'antd/es/form/Form';
 
@@ -8,10 +8,6 @@ export type AccommodationCategoryType =
   | 'PENSION/POOL'
   | 'GUEST'
   | null;
-
-export type HandleTextAreaChange = {
-  event: ChangeEvent<HTMLTextAreaElement>;
-};
 
 export type AccommodationDetailCategoryProps = {
   options: { [key: string]: string };
@@ -26,14 +22,6 @@ export type AddressFormat = {
   bname: string;
   buildingName: string;
   zonecode: string;
-};
-
-export type formValues = {
-  [key: string]: string;
-};
-
-export type formType = {
-  form: FormInstance;
 };
 
 /**request 타입 */

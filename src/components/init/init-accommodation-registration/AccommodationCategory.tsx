@@ -9,13 +9,14 @@ import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
 import { useEffect, useState } from 'react';
-import { AccommodationCategoryType, formType } from './type';
+import { AccommodationCategoryType } from './type';
 import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
 import { Form, Radio } from 'antd';
+import { FormInstance } from 'antd/es/form/Form';
 
-export const AccommodationCategory = ({ form }: formType) => {
+export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
   const [clickedCategory, setClickedCategory] =
     useState<AccommodationCategoryType>(null);
 

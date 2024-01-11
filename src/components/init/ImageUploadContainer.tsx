@@ -3,7 +3,7 @@ import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef, useEffect, ChangeEvent } from 'react';
-import { ImageUploadFileItem, ImageUploadContainerProps } from './type';
+import { ImageUploadFileItem } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
@@ -12,7 +12,7 @@ import {
   selectedAccommodationFilesState,
 } from '@stores/init/atoms';
 
-export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
+export const ImageUploadContainer = ({ header }: { header: string }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
