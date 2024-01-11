@@ -16,7 +16,7 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
       cancelText: '취소',
       icon: '',
       width: '494px',
-      bodyStyle: { height: '216px', width: '494px' },
+      bodyStyle: { height: '216px' },
       centered: true,
       maskClosable: true,
     });

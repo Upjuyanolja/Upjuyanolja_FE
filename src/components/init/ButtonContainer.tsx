@@ -45,7 +45,7 @@ export const ButtonContainer = ({
       cancelText: '머무르기',
       icon: '',
       width: '576px',
-      bodyStyle: { height: '621px', width: '576px' },
+      bodyStyle: { height: '621px' },
       centered: true,
       maskClosable: true,
     });
