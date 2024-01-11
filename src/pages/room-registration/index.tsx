@@ -14,7 +14,13 @@ import { TimeContainer } from '@components/room/time-container';
 
 const RoomRegistration = () => {
   const isValid = true;
-  const roomOptions = ['TV', '에어컨', '인터넷'];
+  const roomOptions = {
+    tv: 'TV',
+    airCondition: '에어컨',
+    internet: '인터넷',
+  };
+
+  const [form] = Form.useForm();
 
   return (
     <StyledFullContainer>
@@ -29,7 +35,11 @@ const RoomRegistration = () => {
       </StyledHeaderContainer>
       <StyledWrapper color={colors.white}>
         <Form>
-          <NameContainer header="객실명" />
+          <NameContainer
+            header="객실명"
+            placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
+            form={form}
+          />
           <StyledInputWrapper>
             <PriceContainer header="객실 가격" />
           </StyledInputWrapper>
@@ -44,7 +54,7 @@ const RoomRegistration = () => {
             <CapacityContainer header="인원" />
           </StyledInputWrapper>
           <StyledInputWrapper>
-            <CheckBoxContainer options={roomOptions} header="객실 옵션" />
+            <CheckBoxContainer options={roomOptions} header="객실" />
           </StyledInputWrapper>
           <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
         </Form>
