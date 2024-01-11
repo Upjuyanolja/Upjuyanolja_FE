@@ -118,7 +118,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledAccommodationInfoContainer = styled.div`
-  height: 320px;
+  height: 340px;
 
   border-radius: 8px;
   border: 2px solid ${colors.primary};
