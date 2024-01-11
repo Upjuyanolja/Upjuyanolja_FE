@@ -1,22 +1,22 @@
 import {
-  COUPON_ERROR_MESSAGE,
   DISCOUNT_PRICE,
-  DISCOUNT_PRICE_NUM,
+  DISCOUNT_PRICE_TYPE,
   DISCOUNT_RATE,
-  DISCOUNT_RATE_NUM,
-} from '@/constants/coupon';
+} from '@/constants/coupon-registration';
+import {
+  DiscountPriceType,
+  DiscountRateType,
+} from '@/constants/coupon-registration/type';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { useEffect, useState } from 'react';
 
 export const useCouponRegistrationProvider = () => {
-  const [selectedDiscountType, setSelectedDiscountType] =
-    useState(DISCOUNT_PRICE);
+  const [selectedDiscountType, setSelectedDiscountType] = useState<
+    DiscountPriceType | DiscountRateType
+  >(DISCOUNT_PRICE_TYPE);
   const [errorMessage, setErrorMessage] = useState('');
   const [discountValue, setDiscountValue] = useState<string>('');
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
-
-  const IS_DISCOUNT_PRICE_TYPE = selectedDiscountType === DISCOUNT_PRICE;
-  const IS_DISCOUNT_RATE_TYPE = selectedDiscountType === DISCOUNT_RATE;
 
   // 할인 쿠폰 타입 선택
   useEffect(() => {
@@ -30,58 +30,51 @@ export const useCouponRegistrationProvider = () => {
       return setIsValidDiscountRange(true);
     }
 
-    if (IS_DISCOUNT_PRICE_TYPE) {
-      checkDiscountPriceValidity(discountValue);
-    }
-
-    if (IS_DISCOUNT_RATE_TYPE) {
-      checkDiscountRateValidity(discountValue);
-    }
+    checkDiscountValidity(discountValue, selectedDiscountType);
   }, [discountValue]);
 
   // input blur 시 실행되는 함수
-  const handleBlur = async (discountValue: string) => {
+  const handleBlur = async (
+    discountValue: string,
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
     if (!discountValue) {
       return;
     }
 
-    if (IS_DISCOUNT_PRICE_TYPE) {
-      await handleDiscountPriceErrorMessage(discountValue);
-      await checkDiscountPriceValidity(discountValue);
+    if (!isNumberDiscountValue(discountValue)) {
+      return handleErrorDisplay(discountType);
     }
 
-    if (IS_DISCOUNT_RATE_TYPE) {
-      await handleDiscountRateErrorMessage(discountValue);
-      await checkDiscountRateValidity(discountValue);
-    }
+    await handleDiscountErrorMessage(discountValue, discountType);
+    await checkDiscountValidity(discountValue, discountType);
     const formattedValue = numberFormat(discountValue);
     await setDiscountValue(formattedValue);
   };
 
+  const handleErrorDisplay = (
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
+    setErrorMessage(discountType.errorMessage);
+    setIsValidDiscountRange(false);
+  };
+
   // 할인가 유효성 검사 후 에러메시지 핸들링 함수
-  const handleDiscountPriceErrorMessage = (discountValue: string) => {
+  const handleDiscountErrorMessage = (
+    discountValue: string,
+    type: DiscountPriceType | DiscountRateType,
+  ) => {
     if (
-      parseInt(discountValue) < DISCOUNT_PRICE_NUM.min ||
-      parseInt(discountValue) > DISCOUNT_PRICE_NUM.max
+      parseInt(discountValue) < type.min ||
+      parseInt(discountValue) > type.max
     ) {
-      setErrorMessage(COUPON_ERROR_MESSAGE.invalidPriceRange);
+      setErrorMessage(type.errorMessage);
     } else {
       setErrorMessage('');
     }
   };
 
-  const handleDiscountRateErrorMessage = (discountValue: string) => {
-    if (
-      parseInt(discountValue) < DISCOUNT_RATE_NUM.min ||
-      parseInt(discountValue) > DISCOUNT_RATE_NUM.max
-    ) {
-      setErrorMessage(COUPON_ERROR_MESSAGE.invalidRateRange);
-    } else {
-      setErrorMessage('');
-    }
-  };
-
-  const handleDiscountType = (type: string) => {
+  const handleDiscountType = (type: DiscountPriceType | DiscountRateType) => {
     setSelectedDiscountType(type);
   };
 
@@ -91,10 +84,15 @@ export const useCouponRegistrationProvider = () => {
     setDiscountValue(e.target.value);
   };
 
-  const checkDiscountPriceValidity = (discountValue: string) => {
+  const checkDiscountValidity = (
+    discountValue: string,
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
+    const numericDiscountValue = parseInt(removeNumberFormat(discountValue));
+
     if (
-      parseInt(removeNumberFormat(discountValue)) < DISCOUNT_PRICE_NUM.min ||
-      parseInt(removeNumberFormat(discountValue)) > DISCOUNT_PRICE_NUM.max
+      numericDiscountValue < discountType.min ||
+      numericDiscountValue > discountType.max
     ) {
       setIsValidDiscountRange(false);
     } else {
@@ -102,14 +100,14 @@ export const useCouponRegistrationProvider = () => {
     }
   };
 
-  const checkDiscountRateValidity = (discountValue: string) => {
-    if (
-      parseInt(removeNumberFormat(discountValue)) < DISCOUNT_RATE_NUM.min ||
-      parseInt(removeNumberFormat(discountValue)) > DISCOUNT_RATE_NUM.max
-    ) {
-      setIsValidDiscountRange(false);
-    } else {
-      setIsValidDiscountRange(true);
+  const isNumberDiscountValue = (discountValue: string) => {
+    const numberRegex = /^[0-9]+$/;
+    return numberRegex.test(discountValue);
+  };
+
+  const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleBlur(discountValue, selectedDiscountType);
     }
   };
 
@@ -124,5 +122,6 @@ export const useCouponRegistrationProvider = () => {
     handleDiscountInputChange,
     isValidDiscountRange,
     handleBlur,
+    handleEnterKeyDown,
   };
 };

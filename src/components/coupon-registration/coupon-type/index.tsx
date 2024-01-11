@@ -16,36 +16,41 @@ export const CouponType = () => {
     handleDiscountInputChange,
     isValidDiscountRange,
     handleBlur,
+    handleEnterKeyDown,
   } = useCouponRegistrationProvider();
 
   return (
     <Container>
       <StyledButtonWrap>
         <StyledDiscountButton
-          onClick={() => handleDiscountType(DISCOUNT_PRICE)}
+          onClick={() => handleDiscountType(selectedDiscountType)}
           className={`price ${
-            selectedDiscountType === DISCOUNT_PRICE ? 'active' : null
+            selectedDiscountType.typeName === DISCOUNT_PRICE ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedDiscountType === DISCOUNT_PRICE ? 'primary' : 'black900'
+              selectedDiscountType.typeName === DISCOUNT_PRICE
+                ? 'primary'
+                : 'black900'
             }
           >
             할인가(원)
           </TextBox>
         </StyledDiscountButton>
         <StyledDiscountButton
-          onClick={() => handleDiscountType(DISCOUNT_RATE)}
+          onClick={() => handleDiscountType(selectedDiscountType)}
           className={`rate ${
-            selectedDiscountType === DISCOUNT_RATE ? 'active' : null
+            selectedDiscountType.typeName === DISCOUNT_RATE ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedDiscountType === DISCOUNT_RATE ? 'primary' : 'black900'
+              selectedDiscountType.typeName === DISCOUNT_RATE
+                ? 'primary'
+                : 'black900'
             }
           >
             할인율(%)
@@ -56,17 +61,20 @@ export const CouponType = () => {
         <StyledInput
           onChange={handleDiscountInputChange}
           value={discountValue || ''}
-          onBlur={() => handleBlur(discountValue)}
+          onBlur={() => handleBlur(discountValue, selectedDiscountType)}
           placeholder={
-            selectedDiscountType === DISCOUNT_PRICE
+            selectedDiscountType.typeName === DISCOUNT_PRICE
               ? '1,000~50,000 까지'
               : '1~50까지'
           }
           status={isValidDiscountRange ? '' : 'error'}
+          onKeyDown={handleEnterKeyDown}
         />
         <StyledTextWrap>
           <TextBox typography="body2" fontWeight="bold">
-            {selectedDiscountType === DISCOUNT_PRICE ? '원 할인' : '% 할인'}
+            {selectedDiscountType.typeName === DISCOUNT_PRICE
+              ? '원 할인'
+              : '% 할인'}
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>
