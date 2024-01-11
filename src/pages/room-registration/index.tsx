@@ -21,43 +21,32 @@ const RoomRegistration = () => {
   const [form] = Form.useForm();
 
   return (
-    <StyledFullContainer>
-      <StyledHeaderContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          객실 관리
-        </TextBox>
-        <RightOutlined />
-        <TextBox typography="h4" fontWeight={700}>
-          객실 추가 등록
-        </TextBox>
-      </StyledHeaderContainer>
-      <StyledWrapper color={colors.white}>
-        <Form>
-          <NameContainer
-            header="객실명"
-            placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
-            form={form}
-          />
-          <StyledInputWrapper>
-            <PriceContainer header="객실 가격" />
-          </StyledInputWrapper>
-          <ImageUploadContainer header="객실 사진" />
-          <StyledInputWrapper>
-            <NumOfRoomsContainer header="객실 수" />
-          </StyledInputWrapper>
-          <StyledInputWrapper>
-            <TimeContainer header="시간" />
-          </StyledInputWrapper>
-          <StyledInputWrapper>
-            <CapacityContainer header="인원" />
-          </StyledInputWrapper>
-          <StyledInputWrapper>
-            <CheckBoxContainer options={roomOptions} header="객실" />
-          </StyledInputWrapper>
-          <ButtonContainer buttonStyle={'register'} isValid={isValid} />
-        </Form>
-      </StyledWrapper>
-    </StyledFullContainer>
+    <StyledWrapper color={colors.white}>
+      <Form>
+        <NameContainer
+          header="객실명"
+          placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
+          form={form}
+        />
+        <StyledInputWrapper>
+          <PriceContainer header="객실 가격" />
+        </StyledInputWrapper>
+        <ImageUploadContainer header="객실 사진" />
+        <StyledInputWrapper>
+          <NumOfRoomsContainer header="객실 수" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <TimeContainer header="시간" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <CapacityContainer header="인원" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <CheckBoxContainer options={roomOptions} header="객실" />
+        </StyledInputWrapper>
+        <ButtonContainer buttonStyle={'register'} isValid={isValid} />
+      </Form>
+    </StyledWrapper>
   );
 };
 

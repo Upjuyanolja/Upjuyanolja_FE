@@ -10,7 +10,8 @@ import {
 } from '@/constants/room/room-registration/';
 
 export const CapacityContainer = ({ header }: CapacityContainerProps) => {
-  const [capacityValue, setCapacityValue] = useState<number>(1);
+  const [stdCapacityValue, setStdCapacityValue] = useState<number>(1);
+  const [maxCapacityValue, setMaxCapacityValue] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
@@ -20,13 +21,16 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
     }
   };
 
-  const handleCapacityChange = (
-    newValue: number | string | null | undefined,
-  ) => {
-    if (typeof newValue !== 'number') return;
-    validateInput({ value: newValue });
-    setCapacityValue(newValue);
-  };
+  const handleCapacityChange =
+    (capType: string) => (newValue: number | string | null | undefined) => {
+      if (typeof newValue !== 'number') return;
+      validateInput({ value: newValue });
+      if (capType === 'std') {
+        setStdCapacityValue(newValue);
+      } else {
+        setMaxCapacityValue(newValue);
+      }
+    };
 
   return (
     <StyledInputWrapper>
@@ -51,8 +55,8 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
             min={1}
             max={15}
             defaultValue={1}
-            value={capacityValue}
-            onChange={handleCapacityChange}
+            value={stdCapacityValue}
+            onChange={handleCapacityChange('std')}
           />
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
@@ -70,8 +74,8 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
             min={1}
             max={15}
             defaultValue={1}
-            value={capacityValue}
-            onChange={handleCapacityChange}
+            value={maxCapacityValue}
+            onChange={handleCapacityChange('max')}
           />
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
@@ -133,7 +137,7 @@ const StyledInputNumber = styled(InputNumber)`
   }
 
   .ant-input-number-handler-wrap {
-    opacity: 1 !important;
+    opacity: 1;
   }
 `;
 

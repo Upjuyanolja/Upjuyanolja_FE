@@ -17,9 +17,6 @@ export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
     setError(null);
     if (value < MIN_NUM_OF_ROOMS || value > MAX_NUM_OF_ROOMS) {
       setError('1~100까지만 입력 가능합니다.');
-      // } else if (!NUMBER_REGEX.test(value.toString())) {
-      //   setError('숫자만 입력 가능합니다.');
-      // 다른 예외 처리는 내일 담당 PM분과 상의 후 처리 할 예정입니다.
     }
   };
 
@@ -109,7 +106,7 @@ const StyledInputNumber = styled(InputNumber)`
   }
 
   .ant-input-number-handler-wrap {
-    opacity: 1 !important;
+    opacity: 1;
   }
 `;
 

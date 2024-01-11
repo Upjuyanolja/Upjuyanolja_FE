@@ -4,8 +4,14 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { ROUTES } from './constants/routes';
 
 export const RootLayout = () => {
-  const location = useLocation();
+  /*  const location = useLocation();
   const currentRoute = location.pathname;
+
+style={{
+  background-color:
+  currentRoute === ROUTES.ROOM_REGISTRATION ? ${colors.midGray} : 'white',
+  }} 디자이너 분과 상의 후 삭제 및 추가
+*/
 
   return (
     <Layout>
@@ -16,8 +22,7 @@ export const RootLayout = () => {
         </Layout.Sider>
         <Layout.Content
           style={{
-            maxWidth:
-              currentRoute === ROUTES.ROOM_REGISTRATION ? 'auto' : '1024px',
+            maxWidth: '1024px',
             margin: '0 auto',
           }}
         >
