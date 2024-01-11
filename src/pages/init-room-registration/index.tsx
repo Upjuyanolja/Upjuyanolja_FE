@@ -11,12 +11,20 @@ export const InitRoomRegistration = () => {
   const [form] = Form.useForm();
   const isValid = true;
 
-  const roomOptions = ['TV', '에어컨', '인터넷'];
+  const roomOptions = {
+    tv: 'TV',
+    airCondition: '에어컨',
+    internet: '인터넷',
+  };
 
   return (
     <StyledWrapper>
       <Form form={form}>
-        <NameContainer header="객실명" />
+        <NameContainer
+          header="객실명"
+          form={form}
+          placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
+        />
         <PriceContainer header="객실 가격" />
         <ImageUploadContainer header="객실 사진" />
         <div>
