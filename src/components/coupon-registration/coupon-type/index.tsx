@@ -11,10 +11,6 @@ export const CouponType = () => {
     DISCOUNT_RATE,
     selectedDiscountType,
     errorMessage,
-<<<<<<< HEAD
-=======
-    handleNavigate,
->>>>>>> a674f3cb3d4dccd1d56dfbd3d759544504336903
     discountValue,
     handleDiscountType,
     handleDiscountInputChange,
