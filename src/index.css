@@ -21,7 +21,6 @@
 .ant-modal-confirm-body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
   .ant-modal-confirm-title {
@@ -33,6 +32,8 @@
 .ant-modal-confirm-btns {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+
+  width: 100%;
 
   .ant-btn-default {
     border: 1px solid #0349e6;
