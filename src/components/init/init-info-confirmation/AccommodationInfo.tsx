@@ -139,7 +139,7 @@ const StyledDetailWrapper = styled.div`
 
   padding-bottom: 16px;
 
-  border-bottom: 1px solid ${colors.black600};
+  border-bottom: 1px dashed ${colors.black600};
 `;
 
 const StyledTextWrapper = styled.div`
