@@ -2,21 +2,29 @@ import { SideBar } from '@components/layout/side-bar';
 import { Layout } from 'antd';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ROUTES } from './constants/routes';
+import { colors } from '@/constants/colors';
 
 export const RootLayout = () => {
-  /*  const location = useLocation();
+  const location = useLocation();
   const currentRoute = location.pathname;
+  console.log(currentRoute);
 
-style={{
-  background-color:
-  currentRoute === ROUTES.ROOM_REGISTRATION ? ${colors.midGray} : 'white',
-  }} 디자이너 분과 상의 후 삭제 및 추가
-*/
+  /*backgroundColor:
+              currentRoute === ROUTES.ROOM_REGISTRATION
+                ? colors.midGray
+                : 'white', */
 
   return (
     <Layout>
       <Layout.Header>Header</Layout.Header>
-      <Layout>
+      <Layout
+        style={{
+          backgroundColor:
+            currentRoute === ROUTES.ROOM_REGISTRATION
+              ? colors.midGray
+              : 'white',
+        }}
+      >
         <Layout.Sider width="256" theme={'light'}>
           <SideBar />
         </Layout.Sider>
