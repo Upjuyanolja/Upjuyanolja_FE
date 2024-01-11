@@ -6,6 +6,7 @@ import {
   ButtonContainerStyledWrapperProps,
 } from './type';
 import { TextBox } from '@components/text-box';
+import { useState } from 'react';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -16,6 +17,12 @@ export const ButtonContainer = ({
     navigate(-1);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOk = () => {
+    setIsModalOpen(false);
+  };
+
   const confirm = () => {
     Modal.confirm({
       title: (
@@ -23,7 +30,11 @@ export const ButtonContainer = ({
           <TextBox typography="h1" fontWeight={700} color="primary">
             사장님!
           </TextBox>
-          <StyledTextBox typography="h4" fontWeight={400}>
+          <TextBox
+            typography="h4"
+            fontWeight={400}
+            style={{ textAlign: 'center' }}
+          >
             쿠폰센터에서는 숙소 등록만 가능하며,
             <br />
             등록 완료 후, 수정 /삭제는
@@ -31,7 +42,7 @@ export const ButtonContainer = ({
             <TextBox typography="h4" fontWeight={700}>
               비즈니스 센터에서 처리 가능합니다.
             </TextBox>
-          </StyledTextBox>
+          </TextBox>
         </StyledConfirmHead>
       ),
       content: (
@@ -47,7 +58,7 @@ export const ButtonContainer = ({
       width: '576px',
       bodyStyle: { height: '621px' },
       centered: true,
-      maskClosable: true,
+      onOk: () => setIsModalOpen(true),
     });
   };
 
@@ -78,6 +89,32 @@ export const ButtonContainer = ({
           수정하기
         </StyledButton>
       )}
+      <Modal
+        open={isModalOpen}
+        onOk={handleModalOk}
+        footer={[]}
+        closable={false}
+        width={576}
+        centered={true}
+      >
+        <StyledTextContainer>
+          <TextBox typography="h1" fontWeight={700} color="primary">
+            환영합니다!
+          </TextBox>
+          <TextBox
+            typography="h4"
+            fontWeight={400}
+            style={{ textAlign: 'center' }}
+          >
+            레스케이프 호텔 숙소
+            <br />
+            등록이 완료되었습니다.
+          </TextBox>
+        </StyledTextContainer>
+        <StyledToMainButton type="primary" onClick={() => navigate('/')}>
+          홈으로 이동
+        </StyledToMainButton>
+      </Modal>
     </StyledWrapper>
   );
 };
@@ -116,8 +153,20 @@ const StyledNextText = styled.div`
   margin: 130px 0 3px;
 `;
 
-const StyledTextBox = styled(TextBox)`
-  white-space: pre;
+const StyledTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  gap: 8px;
+
+  height: 507px;
+`;
+
+const StyledToMainButton = styled(Button)`
+  width: 100%;
+  height: 46px;
+
+  font-size: 20px;
+  font-weight: 700;
 `;
