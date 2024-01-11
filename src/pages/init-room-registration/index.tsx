@@ -3,7 +3,10 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
+import { CapacityContainer } from '@components/room/capacity-container';
+import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
 import { PriceContainer } from '@components/room/price-container';
+import { TimeContainer } from '@components/room/time-container';
 import { Form } from 'antd';
 import styled from 'styled-components';
 
@@ -27,18 +30,9 @@ export const InitRoomRegistration = () => {
         />
         <PriceContainer header="객실 가격" />
         <ImageUploadContainer header="객실 사진" />
-        <div>
-          <h1>객실수</h1>
-          <div>내용</div>
-        </div>
-        <div>
-          <h1>시간</h1>
-          <div>내용</div>
-        </div>
-        <div>
-          <h1>인원</h1>
-          <div>내용</div>
-        </div>
+        <NumOfRoomsContainer header="객실 수" />
+        <TimeContainer header="시간" />
+        <CapacityContainer header="인원" />
         <CheckBoxContainer options={roomOptions} header="객실" />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
