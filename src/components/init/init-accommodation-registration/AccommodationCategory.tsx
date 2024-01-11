@@ -44,7 +44,7 @@ export const AccommodationCategory = ({ form }: formType) => {
 
   return (
     <StyledInputWrapper>
-      <TextBox typography="h4" fontWeight={700}>
+      <TextBox typography="h4" fontWeight={700} style={{ marginBottom: '8px' }}>
         숙소 유형을 선택해주세요.
       </TextBox>
       <Form.Item name="accommodation-category">
@@ -150,11 +150,8 @@ export const AccommodationCategory = ({ form }: formType) => {
 };
 
 const StyledInputWrapper = styled.div`
-  margin-bottom: 48px;
-
   display: flex;
   flex-direction: column;
-  gap: 8px;
 
   .ant-radio-button-wrapper {
     border: 0;
@@ -168,7 +165,7 @@ const StyledInputWrapper = styled.div`
       border: 0;
     }
 
-    padding: 33px 44px;
+    padding: 30px;
 
     height: 200px;
   }

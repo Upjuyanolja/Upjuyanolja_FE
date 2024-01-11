@@ -64,6 +64,8 @@ const StyledWrapper = styled.div`
     gap: 60px;
     align-items: center;
   }
+
+  margin-bottom: 48px;
 `;
 
 const StyledTextContainer = styled.div`
