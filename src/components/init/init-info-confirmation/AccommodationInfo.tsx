@@ -1,8 +1,9 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
-import { Button, List } from 'antd';
+import { List } from 'antd';
 import styled from 'styled-components';
-import { TbPencilMinus } from 'react-icons/tb';
+import { EditOutlined } from '@ant-design/icons';
+import { CustomButton } from './CustomButton';
 
 export const AccommodationInfo = () => {
   return (
@@ -27,10 +28,7 @@ export const AccommodationInfo = () => {
               <TextBox typography="h4" fontWeight={700} color="primary">
                 숙소명: 레스케이프 호텔
               </TextBox>
-              <StyledButton type="primary">
-                <TbPencilMinus size={20} />
-                수정
-              </StyledButton>
+              <CustomButton text="수정" icon={<EditOutlined />} />
             </StyledTextHeadWrapper>
             <List itemLayout="vertical">
               <List.Item>
@@ -108,6 +106,15 @@ const StyledWrapper = styled.div`
     font-weight: 400;
     color: ${colors.black900};
   }
+
+  .ant-btn {
+    .anticon + span {
+      margin-left: 0;
+    }
+    .span {
+      display: block;
+    }
+  }
 `;
 
 const StyledAccommodationInfoContainer = styled.div`
@@ -146,28 +153,6 @@ const StyledTextHeadWrapper = styled.div`
   justify-content: space-between;
 
   width: 100%;
-`;
-
-const StyledButton = styled(Button)`
-  background-color: ${colors.midGray} !important;
-  color: ${colors.black700} !important;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 700;
-  text-shadow: none;
-
-  border: none;
-
-  box-shadow: none;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-
-  &:focus {
-    border: none;
-  }
 `;
 
 const StyledDescWrapper = styled.div`
