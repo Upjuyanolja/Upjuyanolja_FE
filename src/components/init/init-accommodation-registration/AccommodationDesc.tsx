@@ -1,8 +1,7 @@
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import { HandleTextAreaChange } from './type';
 import {
   ACCOMMODATION_DESC_MAX_LENGTH,
   ACCOMMODATION_DESC_MIN_LENGTH,
@@ -17,7 +16,7 @@ export const AccommodationDesc = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(descErrorMessage);
 
-  const handleTextAreaChange = ({ event }: HandleTextAreaChange) => {
+  const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_DESC_MAX_LENGTH);
     setTextAreaValue(newValue);
     validateTextArea({ value: newValue });
@@ -47,7 +46,7 @@ export const AccommodationDesc = () => {
           maxLength={ACCOMMODATION_DESC_MAX_LENGTH}
           disabled={textAreaValue.length >= ACCOMMODATION_DESC_MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
-          onChange={(event) => handleTextAreaChange({ event })}
+          onChange={handleTextAreaChange}
           status={errorMessage ? 'error' : ''}
           data-testid="textarea-accommodation-desc"
         />
