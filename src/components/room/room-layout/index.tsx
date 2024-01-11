@@ -28,7 +28,11 @@ export const RoomLayout = () => {
     routeConfig[currentRoute as keyof typeof routeConfig] || {};
 
   return (
-    <StyledFullContainer>
+    <StyledFullContainer
+      style={{
+        background: colors.midGray,
+      }}
+    >
       <StyledHeaderContainer>
         <TextBox typography="h4" fontWeight={700}>
           객실 관리

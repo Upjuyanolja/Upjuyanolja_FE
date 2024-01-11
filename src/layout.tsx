@@ -7,12 +7,6 @@ import { colors } from '@/constants/colors';
 export const RootLayout = () => {
   const location = useLocation();
   const currentRoute = location.pathname;
-  console.log(currentRoute);
-
-  /*backgroundColor:
-              currentRoute === ROUTES.ROOM_REGISTRATION
-                ? colors.midGray
-                : 'white', */
 
   return (
     <Layout>
