@@ -133,7 +133,8 @@ const StyledAccommodationInfoContainer = styled.div`
 `;
 
 const StyledDetailWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 6fr;
   gap: 24px;
 
   padding-bottom: 16px;
