@@ -2,6 +2,7 @@ import {
   DISCOUNT_PRICE,
   DISCOUNT_PRICE_TYPE,
   DISCOUNT_RATE,
+  DISCOUNT_RATE_TYPE,
 } from '@/constants/coupon-registration';
 import {
   DiscountPriceType,
@@ -10,7 +11,7 @@ import {
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { useEffect, useState } from 'react';
 
-export const useCouponRegistrationProvider = () => {
+export const useCouponTypeProvider = () => {
   const [selectedDiscountType, setSelectedDiscountType] = useState<
     DiscountPriceType | DiscountRateType
   >(DISCOUNT_PRICE_TYPE);
@@ -18,13 +19,11 @@ export const useCouponRegistrationProvider = () => {
   const [discountValue, setDiscountValue] = useState<string>('');
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
 
-  // 할인 쿠폰 타입 선택
   useEffect(() => {
     setDiscountValue('');
     setErrorMessage('');
   }, [selectedDiscountType]);
 
-  // 할인가 변경
   useEffect(() => {
     if (!discountValue) {
       return setIsValidDiscountRange(true);
@@ -33,7 +32,6 @@ export const useCouponRegistrationProvider = () => {
     checkDiscountValidity(discountValue, selectedDiscountType);
   }, [discountValue]);
 
-  // input blur 시 실행되는 함수
   const handleBlur = async (
     discountValue: string,
     discountType: DiscountPriceType | DiscountRateType,
@@ -59,23 +57,28 @@ export const useCouponRegistrationProvider = () => {
     setIsValidDiscountRange(false);
   };
 
-  // 할인가 유효성 검사 후 에러메시지 핸들링 함수
   const handleDiscountErrorMessage = (
     discountValue: string,
-    type: DiscountPriceType | DiscountRateType,
+    discountType: DiscountPriceType | DiscountRateType,
   ) => {
     if (
-      parseInt(discountValue) < type.min ||
-      parseInt(discountValue) > type.max
+      parseInt(discountValue) < discountType.min ||
+      parseInt(discountValue) > discountType.max
     ) {
-      setErrorMessage(type.errorMessage);
+      setErrorMessage(discountType.errorMessage);
     } else {
       setErrorMessage('');
     }
   };
 
-  const handleDiscountType = (type: DiscountPriceType | DiscountRateType) => {
-    setSelectedDiscountType(type);
+  const handleDiscountType = (
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
+    const toggleDiscountType =
+      discountType === DISCOUNT_PRICE_TYPE
+        ? DISCOUNT_RATE_TYPE
+        : DISCOUNT_PRICE_TYPE;
+    setSelectedDiscountType(toggleDiscountType);
   };
 
   const handleDiscountInputChange = (
