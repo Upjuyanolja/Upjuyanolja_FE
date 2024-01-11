@@ -13,21 +13,21 @@ import {
   PaymentWidgetInstance,
   loadPaymentWidget,
 } from '@tosspayments/payment-widget-sdk';
+import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
 const PRICE_10000 = 10000;
-const PRICE_50000 = 10000;
-const PRICE_100000 = 10000;
+const PRICE_50000 = 50000;
+const PRICE_100000 = 100000;
 
-const selector = '#payment-widget';
-const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
-const customerKey = 'YbX2HuSlsC9uVJW6NMRMj';
+const SELECTOR = '#payment-widget';
 
 export const PointModal = ({
   isModalOpen,
   setIsModalOpen,
 }: PointModalProps) => {
+  const [price, setPrice] = useState(0);
   const [formattedValue, setFormattedValue] = useState<string>('');
   const [pointErrorMessage, setPointErrorMessage] = useState<string>('');
   const [form] = Form.useForm<{ inputValue: string }>();
@@ -40,22 +40,29 @@ export const PointModal = ({
     PaymentWidgetInstance['renderPaymentMethods']
   > | null>(null);
 
-  const [price, setPrice] = useState(1_000);
-
+  const { handleChangeUrl } = useCustomNavigate();
   useEffect(() => {
     (async () => {
-      const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
+      if (
+        process.env.REACT_APP_CLIENT_KEY &&
+        process.env.REACT_APP_CUSTOMER_KEY
+      ) {
+        const paymentWidget = await loadPaymentWidget(
+          process.env.REACT_APP_CLIENT_KEY,
+          process.env.REACT_APP_CUSTOMER_KEY,
+        );
 
-      const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
-        selector,
-        { value: price, currency: 'KRW', country: 'KR' },
-        { variantKey: 'DEFAULT' },
-      );
+        const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
+          SELECTOR,
+          { value: price, currency: 'KRW', country: 'KR' },
+          { variantKey: 'DEFAULT' },
+        );
 
-      paymentWidgetRef.current = paymentWidget;
-      paymentMethodsWidgetRef.current = paymentMethodsWidget;
+        paymentWidgetRef.current = paymentWidget;
+        paymentMethodsWidgetRef.current = paymentMethodsWidget;
+      }
     })();
-  }, [paymentWidgetRef, price]);
+  }, []);
 
   useEffect(() => {
     const paymentMethodsWidget = paymentMethodsWidgetRef.current;
@@ -71,8 +78,10 @@ export const PointModal = ({
     const inputValue = e.target.value;
     if (/[0-9]/.test(removeNumberFormat(inputValue))) {
       setFormattedValue(numberFormat(inputValue));
+      setPrice(parseInt(inputValue));
     } else {
       setFormattedValue('');
+      setPrice(0);
     }
 
     priceComparator(inputValue);
@@ -87,6 +96,7 @@ export const PointModal = ({
       setIsPointState(true);
     } else if (parseInt(removeNumberFormat(inputValue)) > MAXIMUM_PRICE) {
       setFormattedValue(numberFormat(`${MAXIMUM_PRICE}`));
+      setPrice(MAXIMUM_PRICE);
       setIsPointState(false);
     } else {
       setPointErrorMessage('');
@@ -98,8 +108,10 @@ export const PointModal = ({
     const result = parseInt(removeNumberFormat(formattedValue || '0')) + price;
     if (result > MAXIMUM_PRICE) {
       setFormattedValue(numberFormat(`${MAXIMUM_PRICE}`));
+      setPrice(MAXIMUM_PRICE);
     } else {
       setFormattedValue(numberFormat(result.toString()));
+      setPrice(result);
       setPointErrorMessage('');
       setIsPointState(false);
     }
@@ -112,6 +124,7 @@ export const PointModal = ({
   const handleCancel = () => {
     setIsModalOpen(false);
     setFormattedValue('');
+    setPrice(0);
     setPointErrorMessage('');
     setIsPointState(true);
     setIsAgreementPoint(false);
@@ -120,11 +133,8 @@ export const PointModal = ({
 
   const handleClickPayment = async () => {
     const paymentWidget = paymentWidgetRef.current;
-    console.log(paymentWidget);
-    console.log('클릭');
-    try {
-      console.log('실행중');
 
+    try {
       await paymentWidget?.requestPayment({
         orderId: nanoid(),
         orderName: '토스 티셔츠 외 2건',
@@ -133,11 +143,9 @@ export const PointModal = ({
         successUrl: `${window.location.origin}/success`,
         failUrl: `${window.location.origin}/fail`,
       });
-      // -> 서버한테 API 요청을 합니다. (결제 확정을 위한 API요청.)
-
       //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
     } catch (error) {
-      console.log(error);
+      handleChangeUrl('/point-detail');
     }
   };
 
