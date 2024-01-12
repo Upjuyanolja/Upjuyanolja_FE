@@ -1,22 +1,28 @@
 import { TextBox } from '@components/text-box';
-import {
-  AccommodationDetailCategoryOnchangeProps,
-  AccommodationDetailCategoryProps,
-} from './type';
+import { AccommodationDetailCategoryProps } from './type';
 import styled from 'styled-components';
-import { Form, Radio } from 'antd';
-import { useState } from 'react';
+import { Form, Radio, RadioChangeEvent } from 'antd';
+import { useEffect, useState } from 'react';
+import { colors } from '@/constants/colors';
 
 export const RadioButtonCustomContainer = ({
   label,
   options,
   icon,
+  form,
 }: AccommodationDetailCategoryProps) => {
   const [value, setValue] = useState('');
 
-  const onChange = ({ event }: AccommodationDetailCategoryOnchangeProps) => {
+  const onChange = (event: RadioChangeEvent) => {
     setValue(event.target.value);
   };
+
+  useEffect(() => {
+    setValue('');
+    '호텔' in options
+      ? form.setFieldValue('accommodation-hotel-category', '')
+      : form.setFieldValue('accommodation-guest-category', '');
+  }, []);
 
   return (
     <StyledWrapper>
@@ -26,14 +32,18 @@ export const RadioButtonCustomContainer = ({
           {label}
         </TextBox>
       </StyledTextContainer>
-      <Form.Item name="accommodation-category">
-        <StyledCheckboxRadioGroup
-          onChange={(event) => onChange({ event })}
-          value={value}
-        >
-          {options.map((option, index) => (
-            <StyledCheckboxRadio value={option} key={index}>
-              {option}
+      <Form.Item
+        name={
+          '호텔' in options
+            ? 'accommodation-hotel-category'
+            : 'accommodation-guest-category'
+        }
+        initialValue=""
+      >
+        <StyledCheckboxRadioGroup onChange={onChange} value={value}>
+          {Object.entries(options).map(([korean, english]) => (
+            <StyledCheckboxRadio value={english} key={english}>
+              {korean}
             </StyledCheckboxRadio>
           ))}
         </StyledCheckboxRadioGroup>
@@ -46,7 +56,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: #f9f9fa;
+  background-color: ${colors.black100};
   border-radius: 8px;
   padding: 8px 24px;
 
@@ -55,6 +65,8 @@ const StyledWrapper = styled.div`
     gap: 60px;
     align-items: center;
   }
+
+  margin-bottom: 48px;
 `;
 
 const StyledTextContainer = styled.div`
@@ -84,20 +96,20 @@ const StyledCheckboxRadioGroup = styled(Radio.Group)`
     height: 16px;
 
     &:hover {
-      border: 1px solid #0351ff;
+      border: 1px solid ${colors.primary};
       transition: 0.3s;
     }
   }
 
   .ant-radio-checked {
     .ant-radio-inner {
-      background-color: #0351ff;
-      border-color: #0351ff;
+      background-color: ${colors.primary};
+      border-color: ${colors.primary};
     }
 
     .ant-radio-inner::after {
       content: '\u2713';
-      color: #fff;
+      color: ${colors.white};
       font-size: 30px;
 
       display: flex;

@@ -1,13 +1,12 @@
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import { HandleTextAreaChangeProps } from './type';
 import {
   ACCOMMODATION_DESC_MAX_LENGTH,
   ACCOMMODATION_DESC_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
-import { ValidateInputProps } from '../type';
+import { ValidateInput } from '../type';
 
 import { TextBox } from '@components/text-box';
 import { useRecoilState } from 'recoil';
@@ -17,13 +16,13 @@ export const AccommodationDesc = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(descErrorMessage);
 
-  const handleTextAreaChange = ({ event }: HandleTextAreaChangeProps) => {
+  const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_DESC_MAX_LENGTH);
     setTextAreaValue(newValue);
     validateTextArea({ value: newValue });
   };
 
-  const validateTextArea = ({ value }: ValidateInputProps) => {
+  const validateTextArea = ({ value }: ValidateInput) => {
     if (value.length < ACCOMMODATION_DESC_MIN_LENGTH) {
       setErrorMessage(
         `숙소 소개는 최소 ${ACCOMMODATION_DESC_MIN_LENGTH}자 이상 작성해 주세요.`,
@@ -41,13 +40,13 @@ export const AccommodationDesc = () => {
       <Form.Item name="accommodation-desc">
         <Input.TextArea
           id="accommodation-desc"
-          placeholder="고객에게 멋진 숙소를 소개해 주세요."
+          placeholder="숙소를 소개해 주세요."
           minLength={ACCOMMODATION_DESC_MIN_LENGTH}
           showCount
           maxLength={ACCOMMODATION_DESC_MAX_LENGTH}
           disabled={textAreaValue.length >= ACCOMMODATION_DESC_MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
-          onChange={(event) => handleTextAreaChange({ event })}
+          onChange={handleTextAreaChange}
           status={errorMessage ? 'error' : ''}
           data-testid="textarea-accommodation-desc"
         />

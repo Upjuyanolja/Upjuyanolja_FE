@@ -1,46 +1,50 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
-import { AccommodationCategory } from '@components/init/init-accommodation-registration/AccommodationCategory';
-import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
-import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { Form } from 'antd';
-import { ButtonContainer } from '@components/init/ButtonContainer';
+import { ButtonContainer } from '@components/room/room-buttons';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
+import { PriceContainer } from '@components/room/price-container';
+import { CapacityContainer } from '@components/room/capacity-container';
+import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
+import { TimeContainer } from '@components/room/time-container';
 
 const RoomRegistration = () => {
   const isValid = true;
+  const roomOptions = {
+    tv: 'TV',
+    airCondition: '에어컨',
+    internet: '인터넷',
+  };
 
   const [form] = Form.useForm();
 
-  const accommodationOptions = [
-    '객실취사',
-    '주차시설',
-    '픽업 서비스',
-    '바베큐장',
-    '휘트니스센터',
-    '노래방',
-    '에어컨',
-    '사우나실',
-    '세미나실',
-  ];
-
   return (
     <StyledWrapper color={colors.white}>
-      <Form form={form}>
-        <AccommodationCategory />
-        <NameContainer header="숙소명" />
-        <AccommodationAddress form={form} />
-        <ImageUploadContainer header="숙소 대표 이미지 설정" />
+      <Form>
+        <NameContainer
+          header="객실명"
+          placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
+          form={form}
+        />
         <StyledInputWrapper>
-          <CheckBoxContainer
-            options={accommodationOptions}
-            header="숙소 옵션"
-          />
+          <PriceContainer header="객실 가격" />
         </StyledInputWrapper>
-        <AccommodationDesc />
-        <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
+        <ImageUploadContainer header="객실 사진" />
+        <StyledInputWrapper>
+          <NumOfRoomsContainer header="객실 수" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <TimeContainer header="시간" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <CapacityContainer header="인원" />
+        </StyledInputWrapper>
+        <StyledInputWrapper>
+          <CheckBoxContainer options={roomOptions} header="객실" />
+        </StyledInputWrapper>
+        <ButtonContainer buttonStyle={'register'} isValid={isValid} />
       </Form>
     </StyledWrapper>
   );
@@ -49,11 +53,10 @@ const RoomRegistration = () => {
 export default RoomRegistration;
 
 const StyledWrapper = styled.div`
-  background-color: ${(props) => props.color};
-
-  padding: 40px;
-
   border-radius: 8px;
+  width: 100%;
+  padding: 40px;
+  background-color: ${(props) => props.color};
 `;
 
 const StyledInputWrapper = styled.div`
