@@ -89,4 +89,25 @@ describe('InitInfoConfirmation', () => {
 
     expect(window.location.pathname).toBe('/init/room-registration');
   });
+
+  test('객실 추가하기 버튼을 누르면 객실 추가하기 페이지로 이동한다.', () => {
+    const mockToRoomEditPage = jest.fn();
+
+    render(
+      <BrowserRouter>
+        <CustomButton
+          text="수정"
+          icon={<DeleteOutlined />}
+          onClick={mockToRoomEditPage}
+        />
+      </BrowserRouter>,
+    );
+
+    const testEditButton = screen.getByTestId('edit-button');
+    act(() => {
+      userEvent.click(testEditButton);
+    });
+
+    expect(window.location.pathname).toBe('/init/room-registration');
+  });
 });
