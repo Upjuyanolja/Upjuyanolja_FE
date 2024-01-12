@@ -13,7 +13,7 @@
           {
             "couponId": 1,
             "status": "ENABLE",
-            "couponType": "FLAT",
+            "discountType": "FLAT",
             "discount": 1000,
             "couponName": "1,000원 쿠폰",
             "appliedPrice": 99000,
@@ -24,7 +24,7 @@
           {
             "couponId": 2,
             "status": "DISABLE",
-            "couponType": "RATE",
+            "discountType": "RATE",
             "discount": 15,
             "couponName": "15% 쿠폰",
             "appliedPrice": 85000,
@@ -35,7 +35,7 @@
           {
             "couponId": 3,
             "status": "SOLD_OUT",
-            "couponType": "RATE",
+            "discountType": "RATE",
             "discount": 15,
             "couponName": "15% 쿠폰",
             "appliedPrice": 85000,
@@ -53,7 +53,7 @@
           {
             "couponId": 1,
             "status": "ENABLE",
-            "couponType": "FLAT",
+            "discountType": "FLAT",
             "discount": 1000,
             "couponName": "1,000원 쿠폰",
             "appliedPrice": 14000,
@@ -64,7 +64,7 @@
           {
             "couponId": 2,
             "status": "DISABLE",
-            "couponType": "RATE",
+            "discountType": "RATE",
             "discount": 15,
             "couponName": "15% 쿠폰",
             "appliedPrice": 127500,
@@ -75,7 +75,7 @@
           {
             "couponId": 3,
             "status": "SOLD_OUT",
-            "couponType": "RATE",
+            "discountType": "RATE",
             "discount": 15,
             "couponName": "15% 쿠폰",
             "appliedPrice": 127500,
