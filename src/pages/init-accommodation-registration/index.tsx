@@ -126,7 +126,7 @@ export const InitAccommodationRegistration = () => {
   };
 
   return (
-    <StyledWrapper color={colors.white}>
+    <StyledWrapper>
       <Form
         onFinish={onFinish}
         form={form}
@@ -149,7 +149,7 @@ export const InitAccommodationRegistration = () => {
 };
 
 const StyledWrapper = styled.div`
-  background-color: ${(props) => props.color};
+  background-color: ${colors.white};
 
   padding: 40px;
 
