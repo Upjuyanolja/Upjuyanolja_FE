@@ -6,7 +6,7 @@ B2B Self-coupon Admin(Backoffice) 서비스 개발 FE 레포지토리 입니다.
 
 **리드미에** **저희가 어떻게 작업했는지만 간략하게 작성했습니다**
 
-**시간이 가능하시다면 노션도 참고해주시면 감사하겠습니다**
+**가능하시다면 노션도 참고부탁드리겠습니다**
 
 [https://youthful-jump-c97.notion.site/FE-2-f8763ce2d853471ea58f0312e5c5927f?pvs=4](https://www.notion.so/f8763ce2d853471ea58f0312e5c5927f?pvs=21)
 
