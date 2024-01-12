@@ -14,13 +14,27 @@ import {
   couponNameContainerProps,
   roomContainerProps,
 } from '../table-cell/type';
+import {
+  COUPON_TYPE_ALL_DAYS,
+  COUPON_TYPE_WEEKDAYS,
+  COUPON_TYPE_WEEKENDS,
+} from '@/constants/coupon';
 
 export const CouponTable = ({
-  couponTypeOption,
   couponTableData,
   handleSelectRecord,
   handleSelectCouponType,
+  handleChangeInput,
 }: couponTableProps) => {
+  const couponTypeOption = [
+    { value: COUPON_TYPE_ALL_DAYS.value, label: COUPON_TYPE_ALL_DAYS.label },
+    { value: COUPON_TYPE_WEEKDAYS.value, label: COUPON_TYPE_WEEKDAYS.label },
+    { value: COUPON_TYPE_WEEKENDS.value, label: COUPON_TYPE_WEEKENDS.label },
+  ];
+  const rowSelection = {
+    onChange: handleSelectRecord,
+  };
+
   const columns: ColumnsType<tableData> = [
     {
       title: '객실 정보',
@@ -51,7 +65,12 @@ export const CouponTable = ({
       title: '일일 제한 수량',
       dataIndex: 'dayLimit',
       render: (dayLimit: number, record: tableData) => (
-        <DayLimitInput dayLimit={dayLimit} isSoldOut={record.isSoldOut} />
+        <DayLimitInput
+          dayLimit={dayLimit}
+          isSoldOut={record.isSoldOut}
+          handleChangeInput={handleChangeInput}
+          record={record}
+        />
       ),
     },
     {
@@ -83,9 +102,6 @@ export const CouponTable = ({
       ),
     },
   ];
-  const rowSelection = {
-    onChange: handleSelectRecord,
-  };
 
   return (
     <StyledTable

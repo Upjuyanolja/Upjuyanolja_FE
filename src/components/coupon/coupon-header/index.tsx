@@ -8,12 +8,20 @@ import moment from 'moment';
 import styled from 'styled-components';
 import { CouponHeaderProps } from './type';
 import { DATE_FORMAT } from '@/constants/date';
+import {
+  COUPON_STATUS_DISABLE,
+  COUPON_STATUS_ENABLE,
+} from '@/constants/coupon';
 
 export const CouponHeader = ({
   expiry,
-  couponStatusOption,
-  handleStatusSelect,
+  handleSelectStatus,
 }: CouponHeaderProps) => {
+  const couponStatusOption = [
+    { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
+    { value: COUPON_STATUS_DISABLE.value, label: COUPON_STATUS_DISABLE.label },
+  ];
+
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     return current < moment().startOf('day');
   };
@@ -48,7 +56,7 @@ export const CouponHeader = ({
         <Select
           defaultValue="상태 변경"
           options={couponStatusOption}
-          onChange={handleStatusSelect}
+          onChange={handleSelectStatus}
         />
         <StyledButtonContainer>
           <StyledDeleteButton>

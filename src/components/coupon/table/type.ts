@@ -42,21 +42,11 @@ export type TableProps = {
 };
 
 export type couponTableProps = {
-  couponTypeOption: (
-    | {
-        value: 'ALL_DAYS';
-        label: '상시';
-      }
-    | {
-        value: 'WEEKDAYS';
-        label: '주중';
-      }
-    | {
-        value: 'WEEKENDS';
-        label: '휴일';
-      }
-  )[];
   couponTableData: tableData[];
   handleSelectRecord: (selectedRowKeys: number[]) => void;
   handleSelectCouponType: (value: string, key: number) => void;
+  handleChangeInput: (
+    event: React.KeyboardEvent<HTMLInputElement>,
+    key: number,
+  ) => void;
 };
