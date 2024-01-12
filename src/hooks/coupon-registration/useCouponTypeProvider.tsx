@@ -77,14 +77,13 @@ export const useCouponTypeProvider = () => {
     }
   };
 
-  const handleDiscountType = (
-    discountType: DiscountPriceType | DiscountRateType,
-  ) => {
-    const toggleDiscountType =
-      discountType === DISCOUNT_PRICE_TYPE
-        ? DISCOUNT_RATE_TYPE
-        : DISCOUNT_PRICE_TYPE;
-    setSelectedDiscountType(toggleDiscountType);
+  const handleDiscountType = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const clickedButtonClassName = e.currentTarget.className;
+    const newDiscountType = clickedButtonClassName.includes('price')
+      ? DISCOUNT_PRICE_TYPE
+      : DISCOUNT_RATE_TYPE;
+
+    setSelectedDiscountType(newDiscountType);
   };
 
   const handleDiscountInputChange = (

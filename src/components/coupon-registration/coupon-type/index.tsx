@@ -25,7 +25,7 @@ export const CouponType = () => {
     <Container>
       <StyledButtonWrap>
         <StyledDiscountButton
-          onClick={() => handleDiscountType(selectedDiscountType)}
+          onClick={(e) => handleDiscountType(e)}
           className={`price ${
             selectedDiscountType.typeName === DISCOUNT_PRICE ? 'active' : null
           }`}
@@ -42,7 +42,7 @@ export const CouponType = () => {
           </TextBox>
         </StyledDiscountButton>
         <StyledDiscountButton
-          onClick={() => handleDiscountType(selectedDiscountType)}
+          onClick={(e) => handleDiscountType(e)}
           className={`rate ${
             selectedDiscountType.typeName === DISCOUNT_RATE ? 'active' : null
           }`}

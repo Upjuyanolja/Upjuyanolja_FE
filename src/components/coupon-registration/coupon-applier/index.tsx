@@ -11,9 +11,12 @@ export const CouponApplier = () => {
       <CommonQuantityCouponSetter />
       <StyledRoomCouponApplierWrap>
         {couponRoomListData?.rooms.map((item, index) => (
-          <div key={item.roomId}>
-            <RoomCouponApplier roomName={item.roomName} index={index} />
-          </div>
+          <RoomCouponApplier
+            key={index}
+            roomId={item.roomId}
+            roomName={item.roomName}
+            index={index}
+          />
         ))}
       </StyledRoomCouponApplierWrap>
     </Container>

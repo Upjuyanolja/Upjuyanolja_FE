@@ -4,9 +4,11 @@ import { CouponPreview } from '@components/coupon-registration/coupon-preview';
 import { CouponType } from '@components/coupon-registration/coupon-type';
 import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
+import { useCouponRoomProvider } from '@hooks/coupon-registration/useCouponRoomProvider';
 import styled from 'styled-components';
 
 export const CouponRegistration = () => {
+  const { couponQuantitiesByRoom } = useCouponRoomProvider();
   return (
     <Container>
       <StyledLeftWrap>

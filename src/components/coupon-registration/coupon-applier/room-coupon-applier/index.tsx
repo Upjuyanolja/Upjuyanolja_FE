@@ -7,9 +7,25 @@ import { useCouponRoomProvider } from '@hooks/coupon-registration/useCouponRoomP
 export const RoomCouponApplier = ({
   roomName,
   index,
+  roomId,
 }: RoomCouponApplierProps) => {
-  const { roomQuantityValue, handleRoomQuantityValueChange } =
-    useCouponRoomProvider();
+  const {
+    itemQuantityValue,
+    updateCouponQuantity,
+    setItemQuantityValue,
+    couponQuantitiesByRoom,
+  } = useCouponRoomProvider();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const quantityValue = parseInt(e.target.value);
+
+    updateCouponQuantity(roomName, roomId, quantityValue);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setItemQuantityValue(e.target.value);
+  };
+
   return (
     <Container>
       <StyledLeftWrap>
@@ -21,7 +37,13 @@ export const RoomCouponApplier = ({
         </label>
       </StyledLeftWrap>
       <StyledRightWrap>
-        <StyledInput size="small" maxLength={4} value={roomQuantityValue} />
+        <StyledInput
+          size="small"
+          maxLength={4}
+          value={itemQuantityValue}
+          onChange={handleChange}
+          onBlur={handleInputChange}
+        />
         <TextBox typography="body1" color="black900">
           장
         </TextBox>
