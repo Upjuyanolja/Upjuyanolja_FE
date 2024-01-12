@@ -17,12 +17,14 @@ import {
   DiscountRateType,
 } from '@/constants/coupon-registration/type';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
+import { InputChangeEvent, MouseEvent } from '@/types/event';
 
 export const CouponType = ({
   selectedDiscountType,
   setSelectedDiscountType,
   discountValue,
   setDiscountValue,
+  setPendingCouponDataList,
 }: CouponTypeProps) => {
   const { isNumberDiscountValue, handleEnterKeyDown } = useCouponTypeProvider();
   const [errorMessage, setErrorMessage] = useState('');
@@ -31,6 +33,13 @@ export const CouponType = ({
   useEffect(() => {
     setDiscountValue('');
     setErrorMessage('');
+    setPendingCouponDataList([
+      {
+        roomId: 0,
+        roomName: '',
+        quantity: '',
+      },
+    ]);
   }, [selectedDiscountType]);
 
   useEffect(() => {
@@ -94,7 +103,7 @@ export const CouponType = ({
     }
   };
 
-  const handleDiscountType = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDiscountType = (e: MouseEvent) => {
     const clickedButtonClassName = e.currentTarget.className;
     const newDiscountType = clickedButtonClassName.includes('price')
       ? DISCOUNT_PRICE_TYPE
@@ -103,9 +112,7 @@ export const CouponType = ({
     setSelectedDiscountType(newDiscountType);
   };
 
-  const handleDiscountInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleDiscountInputChange = (e: InputChangeEvent) => {
     setDiscountValue(e.target.value);
   };
 

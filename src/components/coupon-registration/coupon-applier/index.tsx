@@ -8,14 +8,14 @@ import { useEffect } from 'react';
 export const CouponApplier = ({
   allQuantityValue,
   setAllQuantityValue,
-  itemQuantityValue,
-  setItemQuantityValue,
+  pendingCouponData,
+  setPendingCouponDataList,
 }: CouponApplierProps) => {
   const { couponRoomListData } = useCoupon();
 
   useEffect(() => {
-    console.log('itemQuantityValue', itemQuantityValue);
-  }, [itemQuantityValue]);
+    console.log('pendingCouponData', pendingCouponData);
+  }, [pendingCouponData]);
 
   return (
     <Container>
@@ -30,8 +30,8 @@ export const CouponApplier = ({
             roomName={item.roomName}
             index={index}
             roomId={item.roomId}
-            itemQuantityValue={itemQuantityValue[index]}
-            setItemQuantityValue={setItemQuantityValue}
+            pendingCouponData={pendingCouponData[index]}
+            setPendingCouponDataList={setPendingCouponDataList}
           />
         ))}
       </StyledRoomCouponApplierWrap>

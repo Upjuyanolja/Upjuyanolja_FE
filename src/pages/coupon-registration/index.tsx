@@ -11,6 +11,7 @@ import {
   DiscountPriceType,
   DiscountRateType,
 } from '@/constants/coupon-registration/type';
+import { PendingCouponDataList } from '@components/coupon-registration/type';
 
 export const CouponRegistration = () => {
   const [selectedDiscountType, setSelectedDiscountType] = useState<
@@ -18,13 +19,8 @@ export const CouponRegistration = () => {
   >(DISCOUNT_PRICE_TYPE);
   const [discountValue, setDiscountValue] = useState<string>('');
   const [allQuantityValue, setAllQuantityValue] = useState('0');
-  const [itemQuantityValue, setItemQuantityValue] = useState<
-    {
-      roomId: number;
-      roomName: string;
-      quantity: string;
-    }[]
-  >([]);
+  const [pendingCouponData, setPendingCouponDataList] =
+    useState<PendingCouponDataList>([]);
 
   return (
     <Container>
@@ -40,6 +36,7 @@ export const CouponRegistration = () => {
               setSelectedDiscountType={setSelectedDiscountType}
               discountValue={discountValue}
               setDiscountValue={setDiscountValue}
+              setPendingCouponDataList={setPendingCouponDataList}
             />
           </CouponCard>
           <Spacing space="32" />
@@ -47,8 +44,8 @@ export const CouponRegistration = () => {
             <CouponApplier
               allQuantityValue={allQuantityValue}
               setAllQuantityValue={setAllQuantityValue}
-              itemQuantityValue={itemQuantityValue}
-              setItemQuantityValue={setItemQuantityValue}
+              pendingCouponData={pendingCouponData}
+              setPendingCouponDataList={setPendingCouponDataList}
             />
           </CouponCard>
         </StyledCouponCardWrap>

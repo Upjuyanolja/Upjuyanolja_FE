@@ -1,13 +1,15 @@
 import {
-  DiscountPriceType,
-  DiscountRateType,
-} from '@/constants/coupon-registration/type';
+  DiscountValue,
+  SelectedDiscountType,
+  SetDiscountValue,
+  SetPendingCouponDataList,
+  SetSelectedDiscountType,
+} from '../type';
 
 export type CouponTypeProps = {
-  selectedDiscountType: DiscountPriceType | DiscountRateType;
-  setSelectedDiscountType: React.Dispatch<
-    React.SetStateAction<DiscountPriceType | DiscountRateType>
-  >;
-  discountValue: string;
-  setDiscountValue: React.Dispatch<React.SetStateAction<string>>;
+  selectedDiscountType: SelectedDiscountType;
+  setSelectedDiscountType: SetSelectedDiscountType;
+  discountValue: DiscountValue;
+  setDiscountValue: SetDiscountValue;
+  setPendingCouponDataList: SetPendingCouponDataList;
 };

@@ -2,17 +2,18 @@ import { TextBox } from '@components/text-box';
 import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { RoomCouponApplierProps } from './type';
+import { InputChangeEvent } from '@/types/event';
 
 export const RoomCouponApplier = ({
   roomName,
   index,
   roomId,
-  itemQuantityValue,
-  setItemQuantityValue,
+  pendingCouponData,
+  setPendingCouponDataList,
 }: RoomCouponApplierProps) => {
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQuantityChange = (e: InputChangeEvent) => {
     const newValue = e.target.value;
-    setItemQuantityValue((prevValues) => {
+    setPendingCouponDataList((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = { roomId, roomName, quantity: newValue };
       return newValues;
@@ -32,7 +33,7 @@ export const RoomCouponApplier = ({
         <StyledInput
           size="small"
           maxLength={4}
-          value={itemQuantityValue?.quantity || '0'}
+          value={pendingCouponData?.quantity || '0'}
           onChange={handleQuantityChange}
         />
         <TextBox typography="body1" color="black900">

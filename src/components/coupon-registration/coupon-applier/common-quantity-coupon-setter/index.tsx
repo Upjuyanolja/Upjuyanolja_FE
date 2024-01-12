@@ -2,14 +2,13 @@ import { TextBox } from '@components/text-box';
 import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { CommonQuantityCouponSetterProps } from './type';
+import { InputChangeEvent } from '@/types/event';
 
 export const CommonQuantityCouponSetter = ({
   allQuantityValue,
   setAllQuantityValue,
 }: CommonQuantityCouponSetterProps) => {
-  const handleAllQuantityValueChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleAllQuantityValueChange = (e: InputChangeEvent) => {
     setAllQuantityValue(e.target.value);
   };
 
