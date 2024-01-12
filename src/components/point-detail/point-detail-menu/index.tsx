@@ -5,7 +5,6 @@ import { colors } from '@/constants/colors';
 import { menuStatusState } from '@stores/point-detail/atoms';
 import { useRecoilState } from 'recoil';
 import { menuStatusType } from '@api/point-detail/get-point-detail/type';
-import { useState } from 'react';
 
 export const PointMenu = () => {
   const [menuStatus, setMenuStatus] = useRecoilState(menuStatusState);
