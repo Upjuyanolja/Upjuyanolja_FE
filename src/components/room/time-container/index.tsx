@@ -1,12 +1,25 @@
-import { TimePicker } from 'antd';
+import { useState } from 'react';
+import { TimePicker, Form } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { TimeContainerProps } from './type';
 import locale from 'antd/es/date-picker/locale/de_DE';
+import { Moment } from 'moment';
 
-export const TimeContainer = ({ header }: TimeContainerProps) => {
+export const TimeContainer = ({ header, form }: TimeContainerProps) => {
   const format = 'HH:mm';
+  const [checkInTime, setCheckInTime] = useState<Moment | null>(null);
+  const [checkOutTime, setCheckOutTime] = useState<Moment | null>(null);
 
+  const handleCheckInChange = (time: Moment | null) => {
+    form.setFieldValue('checkInTime', time);
+    setCheckInTime(time);
+  };
+
+  const handleCheckOutChange = (time: Moment | null) => {
+    form.setFieldValue('checkOutTime', time);
+    setCheckOutTime(time);
+  };
   return (
     <StyledInputWrapper>
       <StyledHeadTextContainer>
@@ -20,20 +33,24 @@ export const TimeContainer = ({ header }: TimeContainerProps) => {
             체크인
           </TextBox>
         </StyledTextBoxWrapper>
-        <StyledTimePicker
-          placeholder="00:00"
-          format={format}
-          minuteStep={30}
-          popupStyle={{ height: 274 }}
-          showNow={false}
-          locale={{
-            ...locale,
-            lang: {
-              ...locale.lang,
-              ok: '확인',
-            },
-          }}
-        />
+        <Form.Item name={'checkInTime'}>
+          <StyledTimePicker
+            placeholder="00:00"
+            format={format}
+            minuteStep={30}
+            value={checkInTime}
+            onChange={handleCheckInChange}
+            popupStyle={{ height: 274 }}
+            showNow={false}
+            locale={{
+              ...locale,
+              lang: {
+                ...locale.lang,
+                ok: '확인',
+              },
+            }}
+          />
+        </Form.Item>
       </StyledRow>
       <StyledRow>
         <StyledTextBoxWrapper>
@@ -41,20 +58,24 @@ export const TimeContainer = ({ header }: TimeContainerProps) => {
             체크아웃
           </TextBox>
         </StyledTextBoxWrapper>
-        <StyledTimePicker
-          placeholder="00:00"
-          format={format}
-          minuteStep={30}
-          popupStyle={{ height: 274 }}
-          showNow={false}
-          locale={{
-            ...locale,
-            lang: {
-              ...locale.lang,
-              ok: '확인',
-            },
-          }}
-        />
+        <Form.Item name={'checkOutTime'}>
+          <StyledTimePicker
+            placeholder="00:00"
+            format={format}
+            minuteStep={30}
+            value={checkOutTime}
+            onChange={handleCheckOutChange}
+            popupStyle={{ height: 274 }}
+            showNow={false}
+            locale={{
+              ...locale,
+              lang: {
+                ...locale.lang,
+                ok: '확인',
+              },
+            }}
+          />
+        </Form.Item>
       </StyledRow>
     </StyledInputWrapper>
   );
@@ -75,6 +96,7 @@ const StyledTextBoxWrapper = styled.div`
 `;
 
 const StyledRow = styled.div`
+  height: 40px;
   width: 203px;
   display: flex;
   align-items: center;
@@ -101,6 +123,12 @@ const StyledInputWrapper = styled.div`
     gap: 8px;
   }
 
+  .ant-form-item-col {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
   .ant-form-item-control {
     width: 100%;
   }
@@ -115,4 +143,5 @@ const StyledTimePicker = styled(TimePicker)`
   width: 128px;
   padding: 8px 12px;
   align-items: center;
+  margin-top: 25px;
 `;

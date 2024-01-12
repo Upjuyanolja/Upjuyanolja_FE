@@ -16,8 +16,8 @@ import {
 } from '@/constants/room/room-registration';
 import { TextBox } from '@components/text-box';
 
-export const PriceContainer = ({ header }: PriceContainerProps) => {
-  const [inputValue, setInputValue] = useState('');
+export const PriceContainer = ({ header, form }: PriceContainerProps) => {
+  const [roomPrice, setRoomPrice] = useState('');
   const [outOfRangeError, setOutOfRangeError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
@@ -31,35 +31,32 @@ export const PriceContainer = ({ header }: PriceContainerProps) => {
   const handleInputChange = ({ event }: PriceHandleInputChangeProps) => {
     const stringValue = event.target.value;
     if (stringValue === '' || NUMBER_REGEX.test(stringValue)) {
-      setInputValue(stringValue.slice(0, MAX_PRICE_LENGTH));
+      setRoomPrice(stringValue.slice(0, MAX_PRICE_LENGTH));
       const numericValue = Number(stringValue);
       validateInput({ value: numericValue });
+      form.setFieldValue('room-price', numericValue);
     }
   };
 
   return (
     <StyledInputWrapper>
-      <Form.Item
-        rules={[{ required: true }]}
-        colon={false}
-        style={{ marginBottom: 0 }}
-      >
-        <StyledDesc>
-          <TextBox typography="h4" fontWeight={700}>
-            {header}
+      <StyledDesc>
+        <TextBox typography="h4" fontWeight={700}>
+          {header}
+        </TextBox>
+        <TextBox color="black600" typography="body3">
+          10,000~1,000,000까지만 입력 가능합니다.
+        </TextBox>
+      </StyledDesc>
+      <StyledRow>
+        <StyledTextBoxWrapper>
+          <TextBox typography="body1" color="black900" fontWeight="normal">
+            1박 당
           </TextBox>
-          <TextBox color="black600" typography="body3">
-            10,000~1,000,000까지만 입력 가능합니다.
-          </TextBox>
-        </StyledDesc>
-        <StyledRow>
-          <StyledTextBoxWrapper>
-            <TextBox typography="body1" color="black900" fontWeight="normal">
-              1박 당
-            </TextBox>
-          </StyledTextBoxWrapper>
+        </StyledTextBoxWrapper>
+        <Form.Item name="room-price">
           <StyledInput
-            id="price"
+            id="room-price"
             placeholder={''}
             type="text"
             minLength={MIN_PRICE_LENGTH}
@@ -68,23 +65,23 @@ export const PriceContainer = ({ header }: PriceContainerProps) => {
               height: 40,
               width: header === '' ? '440px' : '',
             }}
-            value={inputValue.toString()}
+            value={roomPrice.toString()}
             onChange={(event) => handleInputChange({ event })}
             status={outOfRangeError ? 'error' : ''}
-            data-testid="input-price"
+            data-testid="input-room-price"
           />
-          {outOfRangeError && (
-            <StyledErrorMessageWrapper data-testid="error-input-price">
-              <StyledFormErrorMessage errorMessage={outOfRangeError} />
-            </StyledErrorMessageWrapper>
-          )}
-          <StyledTextBoxWrapper>
-            <TextBox typography="body1" color="black900" fontWeight="normal">
-              원
-            </TextBox>
-          </StyledTextBoxWrapper>
-        </StyledRow>
-      </Form.Item>
+        </Form.Item>
+        {outOfRangeError && (
+          <StyledErrorMessageWrapper data-testid="error-input-price">
+            <StyledFormErrorMessage errorMessage={outOfRangeError} />
+          </StyledErrorMessageWrapper>
+        )}
+        <StyledTextBoxWrapper>
+          <TextBox typography="body1" color="black900" fontWeight="normal">
+            원
+          </TextBox>
+        </StyledTextBoxWrapper>
+      </StyledRow>
     </StyledInputWrapper>
   );
 };
@@ -144,12 +141,15 @@ const StyledInput = styled(Input)`
   height: 40px;
   font-size: 16px;
   margin-right: 4px;
+  margin-top: 20px;
 `;
 
 const StyledRow = styled.div`
+  height: 40px;
   display: flex;
   align-items: center;
   margin-top: 8;
+  height: 40px;
 `;
 
 const StyledDesc = styled.div`
