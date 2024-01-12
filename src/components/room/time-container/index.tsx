@@ -68,17 +68,18 @@ const StyledHeadTextContainer = styled.div`
 `;
 
 const StyledTextBoxWrapper = styled.div`
-  margin-right: 12px;
+  width: 63px;
   &:last-child {
     margin-right: 0;
   }
 `;
 
 const StyledRow = styled.div`
+  width: 203px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  margin-top: 8;
+  gap: 12px;
+  margin-bottom: 8px;
 `;
 
 const StyledInputWrapper = styled.div`
