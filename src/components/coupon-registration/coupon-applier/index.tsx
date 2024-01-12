@@ -12,7 +12,7 @@ export const CouponApplier = ({
 }: CouponApplierProps) => {
   const { couponRoomListData } = useCoupon();
   const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useState(false);
-  const [groupQuantityValue, setGroupQuantityValue] = useState(0);
+  const [groupQuantityValue, setGroupQuantityValue] = useState('0');
 
   return (
     <Container>

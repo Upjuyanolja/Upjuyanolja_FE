@@ -19,7 +19,7 @@ export const RoomCouponApplier = ({
 }: RoomCouponApplierProps) => {
   const { handleEnterKeyDown } = useCouponRegistration();
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
-  const [inputValue, setInputValue] = useState(0);
+  const [inputValue, setInputValue] = useState('0');
 
   const handleQuantityChange = () => {
     const newValue = inputValue;
@@ -31,22 +31,16 @@ export const RoomCouponApplier = ({
   };
 
   const handleChange = (e: InputChangeEvent) => {
-    const formattedValue = parseInt(e.target.value);
+    const formattedValue = e.target.value;
     if (!isNumber(formattedValue)) {
       return;
     }
     setInputValue(formattedValue);
   };
 
-  const handleFocus = () => {
-    if (inputValue === 0) {
-      setInputValue(0);
-    }
-  };
-
   const handleCheckBox = () => {
     setIsItemQuantitySelected(!isItemQuantitySelected);
-    setInputValue(0);
+    setInputValue('0');
   };
 
   useEffect(() => {
@@ -62,7 +56,7 @@ export const RoomCouponApplier = ({
   }, [groupQuantityValue, isItemQuantitySelected]);
 
   useEffect(() => {
-    setInputValue(0);
+    setInputValue('0');
     setIsItemQuantitySelected(false);
   }, [selectedCouponType]);
 
@@ -91,7 +85,6 @@ export const RoomCouponApplier = ({
           }
           onChange={handleChange}
           disabled={isGroupQuantitySelected || !isItemQuantitySelected}
-          onFocus={handleFocus}
           onKeyDown={handleEnterKeyDown}
         />
         <TextBox typography="body1" color="black900">

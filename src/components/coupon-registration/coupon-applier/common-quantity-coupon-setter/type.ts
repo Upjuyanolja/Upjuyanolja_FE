@@ -1,10 +1,14 @@
 import { SetStateAction } from '@/types/setState';
-import { SelectedCouponType } from '@components/coupon-registration/type';
+import {
+  GroupQuantityValue,
+  SelectedCouponType,
+  SetGroupQuantityValue,
+} from '@components/coupon-registration/type';
 
 export type CommonQuantityCouponSetterProps = {
   selectedCouponType: SelectedCouponType;
-  groupQuantityValue: number;
-  setGroupQuantityValue: SetStateAction<number>;
+  groupQuantityValue: GroupQuantityValue;
+  setGroupQuantityValue: SetGroupQuantityValue;
   isGroupQuantitySelected: boolean;
   setIsGroupQuantitySelected: SetStateAction<boolean>;
 };

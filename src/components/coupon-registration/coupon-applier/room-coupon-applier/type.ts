@@ -12,6 +12,6 @@ export type RoomCouponApplierProps = {
   pendingCouponData: PendingCouponData;
   setPendingCouponDataList: SetPendingCouponDataList;
   isGroupQuantitySelected: boolean;
-  groupQuantityValue: number;
+  groupQuantityValue: string;
   selectedCouponType: SelectedCouponType;
 };

@@ -17,7 +17,7 @@ export const CommonQuantityCouponSetter = ({
   const { handleEnterKeyDown } = useCouponRegistration();
 
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
-    const formattedValue = parseInt(e.target.value);
+    const formattedValue = e.target.value;
     if (!isNumber(formattedValue)) {
       return;
     }
@@ -26,13 +26,13 @@ export const CommonQuantityCouponSetter = ({
 
   useEffect(() => {
     if (!isGroupQuantitySelected) {
-      setGroupQuantityValue(0);
+      setGroupQuantityValue('0');
     }
   }, [isGroupQuantitySelected]);
 
   useEffect(() => {
     setIsGroupQuantitySelected(false);
-    setGroupQuantityValue(0);
+    setGroupQuantityValue('0');
   }, [selectedCouponType]);
 
   return (
