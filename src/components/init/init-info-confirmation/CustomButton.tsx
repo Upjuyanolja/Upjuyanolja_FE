@@ -5,7 +5,11 @@ import { CustomButtonProps } from './type';
 
 export const CustomButton = ({ text, icon, onClick }: CustomButtonProps) => {
   return (
-    <StyledButton icon={icon} onClick={onClick}>
+    <StyledButton
+      icon={icon}
+      onClick={onClick}
+      data-testid={text === '삭제' ? 'delete-button' : 'edit-button'}
+    >
       {text}
     </StyledButton>
   );
