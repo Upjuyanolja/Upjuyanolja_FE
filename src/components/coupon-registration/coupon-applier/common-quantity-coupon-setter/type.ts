@@ -1,6 +1,8 @@
-import { CouponApplierProps } from '../type';
+import { SetStateAction } from '@/types/setState';
 
-export type CommonQuantityCouponSetterProps = Pick<
-  CouponApplierProps,
-  'allQuantityValue' | 'setAllQuantityValue'
->;
+export type CommonQuantityCouponSetterProps = {
+  groupQuantityValue: string;
+  setGroupQuantityValue: SetStateAction<string>;
+  isGroupQuantitySelected: boolean;
+  setIsGroupQuantitySelected: SetStateAction<boolean>;
+};

@@ -6,31 +6,53 @@ import { Input } from 'antd';
 import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
 import { Spacing } from '@components/spacing';
 import {
-  DISCOUNT_PRICE,
-  DISCOUNT_PRICE_TYPE,
-  DISCOUNT_RATE,
-  DISCOUNT_RATE_TYPE,
+  FLAT_COUPON,
+  FLAT_COUPON_TYPE,
+  RATE_COUPON,
+  RATE_COUPON_TYPE,
 } from '@/constants/coupon-registration';
 import { useEffect, useState } from 'react';
 import {
-  DiscountPriceType,
-  DiscountRateType,
+  FlatCouponType,
+  RateCouponType,
 } from '@/constants/coupon-registration/type';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { InputChangeEvent, MouseEvent } from '@/types/event';
+import { isNumber } from '@/utils/is-number';
 
 export const CouponType = ({
-  selectedDiscountType,
-  setSelectedDiscountType,
+  selectedCouponType,
+  setSelectedCouponType,
   discountValue,
   setDiscountValue,
   setPendingCouponDataList,
+  setDeterminedPrice,
 }: CouponTypeProps) => {
   const { isNumberDiscountValue, handleEnterKeyDown } = useCouponTypeProvider();
   const [errorMessage, setErrorMessage] = useState('');
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
 
   useEffect(() => {
+    initializeValue();
+  }, [selectedCouponType]);
+
+  useEffect(() => {
+    if (!discountValue) {
+      return setIsValidDiscountRange(true);
+    }
+
+    checkDiscountValidity(discountValue, selectedCouponType);
+  }, [discountValue]);
+
+  useEffect(() => {
+    if (!discountValue) {
+      return setIsValidDiscountRange(true);
+    }
+
+    checkDiscountValidity(discountValue, selectedCouponType);
+  }, [discountValue]);
+
+  const initializeValue = () => {
     setDiscountValue('');
     setErrorMessage('');
     setPendingCouponDataList([
@@ -40,40 +62,61 @@ export const CouponType = ({
         quantity: '',
       },
     ]);
-  }, [selectedDiscountType]);
-
-  useEffect(() => {
-    if (!discountValue) {
-      return setIsValidDiscountRange(true);
-    }
-
-    checkDiscountValidity(discountValue, selectedDiscountType);
-  }, [discountValue]);
-
-  useEffect(() => {
-    if (!discountValue) {
-      return setIsValidDiscountRange(true);
-    }
-
-    checkDiscountValidity(discountValue, selectedDiscountType);
-  }, [discountValue]);
+    setDeterminedPrice('');
+  };
 
   const handleBlur = async (
     discountValue: string,
-    discountType: DiscountPriceType | DiscountRateType,
+    couponType: FlatCouponType | RateCouponType,
   ) => {
     if (!discountValue) {
       return;
     }
-
     if (!isNumberDiscountValue(discountValue)) {
-      return handleErrorDisplay(discountType);
+      return handleErrorDisplay(couponType);
+    }
+    await handleDiscountErrorMessage(discountValue, couponType);
+    await checkDiscountValidity(discountValue, couponType);
+    let transformedValue;
+    normalizeToRange(discountValue, couponType);
+    if (Number(discountValue) >= FLAT_COUPON_TYPE.min) {
+      transformedValue = (
+        Math.floor(Number(discountValue) / FLAT_COUPON_TYPE.min) *
+        FLAT_COUPON_TYPE.min
+      ).toString();
+    } else {
+      transformedValue = discountValue;
+    }
+    if (!isValidDiscountRange) {
+      return;
+    }
+    formattedNumber(transformedValue);
+  };
+
+  const normalizeToRange = (
+    discountValue: string,
+    couponType: FlatCouponType | RateCouponType,
+  ) => {
+    let transformedValue;
+    if (parseInt(discountValue) > couponType.max) {
+      transformedValue = couponType.max.toString();
+      setDiscountValue(transformedValue);
+      formattedNumber(transformedValue);
+      setErrorMessage(couponType.errorMessage);
     }
 
-    await handleDiscountErrorMessage(discountValue, discountType);
-    await checkDiscountValidity(discountValue, discountType);
-    const removeFormattedValue = removeNumberFormat(discountValue);
+    if (parseInt(discountValue) < couponType.min) {
+      transformedValue = couponType.min.toString();
+      setDiscountValue(transformedValue);
+      formattedNumber(transformedValue);
+      setErrorMessage(couponType.errorMessage);
+    }
+  };
+
+  const formattedNumber = async (transformedValue: string) => {
+    const removeFormattedValue = removeNumberFormat(transformedValue);
     const formattedValue = numberFormat(removeFormattedValue);
+    await setDeterminedPrice(formattedValue);
     await setDiscountValue(formattedValue);
   };
 
@@ -82,49 +125,50 @@ export const CouponType = ({
     setDiscountValue(removeFormattedValue);
   };
 
-  const handleErrorDisplay = (
-    discountType: DiscountPriceType | DiscountRateType,
-  ) => {
-    setErrorMessage(discountType.errorMessage);
+  const handleErrorDisplay = (couponType: FlatCouponType | RateCouponType) => {
+    setErrorMessage(couponType.errorMessage);
     setIsValidDiscountRange(false);
   };
 
   const handleDiscountErrorMessage = (
     discountValue: string,
-    discountType: DiscountPriceType | DiscountRateType,
+    couponType: FlatCouponType | RateCouponType,
   ) => {
     if (
-      parseInt(discountValue) < discountType.min ||
-      parseInt(discountValue) > discountType.max
+      parseInt(discountValue) < couponType.min ||
+      parseInt(discountValue) > couponType.max
     ) {
-      setErrorMessage(discountType.errorMessage);
+      setErrorMessage(couponType.errorMessage);
     } else {
       setErrorMessage('');
     }
   };
 
-  const handleDiscountType = (e: MouseEvent) => {
+  const handleCouponType = (e: MouseEvent) => {
     const clickedButtonClassName = e.currentTarget.className;
-    const newDiscountType = clickedButtonClassName.includes('price')
-      ? DISCOUNT_PRICE_TYPE
-      : DISCOUNT_RATE_TYPE;
+    const newCouponType = clickedButtonClassName.includes('price')
+      ? FLAT_COUPON_TYPE
+      : RATE_COUPON_TYPE;
 
-    setSelectedDiscountType(newDiscountType);
+    setSelectedCouponType(newCouponType);
   };
 
   const handleDiscountInputChange = (e: InputChangeEvent) => {
+    if (!isNumber(e.target.value)) {
+      return setDiscountValue('');
+    }
     setDiscountValue(e.target.value);
   };
 
   const checkDiscountValidity = (
     discountValue: string,
-    discountType: DiscountPriceType | DiscountRateType,
+    couponType: FlatCouponType | RateCouponType,
   ) => {
     const numericDiscountValue = parseInt(removeNumberFormat(discountValue));
 
     if (
-      numericDiscountValue < discountType.min ||
-      numericDiscountValue > discountType.max
+      numericDiscountValue < couponType.min ||
+      numericDiscountValue > couponType.max
     ) {
       setIsValidDiscountRange(false);
     } else {
@@ -136,15 +180,15 @@ export const CouponType = ({
     <Container>
       <StyledButtonWrap>
         <StyledDiscountButton
-          onClick={(e) => handleDiscountType(e)}
+          onClick={(e) => handleCouponType(e)}
           className={`price ${
-            selectedDiscountType.typeName === DISCOUNT_PRICE ? 'active' : null
+            selectedCouponType.typeName === FLAT_COUPON ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedDiscountType.typeName === DISCOUNT_PRICE
+              selectedCouponType.typeName === FLAT_COUPON
                 ? 'primary'
                 : 'black900'
             }
@@ -153,15 +197,15 @@ export const CouponType = ({
           </TextBox>
         </StyledDiscountButton>
         <StyledDiscountButton
-          onClick={(e) => handleDiscountType(e)}
+          onClick={(e) => handleCouponType(e)}
           className={`rate ${
-            selectedDiscountType.typeName === DISCOUNT_RATE ? 'active' : null
+            selectedCouponType.typeName === RATE_COUPON ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedDiscountType.typeName === DISCOUNT_RATE
+              selectedCouponType.typeName === RATE_COUPON
                 ? 'primary'
                 : 'black900'
             }
@@ -175,10 +219,10 @@ export const CouponType = ({
         <StyledInput
           onChange={handleDiscountInputChange}
           value={discountValue || ''}
-          onBlur={() => handleBlur(discountValue, selectedDiscountType)}
+          onBlur={() => handleBlur(discountValue, selectedCouponType)}
           onFocus={() => handleFocus(discountValue)}
           placeholder={
-            selectedDiscountType.typeName === DISCOUNT_PRICE
+            selectedCouponType.typeName === FLAT_COUPON
               ? '1,000~50,000 까지'
               : '1~50까지'
           }
@@ -187,9 +231,7 @@ export const CouponType = ({
         />
         <StyledTextWrap>
           <TextBox typography="body2" fontWeight="bold">
-            {selectedDiscountType.typeName === DISCOUNT_PRICE
-              ? '원 할인'
-              : '% 할인'}
+            {selectedCouponType.typeName === FLAT_COUPON ? '원 할인' : '% 할인'}
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>

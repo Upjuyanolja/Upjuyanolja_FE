@@ -3,25 +3,23 @@ import { CommonQuantityCouponSetter } from './common-quantity-coupon-setter';
 import { RoomCouponApplier } from './room-coupon-applier';
 import { useCoupon } from '@hooks/coupon/useCoupon';
 import { CouponApplierProps } from './type';
-import { useEffect } from 'react';
+import { useState } from 'react';
 
 export const CouponApplier = ({
-  allQuantityValue,
-  setAllQuantityValue,
   pendingCouponData,
   setPendingCouponDataList,
 }: CouponApplierProps) => {
   const { couponRoomListData } = useCoupon();
-
-  useEffect(() => {
-    console.log('pendingCouponData', pendingCouponData);
-  }, [pendingCouponData]);
+  const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useState(false);
+  const [groupQuantityValue, setGroupQuantityValue] = useState('0');
 
   return (
     <Container>
       <CommonQuantityCouponSetter
-        allQuantityValue={allQuantityValue}
-        setAllQuantityValue={setAllQuantityValue}
+        groupQuantityValue={groupQuantityValue}
+        setGroupQuantityValue={setGroupQuantityValue}
+        isGroupQuantitySelected={isGroupQuantitySelected}
+        setIsGroupQuantitySelected={setIsGroupQuantitySelected}
       />
       <StyledRoomCouponApplierWrap>
         {couponRoomListData?.rooms.map((item, index) => (
@@ -30,8 +28,11 @@ export const CouponApplier = ({
             roomName={item.roomName}
             index={index}
             roomId={item.roomId}
+            roomPrice={item.roomPrice}
             pendingCouponData={pendingCouponData[index]}
             setPendingCouponDataList={setPendingCouponDataList}
+            isGroupQuantitySelected={isGroupQuantitySelected}
+            groupQuantityValue={groupQuantityValue}
           />
         ))}
       </StyledRoomCouponApplierWrap>

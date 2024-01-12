@@ -3,26 +3,64 @@ import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { RoomCouponApplierProps } from './type';
 import { InputChangeEvent } from '@/types/event';
+import { useEffect, useState } from 'react';
+import { isNumber } from '@/utils/is-number';
 
 export const RoomCouponApplier = ({
   roomName,
   index,
   roomId,
-  pendingCouponData,
+  roomPrice,
   setPendingCouponDataList,
+  isGroupQuantitySelected,
+  groupQuantityValue,
 }: RoomCouponApplierProps) => {
-  const handleQuantityChange = (e: InputChangeEvent) => {
-    const newValue = e.target.value;
+  const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
+  const [inputValue, setInputValue] = useState('0');
+
+  const handleQuantityChange = () => {
+    const newValue = inputValue;
     setPendingCouponDataList((prevValues) => {
       const newValues = [...prevValues];
-      newValues[index] = { roomId, roomName, quantity: newValue };
+      newValues[index] = { roomId, roomName, roomPrice, quantity: newValue };
       return newValues;
     });
   };
+
+  const handleChange = (e: InputChangeEvent) => {
+    if (!isNumber(parseInt(e.target.value))) {
+      return;
+    }
+    setInputValue(e.target.value);
+  };
+
+  const handleFocus = () => {
+    if (inputValue === '0') {
+      setInputValue('0');
+    }
+  };
+
+  const handleCheckBox = () => {
+    setIsItemQuantitySelected(!isItemQuantitySelected);
+    setInputValue('0');
+  };
+
+  useEffect(() => {
+    handleQuantityChange();
+  }, [inputValue]);
+
+  useEffect(() => {
+    if (isGroupQuantitySelected) {
+      if (isItemQuantitySelected) {
+        setInputValue(groupQuantityValue);
+      }
+    }
+  }, [groupQuantityValue, isItemQuantitySelected]);
+
   return (
     <Container>
       <StyledLeftWrap>
-        <Checkbox id={`checkbox${index}`} />
+        <Checkbox id={`checkbox${index}`} onChange={handleCheckBox} />
         <label htmlFor={`checkbox${index}`}>
           <TextBox typography="h5" fontWeight="bold" color="black900">
             {roomName}
@@ -32,9 +70,15 @@ export const RoomCouponApplier = ({
       <StyledRightWrap>
         <StyledInput
           size="small"
-          maxLength={4}
-          value={pendingCouponData?.quantity || '0'}
-          onChange={handleQuantityChange}
+          maxLength={3}
+          value={
+            isGroupQuantitySelected && isItemQuantitySelected
+              ? groupQuantityValue
+              : inputValue
+          }
+          onChange={handleChange}
+          disabled={isGroupQuantitySelected || !isItemQuantitySelected}
+          onFocus={handleFocus}
         />
         <TextBox typography="body1" color="black900">
           장
@@ -60,7 +104,7 @@ const StyledRightWrap = styled.div`
   gap: 4px;
 `;
 
-const StyledInput = styled(Input)`
+const StyledInput = styled(Input)<{ ref?: React.RefObject<HTMLInputElement> }>`
   width: 114px;
   height: 40px;
 `;

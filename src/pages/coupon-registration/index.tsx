@@ -6,19 +6,19 @@ import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { DISCOUNT_PRICE_TYPE } from '@/constants/coupon-registration';
+import { FLAT_COUPON_TYPE } from '@/constants/coupon-registration';
 import {
-  DiscountPriceType,
-  DiscountRateType,
+  FlatCouponType,
+  RateCouponType,
 } from '@/constants/coupon-registration/type';
 import { PendingCouponDataList } from '@components/coupon-registration/type';
 
 export const CouponRegistration = () => {
-  const [selectedDiscountType, setSelectedDiscountType] = useState<
-    DiscountPriceType | DiscountRateType
-  >(DISCOUNT_PRICE_TYPE);
-  const [discountValue, setDiscountValue] = useState<string>('');
-  const [allQuantityValue, setAllQuantityValue] = useState('0');
+  const [selectedCouponType, setSelectedCouponType] = useState<
+    FlatCouponType | RateCouponType
+  >(FLAT_COUPON_TYPE);
+  const [discountValue, setDiscountValue] = useState('');
+  const [determinedPrice, setDeterminedPrice] = useState('');
   const [pendingCouponData, setPendingCouponDataList] =
     useState<PendingCouponDataList>([]);
 
@@ -32,18 +32,17 @@ export const CouponRegistration = () => {
         <StyledCouponCardWrap>
           <CouponCard title="1. 쿠폰 유형 선택">
             <CouponType
-              selectedDiscountType={selectedDiscountType}
-              setSelectedDiscountType={setSelectedDiscountType}
+              selectedCouponType={selectedCouponType}
+              setSelectedCouponType={setSelectedCouponType}
               discountValue={discountValue}
               setDiscountValue={setDiscountValue}
               setPendingCouponDataList={setPendingCouponDataList}
+              setDeterminedPrice={setDeterminedPrice}
             />
           </CouponCard>
           <Spacing space="32" />
           <CouponCard title="2. 적용 객실 선택">
             <CouponApplier
-              allQuantityValue={allQuantityValue}
-              setAllQuantityValue={setAllQuantityValue}
               pendingCouponData={pendingCouponData}
               setPendingCouponDataList={setPendingCouponDataList}
             />
@@ -51,7 +50,11 @@ export const CouponRegistration = () => {
         </StyledCouponCardWrap>
       </StyledLeftWrap>
       <div>
-        <CouponPreview />
+        <CouponPreview
+          selectedCouponType={selectedCouponType}
+          determinedPrice={determinedPrice}
+          pendingCouponData={pendingCouponData}
+        />
       </div>
     </Container>
   );

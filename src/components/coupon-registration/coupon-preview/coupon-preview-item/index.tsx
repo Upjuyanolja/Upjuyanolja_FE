@@ -5,15 +5,19 @@ import { Divider } from 'antd';
 import styled from 'styled-components';
 import { CouponPreviewItemProps } from './type';
 
-export const CouponPreviewItem = ({ data }: CouponPreviewItemProps) => {
+export const CouponPreviewItem = ({
+  roomId,
+  roomName,
+  quantity,
+}: CouponPreviewItemProps) => {
   return (
     <Container>
       <TextBox typography="h5" fontWeight="bold" color="black900">
-        {data.roomName}
+        {roomName}
       </TextBox>
       <Spacing space="4" />
       <TextBox typography="body2" color="black900">
-        {data.couponName}
+        {roomId}
       </TextBox>
       <Spacing space="16" />
       <StyledCouponInfo>
@@ -22,7 +26,7 @@ export const CouponPreviewItem = ({ data }: CouponPreviewItemProps) => {
             장당
           </TextBox>
           <TextBox typography="body2" fontWeight="bold" color="primary">
-            {data.couponPrice}P
+            {quantity}P
           </TextBox>
         </StyledCouponInfoItemWrap>
         <StyledCouponInfoItemWrap>
@@ -30,14 +34,14 @@ export const CouponPreviewItem = ({ data }: CouponPreviewItemProps) => {
             수량
           </TextBox>
           <TextBox typography="body2" fontWeight="bold" color="primary">
-            {data.couponAmount}장
+            {quantity}장
           </TextBox>
         </StyledCouponInfoItemWrap>
       </StyledCouponInfo>
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          {data.couponPrice * data.couponAmount}P
+          P
         </TextBox>
       </StyledCouponPrice>
     </Container>
