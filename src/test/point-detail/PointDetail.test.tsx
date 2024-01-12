@@ -1,9 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import { server } from 'src/mocks/server';
-import { HttpResponse, http } from 'msw';
-import staticsData from '@assets/data/staticsData.json';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PointDetail } from '@pages/point-detail';
 import { RecoilRoot } from 'recoil';
