@@ -14,6 +14,7 @@ export const RoomCouponApplier = ({
   setPendingCouponDataList,
   isGroupQuantitySelected,
   groupQuantityValue,
+  selectedCouponType,
 }: RoomCouponApplierProps) => {
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
   const [inputValue, setInputValue] = useState('0');
@@ -57,10 +58,19 @@ export const RoomCouponApplier = ({
     }
   }, [groupQuantityValue, isItemQuantitySelected]);
 
+  useEffect(() => {
+    setInputValue('0');
+    setIsItemQuantitySelected(false);
+  }, [selectedCouponType]);
+
   return (
     <Container>
       <StyledLeftWrap>
-        <Checkbox id={`checkbox${index}`} onChange={handleCheckBox} />
+        <Checkbox
+          id={`checkbox${index}`}
+          checked={isItemQuantitySelected}
+          onChange={handleCheckBox}
+        />
         <label htmlFor={`checkbox${index}`}>
           <TextBox typography="h5" fontWeight="bold" color="black900">
             {roomName}

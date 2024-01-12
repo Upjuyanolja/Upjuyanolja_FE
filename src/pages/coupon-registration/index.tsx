@@ -43,6 +43,7 @@ export const CouponRegistration = () => {
           <Spacing space="32" />
           <CouponCard title="2. 적용 객실 선택">
             <CouponApplier
+              selectedCouponType={selectedCouponType}
               pendingCouponData={pendingCouponData}
               setPendingCouponDataList={setPendingCouponDataList}
             />

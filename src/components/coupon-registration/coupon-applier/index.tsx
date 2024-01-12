@@ -6,6 +6,7 @@ import { CouponApplierProps } from './type';
 import { useState } from 'react';
 
 export const CouponApplier = ({
+  selectedCouponType,
   pendingCouponData,
   setPendingCouponDataList,
 }: CouponApplierProps) => {
@@ -16,6 +17,7 @@ export const CouponApplier = ({
   return (
     <Container>
       <CommonQuantityCouponSetter
+        selectedCouponType={selectedCouponType}
         groupQuantityValue={groupQuantityValue}
         setGroupQuantityValue={setGroupQuantityValue}
         isGroupQuantitySelected={isGroupQuantitySelected}
@@ -33,6 +35,7 @@ export const CouponApplier = ({
             setPendingCouponDataList={setPendingCouponDataList}
             isGroupQuantitySelected={isGroupQuantitySelected}
             groupQuantityValue={groupQuantityValue}
+            selectedCouponType={selectedCouponType}
           />
         ))}
       </StyledRoomCouponApplierWrap>

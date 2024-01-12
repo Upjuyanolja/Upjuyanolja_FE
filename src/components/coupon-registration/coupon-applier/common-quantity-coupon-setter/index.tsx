@@ -5,9 +5,9 @@ import { CommonQuantityCouponSetterProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect } from 'react';
 import { isNumber } from '@/utils/is-number';
-import { removeNumberFormat } from '@/utils/Format/numberFormat';
 
 export const CommonQuantityCouponSetter = ({
+  selectedCouponType,
   groupQuantityValue,
   setGroupQuantityValue,
   isGroupQuantitySelected,
@@ -26,11 +26,17 @@ export const CommonQuantityCouponSetter = ({
     }
   }, [isGroupQuantitySelected]);
 
+  useEffect(() => {
+    setIsGroupQuantitySelected(false);
+    setGroupQuantityValue('0');
+  }, [selectedCouponType]);
+
   return (
     <Container>
       <StyledCheckBoxWrap>
         <Checkbox
           id="checkboxAll"
+          checked={isGroupQuantitySelected}
           onChange={() => setIsGroupQuantitySelected(!isGroupQuantitySelected)}
         />
         <label htmlFor="checkboxAll">
