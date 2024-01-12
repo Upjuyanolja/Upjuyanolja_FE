@@ -2,30 +2,22 @@ import { TextBox } from '@components/text-box';
 import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { RoomCouponApplierProps } from './type';
-import { useCouponRoomProvider } from '@hooks/coupon-registration/useCouponRoomProvider';
 
 export const RoomCouponApplier = ({
   roomName,
   index,
   roomId,
+  itemQuantityValue,
+  setItemQuantityValue,
 }: RoomCouponApplierProps) => {
-  const {
-    itemQuantityValue,
-    updateCouponQuantity,
-    setItemQuantityValue,
-    couponQuantitiesByRoom,
-  } = useCouponRoomProvider();
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const quantityValue = parseInt(e.target.value);
-
-    updateCouponQuantity(roomName, roomId, quantityValue);
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setItemQuantityValue((prevValues) => {
+      const newValues = [...prevValues];
+      newValues[index] = { roomId, roomName, quantity: newValue };
+      return newValues;
+    });
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setItemQuantityValue(e.target.value);
-  };
-
   return (
     <Container>
       <StyledLeftWrap>
@@ -40,9 +32,8 @@ export const RoomCouponApplier = ({
         <StyledInput
           size="small"
           maxLength={4}
-          value={itemQuantityValue}
-          onChange={handleChange}
-          onBlur={handleInputChange}
+          value={itemQuantityValue?.quantity || '0'}
+          onChange={handleQuantityChange}
         />
         <TextBox typography="body1" color="black900">
           장

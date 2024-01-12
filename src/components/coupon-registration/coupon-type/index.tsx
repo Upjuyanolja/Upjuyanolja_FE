@@ -1,25 +1,129 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
-import { StyledDiscountButtonProps } from './type';
+import { CouponTypeProps } from './type';
 import { Input } from 'antd';
 import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
 import { Spacing } from '@components/spacing';
+import {
+  DISCOUNT_PRICE,
+  DISCOUNT_PRICE_TYPE,
+  DISCOUNT_RATE,
+  DISCOUNT_RATE_TYPE,
+} from '@/constants/coupon-registration';
+import { useEffect, useState } from 'react';
+import {
+  DiscountPriceType,
+  DiscountRateType,
+} from '@/constants/coupon-registration/type';
+import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 
-export const CouponType = () => {
-  const {
-    DISCOUNT_PRICE,
-    DISCOUNT_RATE,
-    selectedDiscountType,
-    errorMessage,
-    discountValue,
-    handleDiscountType,
-    handleDiscountInputChange,
-    isValidDiscountRange,
-    handleBlur,
-    handleEnterKeyDown,
-    handleFocus,
-  } = useCouponTypeProvider();
+export const CouponType = ({
+  selectedDiscountType,
+  setSelectedDiscountType,
+  discountValue,
+  setDiscountValue,
+}: CouponTypeProps) => {
+  const { isNumberDiscountValue, handleEnterKeyDown } = useCouponTypeProvider();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
+
+  useEffect(() => {
+    setDiscountValue('');
+    setErrorMessage('');
+  }, [selectedDiscountType]);
+
+  useEffect(() => {
+    if (!discountValue) {
+      return setIsValidDiscountRange(true);
+    }
+
+    checkDiscountValidity(discountValue, selectedDiscountType);
+  }, [discountValue]);
+
+  useEffect(() => {
+    if (!discountValue) {
+      return setIsValidDiscountRange(true);
+    }
+
+    checkDiscountValidity(discountValue, selectedDiscountType);
+  }, [discountValue]);
+
+  const handleBlur = async (
+    discountValue: string,
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
+    if (!discountValue) {
+      return;
+    }
+
+    if (!isNumberDiscountValue(discountValue)) {
+      return handleErrorDisplay(discountType);
+    }
+
+    await handleDiscountErrorMessage(discountValue, discountType);
+    await checkDiscountValidity(discountValue, discountType);
+    const removeFormattedValue = removeNumberFormat(discountValue);
+    const formattedValue = numberFormat(removeFormattedValue);
+    await setDiscountValue(formattedValue);
+  };
+
+  const handleFocus = (discountValue: string) => {
+    const removeFormattedValue = removeNumberFormat(discountValue);
+    setDiscountValue(removeFormattedValue);
+  };
+
+  const handleErrorDisplay = (
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
+    setErrorMessage(discountType.errorMessage);
+    setIsValidDiscountRange(false);
+  };
+
+  const handleDiscountErrorMessage = (
+    discountValue: string,
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
+    if (
+      parseInt(discountValue) < discountType.min ||
+      parseInt(discountValue) > discountType.max
+    ) {
+      setErrorMessage(discountType.errorMessage);
+    } else {
+      setErrorMessage('');
+    }
+  };
+
+  const handleDiscountType = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const clickedButtonClassName = e.currentTarget.className;
+    const newDiscountType = clickedButtonClassName.includes('price')
+      ? DISCOUNT_PRICE_TYPE
+      : DISCOUNT_RATE_TYPE;
+
+    setSelectedDiscountType(newDiscountType);
+  };
+
+  const handleDiscountInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setDiscountValue(e.target.value);
+  };
+
+  const checkDiscountValidity = (
+    discountValue: string,
+    discountType: DiscountPriceType | DiscountRateType,
+  ) => {
+    const numericDiscountValue = parseInt(removeNumberFormat(discountValue));
+
+    if (
+      numericDiscountValue < discountType.min ||
+      numericDiscountValue > discountType.max
+    ) {
+      setIsValidDiscountRange(false);
+    } else {
+      setIsValidDiscountRange(true);
+    }
+  };
 
   return (
     <Container>
@@ -102,7 +206,7 @@ const StyledButtonWrap = styled.div`
   display: flex;
 `;
 
-const StyledDiscountButton = styled.button<StyledDiscountButtonProps>`
+const StyledDiscountButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

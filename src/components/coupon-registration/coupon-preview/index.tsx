@@ -5,6 +5,8 @@ import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { useEffect, useState } from 'react';
 import { Button, Checkbox } from 'antd';
+import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
+import { disconnect } from 'process';
 
 const couponMap = {
   label: '5000원 할인 쿠폰',

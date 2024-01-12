@@ -1,11 +1,18 @@
 import { TextBox } from '@components/text-box';
-import { useCouponRoomProvider } from '@hooks/coupon-registration/useCouponRoomProvider';
 import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
+import { CommonQuantityCouponSetterProps } from './type';
 
-export const CommonQuantityCouponSetter = () => {
-  const { allQuantityValue, handleAllQuantityValueChange } =
-    useCouponRoomProvider();
+export const CommonQuantityCouponSetter = ({
+  allQuantityValue,
+  setAllQuantityValue,
+}: CommonQuantityCouponSetterProps) => {
+  const handleAllQuantityValueChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setAllQuantityValue(e.target.value);
+  };
+
   return (
     <Container>
       <StyledCheckBoxWrap>
