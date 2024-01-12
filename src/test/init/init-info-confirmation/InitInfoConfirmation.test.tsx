@@ -4,6 +4,7 @@ import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import '../../matchMedia.mock';
+import { WelcomModalForTest } from './WelcomModalForTest';
 
 describe('InitInfoConfirmation', () => {
   test('객실 삭제 버튼을 누르면 삭제 모달이 띄워진다.', () => {
@@ -130,5 +131,20 @@ describe('InitInfoConfirmation', () => {
     });
 
     expect(window.location.pathname).toBe('/init/accommodation-registration');
+  });
+
+  test('환영 모달에서 홈으로 이동하기 버튼을 누르면 메인 페이지로 이동한다.', () => {
+    render(
+      <BrowserRouter>
+        <WelcomModalForTest />
+      </BrowserRouter>,
+    );
+
+    const toMainButton = screen.getByTestId('to-main-button');
+    act(() => {
+      userEvent.click(toMainButton);
+    });
+
+    expect(window.location.pathname).toBe('/');
   });
 });
