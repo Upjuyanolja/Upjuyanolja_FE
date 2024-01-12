@@ -44,14 +44,6 @@ export const CouponType = ({
     checkDiscountValidity(discountValue, selectedCouponType);
   }, [discountValue]);
 
-  useEffect(() => {
-    if (!discountValue) {
-      return setIsValidDiscountRange(true);
-    }
-
-    checkDiscountValidity(discountValue, selectedCouponType);
-  }, [discountValue]);
-
   const initializeValue = () => {
     setDiscountValue('');
     setErrorMessage('');
