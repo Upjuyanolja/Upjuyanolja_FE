@@ -8,7 +8,6 @@ import {
   ValidateInputProps,
 } from './type';
 import {
-  NUMBER_REGEX,
   MAX_PRICE,
   MIN_PRICE,
   MAX_PRICE_LENGTH,
@@ -30,11 +29,16 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
 
   const handleInputChange = ({ event }: PriceHandleInputChangeProps) => {
     const stringValue = event.target.value;
-    if (stringValue === '' || NUMBER_REGEX.test(stringValue)) {
-      setRoomPrice(stringValue.slice(0, MAX_PRICE_LENGTH));
-      const numericValue = Number(stringValue);
+    const cleanedStringValue = stringValue.replace(/[^0-9]/g, '');
+
+    if (cleanedStringValue.length !== 0) {
+      const numericValue = Number(cleanedStringValue);
       validateInput({ value: numericValue });
+      setRoomPrice(cleanedStringValue);
       form.setFieldValue('room-price', numericValue);
+    } else {
+      setRoomPrice('');
+      form.setFieldValue('room-price', '');
     }
   };
 
@@ -65,7 +69,7 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
               height: 40,
               width: header === '' ? '440px' : '',
             }}
-            value={roomPrice.toString()}
+            value={roomPrice}
             onChange={(event) => handleInputChange({ event })}
             status={outOfRangeError ? 'error' : ''}
             data-testid="input-room-price"
@@ -143,6 +147,12 @@ const StyledInput = styled(Input)`
   font-size: 16px;
   margin-right: 4px;
   margin-top: 20px;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const StyledRow = styled.div`
