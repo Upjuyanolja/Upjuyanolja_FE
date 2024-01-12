@@ -39,7 +39,7 @@ export const AccommodationDesc = () => {
       <Form.Item name="accommodation-desc">
         <Input.TextArea
           id="accommodation-desc"
-          placeholder="고객에게 멋진 숙소를 소개해 주세요."
+          placeholder="숙소를 소개해 주세요."
           minLength={ACCOMMODATION_DESC_MIN_LENGTH}
           showCount
           maxLength={ACCOMMODATION_DESC_MAX_LENGTH}

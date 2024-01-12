@@ -32,23 +32,25 @@ export const InitLayout = () => {
     routeConfig[currentRoute as keyof typeof routeConfig] || {};
 
   return (
-    <StyledLayout color={colors.midGray}>
+    <StyledLayout>
       <Layout.Header>Header</Layout.Header>
-      <StyledHeadContent color={colors.white}>
-        <StyledTextWrapper>
-          <TextBox
-            typography="h2"
-            color={'primary'}
-            fontWeight={700}
-            cursor="default"
-          >
-            {pageName}
-          </TextBox>
-          <TextBox typography="h4" cursor="default">
-            {pageDesc}
-          </TextBox>
-        </StyledTextWrapper>
-      </StyledHeadContent>
+      <StyledHeadContentCotainer>
+        <StyledHeadContent>
+          <StyledTextWrapper>
+            <TextBox
+              typography="h2"
+              color={'primary'}
+              fontWeight={700}
+              cursor="default"
+            >
+              {pageName}
+            </TextBox>
+            <TextBox typography="h4" cursor="default">
+              {pageDesc}
+            </TextBox>
+          </StyledTextWrapper>
+        </StyledHeadContent>
+      </StyledHeadContentCotainer>
       <StyledMainContent>
         <Outlet />
       </StyledMainContent>
@@ -57,18 +59,24 @@ export const InitLayout = () => {
 };
 
 const StyledLayout = styled(Layout)`
-  background-color: ${(props) => props.color};
+  background-color: ${colors.midGray};
 `;
 
-const StyledHeadContent = styled(Layout.Content)`
-  height: 140px;
-  width: 100%;
+const StyledHeadContentCotainer = styled.div`
+  background-color: ${colors.white};
+`;
 
-  background-color: ${(props) => props.color};
+const StyledHeadContent = styled(Layout.Header)`
+  height: 140px;
+  width: 1024px;
+
+  background-color: ${colors.white};
 
   margin: 0 auto;
   display: flex;
   align-items: center;
+
+  padding: 0;
 `;
 
 const StyledTextWrapper = styled.div`
@@ -82,5 +90,7 @@ const StyledMainContent = styled(Layout.Content)`
   max-width: 1024px;
   width: 1024px;
 
-  margin: 40px auto;
+  margin: 0 auto;
+
+  padding: 40px;
 `;

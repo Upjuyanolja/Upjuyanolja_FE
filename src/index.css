@@ -17,6 +17,59 @@
   border-radius: 16px 16px 0 0;
 }
 
+.ant-modal-footer {
+  border: none;
+}
+
+/*confirm modal style*/
+.ant-modal-confirm-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .ant-modal-confirm-title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+}
+
+.ant-modal-confirm-btns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  width: 100%;
+
+  .ant-btn-default {
+    border: 1px solid #0349e6;
+
+    color: #0349e6;
+    font-size: 20px;
+    font-weight: 700;
+
+    height: 46px;
+  }
+
+  .ant-btn-primary {
+    background-color: #0349e6;
+
+    height: 46px;
+
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .ant-btn-primary:hover {
+    background-color: #0241cc;
+    transition: 0.4s;
+  }
+}
+
+.ant-modal-confirm-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 /*button custom style*/
 .ant-btn-primary:hover {
   background-color: #0349e6;
