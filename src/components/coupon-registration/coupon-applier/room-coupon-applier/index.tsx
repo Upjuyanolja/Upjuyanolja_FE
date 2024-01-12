@@ -5,6 +5,7 @@ import { RoomCouponApplierProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/utils/is-number';
+import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
 
 export const RoomCouponApplier = ({
   roomName,
@@ -16,6 +17,7 @@ export const RoomCouponApplier = ({
   groupQuantityValue,
   selectedCouponType,
 }: RoomCouponApplierProps) => {
+  const { handleEnterKeyDown } = useCouponTypeProvider();
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
   const [inputValue, setInputValue] = useState('0');
 
@@ -89,6 +91,7 @@ export const RoomCouponApplier = ({
           onChange={handleChange}
           disabled={isGroupQuantitySelected || !isItemQuantitySelected}
           onFocus={handleFocus}
+          onKeyDown={handleEnterKeyDown}
         />
         <TextBox typography="body1" color="black900">
           장

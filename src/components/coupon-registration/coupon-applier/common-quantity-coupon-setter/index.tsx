@@ -5,6 +5,7 @@ import { CommonQuantityCouponSetterProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect } from 'react';
 import { isNumber } from '@/utils/is-number';
+import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
 
 export const CommonQuantityCouponSetter = ({
   selectedCouponType,
@@ -13,6 +14,8 @@ export const CommonQuantityCouponSetter = ({
   isGroupQuantitySelected,
   setIsGroupQuantitySelected,
 }: CommonQuantityCouponSetterProps) => {
+  const { handleEnterKeyDown } = useCouponTypeProvider();
+
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
     if (!isNumber(Number(e.target.value))) {
       return;
@@ -52,6 +55,7 @@ export const CommonQuantityCouponSetter = ({
           value={groupQuantityValue}
           onChange={handleAllQuantityValueChange}
           disabled={!isGroupQuantitySelected}
+          onKeyDown={handleEnterKeyDown}
         />
         <TextBox typography="body1" color="black900">
           장
