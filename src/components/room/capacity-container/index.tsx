@@ -10,33 +10,39 @@ import {
 } from '@/constants/room/room-registration/';
 
 export const CapacityContainer = ({ header }: CapacityContainerProps) => {
-  const [capacityValue, setCapacityValue] = useState<number>(1);
+  const [stdCapacityValue, setStdCapacityValue] = useState<number>(1);
+  const [maxCapacityValue, setMaxCapacityValue] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     setError(null);
     if (value < MIN_CAPACITY || value > MAX_CAPACITY) {
       setError('1~15까지만 입력 가능합니다.');
-      // } else if (!NUMBER_REGEX.test(value.toString())) {
-      //   setError('숫자만 입력 가능합니다.');
-      // 다른 예외 처리는 내일 담당 PM분과 상의 후 처리 할 예정입니다.
     }
   };
 
-  const handleCapacityChange = (
-    newValue: number | string | null | undefined,
-  ) => {
-    if (typeof newValue !== 'number') return;
-    validateInput({ value: newValue });
-    setCapacityValue(newValue);
-  };
+  const handleCapacityChange =
+    (capType: string) => (newValue: number | string | null | undefined) => {
+      if (typeof newValue !== 'number') return;
+      validateInput({ value: newValue });
+      if (capType === 'std') {
+        setStdCapacityValue(newValue);
+      } else {
+        setMaxCapacityValue(newValue);
+      }
+    };
 
   return (
     <StyledInputWrapper>
       <StyledHeadTextContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          {header}
-        </TextBox>
+        <StyledDesc>
+          <TextBox typography="h4" fontWeight={700}>
+            {header}
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            1~15까지만 가능합니다.
+          </TextBox>
+        </StyledDesc>
       </StyledHeadTextContainer>
       <StyledCol>
         <StyledRow>
@@ -49,8 +55,8 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
             min={1}
             max={15}
             defaultValue={1}
-            value={capacityValue}
-            onChange={handleCapacityChange}
+            value={stdCapacityValue}
+            onChange={handleCapacityChange('std')}
           />
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
@@ -68,8 +74,8 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
             min={1}
             max={15}
             defaultValue={1}
-            value={capacityValue}
-            onChange={handleCapacityChange}
+            value={maxCapacityValue}
+            onChange={handleCapacityChange('max')}
           />
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
@@ -129,6 +135,10 @@ const StyledInputNumber = styled(InputNumber)`
     text-align: right;
     padding-right: 34px;
   }
+
+  .ant-input-number-handler-wrap {
+    opacity: 1;
+  }
 `;
 
 const StyledTextBoxWrapper = styled.div`
@@ -170,4 +180,10 @@ const StyledInputWrapper = styled.div`
   .ant-input {
     font-size: 16px;
   }
+`;
+
+const StyledDesc = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;

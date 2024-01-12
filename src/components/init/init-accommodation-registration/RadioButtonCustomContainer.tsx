@@ -3,6 +3,7 @@ import { AccommodationDetailCategoryProps } from './type';
 import styled from 'styled-components';
 import { Form, Radio, RadioChangeEvent } from 'antd';
 import { useEffect, useState } from 'react';
+import { colors } from '@/constants/colors';
 
 export const RadioButtonCustomContainer = ({
   label,
@@ -55,7 +56,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: #f9f9fa;
+  background-color: ${colors.black100};
   border-radius: 8px;
   padding: 8px 24px;
 
@@ -64,6 +65,8 @@ const StyledWrapper = styled.div`
     gap: 60px;
     align-items: center;
   }
+
+  margin-bottom: 48px;
 `;
 
 const StyledTextContainer = styled.div`
@@ -93,20 +96,20 @@ const StyledCheckboxRadioGroup = styled(Radio.Group)`
     height: 16px;
 
     &:hover {
-      border: 1px solid #0351ff;
+      border: 1px solid ${colors.primary};
       transition: 0.3s;
     }
   }
 
   .ant-radio-checked {
     .ant-radio-inner {
-      background-color: #0351ff;
-      border-color: #0351ff;
+      background-color: ${colors.primary};
+      border-color: ${colors.primary};
     }
 
     .ant-radio-inner::after {
       content: '\u2713';
-      color: #fff;
+      color: ${colors.white};
       font-size: 30px;
 
       display: flex;
