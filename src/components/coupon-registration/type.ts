@@ -8,13 +8,13 @@ export type SetPendingCouponDataList = SetStateAction<PendingCouponDataList>;
 export type PendingCouponData = {
   roomId: number;
   roomName: string;
-  quantity: string;
+  quantity: number;
   roomPrice?: number;
 };
 export type PendingCouponDataList = {
   roomId: number;
   roomName: string;
-  quantity: string;
+  quantity: number;
   roomPrice?: number;
 }[];
 

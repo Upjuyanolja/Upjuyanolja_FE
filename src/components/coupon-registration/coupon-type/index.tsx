@@ -51,7 +51,7 @@ export const CouponType = ({
       {
         roomId: 0,
         roomName: '',
-        quantity: '',
+        quantity: 0,
       },
     ]);
     setDeterminedPrice('');

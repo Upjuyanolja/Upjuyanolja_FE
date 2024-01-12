@@ -3,8 +3,8 @@ import { SelectedCouponType } from '@components/coupon-registration/type';
 
 export type CommonQuantityCouponSetterProps = {
   selectedCouponType: SelectedCouponType;
-  groupQuantityValue: string;
-  setGroupQuantityValue: SetStateAction<string>;
+  groupQuantityValue: number;
+  setGroupQuantityValue: SetStateAction<number>;
   isGroupQuantitySelected: boolean;
   setIsGroupQuantitySelected: SetStateAction<boolean>;
 };
