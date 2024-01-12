@@ -3,7 +3,6 @@ import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { CouponTypeProps } from './type';
 import { Input } from 'antd';
-import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
 import { Spacing } from '@components/spacing';
 import {
   FLAT_COUPON,
@@ -19,6 +18,7 @@ import {
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { InputChangeEvent, MouseEvent } from '@/types/event';
 import { isNumber } from '@/utils/is-number';
+import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 
 export const CouponType = ({
   selectedCouponType,
@@ -28,7 +28,7 @@ export const CouponType = ({
   setPendingCouponDataList,
   setDeterminedPrice,
 }: CouponTypeProps) => {
-  const { isNumberDiscountValue, handleEnterKeyDown } = useCouponTypeProvider();
+  const { handleEnterKeyDown } = useCouponRegistration();
   const [errorMessage, setErrorMessage] = useState('');
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
 
@@ -64,9 +64,7 @@ export const CouponType = ({
     if (!discountValue) {
       return;
     }
-    if (!isNumberDiscountValue(discountValue)) {
-      return handleErrorDisplay(couponType);
-    }
+
     await handleDiscountErrorMessage(discountValue, couponType);
     await checkDiscountValidity(discountValue, couponType);
     let transformedValue;
@@ -89,16 +87,15 @@ export const CouponType = ({
     discountValue: string,
     couponType: FlatCouponType | RateCouponType,
   ) => {
-    let transformedValue;
     if (parseInt(discountValue) > couponType.max) {
-      transformedValue = couponType.max.toString();
+      const transformedValue = couponType.max.toString();
       setDiscountValue(transformedValue);
       formattedNumber(transformedValue);
       setErrorMessage(couponType.errorMessage);
     }
 
     if (parseInt(discountValue) < couponType.min) {
-      transformedValue = couponType.min.toString();
+      const transformedValue = couponType.min.toString();
       setDiscountValue(transformedValue);
       formattedNumber(transformedValue);
       setErrorMessage(couponType.errorMessage);
@@ -115,11 +112,6 @@ export const CouponType = ({
   const handleFocus = (discountValue: string) => {
     const removeFormattedValue = removeNumberFormat(discountValue);
     setDiscountValue(removeFormattedValue);
-  };
-
-  const handleErrorDisplay = (couponType: FlatCouponType | RateCouponType) => {
-    setErrorMessage(couponType.errorMessage);
-    setIsValidDiscountRange(false);
   };
 
   const handleDiscountErrorMessage = (

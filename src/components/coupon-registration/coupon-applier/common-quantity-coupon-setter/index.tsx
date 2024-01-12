@@ -5,7 +5,7 @@ import { CommonQuantityCouponSetterProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect } from 'react';
 import { isNumber } from '@/utils/is-number';
-import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
+import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 
 export const CommonQuantityCouponSetter = ({
   selectedCouponType,
@@ -14,7 +14,7 @@ export const CommonQuantityCouponSetter = ({
   isGroupQuantitySelected,
   setIsGroupQuantitySelected,
 }: CommonQuantityCouponSetterProps) => {
-  const { handleEnterKeyDown } = useCouponTypeProvider();
+  const { handleEnterKeyDown } = useCouponRegistration();
 
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
     if (!isNumber(Number(e.target.value))) {

@@ -5,7 +5,7 @@ import { RoomCouponApplierProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/utils/is-number';
-import { useCouponTypeProvider } from '@hooks/coupon-registration/useCouponTypeProvider';
+import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 
 export const RoomCouponApplier = ({
   roomName,
@@ -17,7 +17,7 @@ export const RoomCouponApplier = ({
   groupQuantityValue,
   selectedCouponType,
 }: RoomCouponApplierProps) => {
-  const { handleEnterKeyDown } = useCouponTypeProvider();
+  const { handleEnterKeyDown } = useCouponRegistration();
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
   const [inputValue, setInputValue] = useState('0');
 
