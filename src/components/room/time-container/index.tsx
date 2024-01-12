@@ -1,26 +1,11 @@
-import { useState } from 'react';
-import { InputNumber, Select } from 'antd';
+import { TimePicker } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { TimeContainerProps } from './type';
-
-const generateTimeOptions = () => {
-  const times = [];
-  for (let hour = 9; hour < 24; hour++) {
-    times.push(`${hour < 10 ? '0' + hour : hour}:00`);
-    times.push(`${hour < 10 ? '0' + hour : hour}:30`);
-  }
-  return times;
-};
+import locale from 'antd/es/date-picker/locale/de_DE';
 
 export const TimeContainer = ({ header }: TimeContainerProps) => {
-  const [timeValue, setTimeValue] = useState('09:00');
-  const timeOptions = generateTimeOptions();
-
-  const handleTimeChange = (value: number): void => {
-    const selectedTime = timeOptions[value];
-    setTimeValue(selectedTime);
-  };
+  const format = 'HH:mm';
 
   return (
     <StyledInputWrapper>
@@ -35,24 +20,41 @@ export const TimeContainer = ({ header }: TimeContainerProps) => {
             체크인
           </TextBox>
         </StyledTextBoxWrapper>
-        <Select
-          showSearch
-          value={timeOptions.indexOf(timeValue)}
-          style={{ width: 120 }}
-          onChange={handleTimeChange}
-          dropdownMatchSelectWidth={false}
-        >
-          {timeOptions.map((time, index) => (
-            <Select.Option key={time} value={index}>
-              {time}
-            </Select.Option>
-          ))}
-        </Select>
+        <StyledTimePicker
+          placeholder="00:00"
+          format={format}
+          minuteStep={30}
+          popupStyle={{ height: 274 }}
+          showNow={false}
+          locale={{
+            ...locale,
+            lang: {
+              ...locale.lang,
+              ok: '확인',
+            },
+          }}
+        />
+      </StyledRow>
+      <StyledRow>
         <StyledTextBoxWrapper>
           <TextBox typography="body1" color="black900" fontWeight="normal">
-            분
+            체크아웃
           </TextBox>
         </StyledTextBoxWrapper>
+        <StyledTimePicker
+          placeholder="00:00"
+          format={format}
+          minuteStep={30}
+          popupStyle={{ height: 274 }}
+          showNow={false}
+          locale={{
+            ...locale,
+            lang: {
+              ...locale.lang,
+              ok: '확인',
+            },
+          }}
+        />
       </StyledRow>
     </StyledInputWrapper>
   );
@@ -65,22 +67,6 @@ const StyledHeadTextContainer = styled.div`
   margin-bottom: 8px;
 `;
 
-const StyledInputNumber = styled(InputNumber)`
-  display: flex;
-  width: 90px;
-  height: 40px;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0;
-  margin-right: 4px;
-
-  .ant-input-number-input {
-    width: 100%;
-    text-align: right;
-    padding-right: 34px;
-  }
-`;
-
 const StyledTextBoxWrapper = styled.div`
   margin-right: 12px;
   &:last-child {
@@ -91,6 +77,7 @@ const StyledTextBoxWrapper = styled.div`
 const StyledRow = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   margin-top: 8;
 `;
 
@@ -120,4 +107,11 @@ const StyledInputWrapper = styled.div`
   .ant-input {
     font-size: 16px;
   }
+`;
+
+const StyledTimePicker = styled(TimePicker)`
+  display: flex;
+  width: 128px;
+  padding: 8px 12px;
+  align-items: center;
 `;
