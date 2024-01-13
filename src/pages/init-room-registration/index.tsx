@@ -4,7 +4,7 @@ import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { CapacityContainer } from '@components/room/capacity-container';
-import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
+import { CountContainer } from '@components/room/num-of-rooms-container';
 import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
 import { Form } from 'antd';
@@ -28,11 +28,11 @@ export const InitRoomRegistration = () => {
           form={form}
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
         />
-        <PriceContainer header="객실 가격" />
+        <PriceContainer header="객실 가격" form={form} />
         <ImageUploadContainer header="객실 사진" />
-        <NumOfRoomsContainer header="객실 수" />
-        <TimeContainer header="시간" />
-        <CapacityContainer header="인원" />
+        <CountContainer header="객실 수" form={form} />
+        <TimeContainer header="시간" form={form} />
+        <CapacityContainer header="인원" form={form} />
         <CheckBoxContainer options={roomOptions} header="객실" />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>

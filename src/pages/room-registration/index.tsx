@@ -33,7 +33,7 @@ const RoomRegistration = () => {
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />
         <StyledInputWrapper>
-          <CountContainer value="객실 수" form={form} />
+          <CountContainer header="객실 수" form={form} />
         </StyledInputWrapper>
         <StyledInputWrapper>
           <TimeContainer header="시간" form={form} />

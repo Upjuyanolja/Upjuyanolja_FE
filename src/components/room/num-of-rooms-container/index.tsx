@@ -9,7 +9,7 @@ import {
   MAX_NUM_OF_ROOMS,
 } from '@/constants/room/room-registration/';
 
-export const CountContainer = ({ value, form }: NumOfRoomsContainerProps) => {
+export const CountContainer = ({ header, form }: NumOfRoomsContainerProps) => {
   const [numOfRooms, setNumOfRooms] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +34,7 @@ export const CountContainer = ({ value, form }: NumOfRoomsContainerProps) => {
       <StyledHeadTextContainer>
         <StyledDesc>
           <TextBox typography="h4" fontWeight={700}>
-            {value}
+            {header}
           </TextBox>
           <TextBox color="black600" typography="body3">
             1~100까지만 가능합니다.
