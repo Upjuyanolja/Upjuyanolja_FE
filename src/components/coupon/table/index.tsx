@@ -14,11 +14,27 @@ import {
   couponNameContainerProps,
   roomContainerProps,
 } from '../table-cell/type';
+import {
+  COUPON_TYPE_ALL_DAYS,
+  COUPON_TYPE_WEEKDAYS,
+  COUPON_TYPE_WEEKENDS,
+} from '@/constants/coupon';
 
 export const CouponTable = ({
-  couponTypeOption,
   couponTableData,
+  handleSelectRecord,
+  handleSelectCouponType,
+  handleChangeInput,
 }: couponTableProps) => {
+  const couponTypeOption = [
+    { value: COUPON_TYPE_ALL_DAYS.value, label: COUPON_TYPE_ALL_DAYS.label },
+    { value: COUPON_TYPE_WEEKDAYS.value, label: COUPON_TYPE_WEEKDAYS.label },
+    { value: COUPON_TYPE_WEEKENDS.value, label: COUPON_TYPE_WEEKENDS.label },
+  ];
+  const rowSelection = {
+    onChange: handleSelectRecord,
+  };
+
   const columns: ColumnsType<tableData> = [
     {
       title: '객실 정보',
@@ -49,7 +65,12 @@ export const CouponTable = ({
       title: '일일 제한 수량',
       dataIndex: 'dayLimit',
       render: (dayLimit: number, record: tableData) => (
-        <DayLimitInput dayLimit={dayLimit} isSoldOut={record.isSoldOut} />
+        <DayLimitInput
+          dayLimit={dayLimit}
+          isSoldOut={record.isSoldOut}
+          handleChangeInput={handleChangeInput}
+          record={record}
+        />
       ),
     },
     {
@@ -74,20 +95,14 @@ export const CouponTable = ({
           style={{ width: 70 }}
           options={couponTypeOption}
           disabled={record.isSoldOut}
+          onChange={(value: string) => {
+            handleSelectCouponType(value, record.key);
+          }}
         />
       ),
     },
   ];
-  const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: tableData[]) => {
-      // console.log(
-      //   `selectedRowKeys: ${selectedRowKeys}`,
-      //   'selectedRows: ',
-      //   selectedRows,
-      // );
-      // 이 부분은 로직 구현하면서 수정 할 예정이라 남기겠습니다!
-    },
-  };
+
   return (
     <StyledTable
       rowSelection={rowSelection}

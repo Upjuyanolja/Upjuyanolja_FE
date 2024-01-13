@@ -51,12 +51,20 @@ const StyledCouponNameContainer = styled.div`
   gap: 4px;
 `;
 
-export const DayLimitInput = ({ dayLimit, isSoldOut }: dayLimitInputProps) => {
+export const DayLimitInput = ({
+  dayLimit,
+  isSoldOut,
+  handleChangeInput,
+  record,
+}: dayLimitInputProps) => {
   return (
     <>
       <StyledInput
         defaultValue={dayLimit === -1 ? '-' : dayLimit}
         disabled={isSoldOut}
+        onKeyDown={(event) => {
+          handleChangeInput(event, record.key);
+        }}
       />
       <TextBox
         typography="body2"
