@@ -10,7 +10,6 @@ export const usePointDetail = (menuStatus: menuStatusType, page: number) => {
     select(data) {
       return data.data.data;
     },
-    staleTime: 60 * 60 * 1000,
   });
 
   const {

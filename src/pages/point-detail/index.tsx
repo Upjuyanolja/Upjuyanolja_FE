@@ -37,7 +37,7 @@ export const PointDetail = () => {
       select(data) {
         return data.data.data;
       },
-      staleTime: 60 * 60 * 1000,
+
       onSuccess: (data) => setPointDetailData(data),
     },
   );
@@ -46,7 +46,7 @@ export const PointDetail = () => {
     select(data) {
       return data.data.data;
     },
-    staleTime: 60 * 60 * 1000,
+
     onSuccess: (data) => setPointSummaryData(data),
   });
 
