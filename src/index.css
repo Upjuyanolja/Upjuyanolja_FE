@@ -142,3 +142,10 @@
     display: none;
   }
 }
+
+.ant-picker-input {
+  #checkInTime,
+  #checkOutTime {
+    cursor: pointer;
+  }
+}
