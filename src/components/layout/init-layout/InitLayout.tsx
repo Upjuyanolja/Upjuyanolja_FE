@@ -65,7 +65,7 @@ const StyledLayout = styled(Layout)`
 const StyledHeader = styled(Layout.Header)`
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 10;
   width: 100%;
 `;
 
@@ -73,7 +73,7 @@ const StyledHeadContentCotainer = styled.div`
   background-color: ${colors.white};
 
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   width: 100%;
 
   margin-top: 64px;
