@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { OrderStatusBadge } from '../badge';
 import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
 
 export const PointDetailList = () => {
-  const [pointDetailData] = useRecoilState(pointDetailDataState);
+  const pointDetailData = useRecoilValue(pointDetailDataState);
 
   return (
     <StyledLayout>

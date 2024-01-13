@@ -1,12 +1,12 @@
 import { pageNumState, pointDetailDataState } from '@stores/point-detail/atoms';
 import { Pagination, Space } from 'antd';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import styled from 'styled-components';
 
 export const PageComp = () => {
-  const [, setPageNum] = useRecoilState(pageNumState);
-  const [pointDetailData] = useRecoilState(pointDetailDataState);
+  const setPageNum = useSetRecoilState(pageNumState);
+  const pointDetailData = useRecoilValue(pointDetailDataState);
 
   const handlePageChange = (pageNum: number) => {
     setPageNum(pageNum);

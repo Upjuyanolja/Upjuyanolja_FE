@@ -2,12 +2,12 @@ import { PointMenu } from './point-detail-menu';
 import { PointDetailList } from './point-detail-list';
 import { PageComp } from './page';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 
 export const PointDetailComp = () => {
-  const [pointDetailData] = useRecoilState(pointDetailDataState);
+  const pointDetailData = useRecoilValue(pointDetailDataState);
 
   return (
     <>

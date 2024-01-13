@@ -5,7 +5,7 @@ import { PointDetailComp } from '@components/point-detail';
 import { useEffect } from 'react';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   currentYearState,
   currentMonthState,
@@ -24,8 +24,8 @@ export const PointDetail = () => {
   const pageNum = useRecoilValue(pageNumState);
   const menuStatus = useRecoilValue<menuStatusType>(menuStatusState);
 
-  const [, setPointSummaryData] = useRecoilState(pointSummaryDataState);
-  const [, setPointDetailData] = useRecoilState(pointDetailDataState);
+  const setPointSummaryData = useSetRecoilState(pointSummaryDataState);
+  const setPointDetailData = useSetRecoilState(pointDetailDataState);
 
   const { handleChangeUrl } = useCustomNavigate();
   const location = useLocation();
