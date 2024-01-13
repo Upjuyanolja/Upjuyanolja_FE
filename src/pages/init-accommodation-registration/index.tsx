@@ -63,7 +63,6 @@ export const InitAccommodationRegistration = () => {
 
       const updatedUserInputValue = {
         ...userInputValue,
-        id: Math.floor(Math.random() * 1000000),
         type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],

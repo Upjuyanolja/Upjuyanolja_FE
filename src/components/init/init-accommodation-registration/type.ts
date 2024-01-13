@@ -66,7 +66,6 @@ type Room = {
 };
 
 export type UserInputValue = {
-  id: number | null;
   name: string;
   address: string;
   detailAddress: string;

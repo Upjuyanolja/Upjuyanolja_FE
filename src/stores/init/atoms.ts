@@ -15,7 +15,6 @@ export const userInputValueState = atom<UserInputValue[]>({
   key: 'userInputValueState',
   default: [
     {
-      id: null,
       name: '',
       address: '',
       detailAddress: '',
