@@ -57,7 +57,7 @@ export const CouponType = ({
     setDeterminedPrice('');
   };
 
-  const handleBlur = async (
+  const handleBlur = (
     discountValue: string,
     couponType: FlatCouponType | RateCouponType,
   ) => {
@@ -65,8 +65,8 @@ export const CouponType = ({
       return;
     }
 
-    await handleDiscountErrorMessage(discountValue, couponType);
-    await checkDiscountValidity(discountValue, couponType);
+    handleDiscountErrorMessage(discountValue, couponType);
+    checkDiscountValidity(discountValue, couponType);
     let transformedValue;
     normalizeToRange(discountValue, couponType);
     if (Number(discountValue) >= FLAT_COUPON_TYPE.min) {
@@ -102,11 +102,11 @@ export const CouponType = ({
     }
   };
 
-  const formattedNumber = async (transformedValue: string) => {
+  const formattedNumber = (transformedValue: string) => {
     const removeFormattedValue = removeNumberFormat(transformedValue);
     const formattedValue = numberFormat(removeFormattedValue);
-    await setDeterminedPrice(formattedValue);
-    await setDiscountValue(formattedValue);
+    setDeterminedPrice(formattedValue);
+    setDiscountValue(formattedValue);
   };
 
   const handleFocus = (discountValue: string) => {

@@ -21,6 +21,7 @@ export const CommonQuantityCouponSetter = ({
     if (!isNumber(formattedValue)) {
       return;
     }
+    console.log(formattedValue);
     setGroupQuantityValue(formattedValue);
   };
 
@@ -53,7 +54,7 @@ export const CommonQuantityCouponSetter = ({
         <StyledInput
           size="small"
           maxLength={3}
-          value={groupQuantityValue}
+          value={groupQuantityValue || ''}
           onChange={handleAllQuantityValueChange}
           disabled={!isGroupQuantitySelected}
           onKeyDown={handleEnterKeyDown}
