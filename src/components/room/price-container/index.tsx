@@ -35,10 +35,10 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
       const numericValue = Number(cleanedStringValue);
       validateInput({ value: numericValue });
       setRoomPrice(cleanedStringValue);
-      form.setFieldValue('room-price', numericValue);
+      form.setFieldValue('price', numericValue);
     } else {
       setRoomPrice('');
-      form.setFieldValue('room-price', '');
+      form.setFieldValue('price', '');
     }
   };
 
@@ -58,9 +58,9 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
             1박 당
           </TextBox>
         </StyledTextBoxWrapper>
-        <Form.Item name="room-price">
+        <Form.Item name="price">
           <StyledInput
-            id="room-price"
+            id="price"
             placeholder={''}
             type="text"
             minLength={MIN_PRICE_LENGTH}

@@ -7,7 +7,7 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { PriceContainer } from '@components/room/price-container';
 import { CapacityContainer } from '@components/room/capacity-container';
-import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
+import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
 
 const RoomRegistration = () => {
@@ -33,7 +33,7 @@ const RoomRegistration = () => {
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />
         <StyledInputWrapper>
-          <NumOfRoomsContainer value="객실 수" form={form} />
+          <CountContainer value="객실 수" form={form} />
         </StyledInputWrapper>
         <StyledInputWrapper>
           <TimeContainer header="시간" form={form} />

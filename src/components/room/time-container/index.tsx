@@ -4,22 +4,43 @@ import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { TimeContainerProps } from './type';
 import locale from 'antd/es/date-picker/locale/de_DE';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 
 export const TimeContainer = ({ header, form }: TimeContainerProps) => {
   const format = 'HH:mm';
-  const [checkInTime, setCheckInTime] = useState<Moment | null>(null);
-  const [checkOutTime, setCheckOutTime] = useState<Moment | null>(null);
+  const specificTime = moment().hours(9).minutes(0);
+  const [checkInTime, setCheckInTime] = useState<Moment>(specificTime);
+  const [checkOutTime, setCheckOutTime] = useState<Moment>(specificTime);
 
   const handleCheckInChange = (time: Moment | null) => {
-    form.setFieldValue('checkInTime', time);
-    setCheckInTime(time);
+    console.log('checkintime', checkInTime);
+    console.log(typeof checkInTime);
+    console.log('time', time);
+    if (!time) {
+      console.log('inside if');
+      form.setFieldValue('checkInTime', '09:00');
+      const specificTime = moment().hours(9).minutes(0);
+      setCheckInTime(specificTime);
+    } else {
+      const formattedTime = time.format('HH:mm');
+      console.log(formattedTime);
+      form.setFieldValue('checkInTime', formattedTime);
+      setCheckInTime(time);
+    }
   };
 
   const handleCheckOutChange = (time: Moment | null) => {
-    form.setFieldValue('checkOutTime', time);
-    setCheckOutTime(time);
+    if (time) {
+      const formattedTime = time.format('HH:mm');
+      form.setFieldValue('checkOutTime', formattedTime);
+      setCheckOutTime(time);
+    } else {
+      form.setFieldValue('checkOutTime', '09:00');
+      const specificTime = moment().hours(9).minutes(0);
+      setCheckOutTime(specificTime);
+    }
   };
+
   return (
     <StyledInputWrapper>
       <StyledHeadTextContainer>

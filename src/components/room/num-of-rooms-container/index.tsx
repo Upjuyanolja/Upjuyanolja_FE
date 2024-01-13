@@ -9,10 +9,7 @@ import {
   MAX_NUM_OF_ROOMS,
 } from '@/constants/room/room-registration/';
 
-export const NumOfRoomsContainer = ({
-  value,
-  form,
-}: NumOfRoomsContainerProps) => {
+export const CountContainer = ({ value, form }: NumOfRoomsContainerProps) => {
   const [numOfRooms, setNumOfRooms] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +26,7 @@ export const NumOfRoomsContainer = ({
     if (typeof newValue !== 'number') return;
     validateInput({ value: newValue });
     setNumOfRooms(newValue);
-    form.setFieldValue('num-of-rooms', newValue);
+    form.setFieldValue('count', newValue);
   };
 
   return (
@@ -50,7 +47,7 @@ export const NumOfRoomsContainer = ({
             일일 예약 가능 객실
           </TextBox>
         </StyledTextBoxWrapper>
-        <Form.Item name={'num-of-rooms'} style={{}}>
+        <Form.Item name={'count'} style={{}}>
           <StyledInputNumber
             min={1}
             max={100}
@@ -66,7 +63,7 @@ export const NumOfRoomsContainer = ({
         </StyledTextBoxWrapper>
       </StyledRow>
       {error && (
-        <StyledErrorMessageWrapper data-testid="error-input-num-of-rooms">
+        <StyledErrorMessageWrapper data-testid="error-input-rooms-count">
           <StyledFormErrorMessage errorMessage={error} />
         </StyledErrorMessageWrapper>
       )}
