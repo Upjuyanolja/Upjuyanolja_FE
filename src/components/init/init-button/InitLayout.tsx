@@ -33,7 +33,7 @@ export const InitLayout = () => {
 
   return (
     <StyledLayout>
-      <Layout.Header>Header</Layout.Header>
+      <StyledHeader>Header</StyledHeader>
       <StyledHeadContentCotainer>
         <StyledHeadContent>
           <StyledTextWrapper>
@@ -62,8 +62,21 @@ const StyledLayout = styled(Layout)`
   background-color: ${colors.midGray};
 `;
 
+const StyledHeader = styled(Layout.Header)`
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+`;
+
 const StyledHeadContentCotainer = styled.div`
   background-color: ${colors.white};
+
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+
+  margin-top: 64px;
 `;
 
 const StyledHeadContent = styled(Layout.Header)`
@@ -90,7 +103,7 @@ const StyledMainContent = styled(Layout.Content)`
   max-width: 1024px;
   width: 1024px;
 
-  margin: 0 auto;
+  margin: 204px auto 0;
 
-  padding: 40px;
+  padding: 32px 48px;
 `;
