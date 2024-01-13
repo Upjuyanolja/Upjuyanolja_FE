@@ -8,9 +8,11 @@ import {
 import { getUserInfoResolver } from './member';
 import { getPointSummaryResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
-import { getPointDetailTotalResolver } from './point-detail/total';
-import { getPointDetailUsageResolver } from './point-detail/usage';
-import { getPointDetailChargesResolver } from './point-detail/charges';
+import {
+  getPointDetailChargesResolver,
+  getPointDetailUsageResolver,
+  getPointDetailTotalResolver,
+} from './point-detail';
 
 export const handlers = [
   http.post('/api/auth/owner/signin', postSignInResolver),
