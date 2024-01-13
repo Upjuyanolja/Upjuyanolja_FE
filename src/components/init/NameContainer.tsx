@@ -17,7 +17,7 @@ export const NameContainer = ({
   placeholder,
   form,
 }: NameContainerProps) => {
-  const [inputValue, setInputValue] = useState('');
+  const [, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
   const validateInput = ({ value }: { value: string }) => {
@@ -56,7 +56,6 @@ export const NameContainer = ({
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
           style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
-          value={inputValue}
           onChange={handleInputChange}
           status={errorMessage ? 'error' : ''}
           data-testid="input-name"
