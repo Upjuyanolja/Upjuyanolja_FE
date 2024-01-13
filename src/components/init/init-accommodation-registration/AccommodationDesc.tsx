@@ -13,7 +13,7 @@ import { useRecoilState } from 'recoil';
 import { descErrorMessage } from '@stores/init/atoms';
 
 export const AccommodationDesc = () => {
-  const [textAreaValue, setTextAreaValue] = useState('');
+  const [, setTextAreaValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(descErrorMessage);
 
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -44,7 +44,6 @@ export const AccommodationDesc = () => {
           minLength={ACCOMMODATION_DESC_MIN_LENGTH}
           showCount
           maxLength={ACCOMMODATION_DESC_MAX_LENGTH}
-          disabled={textAreaValue.length >= ACCOMMODATION_DESC_MAX_LENGTH}
           style={{ height: 160, resize: 'none' }}
           onChange={handleTextAreaChange}
           status={errorMessage ? 'error' : ''}
