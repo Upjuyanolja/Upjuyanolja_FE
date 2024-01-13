@@ -13,31 +13,24 @@ export const TimeContainer = ({ header, form }: TimeContainerProps) => {
   const [checkOutTime, setCheckOutTime] = useState<Moment>(specificTime);
 
   const handleCheckInChange = (time: Moment | null) => {
-    console.log('checkintime', checkInTime);
-    console.log(typeof checkInTime);
-    console.log('time', time);
     if (!time) {
-      console.log('inside if');
       form.setFieldValue('checkInTime', '09:00');
-      const specificTime = moment().hours(9).minutes(0);
-      setCheckInTime(specificTime);
+      const defaultTime = moment().hours(9).minutes(0);
+      setCheckInTime(defaultTime);
     } else {
-      const formattedTime = time.format('HH:mm');
-      console.log(formattedTime);
-      form.setFieldValue('checkInTime', formattedTime);
+      form.setFieldValue('checkInTime', time);
       setCheckInTime(time);
     }
   };
 
   const handleCheckOutChange = (time: Moment | null) => {
-    if (time) {
-      const formattedTime = time.format('HH:mm');
-      form.setFieldValue('checkOutTime', formattedTime);
-      setCheckOutTime(time);
+    if (!time) {
+      form.setFieldValue('checkOutTime', '00:00');
+      const defaultTime = moment().hours(9).minutes(0);
+      setCheckOutTime(defaultTime);
     } else {
-      form.setFieldValue('checkOutTime', '09:00');
-      const specificTime = moment().hours(9).minutes(0);
-      setCheckOutTime(specificTime);
+      form.setFieldValue('checkOutTime', time);
+      setCheckOutTime(time);
     }
   };
 
@@ -63,6 +56,13 @@ export const TimeContainer = ({ header, form }: TimeContainerProps) => {
             onChange={handleCheckInChange}
             popupStyle={{ height: 274 }}
             showNow={false}
+            disabledHours={() => {
+              const hrs = [];
+              for (let i = 0; i < 9; i++) {
+                hrs.push(i);
+              }
+              return hrs;
+            }}
             locale={{
               ...locale,
               lang: {
@@ -88,6 +88,13 @@ export const TimeContainer = ({ header, form }: TimeContainerProps) => {
             onChange={handleCheckOutChange}
             popupStyle={{ height: 274 }}
             showNow={false}
+            disabledHours={() => {
+              const hours = [];
+              for (let i = 0; i < 9; i++) {
+                hours.push(i);
+              }
+              return hours;
+            }}
             locale={{
               ...locale,
               lang: {
@@ -165,4 +172,18 @@ const StyledTimePicker = styled(TimePicker)`
   padding: 8px 12px;
   align-items: center;
   margin-top: 25px;
+
+  .ant-picker-clear {
+    display: none !important;
+  }
+
+  .ant-picker-suffix {
+    pointer-events: none;
+  }
+
+  .ant-picker-time-panel-column {
+    li.ant-picker-time-panel-cell-disabled {
+      background-color: red;
+    }
+  }
 `;

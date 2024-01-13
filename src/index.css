@@ -135,3 +135,10 @@
 .ant-table-row-selected td[rowspan] {
   background-color: white !important;
 }
+
+/* timepicker custom style */
+.ant-picker-time-panel-column:first-child {
+  .ant-picker-time-panel-cell:nth-child(n + 1):nth-child(-n + 9) {
+    display: none;
+  }
+}
