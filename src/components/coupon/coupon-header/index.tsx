@@ -6,13 +6,22 @@ import { RangePickerProps } from 'antd/lib/date-picker';
 import { ReactComponent as Logo } from '@assets/image/smallLogo.svg';
 import moment from 'moment';
 import styled from 'styled-components';
-import { couponHeaderProps } from './type';
+import { CouponHeaderProps } from './type';
 import { DATE_FORMAT } from '@/constants/date';
+import {
+  COUPON_STATUS_DISABLE,
+  COUPON_STATUS_ENABLE,
+} from '@/constants/coupon';
 
 export const CouponHeader = ({
   expiry,
-  couponStatusOption,
-}: couponHeaderProps) => {
+  handleSelectStatus,
+}: CouponHeaderProps) => {
+  const couponStatusOption = [
+    { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
+    { value: COUPON_STATUS_DISABLE.value, label: COUPON_STATUS_DISABLE.label },
+  ];
+
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     return current < moment().startOf('day');
   };
@@ -44,7 +53,11 @@ export const CouponHeader = ({
         </TextBox>
       </StyledDateContainer>
       <StyledContentLayout>
-        <Select defaultValue="상태 변경" options={couponStatusOption} />
+        <Select
+          defaultValue="상태 변경"
+          options={couponStatusOption}
+          onChange={handleSelectStatus}
+        />
         <StyledButtonContainer>
           <StyledDeleteButton>
             <DeleteOutlined width="20px" height="20px" />

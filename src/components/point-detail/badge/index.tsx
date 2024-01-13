@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { badgeProps } from './types';
 
-export const OrderStatusBadge = ({ status }: badgeProps) => {
+export const OrderStatusBadge = ({ status }: { status: badgeProps }) => {
   const [color, setColor] = useState('');
 
   useEffect(() => {

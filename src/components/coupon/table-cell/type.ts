@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+import { tableData } from '../table/type';
+
 export type roomContainerProps = {
   room: {
     name: string;
@@ -13,4 +16,9 @@ export type couponNameContainerProps = {
 export type dayLimitInputProps = {
   dayLimit: number;
   isSoldOut: boolean;
+  record: tableData;
+  handleChangeInput: (
+    event: React.KeyboardEvent<HTMLInputElement>,
+    key: number,
+  ) => void;
 };
