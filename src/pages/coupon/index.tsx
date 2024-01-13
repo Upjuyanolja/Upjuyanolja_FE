@@ -5,30 +5,33 @@ import styled from 'styled-components';
 import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase-footer';
 import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
 import { useCoupon } from '@hooks/coupon/useCoupon';
-
 import { CouponTable } from '@components/coupon/table';
+import { useCouponForm } from '@hooks/coupon/useCouponForm';
 
 export const Coupon = () => {
+  const { couponData, isGetCouponError } = useCoupon();
   const {
-    couponData,
-    couponStatusOption,
-    couponTypeOption,
-    processCouponTableData,
-  } = useCoupon();
+    couponTableData,
+    handleSelectStatus,
+    handleSelectRecord,
+    handleSelectCouponType,
+    handleChangeInput,
+  } = useCouponForm();
   if (!couponData) return <div>로딩 중</div>;
-
-  const couponTableData = processCouponTableData(couponData.rooms);
+  if (isGetCouponError) return <div>에러</div>;
 
   return (
     <>
       <CouponHeader
         expiry={couponData.expiry}
-        couponStatusOption={couponStatusOption}
+        handleSelectStatus={handleSelectStatus}
       />
 
       <CouponTable
-        couponTypeOption={couponTypeOption}
         couponTableData={couponTableData}
+        handleSelectRecord={handleSelectRecord}
+        handleSelectCouponType={handleSelectCouponType}
+        handleChangeInput={handleChangeInput}
       />
       <StyledModal
         open={false}

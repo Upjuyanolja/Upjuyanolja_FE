@@ -1,25 +1,47 @@
 import { Button, Space } from 'antd';
-
 import styled from 'styled-components';
-import { TextBox } from '@components/text-box';
+
 import { colors } from '@/constants/colors';
+import { menuStatusState } from '@stores/point-detail/atoms';
+import { useRecoilState } from 'recoil';
+import { menuStatusType } from '@api/point-detail/get-point-detail/type';
 
 export const PointMenu = () => {
+  const [menuStatus, setMenuStatus] = useRecoilState(menuStatusState);
+
+  const handleClickMenuButton = (status: menuStatusType) => {
+    setMenuStatus(status);
+  };
+
   return (
     <Space>
       <StyledMenuButtonWrap>
         <li>
-          <StyledButton type="primary">
-            <TextBox typography="body3" color="white" fontWeight="400">
-              전체
-            </TextBox>
+          <StyledButton
+            data-testid="menuStatusTotalButton"
+            type={menuStatus === 'total' ? 'primary' : undefined}
+            onClick={() => handleClickMenuButton('total')}
+          >
+            전체
           </StyledButton>
         </li>
         <li>
-          <StyledButton>충전</StyledButton>
+          <StyledButton
+            data-testid="menuStatusChargesButton"
+            type={menuStatus === 'charges' ? 'primary' : undefined}
+            onClick={() => handleClickMenuButton('charges')}
+          >
+            충전
+          </StyledButton>
         </li>
         <li>
-          <StyledButton>사용</StyledButton>
+          <StyledButton
+            data-testid="menuStatusUsageButton"
+            type={menuStatus === 'usage' ? 'primary' : undefined}
+            onClick={() => handleClickMenuButton('usage')}
+          >
+            사용
+          </StyledButton>
         </li>
       </StyledMenuButtonWrap>
     </Space>
