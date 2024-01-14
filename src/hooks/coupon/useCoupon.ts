@@ -6,7 +6,7 @@ import {
   COUPON_TYPE_WEEKENDS,
 } from '@/constants/coupon';
 import { room } from '@api/coupon/type';
-import { useGetCoupon, useGetCouponRoomList } from '@queries/coupon';
+import { useGetCoupon } from '@queries/coupon';
 
 export const useCoupon = () => {
   const { data: couponData, isError: isGetCouponError } = useGetCoupon({
@@ -14,13 +14,6 @@ export const useCoupon = () => {
       return data.data.data;
     },
   });
-
-  const { data: couponRoomListData, isError: isGetCouponRoomListError } =
-    useGetCouponRoomList({
-      select(data) {
-        return data.data.data;
-      },
-    });
 
   const couponStatusOption = [
     { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
@@ -73,7 +66,5 @@ export const useCoupon = () => {
     couponStatusOption,
     couponTypeOption,
     processCouponTableData,
-    couponRoomListData,
-    isGetCouponRoomListError,
   };
 };

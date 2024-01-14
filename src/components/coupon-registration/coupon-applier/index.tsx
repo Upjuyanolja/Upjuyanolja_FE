@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { CommonQuantityCouponSetter } from './common-quantity-coupon-setter';
 import { RoomCouponApplier } from './room-coupon-applier';
-import { useCoupon } from '@hooks/coupon/useCoupon';
 import { CouponApplierProps } from './type';
 import { useState } from 'react';
+import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 
 export const CouponApplier = ({
   selectedCouponType,
   pendingCouponData,
   setPendingCouponDataList,
 }: CouponApplierProps) => {
-  const { couponRoomListData } = useCoupon();
+  const { couponRoomListData } = useCouponRegistration();
   const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useState(false);
   const [groupQuantityValue, setGroupQuantityValue] = useState('0');
 
