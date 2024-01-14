@@ -9,6 +9,7 @@ import {
 import { Response } from '@/types/api';
 import {
   CouponDeleteParams,
+  CouponEditParams,
   coupons,
   dailyRevenue,
   revenueData,
@@ -69,7 +70,22 @@ export const useDeleteCoupon = (
     AxiosError,
     CouponDeleteParams
   >((params: CouponDeleteParams) => COUPON_API.deleteCoupon(params), {
-    mutationKey: ['deleteCoupon'],
+    ...options,
+  });
+};
+
+export const useEditCoupon = (
+  options?: UseMutationOptions<
+    AxiosResponse<Response<null>>,
+    AxiosError,
+    CouponEditParams
+  >,
+) => {
+  return useMutation<
+    AxiosResponse<Response<null>>,
+    AxiosError,
+    CouponEditParams
+  >((params: CouponEditParams) => COUPON_API.editCoupon(params), {
     ...options,
   });
 };
