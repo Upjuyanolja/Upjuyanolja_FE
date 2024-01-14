@@ -19,6 +19,7 @@ export const CouponHeader = ({
   handleDeleteButton,
   isModified,
   handleChangeDate,
+  handleEditButton,
 }: CouponHeaderProps) => {
   const couponStatusOption = [
     { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
@@ -34,7 +35,11 @@ export const CouponHeader = ({
         <TextBox fontWeight={700} typography="h4">
           쿠폰 관리
         </TextBox>
-        <StyledSaveButton type="primary" disabled={!isModified()}>
+        <StyledSaveButton
+          type="primary"
+          disabled={!isModified()}
+          onClick={handleEditButton}
+        >
           <TextBox fontWeight={700} typography="h4">
             저장
           </TextBox>

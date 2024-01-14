@@ -1,9 +1,14 @@
-import { useDeleteCoupon, useGetCoupon } from '@queries/coupon';
+import { useDeleteCoupon, useEditCoupon, useGetCoupon } from '@queries/coupon';
 import { Modal, message } from 'antd';
 import { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { CouponData } from './type';
-import { CouponDeleteParams, coupons } from '@api/coupon/type';
+import {
+  CouponDeleteParams,
+  CouponEditParams,
+  EditCoupon,
+  coupons,
+} from '@api/coupon/type';
 /**
  * @description 쿠폰 관리 페이지 로직을 다루는 hook
  * 
@@ -42,7 +47,24 @@ export const useCoupon = () => {
 
   const { mutate: deleteCoupon } = useDeleteCoupon({
     onSuccess() {
-      message.success('삭제되었습니다');
+      message.success({
+        content: '삭제되었습니다',
+        className: 'coupon-message',
+      });
+      getCouponRemove();
+    },
+    onError(error) {
+      if (error instanceof AxiosError)
+        message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+    },
+  });
+
+  const { mutate: editCoupon } = useEditCoupon({
+    onSuccess() {
+      message.success({
+        content: '저장되었습니다',
+        className: 'coupon-message',
+      });
       getCouponRemove();
     },
     onError(error) {
@@ -53,7 +75,9 @@ export const useCoupon = () => {
 
   useEffect(() => {
     if (data) {
+      console.log('여깅');
       processCouponTableData(data);
+      setSelectedStatus('');
     }
   }, [data]);
 
@@ -184,7 +208,6 @@ export const useCoupon = () => {
       }
       rooms[room.id].push({ couponId });
     }
-
     const data: CouponDeleteParams = {
       accommodationId: 1,
       rooms: [],
@@ -201,13 +224,53 @@ export const useCoupon = () => {
     return data;
   };
 
+  const processEditData = () => {
+    const rooms: EditCoupon[][] = [];
+    for (let index = 0; index < couponData.coupons.length; index++) {
+      const {
+        room,
+        couponId,
+        status,
+        discount,
+        discountType,
+        dayLimit,
+        couponType,
+      } = couponData.coupons[index];
+      if (!rooms[room.id]) {
+        rooms[room.id] = [];
+      }
+      rooms[room.id].push({
+        couponId,
+        status,
+        discount,
+        discountType,
+        dayLimit,
+        couponType,
+      });
+    }
+    const data: CouponEditParams = {
+      accommodationId: 1,
+      expiry: couponData.expiry,
+      rooms: [],
+    };
+    for (let index = 0; index < rooms.length; index++) {
+      if (rooms[index]) {
+        data.rooms.push({
+          roomId: index,
+          coupons: rooms[index],
+        });
+      }
+    }
+    return data;
+  };
+
   const handleDeleteButton = () => {
     if (!isSelectedRow()) {
-      message.warning('삭제할 쿠폰을 먼저 선택하세요.');
+      message.warning('삭제할 쿠폰을 먼저 선택하세요');
       return;
     }
     if (isModified()) {
-      message.warning('수정 중인 내용을 먼저 저장하세요.');
+      message.warning('수정 중인 내용을 먼저 저장하세요');
       return;
     }
     if (findNotSoldOutData(selectedRowKeys)) {
@@ -235,6 +298,20 @@ export const useCoupon = () => {
     });
   };
 
+  const handleEditButton = () => {
+    Modal.confirm({
+      title:
+        '수정사항은 새로운 예약에만 적용되며,\n 기존 예약은 변경되지 않습니다.',
+      content: ' 저장하시겠습니까?',
+      cancelText: '취소',
+      okText: '저장',
+      className: 'confirm-modal',
+      onOk: () => {
+        editCoupon(processEditData());
+      },
+    });
+  };
+
   return {
     data,
     isGetCouponError,
@@ -247,5 +324,6 @@ export const useCoupon = () => {
     handleDeleteButton,
     isModified,
     handleChangeDate,
+    handleEditButton,
   };
 };

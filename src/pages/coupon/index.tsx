@@ -19,6 +19,7 @@ export const Coupon = () => {
     handleDeleteButton,
     isModified,
     handleChangeDate,
+    handleEditButton,
   } = useCoupon();
 
   if (!data) return <div>로딩</div>;
@@ -32,6 +33,7 @@ export const Coupon = () => {
         handleDeleteButton={handleDeleteButton}
         isModified={isModified}
         handleChangeDate={handleChangeDate}
+        handleEditButton={handleEditButton}
       />
 
       <CouponTable

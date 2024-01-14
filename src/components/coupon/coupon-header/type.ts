@@ -5,4 +5,5 @@ export type CouponHeaderProps = {
   handleDeleteButton: VoidFunction;
   isModified: () => boolean;
   handleChangeDate: (date: string) => void;
+  handleEditButton: VoidFunction;
 };
