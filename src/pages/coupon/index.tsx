@@ -9,26 +9,31 @@ import { CouponTable } from '@components/coupon/table';
 import { useCouponForm } from '@hooks/coupon/useCouponForm';
 
 export const Coupon = () => {
-  const { couponData, isGetCouponError } = useCoupon();
+  const { data, isGetCouponError } = useCoupon();
   const {
-    couponTableData,
+    couponData,
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
     handleChangeInput,
+    handleDeleteButton,
+    isModified,
+    handleChangeDate,
   } = useCouponForm();
-  if (!couponData) return <div>로딩 중</div>;
+  if (!data) return <div>로딩</div>;
   if (isGetCouponError) return <div>에러</div>;
-
   return (
     <>
       <CouponHeader
         expiry={couponData.expiry}
         handleSelectStatus={handleSelectStatus}
+        handleDeleteButton={handleDeleteButton}
+        isModified={isModified}
+        handleChangeDate={handleChangeDate}
       />
 
       <CouponTable
-        couponTableData={couponTableData}
+        couponTableData={couponData.coupons}
         handleSelectRecord={handleSelectRecord}
         handleSelectCouponType={handleSelectCouponType}
         handleChangeInput={handleChangeInput}

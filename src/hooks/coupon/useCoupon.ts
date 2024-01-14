@@ -8,14 +8,18 @@ import { useGetCoupon } from '@queries/coupon';
  */
 
 export const useCoupon = () => {
-  const { data: couponData, isError: isGetCouponError } = useGetCoupon({
+  const {
+    data,
+    isError: isGetCouponError,
+    refetch: getCouponRefetch,
+  } = useGetCoupon({
     select(data) {
       return data.data.data;
     },
   });
 
   return {
+    data,
     isGetCouponError,
-    couponData,
   };
 };
