@@ -2,8 +2,12 @@ import { Space } from 'antd';
 
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
+import { pointDetailDataState } from '@stores/point-detail/atoms';
+import { useRecoilValue } from 'recoil';
 
-export const CouponInfo = () => {
+export const CouponInfo = ({ index }: { index: number }) => {
+  const pointDetailData = useRecoilValue(pointDetailDataState);
+
   return (
     <CouponInfoWrap direction="vertical">
       <TextBox typography="body2" color={'black900'} fontWeight={'700'}>
@@ -16,13 +20,14 @@ export const CouponInfo = () => {
           fontWeight={'700'}
           className="couponDetail-title"
         >
-          5% 할인쿠폰
+          {pointDetailData.histories[index].name}
         </TextBox>
         <TextBox typography="body2" color={'black900'} fontWeight={'400'}>
-          패캠스테이 삼성점|슽낸다드, 스탠다드 더블, 프리미엄
+          {pointDetailData.histories[index].description}
         </TextBox>
         <TextBox typography="body2" color={'black900'} fontWeight={'400'}>
-          주문수량: 100개
+          {/* 주문수량: 100개 수량 수량데이터가 나와져 있지 않음.*/}
+          {pointDetailData.histories[index].receipt.amount}
         </TextBox>
       </CouponDetailBox>
     </CouponInfoWrap>

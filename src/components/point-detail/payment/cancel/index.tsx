@@ -6,15 +6,28 @@ import { OrderPointInfo } from '../common/order-point-info';
 import { CompanyInfo } from '../common/company-info';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { colors } from '@/constants/colors';
-import { PointModalProps } from '@components/point-charge-modal/point-modal/types';
+
+import { PointModalReceiptProps } from '../receipt/types';
+import { pointDetailDataState } from '@stores/point-detail/atoms';
+import { useRecoilValue } from 'recoil';
+import { useDeleteOrderCancel } from '@queries/point-detail';
 
 export const CancelModal = ({
   isModalOpen,
   setIsModalOpen,
-}: PointModalProps) => {
+  index,
+}: PointModalReceiptProps) => {
+  const deleteOrderCancelMutation = useDeleteOrderCancel();
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const orderCancel = async (chargeId: number) => {
+    await deleteOrderCancelMutation.mutateAsync(chargeId);
+  };
+
+  const pointDetailData = useRecoilValue(pointDetailDataState);
 
   return (
     <>
@@ -26,8 +39,12 @@ export const CancelModal = ({
         width={576}
       >
         <Layout>
-          <OrderInfo />
-          <OrderPointInfo pointCharge={true} />
+          <OrderInfo index={index} />
+          <OrderPointInfo
+            index={index}
+            pointCharge={pointDetailData.histories[index].type === '포인트'}
+            status={pointDetailData.histories[index].status}
+          />
           <CompanyInfo />
           <ModalFooterWrap>
             <h3>
@@ -54,7 +71,13 @@ export const CancelModal = ({
             </li>
           </ModalFooterWrap>
 
-          <SubmitButton type="primary" onClick={handleCancel}>
+          <SubmitButton
+            type="primary"
+            onClick={() => {
+              orderCancel(pointDetailData.histories[index].id);
+              handleCancel();
+            }}
+          >
             취소 요청
           </SubmitButton>
         </Layout>

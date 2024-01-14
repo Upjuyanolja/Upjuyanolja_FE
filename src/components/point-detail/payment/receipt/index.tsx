@@ -5,29 +5,51 @@ import { OrderInfo } from '../common/order-info';
 import { CouponInfo } from '../common/coupon-info';
 import { OrderPointInfo } from '../common/order-point-info';
 import { CompanyInfo } from '../common/company-info';
-import { PointModalProps } from '@components/point-charge-modal/point-modal/types';
+import { PointModalReceiptProps } from './types';
+import { useRecoilValue } from 'recoil';
+import { pointDetailDataState } from '@stores/point-detail/atoms';
+import { useEffect, useState } from 'react';
 
 export const ReceiptModal = ({
   isModalOpen,
   setIsModalOpen,
-}: PointModalProps) => {
+  index,
+}: PointModalReceiptProps) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const pointDetailData = useRecoilValue(pointDetailDataState);
+  const [modalTitle, setModalTitle] = useState('');
 
+  useEffect(() => {
+    if (pointDetailData.histories[index].type === '쿠폰') {
+      setModalTitle('쿠폰 결제 영수증');
+    } else if (pointDetailData.histories[index].type === '포인트') {
+      setModalTitle('포인트 결제 영수증');
+    } else {
+      setModalTitle('결제 취소 영수증');
+    }
+  }, [pointDetailData.histories, index]);
   return (
     <>
       <StyledModal
-        title="쿠폰 결제 영수증"
+        title={modalTitle}
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[]}
         width={576}
       >
         <Layout>
-          <OrderInfo />
-          <CouponInfo />
-          <OrderPointInfo pointCharge={true} status={'구매 확정'} />
+          <OrderInfo index={index} />
+          {pointDetailData.histories[index].type === '쿠폰' && (
+            <CouponInfo index={index} />
+          )}
+
+          <OrderPointInfo
+            index={index}
+            pointCharge={pointDetailData.histories[index].type === '포인트'}
+            status={pointDetailData.histories[index].status}
+          />
           <CompanyInfo />
           <ModalFooterWrap>
             <li>
@@ -36,13 +58,25 @@ export const ReceiptModal = ({
                 거래내역 및 금액을 확인하는 용도로만 사용가능합니다
               </TextBox>
             </li>
-
             <li>
               <TextBox typography="body5" color={'black900'} fontWeight={'400'}>
-                영수증은 세금계산서 등 세무상 증빙서류로 활용할 수 없으며,
-                거래내역 및 금액을 확인하는 용도로만 사용가능합니다
+                영수증은 결제 완료 시 자동으로 발급되며, 포인트 충전내역에서
+                확인이 가능합니다.
               </TextBox>
             </li>
+            {pointDetailData.histories[index].type === '취소' && (
+              <li>
+                <TextBox
+                  typography="body5"
+                  color={'black900'}
+                  fontWeight={'400'}
+                >
+                  환불 및 결제취소는 영업일 기준 최대 3~7일이 소요됩니다. 결제
+                  시 선택한 결제수단에 따라 환불이 불가능한 경우 고객센터를 통해
+                  계좌환불로 대체 처리될 수 있습니다.
+                </TextBox>
+              </li>
+            )}
           </ModalFooterWrap>
         </Layout>
       </StyledModal>
@@ -51,9 +85,11 @@ export const ReceiptModal = ({
 };
 
 const StyledModal = styled(Modal)`
+  .ant-modal-content {
+    height: 620px;
+  }
   .ant-layout {
     background-color: #ffffff;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -4,8 +4,15 @@ import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
 import { orderInfoProps } from './types';
+import { useRecoilValue } from 'recoil';
+import { pointDetailDataState } from '@stores/point-detail/atoms';
+import { numberFormat } from '@/utils/Format/numberFormat';
 
-export const OrderPointInfo = ({ pointCharge, status }: orderInfoProps) => {
+export const OrderPointInfo = ({
+  pointCharge,
+  index,
+  status,
+}: orderInfoProps) => {
   const [isCancelStatus, setIscancelStatus] = useState<boolean>(false);
 
   useEffect(() => {
@@ -13,6 +20,7 @@ export const OrderPointInfo = ({ pointCharge, status }: orderInfoProps) => {
       setIscancelStatus(true);
     }
   }, []);
+  const pointDetailData = useRecoilValue(pointDetailDataState);
 
   return (
     <OrderPointInfoContainer direction="vertical">
@@ -34,7 +42,7 @@ export const OrderPointInfo = ({ pointCharge, status }: orderInfoProps) => {
             : '결제 포인트'}
         </TextBox>
         <TextBox typography="body2" color={'primary'} fontWeight={'700'}>
-          5000 P
+          {numberFormat(pointDetailData.histories[index].receipt.amount)} P
         </TextBox>
       </OrderPointInfoList>
       <OrderPointInfoList>
@@ -43,13 +51,13 @@ export const OrderPointInfo = ({ pointCharge, status }: orderInfoProps) => {
             ? isCancelStatus
               ? '환불 예정 금액'
               : '결제 금액'
-            : '보유 포인트'}
+            : '결제 금액'}
         </TextBox>
         <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
-          5000 P
+          {numberFormat(pointDetailData.histories[index].receipt.amount)} P
         </TextBox>
       </OrderPointInfoList>
-      {!pointCharge && (
+      {/* {!pointCharge && (
         <OrderPointInfoList>
           <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
             추가 충전 포인트
@@ -58,7 +66,7 @@ export const OrderPointInfo = ({ pointCharge, status }: orderInfoProps) => {
             5000 P
           </TextBox>
         </OrderPointInfoList>
-      )}
+      )} */}
     </OrderPointInfoContainer>
   );
 };
