@@ -2,10 +2,43 @@ import { colors } from '@/constants/colors';
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { TextBox } from '@components/text-box';
 import { Layout, Space } from 'antd';
-
 import styled from 'styled-components';
+import {
+  currentYearState,
+  currentMonthState,
+  pointSummaryDataState,
+} from '@stores/point-detail/atoms';
+import { useRecoilState } from 'recoil';
+
+import { numberFormat } from '@/utils/Format/numberFormat';
+const MONTH_JANUARY = 1;
+const MONTH_DECEMBER = 12;
 
 export const PointBox = () => {
+  const [pointSummaryData] = useRecoilState(pointSummaryDataState);
+
+  const [currentYear, setCurrentYear] = useRecoilState(currentYearState);
+  const [currentMonth, setCurrentMonth] = useRecoilState(currentMonthState);
+  const handleClickDateButton = (sign: 'prev' | 'next') => {
+    if (sign === 'prev') {
+      const subCurrentYear =
+        currentMonth === MONTH_JANUARY ? currentYear - 1 : currentYear;
+      const subCurrentMonth =
+        currentMonth === MONTH_JANUARY ? currentMonth + 11 : currentMonth - 1;
+
+      setCurrentYear(subCurrentYear);
+      setCurrentMonth(subCurrentMonth);
+    } else {
+      const addCurrentMonth =
+        currentMonth === MONTH_DECEMBER ? currentMonth - 11 : currentMonth + 1;
+      const addCurrentYear =
+        currentMonth === MONTH_DECEMBER ? currentYear + 1 : currentYear;
+
+      setCurrentYear(addCurrentYear);
+      setCurrentMonth(addCurrentMonth);
+    }
+  };
+
   return (
     <Layout>
       <TextBox typography="h4" color="black900" fontWeight="bold">
@@ -13,11 +46,29 @@ export const PointBox = () => {
       </TextBox>
       <StyledPointDetailWrap>
         <StyledDateWrap>
-          <CaretLeftOutlined size={24} />
-          <TextBox typography="h5" color="white" fontWeight="bold">
-            2023 . 10월
-          </TextBox>
-          <CaretRightOutlined size={24} />
+          <div>
+            <StyledDateButton
+              data-testid="datePrevButton"
+              onClick={() => handleClickDateButton('prev')}
+            >
+              <CaretLeftOutlined size={24} />
+            </StyledDateButton>
+            <TextBox
+              typography="h5"
+              color="white"
+              fontWeight="bold"
+              style={{ margin: '0px 24px' }}
+              data-testid="dateSpan"
+            >
+              {currentYear} . {currentMonth}월
+            </TextBox>
+            <StyledDateButton
+              data-testid="dateNextButton"
+              onClick={() => handleClickDateButton('next')}
+            >
+              <CaretRightOutlined size={24} />
+            </StyledDateButton>
+          </div>
         </StyledDateWrap>
         <StyledPointUsingInfo>
           <StyledPointUsingInfoList direction="vertical">
@@ -28,11 +79,12 @@ export const PointBox = () => {
             </div>
             <div>
               <TextBox typography="h3" color="black800" fontWeight="bold">
-                30,000 P
+                {numberFormat(pointSummaryData.chargePoint || '0')}P
               </TextBox>
               <br />
               <TextBox typography="body3" color="black800" fontWeight="400">
-                (30,000 원)
+                ({numberFormat(pointSummaryData.chargePoint || '0')}
+                원)
               </TextBox>
             </div>
           </StyledPointUsingInfoList>
@@ -44,11 +96,12 @@ export const PointBox = () => {
             </div>
             <div>
               <TextBox typography="h3" color="black800" fontWeight="bold">
-                15,000 P
+                {numberFormat(pointSummaryData.usePoint || '0')}P
               </TextBox>
               <br />
               <TextBox typography="body3" color="black800" fontWeight="400">
-                (15,000 원)
+                ({numberFormat(pointSummaryData.usePoint || '0')}
+                원)
               </TextBox>
             </div>
           </StyledPointUsingInfoList>
@@ -60,11 +113,11 @@ export const PointBox = () => {
             </div>
             <div>
               <TextBox typography="h3" color="primary" fontWeight="bold">
-                15,000 P
+                {numberFormat(pointSummaryData.currentPoint || '0')}P
               </TextBox>
               <br />
               <TextBox typography="body3" color="primary" fontWeight="400">
-                (15,000 원)
+                ({numberFormat(pointSummaryData.currentPoint || '0')}원)
               </TextBox>
             </div>
           </StyledPointUsingInfoList>
@@ -92,8 +145,6 @@ const StyledDateWrap = styled('div')`
   padding: 8px 0px;
 
   svg {
-    margin: 0px 48px;
-
     color: ${colors.white};
   }
 `;
@@ -110,4 +161,13 @@ const StyledPointUsingInfoList = styled(Space)`
   align-items: center;
 
   text-align: center;
+`;
+const StyledDateButton = styled('button')`
+  width: 24px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
 `;
