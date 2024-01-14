@@ -18,7 +18,7 @@ import {
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { InputChangeEvent, MouseEvent } from '@/types/event';
 import { isNumber } from '@/utils/is-number';
-import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
+import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
 
 export const CouponType = ({
   selectedCouponType,
@@ -28,7 +28,6 @@ export const CouponType = ({
   setPendingCouponDataList,
   setDeterminedPrice,
 }: CouponTypeProps) => {
-  const { handleEnterKeyDown } = useCouponRegistration();
   const [errorMessage, setErrorMessage] = useState('');
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
 

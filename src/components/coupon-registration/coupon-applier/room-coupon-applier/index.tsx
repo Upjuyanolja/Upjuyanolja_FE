@@ -5,7 +5,7 @@ import { RoomCouponApplierProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/utils/is-number';
-import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
+import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
 
 export const RoomCouponApplier = ({
   roomName,
@@ -27,12 +27,6 @@ export const RoomCouponApplier = ({
       newValues[index] = { roomId, roomName, roomPrice, quantity: newValue };
       return newValues;
     });
-  };
-
-  const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.currentTarget.blur();
-    }
   };
 
   const handleChange = (e: InputChangeEvent) => {
