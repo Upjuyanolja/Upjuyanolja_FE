@@ -7,7 +7,7 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { PriceContainer } from '@components/room/price-container';
 import { CapacityContainer } from '@components/room/capacity-container';
-import { NumOfRoomsContainer } from '@components/room/num-of-rooms-container';
+import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
 
 const RoomRegistration = () => {
@@ -22,24 +22,24 @@ const RoomRegistration = () => {
 
   return (
     <StyledWrapper color={colors.white}>
-      <Form>
+      <Form form={form}>
         <NameContainer
           header="객실명"
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
           form={form}
         />
         <StyledInputWrapper>
-          <PriceContainer header="객실 가격" />
+          <PriceContainer header="객실 가격" form={form} />
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />
         <StyledInputWrapper>
-          <NumOfRoomsContainer header="객실 수" />
+          <CountContainer value="객실 수" form={form} />
         </StyledInputWrapper>
         <StyledInputWrapper>
-          <TimeContainer header="시간" />
+          <TimeContainer header="시간" form={form} />
         </StyledInputWrapper>
         <StyledInputWrapper>
-          <CapacityContainer header="인원" />
+          <CapacityContainer header="인원" form={form} />
         </StyledInputWrapper>
         <StyledInputWrapper>
           <CheckBoxContainer options={roomOptions} header="객실" />

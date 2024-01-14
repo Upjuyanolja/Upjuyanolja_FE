@@ -2,7 +2,7 @@ import { FormInstance } from 'antd';
 
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
-  isValid: boolean;
+  isValid?: boolean;
 };
 
 export type ButtonContainerStyledWrapperProps = {

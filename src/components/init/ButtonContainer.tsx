@@ -80,7 +80,12 @@ export const ButtonContainer = ({
         </>
       )}
       {buttonStyle === 'request' && (
-        <StyledButton type="primary" size="large" onClick={confirm}>
+        <StyledButton
+          type="primary"
+          size="large"
+          onClick={confirm}
+          data-testid="request-button"
+        >
           등록 요청
         </StyledButton>
       )}
