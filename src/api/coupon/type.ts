@@ -37,3 +37,7 @@ export type coupons = {
   expiry: string;
   rooms: room[];
 };
+export type CouponDeleteParams = {
+  accommodationId: number;
+  rooms: { roomId: number; coupons: { couponId: number }[] }[];
+};
