@@ -17,7 +17,6 @@ export const RoomCouponApplier = ({
   groupQuantityValue,
   selectedCouponType,
 }: RoomCouponApplierProps) => {
-  const { handleEnterKeyDown } = useCouponRegistration();
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
   const [inputValue, setInputValue] = useState('0');
 
@@ -28,6 +27,12 @@ export const RoomCouponApplier = ({
       newValues[index] = { roomId, roomName, roomPrice, quantity: newValue };
       return newValues;
     });
+  };
+
+  const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.currentTarget.blur();
+    }
   };
 
   const handleChange = (e: InputChangeEvent) => {
