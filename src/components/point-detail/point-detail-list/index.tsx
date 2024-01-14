@@ -5,9 +5,36 @@ import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
 import { useRecoilValue } from 'recoil';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
+import { ReceiptModal } from '../payment/receipt';
+import { useState } from 'react';
+import { numberFormat } from '@/utils/Format/numberFormat';
+import { CancelModal } from '../payment/cancel';
 
 export const PointDetailList = () => {
   const pointDetailData = useRecoilValue(pointDetailDataState);
+
+  const [isReceiptModalOpenList, setIsReceiptModalOpenList] = useState(
+    Array(pointDetailData.histories.length).fill(false),
+  );
+  const [isCancelModalOpenList, setIsCancelModalOpenList] = useState(
+    Array(pointDetailData.histories.length).fill(false),
+  );
+
+  const showReceiptModal = (index: number) => {
+    setIsReceiptModalOpenList((prev) => {
+      const newState = [...prev];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+
+  const showCancelModal = (index: number) => {
+    setIsCancelModalOpenList((prev) => {
+      const newState = [...prev];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
 
   return (
     <StyledLayout>
@@ -36,25 +63,49 @@ export const PointDetailList = () => {
             </StyledListItem>
             <StyledListItem>
               <TextBox typography="body2" color="black900" fontWeight="400">
-                {histories.trade}
+                {numberFormat(histories.trade)}
               </TextBox>
             </StyledListItem>
             <StyledListItem>
-              <TextBox typography="body1" color="primary" fontWeight="700">
-                {histories.category === '사용' ? '-' : '+'} {histories.trade} P
+              <TextBox
+                typography="body1"
+                color={
+                  histories.status === '취소 완료' ? 'black500' : 'primary'
+                }
+                fontWeight="700"
+              >
+                {histories.category === '사용' ? '-' : '+'}{' '}
+                {numberFormat(histories.trade)} P
               </TextBox>
             </StyledListItem>
             <StyledListItem>
               <div>
-                <StyledButton isCancel={false}>영수증 조회</StyledButton>
+                <StyledButton
+                  isCancel={false}
+                  onClick={() => showReceiptModal(index)}
+                >
+                  영수증 조회
+                </StyledButton>
+
+                <ReceiptModal
+                  isModalOpen={isReceiptModalOpenList[index]}
+                  setIsModalOpen={() => showReceiptModal(index)}
+                  index={index}
+                ></ReceiptModal>
               </div>
               <div>
                 <StyledButton
                   isCancel={true}
                   disabled={histories.status === '결제 완료' ? false : true}
+                  onClick={() => showCancelModal(index)}
                 >
                   결제 취소
                 </StyledButton>
+                <CancelModal
+                  isModalOpen={isCancelModalOpenList[index]}
+                  setIsModalOpen={() => showCancelModal(index)}
+                  index={index}
+                ></CancelModal>
               </div>
             </StyledListItem>
           </StyledList>
