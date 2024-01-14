@@ -15,5 +15,7 @@ export const usePostLogin = (
     AxiosResponse<Response<memberData>>,
     AxiosError,
     signInData
-  >((data: signInData) => SIGN_IN_API.postLogin(data), { ...options });
+  >((data: signInData) => SIGN_IN_API.postLogin(data), {
+    ...options,
+  });
 };
