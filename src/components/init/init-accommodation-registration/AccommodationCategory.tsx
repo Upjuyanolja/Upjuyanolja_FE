@@ -8,40 +8,54 @@ import grayMotelIcon from '@assets/image/grayMotel.png';
 import grayPensionPoolIcon from '@assets/image/grayPension_pool.png';
 import grayGuestHouseIcon from '@assets/image/grayGuestHouse.png';
 import { TextBox } from '@components/text-box';
-import { useState } from 'react';
-import { AccommodationCategoryProps } from './type';
+import { useEffect, useState } from 'react';
+import { AccommodationCategoryType, formType } from './type';
 import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
 import { Form, Radio } from 'antd';
 
-export const AccommodationCategory = () => {
+export const AccommodationCategory = ({ form }: formType) => {
   const [clickedCategory, setClickedCategory] =
-    useState<AccommodationCategoryProps>(null);
+    useState<AccommodationCategoryType>(null);
 
-  const handleButtonClick = (category: AccommodationCategoryProps) => {
+  const handleButtonClick = (category: AccommodationCategoryType) => {
     if (clickedCategory !== category) {
       setClickedCategory(category);
     }
   };
 
-  const hotelCategory = ['호텔', '리조트', '관광호텔', '콘도', '레지던스'];
-  const guestHouseCategory = ['게스트하우스', '한옥'];
+  const hotelResortDetailCategoryMapping = {
+    호텔: 'HOTEL',
+    리조트: 'RESORT',
+    관광호텔: 'TOURIST_HOTEL',
+    콘도: 'CONDO',
+    레지던스: 'RESIDENCE',
+  };
+
+  const guestHouseDetailCategoryMapping = {
+    게스트하우스: 'GUEST_HOUSE',
+    한옥: 'HANOK',
+  };
+
+  useEffect(() => {
+    form.setFieldValue('accommodation-category', clickedCategory);
+  }, [clickedCategory, form]);
 
   return (
     <StyledInputWrapper>
-      <TextBox typography="h4" fontWeight={700}>
+      <TextBox typography="h4" fontWeight={700} style={{ marginBottom: '8px' }}>
         숙소 유형을 선택해주세요.
       </TextBox>
       <Form.Item name="accommodation-category">
         <StyledRadioGroup>
           <StyledRadioButton
             value="HOTEL/RESORT"
-            onClick={() => handleButtonClick('hotelResort')}
+            onClick={() => handleButtonClick('HOTEL/RESORT')}
           >
             <img
               src={
-                clickedCategory === 'hotelResort'
+                clickedCategory === 'HOTEL/RESORT'
                   ? primaryHotelResortIcon
                   : grayHotelResortIcon
               }
@@ -49,35 +63,37 @@ export const AccommodationCategory = () => {
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'hotelResort' ? 'primary' : 'black600'}
+              color={
+                clickedCategory === 'HOTEL/RESORT' ? 'primary' : 'black600'
+              }
             >
               호텔/리조트
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
             value="MOTEL"
-            onClick={() => handleButtonClick('motel')}
+            onClick={() => handleButtonClick('MOTEL')}
           >
             <img
               src={
-                clickedCategory === 'motel' ? primaryMotelIcon : grayMotelIcon
+                clickedCategory === 'MOTEL' ? primaryMotelIcon : grayMotelIcon
               }
             />
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'motel' ? 'primary' : 'black600'}
+              color={clickedCategory === 'MOTEL' ? 'primary' : 'black600'}
             >
               모텔
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
             value="PENSION/POOL"
-            onClick={() => handleButtonClick('pensionPool')}
+            onClick={() => handleButtonClick('PENSION/POOL')}
           >
             <img
               src={
-                clickedCategory === 'pensionPool'
+                clickedCategory === 'PENSION/POOL'
                   ? primaryPensionPoolIcon
                   : grayPensionPoolIcon
               }
@@ -85,18 +101,20 @@ export const AccommodationCategory = () => {
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'pensionPool' ? 'primary' : 'black600'}
+              color={
+                clickedCategory === 'PENSION/POOL' ? 'primary' : 'black600'
+              }
             >
               펜션/풀빌라
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
             value="GUEST"
-            onClick={() => handleButtonClick('guestHouse')}
+            onClick={() => handleButtonClick('GUEST')}
           >
             <img
               src={
-                clickedCategory === 'guestHouse'
+                clickedCategory === 'GUEST'
                   ? primaryGuestHouseIcon
                   : grayGuestHouseIcon
               }
@@ -104,23 +122,25 @@ export const AccommodationCategory = () => {
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'guestHouse' ? 'primary' : 'black600'}
+              color={clickedCategory === 'GUEST' ? 'primary' : 'black600'}
             >
               게스트하우스
             </TextBox>
           </StyledRadioButton>
         </StyledRadioGroup>
       </Form.Item>
-      {clickedCategory === 'hotelResort' && (
+      {clickedCategory === 'HOTEL/RESORT' && (
         <RadioButtonCustomContainer
-          options={hotelCategory}
+          form={form}
+          options={hotelResortDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
         />
       )}
-      {clickedCategory === 'guestHouse' && (
+      {clickedCategory === 'GUEST' && (
         <RadioButtonCustomContainer
-          options={guestHouseCategory}
+          form={form}
+          options={guestHouseDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
         />
@@ -130,11 +150,8 @@ export const AccommodationCategory = () => {
 };
 
 const StyledInputWrapper = styled.div`
-  margin-bottom: 48px;
-
   display: flex;
   flex-direction: column;
-  gap: 8px;
 
   .ant-radio-button-wrapper {
     border: 0;
@@ -148,7 +165,7 @@ const StyledInputWrapper = styled.div`
       border: 0;
     }
 
-    padding: 33px 44px;
+    padding: 30px;
 
     height: 200px;
   }

@@ -1,8 +1,8 @@
-import { ChangeEvent } from 'react';
+import { FormInstance } from 'antd';
 
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
-  isValid: boolean;
+  isValid?: boolean;
 };
 
 export type ButtonContainerStyledWrapperProps = {
@@ -10,7 +10,7 @@ export type ButtonContainerStyledWrapperProps = {
 };
 
 export type CheckBoxContainerProps = {
-  options: string[];
+  options: { [key: string]: string };
   header: string;
 };
 
@@ -29,18 +29,12 @@ export type ImageUploadContainerProps = {
   header: string;
 };
 
-export type ImageUploadHandleChangeProps = {
-  event: ChangeEvent<HTMLInputElement>;
-};
-
 export type NameContainerProps = {
   header: string;
+  placeholder: string;
+  form: FormInstance;
 };
 
-export type ValidateInputProps = {
+export type ValidateInput = {
   value: string;
-};
-
-export type NameHandleInputChangeProps = {
-  event: ChangeEvent<HTMLInputElement>;
 };
