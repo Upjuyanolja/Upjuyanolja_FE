@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input, Layout, Modal, Space } from 'antd';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { TextBox } from '@components/text-box';
@@ -8,15 +8,27 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { colors } from '@/constants/colors';
 import { PointModalProps } from './types';
 
+import { nanoid } from 'nanoid';
+import {
+  PaymentWidgetInstance,
+  loadPaymentWidget,
+} from '@tosspayments/payment-widget-sdk';
+import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
+import { isNumber } from '@/utils/isNumber';
+
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
 const PRICE_10000 = 10000;
-const PRICE_50000 = 10000;
-const PRICE_100000 = 10000;
+const PRICE_50000 = 50000;
+const PRICE_100000 = 100000;
+
+const SELECTOR = '#payment-widget';
+
 export const PointModal = ({
   isModalOpen,
   setIsModalOpen,
 }: PointModalProps) => {
+  const [price, setPrice] = useState(0);
   const [formattedValue, setFormattedValue] = useState<string>('');
   const [pointErrorMessage, setPointErrorMessage] = useState<string>('');
   const [form] = Form.useForm<{ inputValue: string }>();
@@ -24,12 +36,53 @@ export const PointModal = ({
   const [isAgreementPoint, setIsAgreementPoint] = useState(false);
   const [isInfoBoxState, setIsInfoBoxState] = useState(false);
 
+  const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
+  const paymentMethodsWidgetRef = useRef<ReturnType<
+    PaymentWidgetInstance['renderPaymentMethods']
+  > | null>(null);
+
+  const { handleChangeUrl } = useCustomNavigate();
+  useEffect(() => {
+    (async () => {
+      if (
+        process.env.REACT_APP_CLIENT_KEY &&
+        process.env.REACT_APP_CUSTOMER_KEY
+      ) {
+        const paymentWidget = await loadPaymentWidget(
+          process.env.REACT_APP_CLIENT_KEY,
+          process.env.REACT_APP_CUSTOMER_KEY,
+        );
+
+        const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
+          SELECTOR,
+          { value: price, currency: 'KRW', country: 'KR' },
+          { variantKey: 'DEFAULT' },
+        );
+
+        paymentWidgetRef.current = paymentWidget;
+        paymentMethodsWidgetRef.current = paymentMethodsWidget;
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    const paymentMethodsWidget = paymentMethodsWidgetRef.current;
+
+    if (paymentMethodsWidget == null) {
+      return;
+    }
+
+    paymentMethodsWidget.updateAmount(price);
+  }, [price]);
+
   const handleChangePoint = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    if (/[0-9]/.test(removeNumberFormat(inputValue))) {
+    if (isNumber(removeNumberFormat(inputValue))) {
       setFormattedValue(numberFormat(inputValue));
+      setPrice(parseInt(inputValue));
     } else {
       setFormattedValue('');
+      setPrice(0);
     }
 
     priceComparator(inputValue);
@@ -44,6 +97,7 @@ export const PointModal = ({
       setIsPointState(true);
     } else if (parseInt(removeNumberFormat(inputValue)) > MAXIMUM_PRICE) {
       setFormattedValue(numberFormat(`${MAXIMUM_PRICE}`));
+      setPrice(MAXIMUM_PRICE);
       setIsPointState(false);
     } else {
       setPointErrorMessage('');
@@ -55,8 +109,10 @@ export const PointModal = ({
     const result = parseInt(removeNumberFormat(formattedValue || '0')) + price;
     if (result > MAXIMUM_PRICE) {
       setFormattedValue(numberFormat(`${MAXIMUM_PRICE}`));
+      setPrice(MAXIMUM_PRICE);
     } else {
       setFormattedValue(numberFormat(result.toString()));
+      setPrice(result);
       setPointErrorMessage('');
       setIsPointState(false);
     }
@@ -69,10 +125,29 @@ export const PointModal = ({
   const handleCancel = () => {
     setIsModalOpen(false);
     setFormattedValue('');
+    setPrice(0);
     setPointErrorMessage('');
     setIsPointState(true);
     setIsAgreementPoint(false);
     setIsInfoBoxState(false);
+  };
+
+  const handleClickPayment = async () => {
+    const paymentWidget = paymentWidgetRef.current;
+
+    try {
+      await paymentWidget?.requestPayment({
+        orderId: nanoid(),
+        orderName: '토스 티셔츠 외 2건',
+        customerName: '김토스',
+        customerEmail: 'customer123@gmail.com',
+        successUrl: `${window.location.origin}/success`,
+        failUrl: `${window.location.origin}/fail`,
+      });
+      //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
+    } catch (error) {
+      handleChangeUrl('/point-detail');
+    }
   };
 
   return (
@@ -122,6 +197,8 @@ export const PointModal = ({
               </Button>
             </PointButtonWrap>
 
+            <div id="payment-widget" />
+
             <PriceWrap>
               {isInfoBoxState && <InfoContainer />}
 
@@ -158,7 +235,7 @@ export const PointModal = ({
             <SubmitButton
               key="submit"
               type="primary"
-              onClick={handleOk}
+              onClick={handleClickPayment}
               disabled={isPointState || !isAgreementPoint}
             >
               결제하기
@@ -206,7 +283,7 @@ const CustomModal = styled(Modal)`
 `;
 const PointButtonWrap = styled(Space)`
   display: flex;
-  margin-bottom: 221px;
+  margin-bottom: 8px;
   button {
     width: 64px;
     height: 25px;

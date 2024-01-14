@@ -1,29 +1,25 @@
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { Button, Space } from 'antd';
-import React from 'react';
+import { pageNumState, pointDetailDataState } from '@stores/point-detail/atoms';
+import { Pagination, Space } from 'antd';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+
 import styled from 'styled-components';
-import { colors } from '@/constants/colors';
 
 export const PageComp = () => {
+  const setPageNum = useSetRecoilState(pageNumState);
+  const pointDetailData = useRecoilValue(pointDetailDataState);
+
+  const handlePageChange = (pageNum: number) => {
+    setPageNum(pageNum);
+  };
+
   return (
     <StyledSpace>
-      <StyledPageButton color={colors.neutral5}>
-        <LeftOutlined />
-      </StyledPageButton>
-
-      <StyledPageButton color={colors.primary}>1</StyledPageButton>
-
-      <StyledPageButton>2</StyledPageButton>
-
-      <StyledPageButton>3</StyledPageButton>
-
-      <StyledPageButton>4</StyledPageButton>
-
-      <StyledPageButton>5</StyledPageButton>
-
-      <StyledPageButton>
-        <RightOutlined />
-      </StyledPageButton>
+      <StyledPagination
+        defaultCurrent={1}
+        total={pointDetailData.totalPages * 10}
+        hideOnSinglePage={true}
+        onChange={(page) => handlePageChange(page)}
+      />
     </StyledSpace>
   );
 };
@@ -36,15 +32,8 @@ const StyledSpace = styled(Space)`
   margin-top: 16px;
 `;
 
-const StyledPageButton = styled(Button)`
-  width: 32px;
-  height: 32px;
-
-  font-size: 14px;
-  line-height: 22px;
-
-  padding: 0px;
-
-  color: ${(props) => props.color};
-  border-color: ${(props) => props.color};
+const StyledPagination = styled(Pagination)`
+  .ant-pagination-options {
+    display: none;
+  }
 `;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InputNumber, Col } from 'antd';
+import { InputNumber, Col, Form } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
@@ -9,8 +9,8 @@ import {
   MIN_CAPACITY,
 } from '@/constants/room/room-registration/';
 
-export const CapacityContainer = ({ header }: CapacityContainerProps) => {
-  const [stdCapacityValue, setStdCapacityValue] = useState<number>(1);
+export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
+  const [defaultCapacity, setDefaultCapacity] = useState<number>(1);
   const [maxCapacityValue, setMaxCapacityValue] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,10 +25,12 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
     (capType: string) => (newValue: number | string | null | undefined) => {
       if (typeof newValue !== 'number') return;
       validateInput({ value: newValue });
-      if (capType === 'std') {
-        setStdCapacityValue(newValue);
+      if (capType === 'default') {
+        setDefaultCapacity(newValue);
+        form.setFieldValue('defaultCapacity', newValue);
       } else {
         setMaxCapacityValue(newValue);
+        form.setFieldValue('maxCapacity', newValue);
       }
     };
 
@@ -51,13 +53,15 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
               기준 인원
             </TextBox>
           </StyledTextBoxWrapper>
-          <StyledInputNumber
-            min={1}
-            max={15}
-            defaultValue={1}
-            value={stdCapacityValue}
-            onChange={handleCapacityChange('std')}
-          />
+          <Form.Item name={'defaultCapacity'}>
+            <StyledInputNumber
+              min={1}
+              max={15}
+              defaultValue={1}
+              value={defaultCapacity}
+              onChange={handleCapacityChange('default')}
+            />
+          </Form.Item>
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
               명
@@ -70,13 +74,15 @@ export const CapacityContainer = ({ header }: CapacityContainerProps) => {
               최대 인원
             </TextBox>
           </StyledTextBoxWrapper>
-          <StyledInputNumber
-            min={1}
-            max={15}
-            defaultValue={1}
-            value={maxCapacityValue}
-            onChange={handleCapacityChange('max')}
-          />
+          <Form.Item name={'maxCapacity'}>
+            <StyledInputNumber
+              min={1}
+              max={15}
+              defaultValue={1}
+              value={maxCapacityValue}
+              onChange={handleCapacityChange('maximum')}
+            />
+          </Form.Item>
           <StyledTextBoxWrapper>
             <TextBox typography="body1" color="black900" fontWeight="normal">
               명
@@ -129,6 +135,7 @@ const StyledInputNumber = styled(InputNumber)`
   align-items: center;
   padding: 0;
   margin-right: 4px;
+  margin-top: 20px;
 
   .ant-input-number-input {
     width: 100%;
@@ -152,6 +159,7 @@ const StyledRow = styled.div`
   display: flex;
   align-items: center;
   margin-top: 8;
+  height: 40px !important;
 `;
 
 const StyledInputWrapper = styled.div`
