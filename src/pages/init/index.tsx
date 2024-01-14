@@ -1,12 +1,13 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
+import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { Layout, Button } from 'antd';
 import { MdOutlineAddHome } from 'react-icons/md';
 import styled from 'styled-components';
 
 export const Init = () => {
-  const name = '신현진';
-
+  const { userInfoData } = useSideBar();
+  const name = userInfoData?.name;
   return (
     <StyledLayout color={colors.white}>
       <Layout.Header>Header</Layout.Header>
