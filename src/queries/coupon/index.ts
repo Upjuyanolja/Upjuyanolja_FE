@@ -1,8 +1,14 @@
 import { COUPON_API } from '@api/coupon';
 import { AxiosError, AxiosResponse } from 'axios';
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 import { Response } from '@/types/api';
 import {
+  CouponDeleteParams,
   coupons,
   dailyRevenue,
   revenueData,
@@ -49,4 +55,21 @@ export const useGetCoupon = (
     () => COUPON_API.getCoupon(),
     { ...options },
   );
+};
+
+export const useDeleteCoupon = (
+  options?: UseMutationOptions<
+    AxiosResponse<Response<null>>,
+    AxiosError,
+    CouponDeleteParams
+  >,
+) => {
+  return useMutation<
+    AxiosResponse<Response<null>>,
+    AxiosError,
+    CouponDeleteParams
+  >((params: CouponDeleteParams) => COUPON_API.deleteCoupon(params), {
+    mutationKey: ['deleteCoupon'],
+    ...options,
+  });
 };

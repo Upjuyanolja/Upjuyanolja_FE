@@ -1,8 +1,8 @@
 import { Response } from '@/types/api';
 import { isChar, isExceededLength, isNumber } from '@/utils/input/keyboard';
-import { coupons } from '@api/coupon/type';
-import { useQueryClient } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import { CouponDeleteParams, coupons } from '@api/coupon/type';
+import { UseMutateFunction, useQueryClient } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { CouponData } from './type';
 import { Modal, message } from 'antd';
@@ -18,21 +18,30 @@ import { Modal, message } from 'antd';
     handleChangeInput,
  */
 
-export const useCouponForm = () => {
+export const useCouponForm = (
+  deleteCoupon: UseMutateFunction<
+    AxiosResponse<Response<null>, any>,
+    AxiosError<unknown, any>,
+    CouponDeleteParams,
+    unknown
+  >,
+) => {
+  const queryClient = useQueryClient();
   const [selectedStatus, setSelectedStatus] = useState<string>('');
   const [couponData, setCouponData] = useState<CouponData>({
     expiry: '',
     coupons: [],
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
-  const queryClient = useQueryClient();
   const originCouponTableData = useRef<CouponData>();
   const data = queryClient.getQueryData<AxiosResponse<Response<coupons>>>([
     'getCoupon',
   ]);
+
   useEffect(() => {
     if (data) {
       processCouponTableData(data.data.data);
+      console.log('여기 다시 실행!!');
     }
   }, [data]);
 
@@ -163,6 +172,33 @@ export const useCouponForm = () => {
     return false;
   };
 
+  const processDeleteData = (selectedRowKeys: number[]) => {
+    const rooms: { couponId: number }[][] = [];
+    for (let index = 0; index < selectedRowKeys.length; index++) {
+      const key = selectedRowKeys[index];
+      const { room, couponId } = couponData.coupons[key];
+      if (!rooms[room.id]) {
+        rooms[room.id] = [];
+      }
+      rooms[room.id].push({ couponId });
+    }
+
+    const data: CouponDeleteParams = {
+      accommodationId: 1,
+      rooms: [],
+    };
+    for (let index = 0; index < rooms.length; index++) {
+      if (rooms[index]) {
+        const roomsData = {
+          roomId: index,
+          coupons: rooms[index],
+        };
+        data.rooms.push(roomsData);
+      }
+    }
+    return data;
+  };
+
   const handleDeleteButton = () => {
     if (!isSelectedRow()) {
       message.warning('삭제할 쿠폰을 먼저 선택하세요.');
@@ -179,8 +215,22 @@ export const useCouponForm = () => {
         cancelText: '취소',
         okText: '삭제',
         className: 'confirm-modal',
+        onOk: () => {
+          deleteCoupon(processDeleteData(selectedRowKeys));
+        },
       });
+      return;
     }
+    Modal.confirm({
+      title: '삭제된 쿠폰 정보는 되돌릴 수 없습니다.',
+      content: ' 삭제하시겠습니까?',
+      cancelText: '취소',
+      okText: '삭제',
+      className: 'confirm-modal',
+      onOk: () => {
+        deleteCoupon(processDeleteData(selectedRowKeys));
+      },
+    });
   };
   return {
     couponData,

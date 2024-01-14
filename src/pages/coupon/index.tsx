@@ -9,7 +9,7 @@ import { CouponTable } from '@components/coupon/table';
 import { useCouponForm } from '@hooks/coupon/useCouponForm';
 
 export const Coupon = () => {
-  const { data, isGetCouponError } = useCoupon();
+  const { data, isGetCouponError, deleteCoupon } = useCoupon();
   const {
     couponData,
     handleSelectStatus,
@@ -19,9 +19,10 @@ export const Coupon = () => {
     handleDeleteButton,
     isModified,
     handleChangeDate,
-  } = useCouponForm();
+  } = useCouponForm(deleteCoupon);
   if (!data) return <div>로딩</div>;
   if (isGetCouponError) return <div>에러</div>;
+
   return (
     <>
       <CouponHeader
