@@ -178,9 +178,20 @@
   .ant-modal-confirm-title {
     font-size: 20px;
     font-weight: 400;
+    white-space: pre-wrap;
   }
   .ant-modal-confirm-content {
     font-size: 20px;
     font-weight: 700;
+    margin-left: 0px !important;
+  }
+}
+
+/* coupon page message*/
+.coupon-message {
+  .ant-message-custom-content {
+    width: 230px;
+    display: flex;
+    align-items: center;
   }
 }
