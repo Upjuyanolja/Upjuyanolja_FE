@@ -9,19 +9,18 @@ import { getUserInfoResolver } from './member';
 import { getPointSummaryResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
 import {
-  postAuthenticationResolver,
+  getPointDetailTotalResolver,
+  getPointDetailUsageResolver,
+  getPointDetailChargesResolver,
+} from './point-detail';
+import {
   postSignUpResolver,
+  postAuthenticationResolver,
   getVerifyResolver,
 } from './sign-up';
-import {
-  getPointDetailChargesResolver,
-  getPointDetailUsageResolver,
-  getPointDetailTotalResolver,
-} from './point-detail';
 
-const email = 'ivegaeul@main.com';
-const verificationCode = '533978';
-
+const email = 'ivegaeul@naver.com';
+const verificationCode = '020924';
 export const handlers = [
   http.post('/api/auth/owner/signin', postSignInResolver),
   http.post('/api/auth/owners/signup', postSignUpResolver),
