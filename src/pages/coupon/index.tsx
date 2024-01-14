@@ -6,11 +6,11 @@ import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase
 import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
 import { useCoupon } from '@hooks/coupon/useCoupon';
 import { CouponTable } from '@components/coupon/table';
-import { useCouponForm } from '@hooks/coupon/useCouponForm';
 
 export const Coupon = () => {
-  const { data, isGetCouponError, deleteCoupon } = useCoupon();
   const {
+    data,
+    isGetCouponError,
     couponData,
     handleSelectStatus,
     handleSelectRecord,
@@ -19,7 +19,8 @@ export const Coupon = () => {
     handleDeleteButton,
     isModified,
     handleChangeDate,
-  } = useCouponForm(deleteCoupon);
+  } = useCoupon();
+
   if (!data) return <div>로딩</div>;
   if (isGetCouponError) return <div>에러</div>;
 
