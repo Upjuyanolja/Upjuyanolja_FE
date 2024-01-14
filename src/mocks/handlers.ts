@@ -26,8 +26,8 @@ export const handlers = [
   http.get('/api/member', getUserInfoResolver),
   http.get('/api/points/summary', getPointSummaryResolver),
 
-  http.get('/api/points/total/1', getPointDetailTotalResolver),
-  http.get('/api/points/usage/1', getPointDetailUsageResolver),
-  http.get('/api/points/charges/1', getPointDetailChargesResolver),
-  http.delete('/api/points/cancel/1', deleteOrderCancelResolver),
+  http.get('/api/points/total?1', getPointDetailTotalResolver),
+  http.get('/api/points/usage?1', getPointDetailUsageResolver),
+  http.get('/api/points/charges?1', getPointDetailChargesResolver),
+  http.delete('/api/points/charges/1', deleteOrderCancelResolver),
 ];
