@@ -1,17 +1,17 @@
 import { ROUTES } from '@/constants/routes';
 import { dailyRevenue } from '@api/coupon/type';
 import { useGetStatics, useGetRevenue } from '@queries/coupon';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const useMain = () => {
   const navigate = useNavigate();
-
+  const { accommodationId } = useParams();
   const navigateCoupon = () => {
-    navigate(ROUTES.COUPON);
+    navigate(`/${accommodationId}${ROUTES.COUPON}`);
   };
 
   const navigateCouponRegistration = () => {
-    navigate(ROUTES.COUPON_REGISTRATION);
+    navigate(`/${accommodationId}${ROUTES.COUPON_REGISTRATION}`);
   };
 
   const handleRevenueDataFormat = (data: dailyRevenue[] | undefined) => {
