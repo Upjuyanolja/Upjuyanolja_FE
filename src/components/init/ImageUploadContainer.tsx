@@ -2,13 +2,12 @@ import { TextBox } from '@components/text-box';
 import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef, useEffect, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent } from 'react';
 import { ImageUploadFileItem, StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
 import {
-  isUploadedAccommodationImage,
   selectedAccommodationFilesState,
   selectedInitRoomFilesState,
 } from '@stores/init/atoms';
@@ -18,8 +17,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const setIsUploadedImage = useSetRecoilState(isUploadedAccommodationImage);
 
   const setSelectedAccommodationFiles = useSetRecoilState(
     selectedAccommodationFilesState,
@@ -67,7 +64,10 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           ...prevSelectedFiles,
           { url: URL.createObjectURL(selectedFile) },
         ]);
-      } else if (header === '객실 사진' && window.location.pathname) {
+      } else if (
+        header === '객실 사진' &&
+        window.location.pathname === '/init/room-registration'
+      ) {
         setSelectedInitRoomFiles((prevSelectedFiles) => [
           ...prevSelectedFiles,
           { url: URL.createObjectURL(selectedFile) },
@@ -94,11 +94,16 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   const handleRemove = (file: ImageUploadFileItem) => {
     const newFileList = fileList.filter((item) => item.uid !== file.uid);
     setFileList(newFileList);
-  };
 
-  useEffect(() => {
-    setIsUploadedImage(fileList.length !== 0);
-  }, [fileList]);
+    if (header === '숙소 대표 이미지 설정') {
+      setSelectedAccommodationFiles(newFileList);
+    } else if (
+      header === '객실 사진' &&
+      window.location.pathname === '/init/room-registration'
+    ) {
+      setSelectedInitRoomFiles(newFileList);
+    }
+  };
 
   return (
     <StyledInputWrapper>

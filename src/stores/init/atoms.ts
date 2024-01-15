@@ -55,11 +55,6 @@ export const userInputValueState = atom<UserInputValue[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const isUploadedAccommodationImage = atom({
-  key: 'isUploadedAccommodationImage',
-  default: false,
-});
-
 export const checkedRoomOptions = atom({
   key: 'checkedAccommodationOptions',
   default: {

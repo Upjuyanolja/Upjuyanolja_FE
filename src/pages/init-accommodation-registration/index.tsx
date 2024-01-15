@@ -11,7 +11,6 @@ import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
   checkedAccommodationOptions,
-  isUploadedAccommodationImage,
   selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
@@ -74,7 +73,6 @@ export const InitAccommodationRegistration = () => {
 
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
-  const uploadedImage = useRecoilValue(isUploadedAccommodationImage);
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
 
@@ -83,7 +81,7 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
       values['accommodation-desc'] &&
-      isUploadedAccommodationImage;
+      selectedImages.length !== 0;
 
     const hotelResortConditions =
       values['accommodation-category'] === 'HOTEL/RESORT' &&
@@ -103,7 +101,7 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, uploadedImage, selectedOptions]);
+  }, [form, selectedImages, selectedOptions]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());

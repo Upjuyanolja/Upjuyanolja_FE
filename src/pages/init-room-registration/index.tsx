@@ -18,13 +18,13 @@ import {
   userInputValueState,
 } from '@stores/init/atoms';
 import { Form } from 'antd';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitRoomRegistration = () => {
   const [form] = Form.useForm();
-  const isValid = true;
 
   const roomOptions = {
     tv: 'TV',
@@ -33,6 +33,7 @@ export const InitRoomRegistration = () => {
   };
 
   const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(false);
 
   const setUserInputValueState = useSetRecoilState(userInputValueState);
 
@@ -68,9 +69,36 @@ export const InitRoomRegistration = () => {
     navigate(ROUTES.INIT_INFO_CONFIRMATION);
   };
 
+  const areFormFieldsValid = () => {
+    const values = form.getFieldsValue();
+
+    const conditions =
+      values['room-name'] &&
+      values['price'] &&
+      values['checkInTime'] &&
+      values['checkOutTime'] &&
+      selectedImages.length !== 0;
+
+    return (
+      !form.getFieldsError().some(({ errors }) => errors.length) && conditions
+    );
+  };
+
+  useEffect(() => {
+    setIsValid(areFormFieldsValid());
+  }, [form, selectedImages, selectedOptions]);
+
+  const handleFormValuesChange = () => {
+    setIsValid(areFormFieldsValid());
+  };
+
   return (
     <StyledWrapper>
-      <Form form={form} onFinish={onFinish}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        onFieldsChange={handleFormValuesChange}
+      >
         <NameContainer
           header="객실명"
           form={form}
