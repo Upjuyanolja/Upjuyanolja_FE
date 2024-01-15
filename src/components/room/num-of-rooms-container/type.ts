@@ -1,7 +1,7 @@
 import { FormInstance } from 'antd';
 
 export type NumOfRoomsContainerProps = {
-  value: string;
+  header: string;
   form: FormInstance;
 };
 
