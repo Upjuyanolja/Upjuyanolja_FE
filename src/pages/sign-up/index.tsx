@@ -26,6 +26,9 @@ export const SignUp = () => {
   const [checkThree, setCheckThree] = useState(false);
   const [checkFour, setCheckFour] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [emailError, setEmailError] = useState(false);
+  const [verifyError, setVerifyError] = useState(false);
+
   const validationSchema = getValidateSchema(queryClient);
 
   const postSignUpMutation = usePostSignUp({
@@ -127,6 +130,8 @@ export const SignUp = () => {
           }
         }
       }
+    } else {
+      setVerifyError(true);
     }
   };
   useEffect(() => {
@@ -154,6 +159,16 @@ export const SignUp = () => {
   useEffect(() => {
     setIsDisabled(!(checkOne && checkTwo && checkThree && checkFour));
   }, [checkOne, checkTwo, checkThree, checkFour]);
+
+  useEffect(() => {
+    if (values.email.length > 0) {
+      setEmailError(false);
+      setCheckOne_1(false);
+      setCheckOne_2(false);
+    } else if (values.verificationCode.length > 0) {
+      setVerifyError(false);
+    }
+  }, [values.email, values.verificationCode]);
 
   return (
     <StyledLayout>
@@ -185,21 +200,36 @@ export const SignUp = () => {
                   onBlur={handleBlur}
                   readOnly={emailDisabled}
                   style={{
-                    borderColor:
-                      values.email.length === 0
-                        ? errors.email && touched.email
+                    borderColor: checkOne_1
+                      ? `${colors.error}`
+                      : checkOne_2
+                        ? `${colors.error}`
+                        : emailError
                           ? `${colors.error}`
-                          : `${colors.black600}`
-                        : errors.email && touched.email
-                          ? `${colors.error}`
-                          : `${colors.success}`,
+                          : values.email.length === 0
+                            ? errors.email && touched.email
+                              ? `${colors.error}`
+                              : `${colors.black600}`
+                            : errors.email && touched.email
+                              ? `${colors.error}`
+                              : `${colors.success}`,
                   }}
                 />
-                {touched.email && errors.email && (
+                {emailError && (
                   <TextBox typography="body4" fontWeight={'400'} color="error">
-                    {errors.email}
+                    이메일 형식이 올바르지 않습니다.
                   </TextBox>
                 )}
+                {emailError ||
+                  (touched.email && errors.email && (
+                    <TextBox
+                      typography="body4"
+                      fontWeight={'400'}
+                      color="error"
+                    >
+                      {errors.email}
+                    </TextBox>
+                  ))}
                 {checkOne && (
                   <TextBox
                     typography="body4"
@@ -242,6 +272,8 @@ export const SignUp = () => {
                       postAuthenticationMutation.mutate({
                         email: values.email,
                       });
+                    } else if (values.email.length === 0) {
+                      setEmailError(true);
                     }
                   }}
                 >
@@ -268,8 +300,9 @@ export const SignUp = () => {
                   onBlur={handleBlur}
                   readOnly={isVerifyRes}
                   style={{
-                    borderColor:
-                      values.verificationCode.length === 0
+                    borderColor: verifyError
+                      ? `${colors.error}`
+                      : values.verificationCode.length === 0
                         ? errors.verificationCode && touched.verificationCode
                           ? `${colors.error}`
                           : `${colors.black600}`
@@ -278,6 +311,16 @@ export const SignUp = () => {
                           : `${colors.error}`,
                   }}
                 />
+                {verifyError && (
+                  <TextBox
+                    typography="body4"
+                    fontWeight={'400'}
+                    color="error"
+                    cursor="default"
+                  >
+                    인증번호를 입력하세요.
+                  </TextBox>
+                )}
                 {touched.verificationCode && errors.verificationCode && (
                   <TextBox
                     typography="body4"
