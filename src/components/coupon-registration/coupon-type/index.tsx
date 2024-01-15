@@ -66,19 +66,23 @@ export const CouponType = ({
 
     handleDiscountErrorMessage(discountValue, couponType);
     checkDiscountValidity(discountValue, couponType);
-    let transformedValue;
     normalizeToRange(discountValue, couponType);
-    if (Number(discountValue) >= FLAT_COUPON_TYPE.min) {
+
+    let transformedValue;
+
+    if (parseInt(discountValue) >= FLAT_COUPON_TYPE.min) {
       transformedValue = (
-        Math.floor(Number(discountValue) / FLAT_COUPON_TYPE.min) *
+        Math.floor(parseInt(discountValue) / FLAT_COUPON_TYPE.min) *
         FLAT_COUPON_TYPE.min
       ).toString();
     } else {
       transformedValue = discountValue;
     }
+
     if (!isValidDiscountRange) {
       return;
     }
+
     formattedNumber(transformedValue);
   };
 
