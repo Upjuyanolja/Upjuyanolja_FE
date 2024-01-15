@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
 import { ValidateSchema } from '@/utils/sign-in/ValidateSchema';
-import { removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
+import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostLogin } from '@queries/sign-in';
 import { useFormik } from 'formik';
@@ -16,13 +16,19 @@ import { HTTP_STATUS_CODE } from '@/constants/api';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
+  const { accommodationListData } = useSideBar();
   const postLoginMutation = usePostLogin({
     onSuccess: (response) => {
       setCookie('accessToken', response.data.data.accessToken);
       setCookie('refreshToken', response.data.data.accessToken);
+      if (accommodationListData?.accommodations[0]?.id) {
+        setCookie(
+          'accomodationId',
+          accommodationListData?.accommodations[0]?.id.toString(),
+        );
+      }
     },
   });
-  const { accommodationListData } = useSideBar();
   const isAccomodationList = () => {
     if (
       accommodationListData?.accommodations &&
@@ -68,9 +74,10 @@ export const SignIn = () => {
         await postLoginMutation.mutateAsync(values);
         try {
           const res = isAccomodationList();
+          const accomodationId = getCookie('accomodationId');
           if (res === true) {
             setTimeout(() => {
-              handleChangeUrl('/');
+              handleChangeUrl(`/${accomodationId}/main`);
             }, 1000);
           } else {
             setTimeout(() => {
