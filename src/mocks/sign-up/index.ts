@@ -8,7 +8,7 @@ export const postSignUpResolver = async () => {
   return HttpResponse.json(signUpData, { status: 200 });
 };
 export const postAuthenticationResolver = async () => {
-  return HttpResponse.json(failRequestPostData, { status: 400 });
+  return HttpResponse.json(requestAuthenticationData, { status: 200 });
 };
 export const getVerifyResolver = async () => {
   return HttpResponse.json(verifyAuthenticationData, { status: 200 });

@@ -161,7 +161,7 @@ export const SignUp = () => {
   }, [checkOne, checkTwo, checkThree, checkFour]);
 
   useEffect(() => {
-    if (values.email.length > 0) {
+    if (values.email.length >= 0) {
       setEmailError(false);
       setCheckOne_1(false);
       setCheckOne_2(false);
