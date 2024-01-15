@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
@@ -17,7 +17,6 @@ export const NameContainer = ({
   placeholder,
   form,
 }: NameContainerProps) => {
-  const [, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
   const validateInput = ({ value }: { value: string }) => {
@@ -37,7 +36,6 @@ export const NameContainer = ({
       else if (header === '객실명') form.setFieldValue('room-name', '');
       return;
     }
-    setInputValue(newValue);
     validateInput({ value: newValue });
   };
 
