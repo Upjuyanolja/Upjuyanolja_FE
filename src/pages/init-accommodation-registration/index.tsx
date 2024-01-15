@@ -63,11 +63,11 @@ export const InitAccommodationRegistration = () => {
 
       const updatedUserInputValue = {
         ...userInputValue,
-        id: Math.floor(Math.random() * 1000000),
         type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],
-        detailAddress: values['accommodation-detailAddress'],
+        detailAddress: values['accommodation-detailAddress'].toString(),
+        zipCode: values['accommodation-postCode'],
         description: values['accommodation-desc'],
         options: selectedOptions,
         images: selectedImages,
