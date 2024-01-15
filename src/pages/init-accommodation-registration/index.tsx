@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import {
   checkedAccommodationOptions,
   descErrorMessage,
-  isUploadedImage,
+  isUploadedAccommodationImage,
   nameErrorMessage,
   selectedAccommodationFilesState,
   userInputValueState,
@@ -80,7 +80,7 @@ export const InitAccommodationRegistration = () => {
   const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
   const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
 
-  const uploadedImage = useRecoilValue(isUploadedImage);
+  const uploadedImage = useRecoilValue(isUploadedAccommodationImage);
 
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
@@ -93,7 +93,7 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
       values['accommodation-desc'] &&
-      isUploadedImage;
+      isUploadedAccommodationImage;
 
     const hotelResortConditions =
       values['accommodation-category'] === 'HOTEL/RESORT' &&

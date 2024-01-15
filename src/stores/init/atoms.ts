@@ -55,8 +55,8 @@ export const userInputValueState = atom<UserInputValue[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const isUploadedImage = atom({
-  key: 'isUploadedImage',
+export const isUploadedAccommodationImage = atom({
+  key: 'isUploadedAccommodationImage',
   default: false,
 });
 
@@ -96,5 +96,10 @@ export const checkedAccommodationOptions = atom<Options>({
 
 export const selectedAccommodationFilesState = atom<Image[]>({
   key: 'selectedAccommodationFilesState',
+  default: [],
+});
+
+export const selectedInitRoomFilesState = atom<Image[]>({
+  key: 'selectedInitRoomFilesState',
   default: [],
 });

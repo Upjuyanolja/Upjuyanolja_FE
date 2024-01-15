@@ -8,7 +8,11 @@ import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
-import { checkedRoomOptions, userInputValueState } from '@stores/init/atoms';
+import {
+  checkedRoomOptions,
+  selectedInitRoomFilesState,
+  userInputValueState,
+} from '@stores/init/atoms';
 import { Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -29,6 +33,7 @@ export const InitRoomRegistration = () => {
   const setUserInputValueState = useSetRecoilState(userInputValueState);
 
   const selectedOptions = useRecoilValue(checkedRoomOptions);
+  const selectedImages = useRecoilValue(selectedInitRoomFilesState);
 
   const onFinish = (values: { [key: string]: string }) => {
     setUserInputValueState((prevUserInputValueState) => {
@@ -45,6 +50,7 @@ export const InitRoomRegistration = () => {
         checkOutTime: values['checkOutTime'],
         count: parseInt(values['count']),
         options: selectedOptions,
+        images: selectedImages,
       };
 
       const updatedUserInputValue = {
