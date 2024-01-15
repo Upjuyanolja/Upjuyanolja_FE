@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
 import { useRecoilValue } from 'recoil';
+import { numberFormat } from './../../../../../utils/Format/numberFormat';
 
 export const CouponInfo = ({ index }: { index: number }) => {
   const pointDetailData = useRecoilValue(pointDetailDataState);
@@ -26,8 +27,9 @@ export const CouponInfo = ({ index }: { index: number }) => {
           {pointDetailData.histories[index].description}
         </TextBox>
         <TextBox typography="body2" color={'black900'} fontWeight={'400'}>
-          {/* 주문수량: 100개 수량 수량데이터가 나와져 있지 않음.*/}
-          {pointDetailData.histories[index].receipt.amount}
+          {`주문수량: ${numberFormat(
+            pointDetailData.histories[index].trade,
+          )}매`}
         </TextBox>
       </CouponDetailBox>
     </CouponInfoWrap>

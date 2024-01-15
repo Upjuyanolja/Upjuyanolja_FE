@@ -47,26 +47,12 @@ export const OrderPointInfo = ({
       </OrderPointInfoList>
       <OrderPointInfoList>
         <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
-          {pointCharge
-            ? isCancelStatus
-              ? '환불 예정 금액'
-              : '결제 금액'
-            : '결제 금액'}
+          {isCancelStatus ? '환불 예정 금액' : '결제 금액'}
         </TextBox>
         <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
-          {numberFormat(pointDetailData.histories[index].receipt.amount)} P
+          {numberFormat(pointDetailData.histories[index].receipt.amount)} 원
         </TextBox>
       </OrderPointInfoList>
-      {/* {!pointCharge && (
-        <OrderPointInfoList>
-          <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
-            추가 충전 포인트
-          </TextBox>
-          <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
-            5000 P
-          </TextBox>
-        </OrderPointInfoList>
-      )} */}
     </OrderPointInfoContainer>
   );
 };

@@ -63,7 +63,9 @@ export const PointDetailList = () => {
             </StyledListItem>
             <StyledListItem>
               <TextBox typography="body2" color="black900" fontWeight="400">
-                {numberFormat(histories.trade)}
+                {histories.type === '쿠폰'
+                  ? `${numberFormat(histories.trade)}매`
+                  : `${numberFormat(histories.trade)}원`}
               </TextBox>
             </StyledListItem>
             <StyledListItem>

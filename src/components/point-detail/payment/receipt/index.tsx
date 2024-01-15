@@ -47,7 +47,7 @@ export const ReceiptModal = ({
 
           <OrderPointInfo
             index={index}
-            pointCharge={pointDetailData.histories[index].type === '포인트'}
+            pointCharge={pointDetailData.histories[index].type !== '쿠폰'}
             status={pointDetailData.histories[index].status}
           />
           <CompanyInfo />
