@@ -70,8 +70,17 @@ export const descErrorMessage = atom({
   default: '',
 });
 
-export const checkedAccommodationOptions = atom<Options>({
+export const checkedRoomOptions = atom({
   key: 'checkedAccommodationOptions',
+  default: {
+    airCondition: false,
+    tv: false,
+    internet: false,
+  },
+});
+
+export const checkedAccommodationOptions = atom<Options>({
+  key: 'checkedRoomOptions',
   default: {
     cooking: false,
     parking: false,

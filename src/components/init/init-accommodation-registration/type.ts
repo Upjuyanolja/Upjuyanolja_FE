@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FormInstance } from 'antd/es/form/Form';
+import { Moment } from 'moment';
 
 export type AccommodationCategoryType =
   | 'HOTEL/RESORT'
@@ -41,6 +42,13 @@ export type Options = {
   seminar: boolean;
 };
 
+/** room 관련 타입 */
+export type RoomOptions = {
+  airCondition: boolean;
+  tv: boolean;
+  internet: boolean;
+};
+
 type Room = {
   name: string;
   price: number | null;
@@ -50,11 +58,19 @@ type Room = {
   checkOutTime: string;
   count: number | null;
   images: Image[];
-  options: {
-    airCondition: boolean;
-    tv: boolean;
-    internet: boolean;
-  };
+  options: RoomOptions;
+};
+
+export type RoomValue = {
+  name: string;
+  price: number;
+  defaultCapacity: number;
+  maxCapacity: number;
+  checkInTime: Moment;
+  checkOutTime: Moment;
+  count: number;
+  options: RoomOptions;
+  images: Image[];
 };
 
 export type UserInputValue = {
