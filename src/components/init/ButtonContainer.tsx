@@ -7,6 +7,7 @@ import {
 } from './type';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -30,19 +31,19 @@ export const ButtonContainer = ({
           <TextBox typography="h1" fontWeight={700} color="primary">
             사장님!
           </TextBox>
-          <TextBox
-            typography="h4"
-            fontWeight={400}
-            style={{ textAlign: 'center' }}
-          >
-            쿠폰센터에서는 숙소 등록만 가능하며,
-            <br />
-            등록 완료 후, 수정 /삭제는
-            <br />
+          <StyledMiddleTextContainer>
             <TextBox typography="h4" fontWeight={700}>
-              비즈니스 센터에서 처리 가능합니다.
+              쿠폰센터에서는 숙소 등록만 가능하며,
             </TextBox>
-          </TextBox>
+            <br />
+            <TextBox typography="h4" fontWeight={400}>
+              등록 완료 후
+            </TextBox>
+            <br />
+            <TextBox typography="h4" fontWeight={700} color="error">
+              수정 /삭제는 비즈니스 센터에서 처리 가능합니다.
+            </TextBox>
+          </StyledMiddleTextContainer>
         </StyledConfirmHead>
       ),
       content: (
@@ -116,7 +117,10 @@ export const ButtonContainer = ({
             등록이 완료되었습니다.
           </TextBox>
         </StyledTextContainer>
-        <StyledToMainButton type="primary" onClick={() => navigate('/')}>
+        <StyledToMainButton
+          type="primary"
+          onClick={() => navigate(ROUTES.MAIN)}
+        >
           홈으로 이동
         </StyledToMainButton>
       </Modal>
@@ -166,6 +170,10 @@ const StyledTextContainer = styled.div`
   gap: 8px;
 
   height: 507px;
+`;
+
+const StyledMiddleTextContainer = styled.div`
+  text-align: center;
 `;
 
 const StyledToMainButton = styled(Button)`

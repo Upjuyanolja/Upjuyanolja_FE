@@ -5,8 +5,12 @@ import styled from 'styled-components';
 import { CheckBoxContainerProps } from './type';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useRecoilState } from 'recoil';
-import { checkedAccommodationOptions } from '@stores/init/atoms';
-import { Options } from './init-accommodation-registration/type';
+import {
+  checkedAccommodationOptions,
+  checkedRoomOptions,
+} from '@stores/init/atoms';
+import { Options, RoomOptions } from './init-accommodation-registration/type';
+import { ROUTES } from '@/constants/routes';
 
 export const CheckBoxContainer = ({
   options,
@@ -15,13 +19,24 @@ export const CheckBoxContainer = ({
   const [selectedAccommodationOptions, setSelectedAccommodationOptions] =
     useRecoilState(checkedAccommodationOptions);
 
+  const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
+    useRecoilState(checkedRoomOptions);
+
   const handleCheckboxChange = (event: CheckboxChangeEvent) => {
     const checkedOption = event.target.value;
 
-    setSelectedAccommodationOptions((prev) => ({
-      ...prev,
-      [checkedOption]: event.target.checked,
-    }));
+    if (header === '숙소') {
+      setSelectedAccommodationOptions((prev) => ({
+        ...prev,
+        [checkedOption]: event.target.checked,
+      }));
+    } else if (header === '객실') {
+      if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
+        setSelectedInitRoomOptions((prev) => ({
+          ...prev,
+          [checkedOption]: event.target.checked,
+        }));
+    }
   };
 
   return (
@@ -39,7 +54,11 @@ export const CheckBoxContainer = ({
               value={english}
               key={english}
               onChange={handleCheckboxChange}
-              checked={selectedAccommodationOptions[english as keyof Options]}
+              checked={
+                header === '숙소'
+                  ? selectedAccommodationOptions[english as keyof Options]
+                  : selectedInitRoomOptions[english as keyof RoomOptions]
+              }
             >
               {korean}
             </Checkbox>

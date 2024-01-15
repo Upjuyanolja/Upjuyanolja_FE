@@ -12,13 +12,12 @@ import { useEffect, useState } from 'react';
 import {
   checkedAccommodationOptions,
   descErrorMessage,
-  isUploadedImage,
+  isUploadedAccommodationImage,
   nameErrorMessage,
   selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { formValues } from '@components/init/init-accommodation-registration/type';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,7 +44,7 @@ export const InitAccommodationRegistration = () => {
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
   const selectedImages = useRecoilValue(selectedAccommodationFilesState);
 
-  const onFinish = (values: formValues) => {
+  const onFinish = (values: { [key: string]: string }) => {
     setUserInputValueState((prevUserInputValueState) => {
       const [userInputValue] = prevUserInputValueState;
 
@@ -63,11 +62,11 @@ export const InitAccommodationRegistration = () => {
 
       const updatedUserInputValue = {
         ...userInputValue,
-        id: Math.floor(Math.random() * 1000000),
         type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],
         detailAddress: values['accommodation-detailAddress'],
+        zipCode: values['accommodation-postCode'],
         description: values['accommodation-desc'],
         options: selectedOptions,
         images: selectedImages,
@@ -81,7 +80,7 @@ export const InitAccommodationRegistration = () => {
   const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
   const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
 
-  const uploadedImage = useRecoilValue(isUploadedImage);
+  const uploadedImage = useRecoilValue(isUploadedAccommodationImage);
 
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
@@ -94,7 +93,7 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
       values['accommodation-desc'] &&
-      isUploadedImage;
+      isUploadedAccommodationImage;
 
     const hotelResortConditions =
       values['accommodation-category'] === 'HOTEL/RESORT' &&

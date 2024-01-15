@@ -1,12 +1,14 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
+import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { Layout, Button } from 'antd';
 import { MdOutlineAddHome } from 'react-icons/md';
 import styled from 'styled-components';
 
 export const Init = () => {
-  const name = '신현진';
-
+  const memberString = localStorage.getItem('member');
+  const memberObj = memberString ? JSON.parse(memberString) : null;
+  const name = memberObj.name;
   return (
     <StyledLayout color={colors.white}>
       <Layout.Header>Header</Layout.Header>
