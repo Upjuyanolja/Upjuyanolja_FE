@@ -47,11 +47,10 @@ export const CountContainer = ({ header, form }: NumOfRoomsContainerProps) => {
             일일 예약 가능 객실
           </TextBox>
         </StyledTextBoxWrapper>
-        <Form.Item name={'count'} style={{}}>
+        <Form.Item name={'count'} initialValue={1}>
           <StyledInputNumber
             min={1}
             max={100}
-            defaultValue={1}
             value={numOfRooms}
             onChange={handleCapacityChange}
           />
