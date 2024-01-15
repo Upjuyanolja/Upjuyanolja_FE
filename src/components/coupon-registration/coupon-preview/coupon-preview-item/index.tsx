@@ -8,11 +8,13 @@ import {
   FLAT_COUPON_TYPE,
   RATE_COUPON_TYPE,
 } from '@/constants/coupon-registration';
+import { numberFormat } from '@/utils/Format/numberFormat';
 
 export const CouponPreviewItem = ({
   roomId,
   roomName,
   quantity,
+  roomPrice,
   selectedCouponType,
   determinedPrice,
 }: CouponPreviewItemProps) => {
@@ -27,7 +29,7 @@ export const CouponPreviewItem = ({
           ? `${determinedPrice}원 할인`
           : null}
         {selectedCouponType === RATE_COUPON_TYPE
-          ? `${determinedPrice}% 할인`
+          ? `${determinedPrice}% 할인 (${roomPrice})`
           : null}
       </TextBox>
       <Spacing space="16" />
@@ -37,7 +39,7 @@ export const CouponPreviewItem = ({
             장당
           </TextBox>
           <TextBox typography="body2" fontWeight="bold" color="primary">
-            {quantity}P
+            {determinedPrice ? parseInt(determinedPrice) * 100 : 0} P
           </TextBox>
         </StyledCouponInfoItemWrap>
         <StyledCouponInfoItemWrap>
@@ -52,7 +54,7 @@ export const CouponPreviewItem = ({
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          P
+          {numberFormat(parseInt(determinedPrice) * 100 * quantity)} P
         </TextBox>
       </StyledCouponPrice>
     </Container>

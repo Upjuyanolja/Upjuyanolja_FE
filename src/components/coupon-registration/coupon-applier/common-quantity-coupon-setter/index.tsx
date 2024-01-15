@@ -3,36 +3,30 @@ import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { CommonQuantityCouponSetterProps } from './type';
 import { InputChangeEvent } from '@/types/event';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
 
 export const CommonQuantityCouponSetter = ({
   selectedCouponType,
+  groupQuantityValue,
   setGroupQuantityValue,
   isGroupQuantitySelected,
   setIsGroupQuantitySelected,
 }: CommonQuantityCouponSetterProps) => {
-  const [inputValue, setInputValue] = useState('');
-
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
-    setInputValue(e.target.value);
+    const formattedValue = parseInt(e.target.value);
+    setGroupQuantityValue(formattedValue);
   };
 
   const handleBlur = () => {
-    if (!inputValue) {
-      setInputValue('0');
+    if (!groupQuantityValue) {
+      setGroupQuantityValue(0);
     }
   };
 
   useEffect(() => {
-    const formattedValue = parseInt(inputValue);
-    setGroupQuantityValue(formattedValue);
-  }, [inputValue]);
-
-  useEffect(() => {
     if (!isGroupQuantitySelected) {
       setGroupQuantityValue(0);
-      setInputValue('0');
     }
   }, [isGroupQuantitySelected]);
 
@@ -59,7 +53,8 @@ export const CommonQuantityCouponSetter = ({
         <StyledInput
           size="small"
           maxLength={3}
-          value={inputValue}
+          defaultValue={0}
+          value={groupQuantityValue}
           onChange={handleAllQuantityValueChange}
           disabled={!isGroupQuantitySelected}
           onKeyDown={handleEnterKeyDown}

@@ -6,18 +6,23 @@ import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase
 import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
 import { useCoupon } from '@hooks/coupon/useCoupon';
 import { CouponTable } from '@components/coupon/table';
-import { useCouponForm } from '@hooks/coupon/useCouponForm';
 
 export const Coupon = () => {
-  const { couponData, isGetCouponError } = useCoupon();
   const {
-    couponTableData,
+    data,
+    isGetCouponError,
+    couponData,
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
     handleChangeInput,
-  } = useCouponForm();
-  if (!couponData) return <div>로딩 중</div>;
+    handleDeleteButton,
+    isModified,
+    handleChangeDate,
+    handleEditButton,
+  } = useCoupon();
+
+  if (!data) return <div>로딩</div>;
   if (isGetCouponError) return <div>에러</div>;
 
   return (
@@ -25,10 +30,14 @@ export const Coupon = () => {
       <CouponHeader
         expiry={couponData.expiry}
         handleSelectStatus={handleSelectStatus}
+        handleDeleteButton={handleDeleteButton}
+        isModified={isModified}
+        handleChangeDate={handleChangeDate}
+        handleEditButton={handleEditButton}
       />
 
       <CouponTable
-        couponTableData={couponTableData}
+        couponTableData={couponData.coupons}
         handleSelectRecord={handleSelectRecord}
         handleSelectCouponType={handleSelectCouponType}
         handleChangeInput={handleChangeInput}

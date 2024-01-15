@@ -111,7 +111,7 @@ describe('로그인 테스트', () => {
     queryClient = new QueryClient();
   });
 
-  test('로그인 버튼을 누른다(400에러)', async () => {
+  test('로그인 버튼을 누른다(이메일, 비밀번호 형식 다른 경우)', async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <SignIn />
@@ -122,11 +122,7 @@ describe('로그인 테스트', () => {
       const passWordInput = await screen.findByTestId('pwInput');
       fireEvent.change(emailInput, { target: { value: 'ivegaeul' } });
       fireEvent.change(passWordInput, { target: { value: 'ivegaeul' } });
-      setTimeout(() => {
-        const errorMessage =
-          screen.getByText(/유효한 이메일 주소를 입력하세요/i);
-        expect(errorMessage).toBeInTheDocument();
-      }, 3000);
+
       const signInBtn = await screen.findByTestId('signInBtn');
       setTimeout(() => {
         fireEvent.click(signInBtn);
@@ -138,7 +134,64 @@ describe('로그인 테스트', () => {
       }, 3000);
       setTimeout(async () => {
         const errorMessage =
-          screen.getByText(/이메일과 비밀번호르 확인해 주세요/i);
+          screen.getByText(/이메일과 비밀번호를 확인해 주세요./i);
+        expect(errorMessage).toBeInTheDocument();
+      }, 5000);
+    });
+  });
+
+  test('로그인 버튼을 누른다(500이 아닌 다른 에러)', async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <SignIn />
+      </QueryClientProvider>,
+    );
+    await act(async () => {
+      const emailInput = await screen.findByTestId('emailInput');
+      const passWordInput = await screen.findByTestId('pwInput');
+      fireEvent.change(emailInput, { target: { value: 'ivegaeul@naver.com' } });
+      fireEvent.change(passWordInput, { target: { value: 'ivegaeul1' } });
+      const signInBtn = await screen.findByTestId('signInBtn');
+      setTimeout(() => {
+        fireEvent.click(signInBtn);
+        server.use(
+          http.post('/api/auth/owner/signin', () => {
+            return HttpResponse.json(signInData, { status: 400 });
+          }),
+        );
+      }, 3000);
+      setTimeout(async () => {
+        const errorMessage =
+          screen.getByText(/이메일과 비밀번호를 확인해 주세요./i);
+        expect(errorMessage).toBeInTheDocument();
+      }, 5000);
+    });
+  });
+
+  test('로그인 버튼을 누른다(500에러)', async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <SignIn />
+      </QueryClientProvider>,
+    );
+    await act(async () => {
+      const emailInput = await screen.findByTestId('emailInput');
+      const passWordInput = await screen.findByTestId('pwInput');
+      fireEvent.change(emailInput, { target: { value: 'ivegaeul@naver.com' } });
+      fireEvent.change(passWordInput, { target: { value: 'ivegaeul1' } });
+      const signInBtn = await screen.findByTestId('signInBtn');
+      setTimeout(() => {
+        fireEvent.click(signInBtn);
+        server.use(
+          http.post('/api/auth/owner/signin', () => {
+            return HttpResponse.json(signInData, { status: 500 });
+          }),
+        );
+      }, 3000);
+      setTimeout(async () => {
+        const errorMessage = screen.getByText(
+          /요청에 실패했습니다. 잠시 후 다시 시도해 주세요./i,
+        );
         expect(errorMessage).toBeInTheDocument();
       }, 5000);
     });

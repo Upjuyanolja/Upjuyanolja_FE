@@ -7,6 +7,8 @@ import { Button, Checkbox } from 'antd';
 import { CouponPreviewProps } from './type';
 import { FLAT_COUPON_TYPE } from '@/constants/coupon-registration';
 import { useEffect } from 'react';
+import { PendingCouponDataList } from '../type';
+import { numberFormat } from '@/utils/Format/numberFormat';
 
 export const CouponPreview = ({
   selectedCouponType,
@@ -16,6 +18,15 @@ export const CouponPreview = ({
   useEffect(() => {
     console.log(pendingCouponDataList, 'pendingCouponData');
   }, [pendingCouponDataList]);
+
+  const calculateTotalPrice = (
+    pendingCouponDataList: PendingCouponDataList,
+  ) => {
+    return pendingCouponDataList.reduce((total, room) => {
+      return total + room.quantity * (parseInt(determinedPrice) * 100);
+    }, 0);
+  };
+
   return (
     <Container>
       <TextBox typography="h4" fontWeight="bold" color="black900">
@@ -42,6 +53,7 @@ export const CouponPreview = ({
             <CouponPreviewItem
               roomId={item.roomId}
               roomName={item.roomName}
+              roomPrice={item.roomPrice}
               quantity={item.quantity}
               key={index}
               selectedCouponType={selectedCouponType}
@@ -52,7 +64,7 @@ export const CouponPreview = ({
         <Spacing space="16" />
         <StyledCouponTotalPrice>
           <TextBox typography="h5" fontWeight="bold" color="primary">
-            합계 : P
+            합계 : {numberFormat(calculateTotalPrice(pendingCouponDataList))} P
           </TextBox>
         </StyledCouponTotalPrice>
         <Spacing space="16" />

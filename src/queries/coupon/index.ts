@@ -1,9 +1,15 @@
 import { COUPON_API } from '@api/coupon';
 import { AxiosError, AxiosResponse } from 'axios';
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 import { Response } from '@/types/api';
 import {
-  CouponRoomList,
+  CouponDeleteParams,
+  CouponEditParams,
   coupons,
   dailyRevenue,
   revenueData,
@@ -52,18 +58,34 @@ export const useGetCoupon = (
   );
 };
 
-export const useGetCouponRoomList = (
-  options?: UseQueryOptions<
-    AxiosResponse<Response<CouponRoomList>>,
+export const useDeleteCoupon = (
+  options?: UseMutationOptions<
+    AxiosResponse<Response<null>>,
     AxiosError,
-    CouponRoomList
+    CouponDeleteParams
   >,
 ) => {
-  return useQuery<
-    AxiosResponse<Response<CouponRoomList>>,
+  return useMutation<
+    AxiosResponse<Response<null>>,
     AxiosError,
-    CouponRoomList
-  >(['getCouponRoomList'], () => COUPON_API.getCouponRoomList(), {
+    CouponDeleteParams
+  >((params: CouponDeleteParams) => COUPON_API.deleteCoupon(params), {
+    ...options,
+  });
+};
+
+export const useEditCoupon = (
+  options?: UseMutationOptions<
+    AxiosResponse<Response<null>>,
+    AxiosError,
+    CouponEditParams
+  >,
+) => {
+  return useMutation<
+    AxiosResponse<Response<null>>,
+    AxiosError,
+    CouponEditParams
+  >((params: CouponEditParams) => COUPON_API.editCoupon(params), {
     ...options,
   });
 };

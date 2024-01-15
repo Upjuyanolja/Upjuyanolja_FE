@@ -6,14 +6,19 @@ import { Input, Button, message } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
 import { TextBox } from '@components/text-box';
-import { memberData } from '@api/sign-in/type';
 import { usePostLogin } from '@queries/sign-in';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
+import { AxiosError } from 'axios';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const postLoginMutation = usePostLogin();
   const { accommodationListData } = useSideBar();
+  const postLoginMutation = usePostLogin({
+    onSuccess: (response) => {
+      setCookie('accessToken', response.data.data.accessToken);
+      setCookie('refreshToken', response.data.data.accessToken);
+    },
+  });
 
   const isAccomodationList = () => {
     if (
@@ -36,14 +41,7 @@ export const SignIn = () => {
       try {
         removeCookie('accessToken');
         removeCookie('refreshToken');
-        const resSignIn = await postLoginMutation.mutateAsync(values);
-        const signinData: memberData = resSignIn.data.data;
-        setCookie('accessToken', signinData.accessToken);
-        setCookie('refreshToken', signinData.refreshToken);
-
-        const memberResponseString = JSON.stringify(signinData.memberResponse);
-        localStorage.setItem('member', memberResponseString);
-
+        await postLoginMutation.mutateAsync(values);
         try {
           const res = isAccomodationList();
           if (res === true) {
@@ -57,7 +55,11 @@ export const SignIn = () => {
           }
         } catch (e) {
           message.error({
-            content: '여기 수정할 부분 입니다.',
+            content: (
+              <TextBox typography="body3" fontWeight={'400'}>
+                요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
+              </TextBox>
+            ),
             duration: 2,
             style: {
               width: '346px',
@@ -66,14 +68,35 @@ export const SignIn = () => {
           });
         }
       } catch (e) {
-        message.error({
-          content: '이메일과 비밀번호를 확인해 주세요.',
-          duration: 2,
-          style: {
-            width: '346px',
-            height: '41px',
-          },
-        });
+        if (e instanceof AxiosError && e.response) {
+          if (e.response.status === 500) {
+            message.error({
+              content: (
+                <TextBox typography="body3" fontWeight={'400'}>
+                  요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
+                </TextBox>
+              ),
+              duration: 2,
+              style: {
+                width: '346px',
+                height: '41px',
+              },
+            });
+          } else {
+            message.error({
+              content: (
+                <TextBox typography="body3" fontWeight={'400'}>
+                  이메일과 비밀번호를 확인해 주세요.
+                </TextBox>
+              ),
+              duration: 2,
+              style: {
+                width: '346px',
+                height: '41px',
+              },
+            });
+          }
+        }
       }
     },
   });

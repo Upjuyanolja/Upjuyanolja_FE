@@ -52,6 +52,7 @@ export const CouponType = ({
           roomId: 0,
           roomName: '',
           quantity: 0,
+          roomPrice: 0,
         },
       ]);
     }
