@@ -58,7 +58,6 @@ export const NameContainer = ({
           style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
           value={inputValue}
           onChange={handleInputChange}
-          disabled={inputValue.length >= ACCOMMODATION_NAME_MAX_LENGTH}
           status={errorMessage ? 'error' : ''}
           data-testid="input-name"
         />

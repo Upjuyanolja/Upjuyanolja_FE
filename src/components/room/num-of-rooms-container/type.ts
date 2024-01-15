@@ -1,5 +1,8 @@
+import { FormInstance } from 'antd';
+
 export type NumOfRoomsContainerProps = {
-  header: string;
+  value: string;
+  form: FormInstance;
 };
 
 export type ValidateInputProps = {
