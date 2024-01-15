@@ -71,6 +71,7 @@ export const SignIn = () => {
       try {
         removeCookie('accessToken');
         removeCookie('refreshToken');
+        removeCookie('accomodationId');
         await postLoginMutation.mutateAsync(values);
         try {
           const res = isAccomodationList();
