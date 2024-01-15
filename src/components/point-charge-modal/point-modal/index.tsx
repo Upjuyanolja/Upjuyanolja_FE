@@ -7,8 +7,6 @@ import { InfoContainer } from '../info-container';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { colors } from '@/constants/colors';
 import { PointModalProps } from './types';
-
-import { nanoid } from 'nanoid';
 import {
   PaymentWidgetInstance,
   loadPaymentWidget,
@@ -16,6 +14,7 @@ import {
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
 import { AgreementModal } from '../agreement-modal';
+import { orderNumber } from '@/utils/orderNumber';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
@@ -145,16 +144,16 @@ export const PointModal = ({
 
     try {
       await paymentWidget?.requestPayment({
-        orderId: nanoid(),
-        orderName: '토스 티셔츠 외 2건',
-        customerName: '김토스',
-        customerEmail: 'customer123@gmail.com',
+        orderId: orderNumber(),
+        orderName: '포인트 충전',
         successUrl: `${window.location.origin}/success`,
         failUrl: `${window.location.origin}/fail`,
       });
       //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
+      // 이 부분 로직은 다음 PR에 작성하도록 하겠습니다.
     } catch (error) {
       handleChangeUrl('/point-detail');
+      ㅁ;
     }
   };
 
