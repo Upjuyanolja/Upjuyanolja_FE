@@ -7,5 +7,5 @@ import {
 export type CouponPreviewProps = {
   selectedCouponType: SelectedCouponType;
   determinedPrice: DeterminedPrice;
-  pendingCouponData: PendingCouponDataList;
+  pendingCouponDataList: PendingCouponDataList;
 };

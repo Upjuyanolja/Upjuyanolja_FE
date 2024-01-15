@@ -25,10 +25,10 @@ export const CouponType = ({
   setSelectedCouponType,
   discountValue,
   setDiscountValue,
+  pendingCouponDataList,
   setPendingCouponDataList,
   setDeterminedPrice,
 }: CouponTypeProps) => {
-  const [errorMessage, setErrorMessage] = useState('');
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
 
   useEffect(() => {
@@ -45,15 +45,16 @@ export const CouponType = ({
 
   const initializeValue = () => {
     setDiscountValue('');
-    setErrorMessage('');
-    setPendingCouponDataList([
-      {
-        roomId: 0,
-        roomName: '',
-        quantity: '',
-      },
-    ]);
     setDeterminedPrice('');
+    if (pendingCouponDataList.length > 0) {
+      setPendingCouponDataList([
+        {
+          roomId: 0,
+          roomName: '',
+          quantity: 0,
+        },
+      ]);
+    }
   };
 
   const handleBlur = (
@@ -64,7 +65,6 @@ export const CouponType = ({
       return;
     }
 
-    handleDiscountErrorMessage(discountValue, couponType);
     checkDiscountValidity(discountValue, couponType);
     normalizeToRange(discountValue, couponType);
 
@@ -94,14 +94,12 @@ export const CouponType = ({
       const transformedValue = couponType.max.toString();
       setDiscountValue(transformedValue);
       formattedNumber(transformedValue);
-      setErrorMessage(couponType.errorMessage);
     }
 
     if (parseInt(discountValue) < couponType.min) {
       const transformedValue = couponType.min.toString();
       setDiscountValue(transformedValue);
       formattedNumber(transformedValue);
-      setErrorMessage(couponType.errorMessage);
     }
   };
 
@@ -115,20 +113,6 @@ export const CouponType = ({
   const handleFocus = (discountValue: string) => {
     const removeFormattedValue = removeNumberFormat(discountValue);
     setDiscountValue(removeFormattedValue);
-  };
-
-  const handleDiscountErrorMessage = (
-    discountValue: string,
-    couponType: FlatCouponType | RateCouponType,
-  ) => {
-    if (
-      parseInt(discountValue) < couponType.min ||
-      parseInt(discountValue) > couponType.max
-    ) {
-      setErrorMessage(couponType.errorMessage);
-    } else {
-      setErrorMessage('');
-    }
   };
 
   const handleCouponType = (e: MouseEvent) => {
@@ -224,9 +208,6 @@ export const CouponType = ({
       </StyledInputWrap>
       <StyledErrorMessage>
         <Spacing space="4" />
-        <TextBox typography="body4" color="error">
-          {errorMessage ? errorMessage : null}
-        </TextBox>
       </StyledErrorMessage>
     </Container>
   );

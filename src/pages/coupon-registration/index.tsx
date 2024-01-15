@@ -19,7 +19,7 @@ export const CouponRegistration = () => {
   >(FLAT_COUPON_TYPE);
   const [discountValue, setDiscountValue] = useState('');
   const [determinedPrice, setDeterminedPrice] = useState('');
-  const [pendingCouponData, setPendingCouponDataList] =
+  const [pendingCouponDataList, setPendingCouponDataList] =
     useState<PendingCouponDataList>([]);
 
   return (
@@ -36,6 +36,7 @@ export const CouponRegistration = () => {
               setSelectedCouponType={setSelectedCouponType}
               discountValue={discountValue}
               setDiscountValue={setDiscountValue}
+              pendingCouponDataList={pendingCouponDataList}
               setPendingCouponDataList={setPendingCouponDataList}
               setDeterminedPrice={setDeterminedPrice}
             />
@@ -44,7 +45,7 @@ export const CouponRegistration = () => {
           <CouponCard title="2. 적용 객실 선택">
             <CouponApplier
               selectedCouponType={selectedCouponType}
-              pendingCouponData={pendingCouponData}
+              pendingCouponDataList={pendingCouponDataList}
               setPendingCouponDataList={setPendingCouponDataList}
             />
           </CouponCard>
@@ -54,7 +55,7 @@ export const CouponRegistration = () => {
         <CouponPreview
           selectedCouponType={selectedCouponType}
           determinedPrice={determinedPrice}
-          pendingCouponData={pendingCouponData}
+          pendingCouponDataList={pendingCouponDataList}
         />
       </div>
     </Container>

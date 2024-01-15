@@ -3,7 +3,7 @@ import { ROUTES } from '../routes';
 export const navigationMap = {
   Home: {
     label: '홈',
-    link: `/:1${ROUTES.MAIN}`,
+    link: `/1${ROUTES.MAIN}`,
   },
   Coupon: {
     label: '쿠폰 현황',

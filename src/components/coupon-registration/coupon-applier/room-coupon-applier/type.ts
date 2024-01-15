@@ -1,5 +1,5 @@
 import {
-  PendingCouponData,
+  GroupQuantityValue,
   SelectedCouponType,
   SetPendingCouponDataList,
 } from '@components/coupon-registration/type';
@@ -9,9 +9,8 @@ export type RoomCouponApplierProps = {
   index: number;
   roomId: number;
   roomPrice: number;
-  pendingCouponData: PendingCouponData;
   setPendingCouponDataList: SetPendingCouponDataList;
   isGroupQuantitySelected: boolean;
-  groupQuantityValue: string;
+  groupQuantityValue: GroupQuantityValue;
   selectedCouponType: SelectedCouponType;
 };

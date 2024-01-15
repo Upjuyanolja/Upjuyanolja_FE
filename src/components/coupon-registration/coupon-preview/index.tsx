@@ -6,12 +6,16 @@ import { Spacing } from '@components/spacing';
 import { Button, Checkbox } from 'antd';
 import { CouponPreviewProps } from './type';
 import { FLAT_COUPON_TYPE } from '@/constants/coupon-registration';
+import { useEffect } from 'react';
 
 export const CouponPreview = ({
   selectedCouponType,
   determinedPrice,
-  pendingCouponData,
+  pendingCouponDataList,
 }: CouponPreviewProps) => {
+  useEffect(() => {
+    console.log(pendingCouponDataList, 'pendingCouponData');
+  }, [pendingCouponDataList]);
   return (
     <Container>
       <TextBox typography="h4" fontWeight="bold" color="black900">
@@ -34,12 +38,14 @@ export const CouponPreview = ({
           )}
         </StyledTitleWrap>
         <StyledPreviewItemWrap>
-          {pendingCouponData.map((item, index) => (
+          {pendingCouponDataList.map((item, index) => (
             <CouponPreviewItem
               roomId={item.roomId}
               roomName={item.roomName}
               quantity={item.quantity}
               key={index}
+              selectedCouponType={selectedCouponType}
+              determinedPrice={determinedPrice}
             />
           ))}
         </StyledPreviewItemWrap>

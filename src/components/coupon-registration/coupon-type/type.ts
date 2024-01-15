@@ -2,6 +2,7 @@ import { SetStateAction } from '@/types/setState';
 import {
   DeterminedPrice,
   DiscountValue,
+  PendingCouponDataList,
   SelectedCouponType,
   SetDiscountValue,
   SetPendingCouponDataList,
@@ -13,6 +14,7 @@ export type CouponTypeProps = {
   setSelectedCouponType: SetSelectedCouponType;
   discountValue: DiscountValue;
   setDiscountValue: SetDiscountValue;
+  pendingCouponDataList: PendingCouponDataList;
   setPendingCouponDataList: SetPendingCouponDataList;
   setDeterminedPrice: SetStateAction<DeterminedPrice>;
 };

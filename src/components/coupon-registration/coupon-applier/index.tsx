@@ -7,18 +7,16 @@ import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegis
 
 export const CouponApplier = ({
   selectedCouponType,
-  pendingCouponData,
   setPendingCouponDataList,
 }: CouponApplierProps) => {
   const { couponRoomListData } = useCouponRegistration();
   const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useState(false);
-  const [groupQuantityValue, setGroupQuantityValue] = useState('0');
+  const [groupQuantityValue, setGroupQuantityValue] = useState(0);
 
   return (
     <Container>
       <CommonQuantityCouponSetter
         selectedCouponType={selectedCouponType}
-        groupQuantityValue={groupQuantityValue}
         setGroupQuantityValue={setGroupQuantityValue}
         isGroupQuantitySelected={isGroupQuantitySelected}
         setIsGroupQuantitySelected={setIsGroupQuantitySelected}
@@ -31,7 +29,6 @@ export const CouponApplier = ({
             index={index}
             roomId={item.roomId}
             roomPrice={item.roomPrice}
-            pendingCouponData={pendingCouponData[index]}
             setPendingCouponDataList={setPendingCouponDataList}
             isGroupQuantitySelected={isGroupQuantitySelected}
             groupQuantityValue={groupQuantityValue}

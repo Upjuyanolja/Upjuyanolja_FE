@@ -6,6 +6,6 @@ import {
 
 export type CouponApplierProps = {
   selectedCouponType: SelectedCouponType;
-  pendingCouponData: PendingCouponDataList;
+  pendingCouponDataList: PendingCouponDataList;
   setPendingCouponDataList: SetPendingCouponDataList;
 };

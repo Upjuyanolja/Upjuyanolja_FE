@@ -1,3 +1,9 @@
-import { PendingCouponData } from '@components/coupon-registration/type';
+import {
+  PendingCouponData,
+  SelectedCouponType,
+} from '@components/coupon-registration/type';
 
-export type CouponPreviewItemProps = PendingCouponData;
+export type CouponPreviewItemProps = PendingCouponData & {
+  selectedCouponType: SelectedCouponType;
+  determinedPrice: string;
+};

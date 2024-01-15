@@ -4,11 +4,17 @@ import { TextBox } from '@components/text-box';
 import { Divider } from 'antd';
 import styled from 'styled-components';
 import { CouponPreviewItemProps } from './type';
+import {
+  FLAT_COUPON_TYPE,
+  RATE_COUPON_TYPE,
+} from '@/constants/coupon-registration';
 
 export const CouponPreviewItem = ({
   roomId,
   roomName,
   quantity,
+  selectedCouponType,
+  determinedPrice,
 }: CouponPreviewItemProps) => {
   return (
     <Container>
@@ -17,7 +23,12 @@ export const CouponPreviewItem = ({
       </TextBox>
       <Spacing space="4" />
       <TextBox typography="body2" color="black900">
-        {roomId}
+        {selectedCouponType === FLAT_COUPON_TYPE
+          ? `${determinedPrice}원 할인`
+          : null}
+        {selectedCouponType === RATE_COUPON_TYPE
+          ? `${determinedPrice}% 할인`
+          : null}
       </TextBox>
       <Spacing space="16" />
       <StyledCouponInfo>

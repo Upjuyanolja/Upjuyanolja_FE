@@ -3,34 +3,42 @@ import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { CommonQuantityCouponSetterProps } from './type';
 import { InputChangeEvent } from '@/types/event';
-import { useEffect } from 'react';
-import { isNumber } from '@/utils/is-number';
+import { useEffect, useState } from 'react';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
 
 export const CommonQuantityCouponSetter = ({
   selectedCouponType,
-  groupQuantityValue,
   setGroupQuantityValue,
   isGroupQuantitySelected,
   setIsGroupQuantitySelected,
 }: CommonQuantityCouponSetterProps) => {
+  const [inputValue, setInputValue] = useState('');
+
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
-    const formattedValue = e.target.value;
-    if (!isNumber(formattedValue)) {
-      return;
+    setInputValue(e.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!inputValue) {
+      setInputValue('0');
     }
-    setGroupQuantityValue(formattedValue);
   };
 
   useEffect(() => {
+    const formattedValue = parseInt(inputValue);
+    setGroupQuantityValue(formattedValue);
+  }, [inputValue]);
+
+  useEffect(() => {
     if (!isGroupQuantitySelected) {
-      setGroupQuantityValue('0');
+      setGroupQuantityValue(0);
+      setInputValue('0');
     }
   }, [isGroupQuantitySelected]);
 
   useEffect(() => {
     setIsGroupQuantitySelected(false);
-    setGroupQuantityValue('0');
+    setGroupQuantityValue(0);
   }, [selectedCouponType]);
 
   return (
@@ -51,10 +59,11 @@ export const CommonQuantityCouponSetter = ({
         <StyledInput
           size="small"
           maxLength={3}
-          value={groupQuantityValue || ''}
+          value={inputValue}
           onChange={handleAllQuantityValueChange}
           disabled={!isGroupQuantitySelected}
           onKeyDown={handleEnterKeyDown}
+          onBlur={handleBlur}
         />
         <TextBox typography="body1" color="black900">
           장

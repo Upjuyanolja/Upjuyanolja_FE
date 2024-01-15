@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { RoomCouponApplierProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
-import { isNumber } from '@/utils/is-number';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
 
 export const RoomCouponApplier = ({
@@ -18,10 +17,11 @@ export const RoomCouponApplier = ({
   selectedCouponType,
 }: RoomCouponApplierProps) => {
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
-  const [inputValue, setInputValue] = useState('0');
+  const [itemQuantityValue, setItemQuantityValue] = useState(0);
+  const [inputValue, setInputValue] = useState('');
 
   const handleQuantityChange = () => {
-    const newValue = inputValue;
+    const newValue = itemQuantityValue;
     setPendingCouponDataList((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = { roomId, roomName, roomPrice, quantity: newValue };
@@ -30,32 +30,52 @@ export const RoomCouponApplier = ({
   };
 
   const handleChange = (e: InputChangeEvent) => {
-    const formattedValue = e.target.value;
-    if (!isNumber(formattedValue)) {
-      return;
-    }
-    setInputValue(formattedValue);
+    setInputValue(e.target.value);
   };
 
   const handleCheckBox = () => {
     setIsItemQuantitySelected(!isItemQuantitySelected);
-    setInputValue('0');
+    setItemQuantityValue(0);
+    handleQuantityChange();
+  };
+
+  const handleBlur = () => {
+    if (!inputValue) {
+      setInputValue('0');
+      setItemQuantityValue(0);
+    }
+    const formattedValue = parseInt(inputValue);
+    setItemQuantityValue(formattedValue);
   };
 
   useEffect(() => {
-    handleQuantityChange();
+    if (!inputValue) {
+      return;
+    }
   }, [inputValue]);
+
+  useEffect(() => {
+    if (!itemQuantityValue) {
+      return;
+    }
+
+    handleQuantityChange();
+  }, [itemQuantityValue]);
 
   useEffect(() => {
     if (!isGroupQuantitySelected || !isItemQuantitySelected) {
       return;
     }
 
-    setInputValue(groupQuantityValue);
+    if (isGroupQuantitySelected && isItemQuantitySelected) {
+      const formattedValue = groupQuantityValue.toString();
+      setInputValue(formattedValue);
+    }
   }, [groupQuantityValue, isItemQuantitySelected]);
 
   useEffect(() => {
     setInputValue('0');
+    setItemQuantityValue(0);
     setIsItemQuantitySelected(false);
   }, [selectedCouponType]);
 
@@ -77,14 +97,11 @@ export const RoomCouponApplier = ({
         <StyledInput
           size="small"
           maxLength={3}
-          value={
-            isGroupQuantitySelected && isItemQuantitySelected
-              ? groupQuantityValue
-              : inputValue
-          }
+          value={inputValue}
           onChange={handleChange}
           disabled={isGroupQuantitySelected || !isItemQuantitySelected}
           onKeyDown={handleEnterKeyDown}
+          onBlur={handleBlur}
         />
         <TextBox typography="body1" color="black900">
           장
