@@ -45,8 +45,8 @@ export type couponTableProps = {
   couponTableData: tableData[];
   handleSelectRecord: (selectedRowKeys: number[]) => void;
   handleSelectCouponType: (value: string, key: number) => void;
-  handleChangeInput: (
-    event: React.KeyboardEvent<HTMLInputElement>,
+  handleChangeDayLimit: (
+    event: React.ChangeEvent<HTMLInputElement>,
     key: number,
   ) => void;
 };

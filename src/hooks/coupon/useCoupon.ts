@@ -20,7 +20,7 @@ import {
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
-    handleChangeInput,
+    handleChangeDayLimit,
     handleDeleteButton,
     isModified,
     handleChangeDate,
@@ -166,11 +166,16 @@ export const useCoupon = () => {
     setCouponData({ expiry, coupons: data });
   };
 
-  const handleChangeInput = (
-    event: React.KeyboardEvent<HTMLInputElement>,
+  const handleChangeDayLimit = (
+    event: React.ChangeEvent<HTMLInputElement>,
     key: number,
   ) => {
-    // 수정 예정
+    const value = parseInt(event.currentTarget.value);
+    if (value > 99 || value < 1) return;
+    const { expiry, coupons: data } = { ...couponData };
+    if (Number.isNaN(value)) data[key].dayLimit = -1;
+    else data[key].dayLimit = value;
+    setCouponData({ expiry, coupons: data });
   };
 
   const handleChangeDate = (date: string) => {
@@ -319,7 +324,7 @@ export const useCoupon = () => {
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
-    handleChangeInput,
+    handleChangeDayLimit,
     handleDeleteButton,
     isModified,
     handleChangeDate,

@@ -24,7 +24,7 @@ export const CouponTable = ({
   couponTableData,
   handleSelectRecord,
   handleSelectCouponType,
-  handleChangeInput,
+  handleChangeDayLimit,
 }: couponTableProps) => {
   const couponTypeOption = [
     { value: COUPON_TYPE_ALL_DAYS.value, label: COUPON_TYPE_ALL_DAYS.label },
@@ -68,7 +68,7 @@ export const CouponTable = ({
         <DayLimitInput
           dayLimit={dayLimit}
           isSoldOut={record.isSoldOut}
-          handleChangeInput={handleChangeInput}
+          handleChangeDayLimit={handleChangeDayLimit}
           record={record}
         />
       ),

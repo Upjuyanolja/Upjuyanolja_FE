@@ -15,7 +15,7 @@ export const Coupon = () => {
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
-    handleChangeInput,
+    handleChangeDayLimit,
     handleDeleteButton,
     isModified,
     handleChangeDate,
@@ -40,7 +40,7 @@ export const Coupon = () => {
         couponTableData={couponData.coupons}
         handleSelectRecord={handleSelectRecord}
         handleSelectCouponType={handleSelectCouponType}
-        handleChangeInput={handleChangeInput}
+        handleChangeDayLimit={handleChangeDayLimit}
       />
       <StyledModal
         open={false}
