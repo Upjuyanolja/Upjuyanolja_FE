@@ -11,15 +11,27 @@ import { getUserInfoResolver } from './member';
 import { getPointSummaryResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
 import {
-  getPointDetailChargesResolver,
-  getPointDetailUsageResolver,
   getPointDetailTotalResolver,
+  getPointDetailUsageResolver,
+  getPointDetailChargesResolver,
 } from './point-detail';
+import {
+  postSignUpResolver,
+  postAuthenticationResolver,
+  getVerifyResolver,
+} from './sign-up';
 
+const email = 'ivegaeul@naver.com';
+const verificationCode = '020924';
 export const handlers = [
   http.post('/api/auth/owner/signin', postSignInResolver),
+  http.post('/api/auth/owners/signup', postSignUpResolver),
+  http.post('/api/auth/owners/request-email', postAuthenticationResolver),
+  http.get(
+    `/api/auth/owners/verify?email=${email}&verificationCode=${verificationCode}`,
+    getVerifyResolver,
+  ),
   http.get('/api/accommodations/backoffice', getAccommodationsResolver),
-
   http.get('/api/coupons/backoffice/statistics', getStaticsResolver),
   http.get('/api/coupons/backoffice/revenue', getRevenueResolver),
   http.get('/api/coupons/backoffice/manage', getCouponResolver),

@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
 import { ValidateSchema } from '@/utils/sign-in/ValidateSchema';
-import { memberData } from '@api/sign-in/type';
-import { removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
+import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostLogin } from '@queries/sign-in';
 import { useFormik } from 'formik';
@@ -12,12 +11,27 @@ import { Layout, Input, Button, message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
+import { AxiosError } from 'axios';
+import { HTTP_STATUS_CODE } from '@/constants/api';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const postLoginMutation = usePostLogin();
   const { accommodationListData } = useSideBar();
-
+  const postLoginMutation = usePostLogin({
+    onSuccess: (response) => {
+      setCookie('accessToken', response.data.data.accessToken);
+      setCookie('refreshToken', response.data.data.accessToken);
+      const memberResponse = response.data.data.memberResponse;
+      const memberData = JSON.stringify(memberResponse);
+      localStorage.setItem('member', memberData);
+      if (accommodationListData?.accommodations[0]?.id) {
+        setCookie(
+          'accomodationId',
+          accommodationListData?.accommodations[0]?.id.toString(),
+        );
+      }
+    },
+  });
   const isAccomodationList = () => {
     if (
       accommodationListData?.accommodations &&
@@ -37,7 +51,11 @@ export const SignIn = () => {
       !values.password
     ) {
       message.error({
-        content: '이메일과 비밀번호를 확인해 주세요.',
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            이메일과 비밀번호를 확인해 주세요.
+          </TextBox>
+        ),
         duration: 2,
         style: {
           width: '346px',
@@ -56,19 +74,14 @@ export const SignIn = () => {
       try {
         removeCookie('accessToken');
         removeCookie('refreshToken');
-        const resSignIn = await postLoginMutation.mutateAsync(values);
-        const signinData: memberData = resSignIn.data.data;
-        setCookie('accessToken', signinData.accessToken);
-        setCookie('refreshToken', signinData.refreshToken);
-
-        const memberResponseString = JSON.stringify(signinData.memberResponse);
-        localStorage.setItem('member', memberResponseString);
-
+        removeCookie('accomodationId');
+        await postLoginMutation.mutateAsync(values);
         try {
           const res = isAccomodationList();
+          const accomodationId = getCookie('accomodationId');
           if (res === true) {
             setTimeout(() => {
-              handleChangeUrl('/');
+              handleChangeUrl(`/${accomodationId}/main`);
             }, 1000);
           } else {
             setTimeout(() => {
@@ -77,7 +90,11 @@ export const SignIn = () => {
           }
         } catch (e) {
           message.error({
-            content: '여기 수정할 부분 입니다.',
+            content: (
+              <TextBox typography="body3" fontWeight={'400'}>
+                요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
+              </TextBox>
+            ),
             duration: 2,
             style: {
               width: '346px',
@@ -86,14 +103,35 @@ export const SignIn = () => {
           });
         }
       } catch (e) {
-        message.error({
-          content: '이메일과 비밀번호를 확인해 주세요.',
-          duration: 2,
-          style: {
-            width: '346px',
-            height: '41px',
-          },
-        });
+        if (e instanceof AxiosError && e.response) {
+          if (e.response.status === HTTP_STATUS_CODE.BAD_GATEWAY) {
+            message.error({
+              content: (
+                <TextBox typography="body3" fontWeight={'400'}>
+                  요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
+                </TextBox>
+              ),
+              duration: 2,
+              style: {
+                width: '346px',
+                height: '41px',
+              },
+            });
+          } else {
+            message.error({
+              content: (
+                <TextBox typography="body3" fontWeight={'400'}>
+                  이메일과 비밀번호를 확인해 주세요.
+                </TextBox>
+              ),
+              duration: 2,
+              style: {
+                width: '346px',
+                height: '41px',
+              },
+            });
+          }
+        }
       }
     },
   });
