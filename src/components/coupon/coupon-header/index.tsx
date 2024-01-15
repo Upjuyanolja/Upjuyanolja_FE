@@ -16,6 +16,10 @@ import {
 export const CouponHeader = ({
   expiry,
   handleSelectStatus,
+  handleDeleteButton,
+  isModified,
+  handleChangeDate,
+  handleEditButton,
 }: CouponHeaderProps) => {
   const couponStatusOption = [
     { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
@@ -31,7 +35,11 @@ export const CouponHeader = ({
         <TextBox fontWeight={700} typography="h4">
           쿠폰 관리
         </TextBox>
-        <StyledSaveButton type="primary">
+        <StyledSaveButton
+          type="primary"
+          disabled={!isModified()}
+          onClick={handleEditButton}
+        >
           <TextBox fontWeight={700} typography="h4">
             저장
           </TextBox>
@@ -45,8 +53,12 @@ export const CouponHeader = ({
           <InfoCircleOutlined width="18px" height="18px" color="blue" />
         </StyledDateText>
         <DatePicker
-          defaultValue={moment(expiry, DATE_FORMAT)}
+          value={moment(expiry, DATE_FORMAT)}
           disabledDate={disabledDate}
+          onChange={(_, date) => {
+            handleChangeDate(date);
+          }}
+          allowClear={false}
         />
         <TextBox typography="body1" fontWeight={700} color="black700">
           까지
@@ -59,7 +71,7 @@ export const CouponHeader = ({
           onChange={handleSelectStatus}
         />
         <StyledButtonContainer>
-          <StyledDeleteButton>
+          <StyledDeleteButton onClick={handleDeleteButton}>
             <DeleteOutlined width="20px" height="20px" />
             <TextBox typography="body2" fontWeight={700}>
               선택 삭제

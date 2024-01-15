@@ -16,7 +16,6 @@ import {
 import { TextBox } from '@components/text-box';
 
 export const PriceContainer = ({ header, form }: PriceContainerProps) => {
-  const [roomPrice, setRoomPrice] = useState('');
   const [outOfRangeError, setOutOfRangeError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
@@ -34,10 +33,8 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
     if (cleanedStringValue.length !== 0) {
       const numericValue = Number(cleanedStringValue);
       validateInput({ value: numericValue });
-      setRoomPrice(cleanedStringValue);
-      form.setFieldValue('price', numericValue);
+      form.setFieldValue('price', numericValue.toLocaleString());
     } else {
-      setRoomPrice('');
       form.setFieldValue('price', '');
     }
   };
@@ -69,7 +66,6 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
               height: 40,
               width: header === '' ? '440px' : '',
             }}
-            value={roomPrice}
             onChange={(event) => handleInputChange({ event })}
             status={outOfRangeError ? 'error' : ''}
             data-testid="input-room-price"

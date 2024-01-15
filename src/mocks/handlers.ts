@@ -1,6 +1,8 @@
 import { http } from 'msw';
 import { postSignInResolver } from './sign-in';
 import {
+  deleteCouponResolver,
+  editCouponResolver,
   getCouponResolver,
   getRevenueResolver,
   getStaticsResolver,
@@ -21,6 +23,8 @@ export const handlers = [
   http.get('/api/coupons/backoffice/statistics', getStaticsResolver),
   http.get('/api/coupons/backoffice/revenue', getRevenueResolver),
   http.get('/api/coupons/backoffice/manage', getCouponResolver),
+  http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
+  http.patch('/api/coupons/backoffice/manage', editCouponResolver),
 
   http.get('/api/member', getUserInfoResolver),
   http.get('/api/points/summary', getPointSummaryResolver),

@@ -15,7 +15,7 @@ export type revenueData = {
 
 export type coupon = {
   couponId: number;
-  status: 'ENABLE' | 'DISABLED' | 'SOLD_OUT';
+  status: string;
   discountType: 'FLAT' | 'RATE';
   couponName: string;
   appliedPrice: number;
@@ -24,16 +24,35 @@ export type coupon = {
   discount: number;
   couponType: 'WEEKDAYS' | 'WEEKENDS' | 'ALL_DAYS';
 };
-export type room = {
+
+export type EditCoupon = {
+  couponId: number;
+  status: string;
+  discountType: 'FLAT' | 'RATE';
+  discount: number;
+  dayLimit: number;
+  couponType: string;
+};
+export type room<T> = {
   roomId: number;
   roomName: string;
   roomPrice: number;
-  coupons: coupon[];
+  coupons: T[];
 };
 
 export type coupons = {
   accommodationId: number;
   accommodationName: string;
   expiry: string;
-  rooms: room[];
+  rooms: room<coupon>[];
+};
+export type CouponDeleteParams = {
+  accommodationId: number;
+  rooms: { roomId: number; coupons: { couponId: number }[] }[];
+};
+
+export type CouponEditParams = {
+  accommodationId: number;
+  expiry: string;
+  rooms: Omit<room<EditCoupon>, 'roomPrice' | 'roomName'>[];
 };

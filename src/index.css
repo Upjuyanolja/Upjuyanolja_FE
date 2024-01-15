@@ -142,3 +142,63 @@
     display: none;
   }
 }
+
+.ant-picker-input {
+  #checkInTime,
+  #checkOutTime {
+    cursor: pointer;
+  }
+}
+
+.confirm-modal {
+  top: 30vh;
+  .ant-modal-content {
+    width: 494px;
+    height: 216px;
+  }
+  .ant-modal-body {
+    padding: 0;
+  }
+  .anticon-exclamation-circle {
+    display: none;
+  }
+  .ant-modal-confirm-body {
+    height: 138px;
+    align-items: center;
+    justify-content: center;
+  }
+  .ant-modal-confirm-body-wrapper {
+    gap: 0px;
+  }
+  .ant-modal-confirm-content {
+    margin: 0;
+  }
+  .ant-modal-confirm-btns {
+    margin: 0;
+    padding: 16px 24px;
+  }
+  .ant-btn {
+    padding: 8px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .ant-modal-confirm-title {
+    font-size: 20px;
+    font-weight: 400;
+    white-space: pre-wrap;
+  }
+  .ant-modal-confirm-content {
+    font-size: 20px;
+    font-weight: 700;
+    margin-left: 0px !important;
+  }
+}
+
+/* coupon page message*/
+.coupon-message {
+  .ant-message-custom-content {
+    width: 230px;
+    display: flex;
+    align-items: center;
+  }
+}
