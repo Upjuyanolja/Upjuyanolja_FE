@@ -4,7 +4,10 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
-import { Room } from '@components/init/init-accommodation-registration/type';
+import {
+  Room,
+  onFinishValues,
+} from '@components/init/init-accommodation-registration/type';
 import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { PriceContainer } from '@components/room/price-container';
@@ -36,7 +39,7 @@ export const InitRoomRegistration = () => {
   const selectedOptions = useRecoilValue(checkedRoomOptions);
   const selectedImages = useRecoilValue(selectedInitRoomFilesState);
 
-  const onFinish = (values: { [key: string]: any }) => {
+  const onFinish = (values: onFinishValues) => {
     setUserInputValueState((prevUserInputValueState) => {
       const [userInputValue] = prevUserInputValueState;
       const [room] = userInputValue.rooms;
