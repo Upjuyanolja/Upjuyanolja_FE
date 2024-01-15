@@ -1,4 +1,5 @@
 import { colors } from '@/constants/colors';
+import { ROUTES } from '@/constants/routes';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
@@ -7,7 +8,10 @@ import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
+import { checkedRoomOptions, userInputValueState } from '@stores/init/atoms';
 import { Form } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitRoomRegistration = () => {
@@ -20,9 +24,43 @@ export const InitRoomRegistration = () => {
     internet: '인터넷',
   };
 
+  const navigate = useNavigate();
+
+  const setUserInputValueState = useSetRecoilState(userInputValueState);
+
+  const selectedOptions = useRecoilValue(checkedRoomOptions);
+
+  const onFinish = (values: { [key: string]: string }) => {
+    setUserInputValueState((prevUserInputValueState) => {
+      const [userInputValue] = prevUserInputValueState;
+      const [room] = userInputValue.rooms;
+
+      const updatedRoom = {
+        ...room,
+        name: values['room-name'],
+        price: parseInt(values['price']),
+        defaultCapacity: parseInt(values['defaultCapacity']),
+        maxCapacity: parseInt(values['maxCapacity']),
+        checkInTime: values['checkInTime'],
+        checkOutTime: values['checkOutTime'],
+        count: parseInt(values['count']),
+        options: selectedOptions,
+      };
+
+      const updatedUserInputValue = {
+        ...userInputValue,
+        rooms: [updatedRoom],
+      };
+
+      return [updatedUserInputValue];
+    });
+
+    navigate(ROUTES.INIT_INFO_CONFIRMATION);
+  };
+
   return (
     <StyledWrapper>
-      <Form form={form}>
+      <Form form={form} onFinish={onFinish}>
         <NameContainer
           header="객실명"
           form={form}
