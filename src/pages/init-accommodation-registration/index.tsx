@@ -65,7 +65,7 @@ export const InitAccommodationRegistration = () => {
         type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],
-        detailAddress: values['accommodation-detailAddress'].toString(),
+        detailAddress: values['accommodation-detailAddress'],
         zipCode: values['accommodation-postCode'],
         description: values['accommodation-desc'],
         options: selectedOptions,
