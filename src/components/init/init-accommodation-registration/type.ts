@@ -69,6 +69,7 @@ export type UserInputValue = {
   name: string;
   address: string;
   detailAddress: string;
+  zipCode: string;
   description: string;
   type: string;
   images: Image[];
