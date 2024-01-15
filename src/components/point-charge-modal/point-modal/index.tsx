@@ -153,7 +153,6 @@ export const PointModal = ({
       // 이 부분 로직은 다음 PR에 작성하도록 하겠습니다.
     } catch (error) {
       handleChangeUrl('/point-detail');
-      ㅁ;
     }
   };
 
