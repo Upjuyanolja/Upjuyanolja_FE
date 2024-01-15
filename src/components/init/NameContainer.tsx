@@ -1,8 +1,8 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import { NameContainerProps, ValidateInput } from './type';
+import { NameContainerProps } from './type';
 import {
   ACCOMMODATION_NAME_MAX_LENGTH,
   ACCOMMODATION_NAME_MIN_LENGTH,
@@ -17,10 +17,9 @@ export const NameContainer = ({
   placeholder,
   form,
 }: NameContainerProps) => {
-  const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
 
-  const validateInput = ({ value }: ValidateInput) => {
+  const validateInput = ({ value }: { value: string }) => {
     if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
       setErrorMessage(
         `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
@@ -37,7 +36,6 @@ export const NameContainer = ({
       else if (header === '객실명') form.setFieldValue('room-name', '');
       return;
     }
-    setInputValue(newValue);
     validateInput({ value: newValue });
   };
 
@@ -56,7 +54,6 @@ export const NameContainer = ({
           minLength={ACCOMMODATION_NAME_MIN_LENGTH}
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
           style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
-          value={inputValue}
           onChange={handleInputChange}
           status={errorMessage ? 'error' : ''}
           data-testid="input-name"

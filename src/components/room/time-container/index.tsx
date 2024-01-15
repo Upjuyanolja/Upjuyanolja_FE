@@ -56,13 +56,7 @@ export const TimeContainer = ({ header, form }: TimeContainerProps) => {
             onChange={handleCheckInChange}
             popupStyle={{ height: 274 }}
             showNow={false}
-            disabledHours={() => {
-              const hrs = [];
-              for (let i = 0; i < 9; i++) {
-                hrs.push(i);
-              }
-              return hrs;
-            }}
+            inputReadOnly={true}
             locale={{
               ...locale,
               lang: {
@@ -88,13 +82,7 @@ export const TimeContainer = ({ header, form }: TimeContainerProps) => {
             onChange={handleCheckOutChange}
             popupStyle={{ height: 274 }}
             showNow={false}
-            disabledHours={() => {
-              const hours = [];
-              for (let i = 0; i < 9; i++) {
-                hours.push(i);
-              }
-              return hours;
-            }}
+            inputReadOnly={true}
             locale={{
               ...locale,
               lang: {

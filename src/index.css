@@ -143,6 +143,13 @@
   }
 }
 
+.ant-picker-input {
+  #checkInTime,
+  #checkOutTime {
+    cursor: pointer;
+  }
+}
+
 .confirm-modal {
   top: 30vh;
   .ant-modal-content {
