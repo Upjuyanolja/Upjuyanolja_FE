@@ -6,8 +6,9 @@ import { MdOutlineAddHome } from 'react-icons/md';
 import styled from 'styled-components';
 
 export const Init = () => {
-  const { userInfoData } = useSideBar();
-  const name = userInfoData?.name;
+  const memberString = localStorage.getItem('member');
+  const memberObj = memberString ? JSON.parse(memberString) : null;
+  const name = memberObj.name;
   return (
     <StyledLayout color={colors.white}>
       <Layout.Header>Header</Layout.Header>

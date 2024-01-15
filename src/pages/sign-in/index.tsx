@@ -21,6 +21,9 @@ export const SignIn = () => {
     onSuccess: (response) => {
       setCookie('accessToken', response.data.data.accessToken);
       setCookie('refreshToken', response.data.data.accessToken);
+      const memberResponse = response.data.data.memberResponse;
+      const memberData = JSON.stringify(memberResponse);
+      localStorage.setItem('member', memberData);
       if (accommodationListData?.accommodations[0]?.id) {
         setCookie(
           'accomodationId',
