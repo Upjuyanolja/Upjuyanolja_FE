@@ -3,11 +3,7 @@ import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef, useEffect, ChangeEvent } from 'react';
-import {
-  ImageUploadFileItem,
-  ImageUploadContainerProps,
-  StyledImageContainerProps,
-} from './type';
+import { ImageUploadFileItem, StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
@@ -16,7 +12,7 @@ import {
   selectedAccommodationFilesState,
 } from '@stores/init/atoms';
 
-export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
+export const ImageUploadContainer = ({ header }: { header: string }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
@@ -44,30 +40,29 @@ export const ImageUploadContainer = ({ header }: ImageUploadContainerProps) => {
         !selectedFile.type.includes('jpeg') &&
         !selectedFile.type.includes('jpg'))
     ) {
-      message.error({
+      return message.error({
         content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
       });
-    } else {
-      if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
-        setFileList((prevFileList) => [
-          ...prevFileList,
-          {
-            uid: Date.now(),
-            name: selectedFile.name,
-            url: URL.createObjectURL(selectedFile),
-            originFileObj: selectedFile,
-          },
-        ]);
+    }
+    if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+      setFileList((prevFileList) => [
+        ...prevFileList,
+        {
+          uid: Date.now(),
+          name: selectedFile.name,
+          url: URL.createObjectURL(selectedFile),
+          originFileObj: selectedFile,
+        },
+      ]);
 
-        setSelectedFiles((prevSelectedFiles) => [
-          ...prevSelectedFiles,
-          { url: URL.createObjectURL(selectedFile) },
-        ]);
-      } else {
-        message.error({
-          content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
-        });
-      }
+      setSelectedFiles((prevSelectedFiles) => [
+        ...prevSelectedFiles,
+        { url: URL.createObjectURL(selectedFile) },
+      ]);
+    } else {
+      message.error({
+        content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+      });
     }
   };
 

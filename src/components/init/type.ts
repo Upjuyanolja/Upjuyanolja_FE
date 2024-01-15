@@ -14,10 +14,6 @@ export type CheckBoxContainerProps = {
   header: string;
 };
 
-export type FormErrorMessageProps = {
-  errorMessage: string;
-};
-
 export type ImageUploadFileItem = {
   uid: number;
   name: string;
@@ -38,8 +34,4 @@ export type NameContainerProps = {
   header: string;
   placeholder: string;
   form: FormInstance;
-};
-
-export type ValidateInput = {
-  value: string;
 };

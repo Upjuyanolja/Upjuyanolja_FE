@@ -24,14 +24,6 @@ export type AddressFormat = {
   zonecode: string;
 };
 
-export type formValues = {
-  [key: string]: string;
-};
-
-export type formType = {
-  form: FormInstance;
-};
-
 /**request 타입 */
 export type Image = {
   url: string;

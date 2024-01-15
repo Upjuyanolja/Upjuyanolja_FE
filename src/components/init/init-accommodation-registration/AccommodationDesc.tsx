@@ -6,7 +6,6 @@ import {
   ACCOMMODATION_DESC_MAX_LENGTH,
   ACCOMMODATION_DESC_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
-import { ValidateInput } from '../type';
 
 import { TextBox } from '@components/text-box';
 import { useRecoilState } from 'recoil';
@@ -22,7 +21,7 @@ export const AccommodationDesc = () => {
     validateTextArea({ value: newValue });
   };
 
-  const validateTextArea = ({ value }: ValidateInput) => {
+  const validateTextArea = ({ value }: { value: string }) => {
     if (value.length < ACCOMMODATION_DESC_MIN_LENGTH) {
       setErrorMessage(
         `숙소 소개는 최소 ${ACCOMMODATION_DESC_MIN_LENGTH}자 이상 작성해 주세요.`,
