@@ -192,6 +192,18 @@ export const AgreementModal = ({
 };
 
 const StyledModal = styled(Modal)`
+  .ant-modal-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 48px;
+  }
+  .ant-modal-close-x {
+    display: none;
+  }
   .ant-modal-body {
     height: 413px;
 
@@ -200,5 +212,13 @@ const StyledModal = styled(Modal)`
     div {
       margin-bottom: 16px;
     }
+  }
+  .ant-btn {
+    width: 100px;
+    height: 46px;
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
   }
 `;
