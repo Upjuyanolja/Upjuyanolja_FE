@@ -60,5 +60,5 @@ export type CouponEditParams = {
 export type CouponRoomList = {
   accommodationId: number;
   accommodationName: string;
-  rooms: Pick<room, 'roomId' | 'roomName' | 'roomPrice'>[];
+  rooms: Pick<room<coupon>, 'roomId' | 'roomName' | 'roomPrice'>[];
 };

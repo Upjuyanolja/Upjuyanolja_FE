@@ -1,4 +1,4 @@
-import { useGetCouponRoomList } from '@queries/coupon';
+import { useGetCouponRoomList } from '@queries/coupon-registration';
 
 export const useCouponRegistration = () => {
   const { data: couponRoomListData, isError: isGetCouponRoomListError } =

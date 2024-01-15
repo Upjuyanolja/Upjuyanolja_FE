@@ -19,6 +19,7 @@ import {
   postAuthenticationResolver,
   getVerifyResolver,
 } from './sign-up';
+import { getCouponRoomListResolver } from './coupon-registration';
 
 const email = 'ivegaeul@naver.com';
 const verificationCode = '020924';
@@ -42,4 +43,8 @@ export const handlers = [
   http.get('/api/points/total/1', getPointDetailTotalResolver),
   http.get('/api/points/usage/1', getPointDetailUsageResolver),
   http.get('/api/points/charges/1', getPointDetailChargesResolver),
+  http.get(
+    '/api/coupons/backoffice/buy/accommodationId',
+    getCouponRoomListResolver,
+  ),
 ];

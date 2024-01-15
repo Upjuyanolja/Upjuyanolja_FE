@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { CommonQuantityCouponSetter } from './common-quantity-coupon-setter';
 import { RoomCouponApplier } from './room-coupon-applier';
 import { CouponApplierProps } from './type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 
 export const CouponApplier = ({
@@ -13,6 +13,10 @@ export const CouponApplier = ({
   const { couponRoomListData } = useCouponRegistration();
   const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useState(false);
   const [groupQuantityValue, setGroupQuantityValue] = useState(0);
+
+  useEffect(() => {
+    console.log(couponRoomListData);
+  }, [couponRoomListData]);
 
   return (
     <Container>
