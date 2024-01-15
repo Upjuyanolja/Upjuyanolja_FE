@@ -1,42 +1,42 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import {
-  authenticationData,
-  postAuthenticationData,
-  postSignUpResData,
-  signUpData,
+  AuthenticationData,
+  PostAuthenticationData,
+  PostSignUpResData,
+  SignUpData,
 } from '@api/sign-up/type';
 import { Response } from '@/types/api';
 import { SIGN_UP_API } from '@api/sign-up';
 
 export const usePostSignUp = (
   options?: UseMutationOptions<
-    AxiosResponse<Response<postSignUpResData>>,
+    AxiosResponse<Response<PostSignUpResData>>,
     AxiosError,
-    signUpData
+    SignUpData
   >,
 ) => {
   return useMutation<
-    AxiosResponse<Response<postSignUpResData>>,
+    AxiosResponse<Response<PostSignUpResData>>,
     AxiosError,
-    signUpData
-  >((data: signUpData) => SIGN_UP_API.postSignUp(data), {
+    SignUpData
+  >((data: SignUpData) => SIGN_UP_API.postSignUp(data), {
     ...options,
   });
 };
 
 export const usePostAuthentication = (
   options?: UseMutationOptions<
-    AxiosResponse<Response<postAuthenticationData>>,
+    AxiosResponse<Response<PostAuthenticationData>>,
     AxiosError,
-    authenticationData
+    AuthenticationData
   >,
 ) => {
   return useMutation<
-    AxiosResponse<Response<postAuthenticationData>>,
+    AxiosResponse<Response<PostAuthenticationData>>,
     AxiosError,
-    authenticationData
-  >((data: authenticationData) => SIGN_UP_API.postAuthentication(data), {
+    AuthenticationData
+  >((data: AuthenticationData) => SIGN_UP_API.postAuthentication(data), {
     ...options,
   });
 };

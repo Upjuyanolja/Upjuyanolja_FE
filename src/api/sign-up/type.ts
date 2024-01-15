@@ -1,18 +1,18 @@
-export type signUpData = {
+export type SignUpData = {
   email: string;
   password: string;
 };
 
-export type authenticationData = {
+export type AuthenticationData = {
   email: string;
 };
 
-export type verificationData = {
+export type VerificationData = {
   email: string;
   verificationCode: string;
 };
 
-export type postSignUpResData = {
+export type PostSignUpResData = {
   message: string;
   data: {
     id: number;
@@ -21,14 +21,14 @@ export type postSignUpResData = {
   };
 };
 
-export type postAuthenticationData = {
+export type PostAuthenticationData = {
   message: string;
   data: {
     verificationCode: string;
   };
 };
 
-export type getVerificationData = {
+export type GetVerificationData = {
   message: string;
   data: string;
 };
