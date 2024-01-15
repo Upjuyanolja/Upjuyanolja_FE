@@ -1,0 +1,68 @@
+{
+  "message": "포인트 전체 내역 조회에 성공 했습니다.",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 4,
+    "totalPages": 8,
+    "totalElements": 32,
+    "isLast": true,
+    "histories": [
+      {
+        "id": 29,
+        "category": "충전",
+        "type": "포인트",
+        "status": "구매 확정",
+        "name": "포인트 충전",
+        "description": "",
+        "trade": "5000원",
+        "receipt": {
+          "orderId": "O-1644460169123",
+          "tradeAt": "2023.12.20 18:06",
+          "amount": "5000"
+        }
+      },
+      {
+        "id": 30,
+        "category": "충전",
+        "type": "취소",
+        "status": "취소 완료",
+        "name": "포인트 충전",
+        "description": "",
+        "trade": "5000원",
+        "receipt": {
+          "orderId": "O-1644460169123",
+          "tradeAt": "2023.12.20 18:06",
+          "amount": "5000"
+        }
+      },
+      {
+        "id": 31,
+        "category": "사용",
+        "type": "쿠폰",
+        "status": "구매 확정",
+        "name": "5% 할인 쿠폰",
+        "description": "패캠스테이 삼성점 | 스탠다드, 스탠다드 더블, 프리미엄",
+        "trade": "5000원",
+        "receipt": {
+          "orderId": "O-1644460169123",
+          "tradeAt": "2023.12.20 18:06",
+          "amount": "5000"
+        }
+      },
+      {
+        "id": 32,
+        "category": "충전",
+        "type": "포인트",
+        "status": "결제 완료",
+        "name": "포인트 충전",
+        "description": "",
+        "trade": "5000원",
+        "receipt": {
+          "orderId": "O-1644460169123",
+          "tradeAt": "2023.12.20 18:06",
+          "amount": "5000"
+        }
+      }
+    ]
+  }
+}

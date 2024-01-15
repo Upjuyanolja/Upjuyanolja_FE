@@ -18,7 +18,6 @@ import {
   userInputValueState,
 } from '@stores/init/atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { formValues } from '@components/init/init-accommodation-registration/type';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,7 +44,7 @@ export const InitAccommodationRegistration = () => {
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
   const selectedImages = useRecoilValue(selectedAccommodationFilesState);
 
-  const onFinish = (values: formValues) => {
+  const onFinish = (values: { [key: string]: string }) => {
     setUserInputValueState((prevUserInputValueState) => {
       const [userInputValue] = prevUserInputValueState;
 
@@ -63,11 +62,11 @@ export const InitAccommodationRegistration = () => {
 
       const updatedUserInputValue = {
         ...userInputValue,
-        id: Math.floor(Math.random() * 1000000),
         type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],
-        detailAddress: values['accommodation-detailAddress'],
+        detailAddress: values['accommodation-detailAddress'].toString(),
+        zipCode: values['accommodation-postCode'],
         description: values['accommodation-desc'],
         options: selectedOptions,
         images: selectedImages,

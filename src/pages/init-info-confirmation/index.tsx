@@ -4,8 +4,6 @@ import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
 import styled from 'styled-components';
 
 export const InitInfoConfirmation = () => {
-  const isValid = true;
-
   const hardRoomData = [
     {
       name: '봄',
@@ -57,7 +55,7 @@ export const InitInfoConfirmation = () => {
     <StyledWrapper>
       <AccommodationInfo />
       <RoomInfo roomData={hardRoomData} />
-      <ButtonContainer buttonStyle="request" isValid={isValid} />
+      <ButtonContainer buttonStyle="request" />
     </StyledWrapper>
   );
 };

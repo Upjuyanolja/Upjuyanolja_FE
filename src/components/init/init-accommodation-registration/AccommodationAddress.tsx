@@ -1,13 +1,13 @@
 import { styled } from 'styled-components';
 import { Input, Button, Form } from 'antd';
 import { ChangeEvent, useState } from 'react';
-import { formType } from './type';
 import { AddressFormat } from '@components/init/init-accommodation-registration/type';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { ADDRESS_TYPE_ROAD } from '@/constants/init/init-accommodation-registration';
 import { TextBox } from '@components/text-box';
+import { FormInstance } from 'antd/es/form/Form';
 
-export const AccommodationAddress = ({ form }: formType) => {
+export const AccommodationAddress = ({ form }: { form: FormInstance }) => {
   const [inputPostCode, setInputPostCode] = useState('');
   const [inputAddress, setInputAddress] = useState('');
   const [inputDetailAddress, setInputDetailAddress] = useState('');

@@ -42,12 +42,6 @@ export const AccommodationInfo = () => {
               </List.Item>
               <List.Item>
                 <List.Item.Meta
-                  title="숙소 대표 이미지 :"
-                  description="파일명 외 2장"
-                />
-              </List.Item>
-              <List.Item>
-                <List.Item.Meta
                   title="숙소 옵션 :"
                   description=" 객실취사 / 주차시설 / 휘트니스 센터 / 세미나실"
                 />
@@ -83,12 +77,14 @@ const StyledWrapper = styled.div`
   .ant-list-item {
     border-bottom: none;
     padding: 0;
+
+    margin-bottom: 8px;
   }
 
   .ant-list-item-meta-content {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 8px;
     align-items: center;
   }
 
@@ -118,7 +114,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledAccommodationInfoContainer = styled.div`
-  height: 340px;
+  height: 360px;
 
   border-radius: 8px;
   border: 2px solid ${colors.primary};
@@ -147,6 +143,8 @@ const StyledTextWrapper = styled.div`
   flex-direction: column;
 
   width: 100%;
+
+  gap: 8px;
 `;
 
 const StyledTextHeadWrapper = styled.div`

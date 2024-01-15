@@ -14,6 +14,7 @@ import {
   loadPaymentWidget,
 } from '@tosspayments/payment-widget-sdk';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
+import { isNumber } from '@/utils/isNumber';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
@@ -76,7 +77,7 @@ export const PointModal = ({
 
   const handleChangePoint = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    if (/[0-9]/.test(removeNumberFormat(inputValue))) {
+    if (isNumber(removeNumberFormat(inputValue))) {
       setFormattedValue(numberFormat(inputValue));
       setPrice(parseInt(inputValue));
     } else {

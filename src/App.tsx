@@ -22,9 +22,10 @@ import RoomRegistration from './pages/room-registration';
 import { RoomUpdate } from './pages/room-update';
 import { RootLayout } from './layout';
 import './App.less';
-import { InitLayout } from '@components/init/init-button/InitLayout';
 import { RoomLayout } from '@components/room/room-layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
+import { InitLayout } from '@components/layout/init-layout/InitLayout';
+import { MainRedirect } from '@pages/main-redirect';
 
 function App() {
   const accessToken = getCookie('accessToken');
@@ -66,20 +67,32 @@ function App() {
         {/* 레이아웃 적용 페이지  */}
         <Route element={<RootLayout />}>
           <Route path={ROUTES.POINT_DETAIL} element={<PointDetail />} />
-          <Route path={ROUTES.COUPON} element={<Coupon />} />
           <Route
-            path={ROUTES.COUPON_REGISTRATION}
+            path={`/:accommodationId${ROUTES.COUPON}`}
+            element={<Coupon />}
+          />
+          <Route path={'/'} element={<MainRedirect />} />
+          <Route
+            path={`/:accommodationId${ROUTES.COUPON_REGISTRATION}/:percent`}
             element={<CouponRegistration />}
           />
-          <Route path={ROUTES.MAIN} element={<Main />} />
-          <Route path={ROUTES.ROOM} element={<Room />} />
+          <Route
+            path={`/:accommodationId${ROUTES.COUPON_REGISTRATION}`}
+            element={<CouponRegistration />}
+          />
+
+          <Route path={`/:accommodationId${ROUTES.MAIN}`} element={<Main />} />
+          <Route path={`/:accommodationId${ROUTES.ROOM}`} element={<Room />} />
           <Route element={<RoomLayout />}>
             <Route
-              path={ROUTES.ROOM_REGISTRATION}
+              path={`/:accommodationId${ROUTES.ROOM_REGISTRATION}`}
               element={<RoomRegistration />}
             />
           </Route>
-          <Route path={ROUTES.ROOM_UPDATE} element={<RoomUpdate />} />
+          <Route
+            path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
+            element={<RoomUpdate />}
+          />
         </Route>
       </Routes>
     </Router>

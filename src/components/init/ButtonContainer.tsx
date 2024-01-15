@@ -30,19 +30,19 @@ export const ButtonContainer = ({
           <TextBox typography="h1" fontWeight={700} color="primary">
             사장님!
           </TextBox>
-          <TextBox
-            typography="h4"
-            fontWeight={400}
-            style={{ textAlign: 'center' }}
-          >
-            쿠폰센터에서는 숙소 등록만 가능하며,
-            <br />
-            등록 완료 후, 수정 /삭제는
-            <br />
+          <StyledMiddleTextContainer>
             <TextBox typography="h4" fontWeight={700}>
-              비즈니스 센터에서 처리 가능합니다.
+              쿠폰센터에서는 숙소 등록만 가능하며,
             </TextBox>
-          </TextBox>
+            <br />
+            <TextBox typography="h4" fontWeight={400}>
+              등록 완료 후
+            </TextBox>
+            <br />
+            <TextBox typography="h4" fontWeight={700} color="error">
+              수정 /삭제는 비즈니스 센터에서 처리 가능합니다.
+            </TextBox>
+          </StyledMiddleTextContainer>
         </StyledConfirmHead>
       ),
       content: (
@@ -80,7 +80,12 @@ export const ButtonContainer = ({
         </>
       )}
       {buttonStyle === 'request' && (
-        <StyledButton type="primary" size="large" onClick={confirm}>
+        <StyledButton
+          type="primary"
+          size="large"
+          onClick={confirm}
+          data-testid="request-button"
+        >
           등록 요청
         </StyledButton>
       )}
@@ -161,6 +166,10 @@ const StyledTextContainer = styled.div`
   gap: 8px;
 
   height: 507px;
+`;
+
+const StyledMiddleTextContainer = styled.div`
+  text-align: center;
 `;
 
 const StyledToMainButton = styled(Button)`

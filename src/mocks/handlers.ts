@@ -8,6 +8,11 @@ import {
 } from './coupon';
 import { getPointSummaryResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
+import {
+  getPointDetailChargesResolver,
+  getPointDetailUsageResolver,
+  getPointDetailTotalResolver,
+} from './point-detail';
 
 export const handlers = [
   http.post('/api/auth/owner/signin', postSignInResolver),
@@ -22,4 +27,8 @@ export const handlers = [
   ),
 
   http.get('/api/points/summary', getPointSummaryResolver),
+
+  http.get('/api/points/total/1', getPointDetailTotalResolver),
+  http.get('/api/points/usage/1', getPointDetailUsageResolver),
+  http.get('/api/points/charges/1', getPointDetailChargesResolver),
 ];

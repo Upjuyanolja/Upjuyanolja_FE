@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InputNumber, Col } from 'antd';
+import { InputNumber, Form } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
@@ -9,8 +9,8 @@ import {
   MAX_NUM_OF_ROOMS,
 } from '@/constants/room/room-registration/';
 
-export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
-  const [numOfRoomsValue, setNumOfRoomsValue] = useState<number>(1);
+export const CountContainer = ({ header, form }: NumOfRoomsContainerProps) => {
+  const [numOfRooms, setNumOfRooms] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
@@ -25,7 +25,8 @@ export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
   ) => {
     if (typeof newValue !== 'number') return;
     validateInput({ value: newValue });
-    setNumOfRoomsValue(newValue);
+    setNumOfRooms(newValue);
+    form.setFieldValue('count', newValue);
   };
 
   return (
@@ -46,13 +47,14 @@ export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
             일일 예약 가능 객실
           </TextBox>
         </StyledTextBoxWrapper>
-        <StyledInputNumber
-          min={1}
-          max={100}
-          defaultValue={1}
-          value={numOfRoomsValue}
-          onChange={handleCapacityChange}
-        />
+        <Form.Item name={'count'} initialValue={1}>
+          <StyledInputNumber
+            min={1}
+            max={100}
+            value={numOfRooms}
+            onChange={handleCapacityChange}
+          />
+        </Form.Item>
         <StyledTextBoxWrapper>
           <TextBox typography="body1" color="black900" fontWeight="normal">
             개
@@ -60,7 +62,7 @@ export const NumOfRoomsContainer = ({ header }: NumOfRoomsContainerProps) => {
         </StyledTextBoxWrapper>
       </StyledRow>
       {error && (
-        <StyledErrorMessageWrapper data-testid="error-input-num-of-rooms">
+        <StyledErrorMessageWrapper data-testid="error-input-rooms-count">
           <StyledFormErrorMessage errorMessage={error} />
         </StyledErrorMessageWrapper>
       )}
@@ -98,6 +100,7 @@ const StyledInputNumber = styled(InputNumber)`
   align-items: center;
   padding: 0;
   margin-right: 4px;
+  margin-top: 24px;
 
   .ant-input-number-input {
     width: 100%;
@@ -120,7 +123,7 @@ const StyledTextBoxWrapper = styled.div`
 const StyledRow = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 8;
+  height: 40px !important;
 `;
 
 const StyledInputWrapper = styled.div`

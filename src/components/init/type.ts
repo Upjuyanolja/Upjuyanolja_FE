@@ -2,7 +2,7 @@ import { FormInstance } from 'antd';
 
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
-  isValid: boolean;
+  isValid?: boolean;
 };
 
 export type ButtonContainerStyledWrapperProps = {
@@ -14,15 +14,16 @@ export type CheckBoxContainerProps = {
   header: string;
 };
 
-export type FormErrorMessageProps = {
-  errorMessage: string;
-};
-
 export type ImageUploadFileItem = {
   uid: number;
   name: string;
   url: string;
   originFileObj?: File;
+};
+
+export type StyledImageContainerProps = {
+  $fileList: ImageUploadFileItem[];
+  header: string;
 };
 
 export type ImageUploadContainerProps = {
@@ -33,8 +34,4 @@ export type NameContainerProps = {
   header: string;
   placeholder: string;
   form: FormInstance;
-};
-
-export type ValidateInput = {
-  value: string;
 };

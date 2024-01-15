@@ -1,13 +1,5 @@
-export type couponHeaderProps = {
+/* eslint-disable no-unused-vars */
+export type CouponHeaderProps = {
   expiry: string;
-  couponStatusOption: (
-    | {
-        value: 'ENABLE';
-        label: '발급 중';
-      }
-    | {
-        value: 'DISABLE';
-        label: '발급 중지';
-      }
-  )[];
+  handleSelectStatus: (value: string) => void;
 };
