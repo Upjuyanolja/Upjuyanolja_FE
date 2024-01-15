@@ -1,11 +1,5 @@
-import {
-  DeterminedPrice,
-  PendingCouponDataList,
-  SelectedCouponType,
-} from '../type';
+import { PendingCouponDataList } from '../type';
 
 export type CouponPreviewProps = {
-  selectedCouponType: SelectedCouponType;
-  determinedPrice: DeterminedPrice;
   pendingCouponDataList: PendingCouponDataList;
 };

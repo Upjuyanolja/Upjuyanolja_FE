@@ -1,32 +1,14 @@
 import styled from 'styled-components';
 import { CommonQuantityCouponSetter } from './common-quantity-coupon-setter';
 import { RoomCouponApplier } from './room-coupon-applier';
-import { CouponApplierProps } from './type';
-import { useEffect, useState } from 'react';
 import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 
-export const CouponApplier = ({
-  selectedCouponType,
-  pendingCouponDataList,
-  setPendingCouponDataList,
-}: CouponApplierProps) => {
+export const CouponApplier = () => {
   const { couponRoomListData } = useCouponRegistration();
-  const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useState(false);
-  const [groupQuantityValue, setGroupQuantityValue] = useState(0);
-
-  useEffect(() => {
-    console.log(couponRoomListData);
-  }, [couponRoomListData]);
 
   return (
     <Container>
-      <CommonQuantityCouponSetter
-        selectedCouponType={selectedCouponType}
-        groupQuantityValue={groupQuantityValue}
-        setGroupQuantityValue={setGroupQuantityValue}
-        isGroupQuantitySelected={isGroupQuantitySelected}
-        setIsGroupQuantitySelected={setIsGroupQuantitySelected}
-      />
+      <CommonQuantityCouponSetter />
       <StyledRoomCouponApplierWrap>
         {couponRoomListData?.rooms.map((item, index) => (
           <RoomCouponApplier
@@ -35,10 +17,6 @@ export const CouponApplier = ({
             index={index}
             roomId={item.roomId}
             roomPrice={item.roomPrice}
-            setPendingCouponDataList={setPendingCouponDataList}
-            isGroupQuantitySelected={isGroupQuantitySelected}
-            groupQuantityValue={groupQuantityValue}
-            selectedCouponType={selectedCouponType}
           />
         ))}
       </StyledRoomCouponApplierWrap>

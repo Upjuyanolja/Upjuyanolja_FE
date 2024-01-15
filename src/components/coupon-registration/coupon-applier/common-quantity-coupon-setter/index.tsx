@@ -1,18 +1,25 @@
 import { TextBox } from '@components/text-box';
 import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
-import { CommonQuantityCouponSetterProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect } from 'react';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  groupQuantityValueState,
+  isGroupQuantitySelectedState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
 
-export const CommonQuantityCouponSetter = ({
-  selectedCouponType,
-  groupQuantityValue,
-  setGroupQuantityValue,
-  isGroupQuantitySelected,
-  setIsGroupQuantitySelected,
-}: CommonQuantityCouponSetterProps) => {
+export const CommonQuantityCouponSetter = () => {
+  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
+  const [groupQuantityValue, setGroupQuantityValue] = useRecoilState(
+    groupQuantityValueState,
+  );
+  const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useRecoilState(
+    isGroupQuantitySelectedState,
+  );
+
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
     const formattedValue = parseInt(e.target.value);
     setGroupQuantityValue(formattedValue);
@@ -33,7 +40,7 @@ export const CommonQuantityCouponSetter = ({
   useEffect(() => {
     setIsGroupQuantitySelected(false);
     setGroupQuantityValue(0);
-  }, [selectedCouponType]);
+  }, [selectedDiscountType]);
 
   return (
     <Container>

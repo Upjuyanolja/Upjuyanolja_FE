@@ -1,7 +1,6 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
-import { CouponTypeProps } from './type';
 import { Input } from 'antd';
 import { Spacing } from '@components/spacing';
 import {
@@ -19,28 +18,35 @@ import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { InputChangeEvent, MouseEvent } from '@/types/event';
 import { isNumber } from '@/utils/is-number';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  determinedPriceState,
+  discountValueState,
+  pendingCouponDataListState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
 
-export const CouponType = ({
-  selectedCouponType,
-  setSelectedCouponType,
-  discountValue,
-  setDiscountValue,
-  pendingCouponDataList,
-  setPendingCouponDataList,
-  setDeterminedPrice,
-}: CouponTypeProps) => {
+export const CouponType = () => {
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
+  const [selectedDiscountType, setSelectedDiscountType] = useRecoilState(
+    selectedDiscountTypeState,
+  );
+  const [discountValue, setDiscountValue] = useRecoilState(discountValueState);
+  const setDeterminedPrice = useSetRecoilState(determinedPriceState);
+  const [pendingCouponDataList, setPendingCouponDataList] = useRecoilState(
+    pendingCouponDataListState,
+  );
 
   useEffect(() => {
     initializeValue();
-  }, [selectedCouponType]);
+  }, [selectedDiscountType]);
 
   useEffect(() => {
     if (!discountValue) {
       return setIsValidDiscountRange(true);
     }
 
-    checkDiscountValidity(discountValue, selectedCouponType);
+    checkDiscountValidity(discountValue, selectedDiscountType);
   }, [discountValue]);
 
   const initializeValue = () => {
@@ -122,7 +128,7 @@ export const CouponType = ({
       ? FLAT_COUPON_TYPE
       : RATE_COUPON_TYPE;
 
-    setSelectedCouponType(newCouponType);
+    setSelectedDiscountType(newCouponType);
   };
 
   const handleDiscountInputChange = (e: InputChangeEvent) => {
@@ -154,13 +160,13 @@ export const CouponType = ({
         <StyledDiscountButton
           onClick={(e) => handleCouponType(e)}
           className={`price ${
-            selectedCouponType.typeName === FLAT_COUPON ? 'active' : null
+            selectedDiscountType.typeName === FLAT_COUPON ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedCouponType.typeName === FLAT_COUPON
+              selectedDiscountType.typeName === FLAT_COUPON
                 ? 'primary'
                 : 'black900'
             }
@@ -171,13 +177,13 @@ export const CouponType = ({
         <StyledDiscountButton
           onClick={(e) => handleCouponType(e)}
           className={`rate ${
-            selectedCouponType.typeName === RATE_COUPON ? 'active' : null
+            selectedDiscountType.typeName === RATE_COUPON ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedCouponType.typeName === RATE_COUPON
+              selectedDiscountType.typeName === RATE_COUPON
                 ? 'primary'
                 : 'black900'
             }
@@ -191,10 +197,10 @@ export const CouponType = ({
         <StyledInput
           onChange={handleDiscountInputChange}
           value={discountValue || ''}
-          onBlur={() => handleBlur(discountValue, selectedCouponType)}
+          onBlur={() => handleBlur(discountValue, selectedDiscountType)}
           onFocus={() => handleFocus(discountValue)}
           placeholder={
-            selectedCouponType.typeName === FLAT_COUPON
+            selectedDiscountType.typeName === FLAT_COUPON
               ? '1,000~50,000 까지'
               : '1~50까지'
           }
@@ -203,7 +209,9 @@ export const CouponType = ({
         />
         <StyledTextWrap>
           <TextBox typography="body2" fontWeight="bold">
-            {selectedCouponType.typeName === FLAT_COUPON ? '원 할인' : '% 할인'}
+            {selectedDiscountType.typeName === FLAT_COUPON
+              ? '원 할인'
+              : '% 할인'}
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>

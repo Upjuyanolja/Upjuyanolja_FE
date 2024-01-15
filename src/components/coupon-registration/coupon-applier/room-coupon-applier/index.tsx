@@ -6,19 +6,28 @@ import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/utils/is-number';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  groupQuantityValueState,
+  isGroupQuantitySelectedState,
+  pendingCouponDataListState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
 
 export const RoomCouponApplier = ({
   roomName,
   index,
   roomId,
   roomPrice,
-  setPendingCouponDataList,
-  isGroupQuantitySelected,
-  groupQuantityValue,
-  selectedCouponType,
 }: RoomCouponApplierProps) => {
+  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
   const [itemQuantityValue, setItemQuantityValue] = useState(0);
+  const setPendingCouponDataList = useSetRecoilState(
+    pendingCouponDataListState,
+  );
+  const groupQuantityValue = useRecoilValue(groupQuantityValueState);
+  const isGroupQuantitySelected = useRecoilValue(isGroupQuantitySelectedState);
 
   const handleQuantityChange = () => {
     const newValue = itemQuantityValue;
@@ -41,6 +50,10 @@ export const RoomCouponApplier = ({
     handleQuantityChange();
   };
 
+  const handleBlur = () => {
+    handleQuantityChange();
+  };
+
   useEffect(() => {
     handleQuantityChange();
   }, [itemQuantityValue]);
@@ -55,7 +68,7 @@ export const RoomCouponApplier = ({
   useEffect(() => {
     setItemQuantityValue(0);
     setIsItemQuantitySelected(false);
-  }, [selectedCouponType]);
+  }, [selectedDiscountType]);
 
   return (
     <Container>
@@ -83,6 +96,7 @@ export const RoomCouponApplier = ({
           onChange={handleChange}
           disabled={isGroupQuantitySelected || !isItemQuantitySelected}
           onKeyDown={handleEnterKeyDown}
+          onBlur={handleBlur}
         />
         <TextBox typography="body1" color="black900">
           장

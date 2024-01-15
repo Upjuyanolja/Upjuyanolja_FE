@@ -4,20 +4,20 @@ import styled from 'styled-components';
 import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { Button, Checkbox } from 'antd';
-import { CouponPreviewProps } from './type';
 import { FLAT_COUPON_TYPE } from '@/constants/coupon-registration';
-import { useEffect } from 'react';
 import { PendingCouponDataList } from '../type';
 import { numberFormat } from '@/utils/Format/numberFormat';
+import { useRecoilValue } from 'recoil';
+import {
+  determinedPriceState,
+  pendingCouponDataListState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
 
-export const CouponPreview = ({
-  selectedCouponType,
-  determinedPrice,
-  pendingCouponDataList,
-}: CouponPreviewProps) => {
-  useEffect(() => {
-    console.log(pendingCouponDataList, 'pendingCouponData');
-  }, [pendingCouponDataList]);
+export const CouponPreview = () => {
+  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
+  const determinedPrice = useRecoilValue(determinedPriceState);
+  const pendingCouponDataList = useRecoilValue(pendingCouponDataListState);
 
   const calculateTotalPrice = (
     pendingCouponDataList: PendingCouponDataList,
@@ -38,7 +38,7 @@ export const CouponPreview = ({
             <TextBox typography="body2" fontWeight="bold" color="primary">
               쿠폰 유형을 선택해 주세요.
             </TextBox>
-          ) : selectedCouponType === FLAT_COUPON_TYPE ? (
+          ) : selectedDiscountType === FLAT_COUPON_TYPE ? (
             <TextBox typography="h4" fontWeight="bold" color="primary">
               {determinedPrice}원 할인 쿠폰
             </TextBox>
@@ -56,8 +56,6 @@ export const CouponPreview = ({
               roomPrice={item.roomPrice}
               quantity={item.quantity}
               key={index}
-              selectedCouponType={selectedCouponType}
-              determinedPrice={determinedPrice}
             />
           ))}
         </StyledPreviewItemWrap>

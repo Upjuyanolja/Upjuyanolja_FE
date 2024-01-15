@@ -4,24 +4,9 @@ import { CouponPreview } from '@components/coupon-registration/coupon-preview';
 import { CouponType } from '@components/coupon-registration/coupon-type';
 import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
-import { useState } from 'react';
 import styled from 'styled-components';
-import { FLAT_COUPON_TYPE } from '@/constants/coupon-registration';
-import {
-  FlatCouponType,
-  RateCouponType,
-} from '@/constants/coupon-registration/type';
-import { PendingCouponDataList } from '@components/coupon-registration/type';
 
 export const CouponRegistration = () => {
-  const [selectedCouponType, setSelectedCouponType] = useState<
-    FlatCouponType | RateCouponType
-  >(FLAT_COUPON_TYPE);
-  const [discountValue, setDiscountValue] = useState('');
-  const [determinedPrice, setDeterminedPrice] = useState('');
-  const [pendingCouponDataList, setPendingCouponDataList] =
-    useState<PendingCouponDataList>([]);
-
   return (
     <Container>
       <StyledLeftWrap>
@@ -31,32 +16,16 @@ export const CouponRegistration = () => {
         <Spacing space="8" />
         <StyledCouponCardWrap>
           <CouponCard title="1. 쿠폰 유형 선택">
-            <CouponType
-              selectedCouponType={selectedCouponType}
-              setSelectedCouponType={setSelectedCouponType}
-              discountValue={discountValue}
-              setDiscountValue={setDiscountValue}
-              pendingCouponDataList={pendingCouponDataList}
-              setPendingCouponDataList={setPendingCouponDataList}
-              setDeterminedPrice={setDeterminedPrice}
-            />
+            <CouponType />
           </CouponCard>
           <Spacing space="32" />
           <CouponCard title="2. 적용 객실 선택">
-            <CouponApplier
-              selectedCouponType={selectedCouponType}
-              pendingCouponDataList={pendingCouponDataList}
-              setPendingCouponDataList={setPendingCouponDataList}
-            />
+            <CouponApplier />
           </CouponCard>
         </StyledCouponCardWrap>
       </StyledLeftWrap>
       <div>
-        <CouponPreview
-          selectedCouponType={selectedCouponType}
-          determinedPrice={determinedPrice}
-          pendingCouponDataList={pendingCouponDataList}
-        />
+        <CouponPreview />
       </div>
     </Container>
   );

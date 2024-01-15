@@ -9,15 +9,20 @@ import {
   RATE_COUPON_TYPE,
 } from '@/constants/coupon-registration';
 import { numberFormat } from '@/utils/Format/numberFormat';
+import { useRecoilValue } from 'recoil';
+import {
+  determinedPriceState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
 
 export const CouponPreviewItem = ({
-  roomId,
   roomName,
   quantity,
   roomPrice,
-  selectedCouponType,
-  determinedPrice,
 }: CouponPreviewItemProps) => {
+  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
+  const determinedPrice = useRecoilValue(determinedPriceState);
+
   return (
     <Container>
       <TextBox typography="h5" fontWeight="bold" color="black900">
@@ -25,10 +30,10 @@ export const CouponPreviewItem = ({
       </TextBox>
       <Spacing space="4" />
       <TextBox typography="body2" color="black900">
-        {selectedCouponType === FLAT_COUPON_TYPE
+        {selectedDiscountType === FLAT_COUPON_TYPE
           ? `${determinedPrice}원 할인`
           : null}
-        {selectedCouponType === RATE_COUPON_TYPE
+        {selectedDiscountType === RATE_COUPON_TYPE
           ? `${determinedPrice}% 할인 (${roomPrice})`
           : null}
       </TextBox>
