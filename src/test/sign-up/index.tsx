@@ -9,6 +9,7 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { TextBox } from '@components/text-box';
 import { SIGN_UP_API } from '@api/sign-up/index';
 import { AxiosError } from 'axios';
+import { RESPONSE_CODE } from '@/constants/api';
 export const SignUp = () => {
   const queryClient = useQueryClient();
   const { handleChangeUrl } = useCustomNavigate();
@@ -81,7 +82,6 @@ export const SignUp = () => {
     onSubmit: async (values) => {
       try {
         const signUpData = { email: values.email, password: values.password };
-        console.log(signUpData);
         await postSignUpMutation.mutateAsync(signUpData);
       } catch (e) {
         console.error(e);
@@ -115,8 +115,8 @@ export const SignUp = () => {
       } catch (error) {
         if (error instanceof AxiosError && error.response) {
           if (
-            error.response.data.code === 1010 ||
-            error.response.data.code === 9001
+            error.response.data.code === RESPONSE_CODE.INVALID_REFRESH_TOKEN ||
+            error.response.data.code === RESPONSE_CODE.REQUEST_BODY_ERROR
           ) {
             setCheckTwo(false);
             setCheckTwo_1(true);

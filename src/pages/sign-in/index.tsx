@@ -12,6 +12,7 @@ import { TextBox } from '@components/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
+import { HTTP_STATUS_CODE } from '@/constants/api';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -92,7 +93,7 @@ export const SignIn = () => {
         }
       } catch (e) {
         if (e instanceof AxiosError && e.response) {
-          if (e.response.status === 500) {
+          if (e.response.status === HTTP_STATUS_CODE.BAD_GATEWAY) {
             message.error({
               content: (
                 <TextBox typography="body3" fontWeight={'400'}>
