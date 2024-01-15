@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FormInstance } from 'antd/es/form/Form';
-import { Moment } from 'moment';
 
 export type AccommodationCategoryType =
   | 'HOTEL/RESORT'
@@ -49,7 +48,7 @@ export type RoomOptions = {
   internet: boolean;
 };
 
-type Room = {
+export type Room = {
   name: string;
   price: number | null;
   defaultCapacity: number | null;
@@ -59,18 +58,6 @@ type Room = {
   count: number | null;
   images: Image[];
   options: RoomOptions;
-};
-
-export type RoomValue = {
-  name: string;
-  price: number;
-  defaultCapacity: number;
-  maxCapacity: number;
-  checkInTime: Moment;
-  checkOutTime: Moment;
-  count: number;
-  options: RoomOptions;
-  images: Image[];
 };
 
 export type UserInputValue = {

@@ -4,6 +4,7 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
+import { Room } from '@components/init/init-accommodation-registration/type';
 import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { PriceContainer } from '@components/room/price-container';
@@ -35,20 +36,20 @@ export const InitRoomRegistration = () => {
   const selectedOptions = useRecoilValue(checkedRoomOptions);
   const selectedImages = useRecoilValue(selectedInitRoomFilesState);
 
-  const onFinish = (values: { [key: string]: string }) => {
+  const onFinish = (values: { [key: string]: any }) => {
     setUserInputValueState((prevUserInputValueState) => {
       const [userInputValue] = prevUserInputValueState;
       const [room] = userInputValue.rooms;
 
-      const updatedRoom = {
+      const updatedRoom: Room = {
         ...room,
         name: values['room-name'],
-        price: parseInt(values['price']),
-        defaultCapacity: parseInt(values['defaultCapacity']),
-        maxCapacity: parseInt(values['maxCapacity']),
-        checkInTime: values['checkInTime'],
-        checkOutTime: values['checkOutTime'],
-        count: parseInt(values['count']),
+        price: parseInt(values['price'].replace(',', '')),
+        defaultCapacity: values['defaultCapacity'],
+        maxCapacity: values['maxCapacity'],
+        checkInTime: values['checkInTime'].format('hh:mm'),
+        checkOutTime: values['checkOutTime'].format('hh:mm'),
+        count: values['count'],
         options: selectedOptions,
         images: selectedImages,
       };
