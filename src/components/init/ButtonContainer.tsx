@@ -7,6 +7,7 @@ import {
 } from './type';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -116,7 +117,10 @@ export const ButtonContainer = ({
             등록이 완료되었습니다.
           </TextBox>
         </StyledTextContainer>
-        <StyledToMainButton type="primary" onClick={() => navigate('/')}>
+        <StyledToMainButton
+          type="primary"
+          onClick={() => navigate(ROUTES.MAIN)}
+        >
           홈으로 이동
         </StyledToMainButton>
       </Modal>
