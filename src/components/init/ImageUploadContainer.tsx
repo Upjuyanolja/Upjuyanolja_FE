@@ -8,8 +8,9 @@ import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
 import {
-  isUploadedImage,
+  isUploadedAccommodationImage,
   selectedAccommodationFilesState,
+  selectedInitRoomFilesState,
 } from '@stores/init/atoms';
 
 export const ImageUploadContainer = ({ header }: { header: string }) => {
@@ -18,9 +19,15 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const setIsUploadedImage = useSetRecoilState(isUploadedImage);
+  const setIsUploadedImage = useSetRecoilState(isUploadedAccommodationImage);
 
-  const setSelectedFiles = useSetRecoilState(selectedAccommodationFilesState);
+  const setSelectedAccommodationFiles = useSetRecoilState(
+    selectedAccommodationFilesState,
+  );
+
+  const setSelectedInitRoomFiles = useSetRecoilState(
+    selectedInitRoomFilesState,
+  );
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -55,10 +62,17 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
         },
       ]);
 
-      setSelectedFiles((prevSelectedFiles) => [
-        ...prevSelectedFiles,
-        { url: URL.createObjectURL(selectedFile) },
-      ]);
+      if (header === '숙소 대표 이미지 설정') {
+        setSelectedAccommodationFiles((prevSelectedFiles) => [
+          ...prevSelectedFiles,
+          { url: URL.createObjectURL(selectedFile) },
+        ]);
+      } else if (header === '객실 사진' && window.location.pathname) {
+        setSelectedInitRoomFiles((prevSelectedFiles) => [
+          ...prevSelectedFiles,
+          { url: URL.createObjectURL(selectedFile) },
+        ]);
+      }
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
