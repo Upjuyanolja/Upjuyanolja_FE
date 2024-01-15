@@ -45,9 +45,6 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
         <TextBox typography="h4" fontWeight={700}>
           {header}
         </TextBox>
-        <TextBox color="black600" typography="body3">
-          10,000~1,000,000까지만 입력 가능합니다.
-        </TextBox>
       </StyledDesc>
       <StyledRow>
         <StyledTextBoxWrapper>
