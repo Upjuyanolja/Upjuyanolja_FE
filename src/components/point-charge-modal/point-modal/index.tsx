@@ -15,6 +15,7 @@ import {
 } from '@tosspayments/payment-widget-sdk';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
+import { AgreementModal } from '../agreement-modal';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
@@ -41,7 +42,14 @@ export const PointModal = ({
     PaymentWidgetInstance['renderPaymentMethods']
   > | null>(null);
 
+  const [isAgreementModalOpen, setIsAgreementModalOpen] = useState(false);
+
+  const agreementShowModal = () => {
+    setIsAgreementModalOpen(true);
+  };
+
   const { handleChangeUrl } = useCustomNavigate();
+
   useEffect(() => {
     (async () => {
       if (
@@ -223,10 +231,18 @@ export const PointModal = ({
                 checked={isAgreementPoint}
               >
                 <TextBox typography="body3" color={'black900'}>
-                  주문 내용을 확인하였으며,{' '}
-                  <TextBox typography="body3" color={'primaryHover'}>
+                  주문 내용을 확인하였으며,
+                  <TextBox
+                    typography="body3"
+                    color={'primaryHover'}
+                    onClick={agreementShowModal}
+                  >
                     구매 약관
                   </TextBox>
+                  <AgreementModal
+                    isModalOpen={isAgreementModalOpen}
+                    setIsModalOpen={setIsAgreementModalOpen}
+                  />
                   등에 동의합니다
                 </TextBox>
               </Checkbox>
