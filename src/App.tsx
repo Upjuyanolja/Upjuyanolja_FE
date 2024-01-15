@@ -35,23 +35,19 @@ function App() {
         {/* 레이아웃 미적용 페이지 */}
         <Route
           path={ROUTES.SIGNIN}
-          element={accessToken ? <Navigate to={ROUTES.MAIN} /> : <SignIn />}
+          element={accessToken ? <Navigate to="/" /> : <SignIn />}
         />
         <Route
           path={ROUTES.SIGNIN_AGREEMENT}
-          element={
-            accessToken ? <Navigate to={ROUTES.MAIN} /> : <SignInAgreement />
-          }
+          element={accessToken ? <Navigate to="/" /> : <SignInAgreement />}
         />
         <Route
           path={ROUTES.SIGNUP}
-          element={accessToken ? <Navigate to={ROUTES.MAIN} /> : <SignUp />}
+          element={accessToken ? <Navigate to="/" /> : <SignUp />}
         />
         <Route
           path={ROUTES.SIGNUP_SUCCESS}
-          element={
-            accessToken ? <Navigate to={ROUTES.MAIN} /> : <SignUpSuccess />
-          }
+          element={accessToken ? <Navigate to="/" /> : <SignUpSuccess />}
         />
         <Route path={ROUTES.INIT} element={<Init />} />
         <Route element={<InitLayout />}>
