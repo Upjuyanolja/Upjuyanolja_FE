@@ -14,3 +14,23 @@ export const getRevenueResolver = () => {
 export const getCouponResolver = () => {
   return HttpResponse.json(couponData, { status: 200 });
 };
+
+export const deleteCouponResolver = () => {
+  return HttpResponse.json(
+    {
+      message: '성공적으로 쿠폰이 삭제되었습니다.',
+      data: null,
+    },
+    { status: 200 },
+  );
+};
+
+export const editCouponResolver = () => {
+  return HttpResponse.json(
+    {
+      message: '성공적으로 쿠폰이 수정되었습니다.',
+      data: null,
+    },
+    { status: 200 },
+  );
+};

@@ -91,7 +91,7 @@ export const CouponTable = ({
       dataIndex: 'couponType',
       render: (value: string, record: tableData) => (
         <Select
-          defaultValue={value}
+          value={value}
           style={{ width: 70 }}
           options={couponTypeOption}
           disabled={record.isSoldOut}
