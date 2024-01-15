@@ -60,16 +60,6 @@ export const isUploadedAccommodationImage = atom({
   default: false,
 });
 
-export const nameErrorMessage = atom({
-  key: 'nameErrorMessage',
-  default: '',
-});
-
-export const descErrorMessage = atom({
-  key: 'descErrorMessage',
-  default: '',
-});
-
 export const checkedRoomOptions = atom({
   key: 'checkedAccommodationOptions',
   default: {

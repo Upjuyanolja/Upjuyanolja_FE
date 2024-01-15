@@ -11,7 +11,6 @@ import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
   checkedAccommodationOptions,
-  descErrorMessage,
   isUploadedAccommodationImage,
   selectedAccommodationFilesState,
   userInputValueState,
@@ -75,15 +74,12 @@ export const InitAccommodationRegistration = () => {
 
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
-  const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
   const uploadedImage = useRecoilValue(isUploadedAccommodationImage);
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
-    const isDescValid = !accommodationDescErrorMessage;
 
     const commonConditions =
       values['accommodation-postCode'] &&
-      isDescValid &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
       values['accommodation-desc'] &&
@@ -107,7 +103,7 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, uploadedImage, accommodationDescErrorMessage, selectedOptions]);
+  }, [form, uploadedImage, selectedOptions]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
