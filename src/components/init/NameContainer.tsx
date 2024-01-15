@@ -1,7 +1,6 @@
 import { ChangeEvent } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
-import { FormErrorMessage } from '@components/init/FormErrorMessage';
 import { NameContainerProps } from './type';
 import {
   ACCOMMODATION_NAME_MAX_LENGTH,
@@ -9,26 +8,12 @@ import {
 } from '@/constants/init/init-accommodation-registration';
 import { NAME_REGEX } from '@/constants/init';
 import { TextBox } from '@components/text-box';
-import { useRecoilState } from 'recoil';
-import { nameErrorMessage } from '@stores/init/atoms';
 
 export const NameContainer = ({
   header,
   placeholder,
   form,
 }: NameContainerProps) => {
-  const [errorMessage, setErrorMessage] = useRecoilState(nameErrorMessage);
-
-  const validateInput = ({ value }: { value: string }) => {
-    if (value.length < ACCOMMODATION_NAME_MIN_LENGTH) {
-      setErrorMessage(
-        `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
-      );
-    } else {
-      setErrorMessage('');
-    }
-  };
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_NAME_MAX_LENGTH);
     if (!NAME_REGEX.test(newValue)) {
@@ -36,7 +21,6 @@ export const NameContainer = ({
       else if (header === '객실명') form.setFieldValue('room-name', '');
       return;
     }
-    validateInput({ value: newValue });
   };
 
   return (
@@ -46,6 +30,12 @@ export const NameContainer = ({
       </TextBox>
       <Form.Item
         name={header === '숙소명' ? 'accommodation-name' : 'room-name'}
+        rules={[
+          {
+            min: ACCOMMODATION_NAME_MIN_LENGTH,
+            message: `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
+          },
+        ]}
       >
         <Input
           id={header === '숙소명' ? 'accommodation-name' : 'room-name'}
@@ -55,13 +45,9 @@ export const NameContainer = ({
           maxLength={ACCOMMODATION_NAME_MAX_LENGTH}
           style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
           onChange={handleInputChange}
-          status={errorMessage ? 'error' : ''}
           data-testid="input-name"
         />
       </Form.Item>
-      <StyledErrorMessageWrapper data-testid="error-input-name">
-        {errorMessage && <StyledFormErrorMessage errorMessage={errorMessage} />}
-      </StyledErrorMessageWrapper>
     </StyledInputWrapper>
   );
 };
@@ -80,12 +66,4 @@ const StyledInputWrapper = styled.div`
   .ant-form-item {
     margin-bottom: 0;
   }
-`;
-
-const StyledErrorMessageWrapper = styled.div`
-  height: 18px;
-`;
-
-const StyledFormErrorMessage = styled(FormErrorMessage)`
-  float: left;
 `;

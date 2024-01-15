@@ -13,7 +13,6 @@ import {
   checkedAccommodationOptions,
   descErrorMessage,
   isUploadedAccommodationImage,
-  nameErrorMessage,
   selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
@@ -76,20 +75,15 @@ export const InitAccommodationRegistration = () => {
 
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
-
-  const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
   const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
-
   const uploadedImage = useRecoilValue(isUploadedAccommodationImage);
-
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
-    const isNameValid = !accommodationNameErrorMessage;
     const isDescValid = !accommodationDescErrorMessage;
+
     const commonConditions =
       values['accommodation-postCode'] &&
       isDescValid &&
-      isNameValid &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
       values['accommodation-desc'] &&
@@ -103,6 +97,7 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-guest-category'];
 
     return (
+      !form.getFieldsError().some(({ errors }) => errors.length) &&
       commonConditions &&
       (values['accommodation-category'] ||
         hotelResortConditions ||
@@ -112,13 +107,7 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [
-    form,
-    uploadedImage,
-    accommodationNameErrorMessage,
-    accommodationDescErrorMessage,
-    selectedOptions,
-  ]);
+  }, [form, uploadedImage, accommodationDescErrorMessage, selectedOptions]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
@@ -129,7 +118,7 @@ export const InitAccommodationRegistration = () => {
       <Form
         onFinish={onFinish}
         form={form}
-        onValuesChange={handleFormValuesChange}
+        onFieldsChange={handleFormValuesChange}
       >
         <AccommodationCategory form={form} />
         <NameContainer
