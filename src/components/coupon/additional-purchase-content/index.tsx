@@ -8,16 +8,25 @@ import { PurchaseContentProps } from './type';
 
 export const AdditionalPurchaseContent = ({
   purchaseData,
+  handleBatchEditCheckbox,
+  handleChangeBatchValue,
 }: PurchaseContentProps) => {
   if (!purchaseData) return <></>;
   return (
     <>
       <StyledBatchEditContainer>
-        <Checkbox />
+        <Checkbox
+          onChange={handleBatchEditCheckbox}
+          checked={purchaseData.isAppliedBatchEdit}
+        />
         <TextBox color="primary" typography="h5" fontWeight={700}>
           수량 일괄 적용
         </TextBox>
-        <StyledInput value={purchaseData.batchValue} />
+        <StyledInput
+          value={purchaseData.batchValue}
+          disabled={!purchaseData.isAppliedBatchEdit}
+          onChange={handleChangeBatchValue}
+        />
         <TextBox typography="body1" fontWeight={400}>
           장
         </TextBox>
@@ -31,7 +40,11 @@ export const AdditionalPurchaseContent = ({
                 {room.roomName}
               </TextBox>
               {room.coupons.map((coupon) => (
-                <AdditionalPurchaseInfo key={coupon.couponId} coupon={coupon} />
+                <AdditionalPurchaseInfo
+                  key={coupon.couponId}
+                  coupon={coupon}
+                  disabled={purchaseData.isAppliedBatchEdit}
+                />
               ))}
             </StyledRoomInfo>
           );

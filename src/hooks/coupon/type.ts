@@ -19,6 +19,7 @@ export type PurchaseRoom = {
   coupons: PurchaseCoupons[];
 };
 export type PurchaseData = {
+  isAppliedBatchEdit: boolean;
   batchValue: number;
   totalPoints: number;
   rooms: PurchaseRoom[];

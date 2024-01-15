@@ -3,7 +3,10 @@ import { Input } from 'antd';
 import styled from 'styled-components';
 import { PurchaseInfoProps } from './type';
 
-export const AdditionalPurchaseInfo = ({ coupon }: PurchaseInfoProps) => {
+export const AdditionalPurchaseInfo = ({
+  coupon,
+  disabled,
+}: PurchaseInfoProps) => {
   return (
     <StyledCouponInfo>
       <TextBox typography="body2" fontWeight={400}>
@@ -11,7 +14,7 @@ export const AdditionalPurchaseInfo = ({ coupon }: PurchaseInfoProps) => {
       </TextBox>
       <StyledPriceInfo>
         <div>
-          <StyledInput value={coupon.numberOfCoupons} />
+          <StyledInput value={coupon.numberOfCoupons} disabled={disabled} />
           <TextBox fontWeight={400} typography="body3">
             장
           </TextBox>

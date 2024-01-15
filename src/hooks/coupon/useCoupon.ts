@@ -151,6 +151,7 @@ export const useCoupon = () => {
     const data: PurchaseData = {
       batchValue: 0,
       totalPoints: 0,
+      isAppliedBatchEdit: false,
       rooms: [],
     };
     for (let index = 0; index < selectedRowKeys.length; index++) {
@@ -367,6 +368,41 @@ export const useCoupon = () => {
     setIsModalOpen(false);
   };
 
+  const handleBatchEditCheckbox = () => {
+    if (!purchaseData) return;
+    const data = { ...purchaseData };
+    data.isAppliedBatchEdit = !purchaseData.isAppliedBatchEdit;
+    if (!data.isAppliedBatchEdit) data.batchValue = 0;
+    data.totalPoints = 0;
+    for (const room of data.rooms) {
+      if (!room) continue;
+      for (const coupon of room.coupons) {
+        coupon.numberOfCoupons = data.batchValue;
+        coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
+        data.totalPoints += coupon.totalPoints;
+      }
+    }
+    setPurchaseData(data);
+  };
+
+  const handleChangeBatchValue = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!purchaseData) return;
+    const data = { ...purchaseData };
+    data.batchValue = parseInt(event.currentTarget.value);
+    data.totalPoints = 0;
+    for (const room of data.rooms) {
+      if (!room) continue;
+      for (const coupon of room.coupons) {
+        coupon.numberOfCoupons = data.batchValue;
+        coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
+        data.totalPoints += coupon.totalPoints;
+      }
+    }
+    setPurchaseData(data);
+  };
+
   return {
     data,
     isGetCouponError,
@@ -383,6 +419,8 @@ export const useCoupon = () => {
     handleModalOpen,
     handleModalClose,
     isModalOpen,
+    handleBatchEditCheckbox,
     purchaseData,
+    handleChangeBatchValue,
   };
 };

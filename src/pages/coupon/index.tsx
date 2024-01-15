@@ -23,7 +23,9 @@ export const Coupon = () => {
     handleModalOpen,
     isModalOpen,
     handleModalClose,
+    handleBatchEditCheckbox,
     purchaseData,
+    handleChangeBatchValue,
   } = useCoupon();
 
   if (!data) return <div>로딩</div>;
@@ -55,7 +57,11 @@ export const Coupon = () => {
           <AdditionalPurchaseFooter totalPoints={purchaseData?.totalPoints} />
         }
       >
-        <AdditionalPurchaseContent purchaseData={purchaseData} />
+        <AdditionalPurchaseContent
+          purchaseData={purchaseData}
+          handleBatchEditCheckbox={handleBatchEditCheckbox}
+          handleChangeBatchValue={handleChangeBatchValue}
+        />
       </StyledModal>
     </>
   );
