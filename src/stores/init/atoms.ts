@@ -88,3 +88,8 @@ export const selectedInitRoomFilesState = atom<Image[]>({
   key: 'selectedInitRoomFilesState',
   default: [],
 });
+
+export const isSameRoomName = atom({
+  key: 'isSameRoomName',
+  default: false,
+});

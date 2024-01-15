@@ -14,13 +14,14 @@ import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
 import {
   checkedRoomOptions,
+  isSameRoomName,
   selectedInitRoomFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitRoomRegistration = () => {
@@ -39,6 +40,10 @@ export const InitRoomRegistration = () => {
 
   const selectedOptions = useRecoilValue(checkedRoomOptions);
   const selectedImages = useRecoilValue(selectedInitRoomFilesState);
+
+  const userInputLocalStorage = localStorage.getItem('localStorage');
+
+  const [sameRoomName, setSameRoomName] = useRecoilState(isSameRoomName);
 
   const onFinish = (values: onFinishValues) => {
     setUserInputValueState((prevUserInputValueState) => {
@@ -66,7 +71,22 @@ export const InitRoomRegistration = () => {
       return [updatedUserInputValue];
     });
 
-    navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    if (userInputLocalStorage !== null) {
+      const parsedData = JSON.parse(userInputLocalStorage);
+      const roomsArray = parsedData?.userInputValueState[0]?.rooms;
+
+      if (roomsArray.length !== 0) {
+        roomsArray.map((room: Room) => {
+          if (room.name === form.getFieldValue('room-name')) {
+            setSameRoomName(true);
+            message.error('동일한 객실명의 상품이 이미 존재합니다.');
+          } else {
+            setSameRoomName(false);
+            navigate(ROUTES.INIT_INFO_CONFIRMATION);
+          }
+        });
+      }
+    }
   };
 
   const areFormFieldsValid = () => {
@@ -103,6 +123,7 @@ export const InitRoomRegistration = () => {
           header="객실명"
           form={form}
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
+          isSameRoomName={sameRoomName}
         />
         <PriceContainer header="객실 가격" form={form} />
         <ImageUploadContainer header="객실 사진" />
