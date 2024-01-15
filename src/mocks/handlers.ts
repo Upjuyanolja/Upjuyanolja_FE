@@ -6,7 +6,6 @@ import {
   getRevenueResolver,
   getStaticsResolver,
 } from './coupon';
-import { getUserInfoResolver } from './member';
 import { getPointSummaryResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
 
@@ -22,6 +21,5 @@ export const handlers = [
     getCouponRoomListResolver,
   ),
 
-  http.get('/api/member', getUserInfoResolver),
   http.get('/api/points/summary', getPointSummaryResolver),
 ];
