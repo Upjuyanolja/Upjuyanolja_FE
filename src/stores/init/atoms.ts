@@ -15,10 +15,10 @@ export const userInputValueState = atom<UserInputValue[]>({
   key: 'userInputValueState',
   default: [
     {
-      id: null,
       name: '',
       address: '',
       detailAddress: '',
+      zipCode: '',
       description: '',
       type: '',
       images: [{ url: '' }],

@@ -5,8 +5,8 @@ import { FormInstance } from 'antd/es/form/Form';
 export type AccommodationCategoryType =
   | 'HOTEL/RESORT'
   | 'MOTEL'
-  | 'PENSION/POOL'
-  | 'GUEST'
+  | 'PENSION_POOL_VILLA'
+  | 'GUEST_HOUSE'
   | null;
 
 export type AccommodationDetailCategoryProps = {
@@ -58,10 +58,10 @@ type Room = {
 };
 
 export type UserInputValue = {
-  id: number | null;
   name: string;
   address: string;
   detailAddress: string;
+  zipCode: string;
   description: string;
   type: string;
   images: Image[];

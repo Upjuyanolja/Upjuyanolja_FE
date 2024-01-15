@@ -89,12 +89,12 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
-            value="PENSION/POOL"
-            onClick={() => handleButtonClick('PENSION/POOL')}
+            value="PENSION_POOL_VILLA"
+            onClick={() => handleButtonClick('PENSION_POOL_VILLA')}
           >
             <img
               src={
-                clickedCategory === 'PENSION/POOL'
+                clickedCategory === 'PENSION_POOL_VILLA'
                   ? primaryPensionPoolIcon
                   : grayPensionPoolIcon
               }
@@ -103,7 +103,9 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
               typography="h4"
               fontWeight={700}
               color={
-                clickedCategory === 'PENSION/POOL' ? 'primary' : 'black600'
+                clickedCategory === 'PENSION_POOL_VILLA'
+                  ? 'primary'
+                  : 'black600'
               }
             >
               펜션/풀빌라
@@ -111,11 +113,11 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
           </StyledRadioButton>
           <StyledRadioButton
             value="GUEST"
-            onClick={() => handleButtonClick('GUEST')}
+            onClick={() => handleButtonClick('GUEST_HOUSE')}
           >
             <img
               src={
-                clickedCategory === 'GUEST'
+                clickedCategory === 'GUEST_HOUSE'
                   ? primaryGuestHouseIcon
                   : grayGuestHouseIcon
               }
@@ -123,7 +125,7 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
             <TextBox
               typography="h4"
               fontWeight={700}
-              color={clickedCategory === 'GUEST' ? 'primary' : 'black600'}
+              color={clickedCategory === 'GUEST_HOUSE' ? 'primary' : 'black600'}
             >
               게스트하우스
             </TextBox>
@@ -138,7 +140,7 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
           icon={<FaCheck size={15} color={colors.primary} />}
         />
       )}
-      {clickedCategory === 'GUEST' && (
+      {clickedCategory === 'GUEST_HOUSE' && (
         <RadioButtonCustomContainer
           form={form}
           options={guestHouseDetailCategoryMapping}

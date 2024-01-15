@@ -3,7 +3,7 @@ import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
 import { useState, useRef, useEffect, ChangeEvent } from 'react';
-import { ImageUploadFileItem } from './type';
+import { ImageUploadFileItem, StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
@@ -96,7 +96,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
         </TextBox>
       </StyledHeadTextContainer>
-      <StyledImageContainer $fileList={fileList}>
+      <StyledImageContainer $fileList={fileList} header={header}>
         {fileList.map((file) => (
           <div key={file.uid}>
             <StyledCloseButton
@@ -177,7 +177,7 @@ const StyledCloseButton = styled(CloseCircleTwoTone)`
   font-size: 20px;
 `;
 
-const StyledImageContainer = styled.div<{ $fileList: ImageUploadFileItem[] }>`
+const StyledImageContainer = styled.div<StyledImageContainerProps>`
   display: flex;
 
   div {
@@ -222,7 +222,10 @@ const StyledImageContainer = styled.div<{ $fileList: ImageUploadFileItem[] }>`
 
       z-index: 1;
 
-      display: ${(props) => (props.$fileList.length === 0 ? 'none' : 'block')};
+      display: ${(props) =>
+        props.$fileList.length === 0 || props.header !== '숙소 대표 이미지 설정'
+          ? 'none'
+          : 'block'};
     }
   }
 `;

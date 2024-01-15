@@ -21,6 +21,15 @@ export type ImageUploadFileItem = {
   originFileObj?: File;
 };
 
+export type StyledImageContainerProps = {
+  $fileList: ImageUploadFileItem[];
+  header: string;
+};
+
+export type ImageUploadContainerProps = {
+  header: string;
+};
+
 export type NameContainerProps = {
   header: string;
   placeholder: string;
