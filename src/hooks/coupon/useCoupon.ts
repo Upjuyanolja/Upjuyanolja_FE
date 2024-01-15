@@ -75,7 +75,6 @@ export const useCoupon = () => {
 
   useEffect(() => {
     if (data) {
-      console.log('여깅');
       processCouponTableData(data);
       setSelectedStatus('');
     }
