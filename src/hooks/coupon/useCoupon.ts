@@ -2,13 +2,14 @@ import { useDeleteCoupon, useEditCoupon, useGetCoupon } from '@queries/coupon';
 import { Modal, message } from 'antd';
 import { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { CouponData } from './type';
+import { CouponData, PurchaseData } from './type';
 import {
   CouponDeleteParams,
   CouponEditParams,
   EditCoupon,
   coupons,
 } from '@api/coupon/type';
+import { calculatedCouponPoints } from '@/utils/discountCoupon';
 /**
  * @description 쿠폰 관리 페이지 로직을 다루는 hook
  * 
@@ -34,6 +35,8 @@ export const useCoupon = () => {
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
   const originCouponTableData = useRef<CouponData>();
+  const [purchaseData, setPurchaseData] = useState<PurchaseData>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     data,
@@ -79,6 +82,10 @@ export const useCoupon = () => {
       setSelectedStatus('');
     }
   }, [data]);
+
+  useEffect(() => {
+    processPurchaseData();
+  }, [isModalOpen]);
 
   const processCouponTableData = (data: coupons) => {
     const couponTableData = [];
@@ -138,6 +145,34 @@ export const useCoupon = () => {
       expiry: data.expiry,
       coupons: [...originData],
     };
+  };
+
+  const processPurchaseData = () => {
+    const data: PurchaseData = {
+      batchValue: 0,
+      totalPoints: 0,
+      rooms: [],
+    };
+    for (let index = 0; index < selectedRowKeys.length; index++) {
+      const key = selectedRowKeys[index];
+      const { room, discount, discountType, info, couponId } =
+        couponData.coupons[key];
+      if (!data.rooms[room.id]) {
+        data.rooms[room.id] = {
+          roomId: room.id,
+          roomName: room.name,
+          coupons: [],
+        };
+      }
+      data.rooms[room.id].coupons.push({
+        name: info.name,
+        points: calculatedCouponPoints(room.price, discount, discountType),
+        numberOfCoupons: 0,
+        totalPoints: 0,
+        couponId,
+      });
+    }
+    setPurchaseData(data);
   };
 
   const handleSelectStatus = (value: string) => {
@@ -316,6 +351,22 @@ export const useCoupon = () => {
     });
   };
 
+  const handleModalOpen = () => {
+    if (!isSelectedRow()) {
+      message.warning('구매할 쿠폰을 먼저 선택하세요');
+      return;
+    }
+    if (isModified()) {
+      message.warning('수정 중인 내용을 먼저 저장하세요');
+      return;
+    }
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return {
     data,
     isGetCouponError,
@@ -329,5 +380,9 @@ export const useCoupon = () => {
     isModified,
     handleChangeDate,
     handleEditButton,
+    handleModalOpen,
+    handleModalClose,
+    isModalOpen,
+    purchaseData,
   };
 };

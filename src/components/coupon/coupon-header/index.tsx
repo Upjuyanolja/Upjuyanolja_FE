@@ -21,6 +21,7 @@ export const CouponHeader = ({
   isModified,
   handleChangeDate,
   handleEditButton,
+  handleModalOpen,
 }: CouponHeaderProps) => {
   const couponStatusOption = [
     { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
@@ -80,7 +81,7 @@ export const CouponHeader = ({
                 선택 삭제
               </TextBox>
             </StyledDeleteButton>
-            <StyledPurchaseButton>
+            <StyledPurchaseButton onClick={handleModalOpen}>
               <Logo />
               <TextBox typography="body2" fontWeight={700} color="white">
                 추가 구매

@@ -1,22 +1,23 @@
 import { TextBox } from '@components/text-box';
 import { Input } from 'antd';
 import styled from 'styled-components';
+import { PurchaseInfoProps } from './type';
 
-export const AdditionalPurchaseInfo = () => {
+export const AdditionalPurchaseInfo = ({ coupon }: PurchaseInfoProps) => {
   return (
     <StyledCouponInfo>
       <TextBox typography="body2" fontWeight={400}>
-        10% 쿠폰 | 100P
+        {coupon.name} | {coupon.points.toLocaleString()}P
       </TextBox>
       <StyledPriceInfo>
         <div>
-          <StyledInput />
+          <StyledInput value={coupon.numberOfCoupons} />
           <TextBox fontWeight={400} typography="body3">
             장
           </TextBox>
         </div>
         <TextBox typography="h5" fontWeight={700}>
-          10,0000P
+          {coupon.totalPoints.toLocaleString()}P
         </TextBox>
       </StyledPriceInfo>
     </StyledCouponInfo>

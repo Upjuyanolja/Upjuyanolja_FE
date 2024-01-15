@@ -2,13 +2,16 @@ import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
 import { Button, Checkbox } from 'antd';
 import styled from 'styled-components';
+import { PurchaseFooterProps } from './type';
 
-export const AdditionalPurchaseFooter = () => {
+export const AdditionalPurchaseFooter = ({
+  totalPoints,
+}: PurchaseFooterProps) => {
   return (
     <>
       <StyledTotalPriceContainer>
         <TextBox typography="h5" fontWeight={700} color="primary">
-          합계 : 36,000P
+          합계 : {totalPoints?.toLocaleString()}P
         </TextBox>
       </StyledTotalPriceContainer>
       <StyledCheckBoxContainer>

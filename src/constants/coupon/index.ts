@@ -48,3 +48,8 @@ export const COUPON_TYPE_ALL_DAYS = {
   value: 'ALL_DAYS',
   label: '상시',
 } as const;
+
+export const DISCOUNT_TYPE = {
+  FLAT: 'FLAT',
+  RATE: 'RATE',
+};
