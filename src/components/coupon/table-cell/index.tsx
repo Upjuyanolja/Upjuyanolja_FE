@@ -65,6 +65,7 @@ export const DayLimitInput = ({
         onKeyDown={(event) => {
           handleChangeInput(event, record.key);
         }}
+        type="number"
       />
       <TextBox
         typography="body2"
