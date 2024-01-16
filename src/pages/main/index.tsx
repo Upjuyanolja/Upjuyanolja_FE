@@ -15,6 +15,7 @@ export const Main = () => {
     isStaticsError,
     revenueData,
     isRevenueError,
+    couponMessage,
   } = useMain();
 
   if (!staticsData || !revenueData) return <></>;
@@ -27,7 +28,7 @@ export const Main = () => {
             staticsData={staticsData}
             navigateCoupon={navigateCoupon}
           />
-          <MainChart revenueData={revenueData} />
+          <MainChart revenueData={revenueData} couponMessage={couponMessage} />
         </StyledMainContainer>
         <StyledMainInfo>
           <MainNavigationContainer

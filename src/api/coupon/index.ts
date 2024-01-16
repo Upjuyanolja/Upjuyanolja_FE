@@ -10,10 +10,14 @@ import {
 } from './type';
 
 export const COUPON_API = {
-  getStatics: () =>
-    instance.get<Response<staticsData>>('/api/coupons/backoffice/statistics'),
-  getRevenue: () =>
-    instance.get<Response<revenueData>>('/api/coupons/backoffice/revenue'),
+  getStatics: (accommodationId: string) =>
+    instance.get<Response<staticsData>>(
+      `/api/coupons/backoffice/statistics/${accommodationId}`,
+    ),
+  getRevenue: (accommodationId: string) =>
+    instance.get<Response<revenueData>>(
+      `/api/coupons/backoffice/revenue/${accommodationId}`,
+    ),
   getCoupon: () =>
     instance.get<Response<coupons>>('/api/coupons/backoffice/manage'),
   deleteCoupon: (params: CouponDeleteParams) =>
