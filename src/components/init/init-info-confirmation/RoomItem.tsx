@@ -43,15 +43,13 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
             <StyledRoomInfoMainContainer>
               <StyledRoomInfoMainLeft>
                 <StyledTagContainer>
-                  <StyledTag color="default">
-                    {room.options.tv && 'TV'}
-                  </StyledTag>
-                  <StyledTag color="default">
-                    {room.options.airCondition && '에어컨'}
-                  </StyledTag>
-                  <StyledTag color="default">
-                    {room.options.internet && '인터넷'}
-                  </StyledTag>
+                  {room.options.tv && <StyledTag color="default">TV</StyledTag>}
+                  {room.options.airCondition && (
+                    <StyledTag color="default">에어컨</StyledTag>
+                  )}
+                  {room.options.internet && (
+                    <StyledTag color="default">인터넷</StyledTag>
+                  )}
                 </StyledTagContainer>
                 <StyledCapacityContainer>
                   <BsPeopleFill />
@@ -71,7 +69,7 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
               <StyledRoomInfoMainRight>
                 <TextBox typography="body3">객실 수: {room.count}개</TextBox>
                 <TextBox typography="h5" fontWeight={700}>
-                  {room.price}원
+                  {room.price.toLocaleString()}원
                 </TextBox>
               </StyledRoomInfoMainRight>
             </StyledRoomInfoMainContainer>

@@ -87,6 +87,7 @@ export const InitRoomRegistration = () => {
         });
       }
     }
+    navigate(ROUTES.INIT_INFO_CONFIRMATION);
   };
 
   const areFormFieldsValid = () => {
