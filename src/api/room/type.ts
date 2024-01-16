@@ -29,5 +29,5 @@ export type AddRoomParams = {
 };
 
 export type AccommodationData = {
-  accommodationId: string;
+  accommodationId: number;
 };
