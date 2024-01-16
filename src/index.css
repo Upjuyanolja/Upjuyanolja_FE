@@ -227,3 +227,7 @@
 .ant-spin-nested-loading > div > .ant-spin-lg .ant-spin-dot {
   margin: 0 0 0 16px;
 }
+
+.ant-checkbox-inner {
+  border: 1px solid #0349e6;
+}
