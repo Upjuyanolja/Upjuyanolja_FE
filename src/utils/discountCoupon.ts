@@ -9,7 +9,7 @@ export const calculatedCouponPoints = (
   const roundingUnit = 10;
   let unitPrice = 0;
   if (discountType === DISCOUNT_TYPE.RATE) {
-    unitPrice = price / discount / roundingUnit;
+    unitPrice = (price * discount) / 1000;
   }
   if (discountType === DISCOUNT_TYPE.FLAT) {
     unitPrice = discount / roundingUnit;

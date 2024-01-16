@@ -4,7 +4,7 @@ import { TextBox } from '@components/text-box';
 import { Divider } from 'antd';
 import styled from 'styled-components';
 import { CouponPreviewItemProps } from './type';
-import { numberFormat } from '@/utils/Format/numberFormat';
+import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { useRecoilValue } from 'recoil';
 import {
   determinedPriceState,
@@ -14,15 +14,22 @@ import {
   FLAT_DISCOUNT_TYPE,
   RATE_DISCOUNT_TYPE,
 } from '@/constants/coupon-registration';
+import { calculatedCouponPoints } from '@/utils/discountCoupon';
 
 export const CouponPreviewItem = ({
   roomName,
-  eachPrice,
+  roomPrice,
   quantity,
 }: CouponPreviewItemProps) => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const determinedPrice = useRecoilValue(determinedPriceState);
 
+  const formattedDeterminedPrice = Number(removeNumberFormat(determinedPrice));
+  const isValidDiscountFlatType =
+    selectedDiscountType === FLAT_DISCOUNT_TYPE && determinedPrice && roomPrice;
+
+  const isValidDiscountRateType =
+    selectedDiscountType === RATE_DISCOUNT_TYPE && determinedPrice && roomPrice;
   return (
     <Container>
       <TextBox typography="h5" fontWeight="bold" color="black900">
@@ -33,7 +40,11 @@ export const CouponPreviewItem = ({
         {selectedDiscountType === FLAT_DISCOUNT_TYPE &&
           `${determinedPrice ? determinedPrice : '0'}원 할인`}
         {selectedDiscountType === RATE_DISCOUNT_TYPE &&
-          `${determinedPrice ? determinedPrice : '0'}% 할인 (${eachPrice})`}
+          `${determinedPrice ? determinedPrice : '0'}% 할인 (${
+            roomPrice
+              ? numberFormat((roomPrice * formattedDeterminedPrice) / 100)
+              : 0
+          }원)`}
       </TextBox>
       <Spacing space="16" />
       <StyledCouponInfo>
@@ -42,9 +53,22 @@ export const CouponPreviewItem = ({
             장당
           </TextBox>
           <TextBox typography="body2" fontWeight="bold" color="primary">
-            {determinedPrice
-              ? numberFormat(parseInt(determinedPrice) * 100)
-              : 0}{' '}
+            {isValidDiscountFlatType &&
+              numberFormat(
+                calculatedCouponPoints(
+                  roomPrice,
+                  formattedDeterminedPrice,
+                  'FLAT',
+                ),
+              )}
+            {isValidDiscountRateType &&
+              numberFormat(
+                calculatedCouponPoints(
+                  roomPrice,
+                  formattedDeterminedPrice,
+                  'RATE',
+                ),
+              )}
             P
           </TextBox>
         </StyledCouponInfoItemWrap>
@@ -60,9 +84,24 @@ export const CouponPreviewItem = ({
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          {quantity && determinedPrice
-            ? `${numberFormat(parseInt(determinedPrice) * 100 * quantity)} P`
-            : '0 P'}
+          {isValidDiscountFlatType &&
+            quantity &&
+            `${numberFormat(
+              calculatedCouponPoints(
+                roomPrice,
+                formattedDeterminedPrice,
+                'FLAT',
+              ) * quantity,
+            )}P`}
+          {isValidDiscountRateType &&
+            quantity &&
+            `${numberFormat(
+              calculatedCouponPoints(
+                roomPrice,
+                formattedDeterminedPrice,
+                'RATE',
+              ) * quantity,
+            )}P`}
         </TextBox>
       </StyledCouponPrice>
     </Container>

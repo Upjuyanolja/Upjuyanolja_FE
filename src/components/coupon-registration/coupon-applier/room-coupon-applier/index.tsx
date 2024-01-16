@@ -6,7 +6,7 @@ import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/utils/is-number';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   discountValueState,
   groupQuantityValueState,
@@ -58,7 +58,7 @@ export const RoomCouponApplier = ({
     discountType: selectedDiscountType.typeName,
     discount: Number(removeNumberFormat(discountValue)),
     quantity: Number(itemQuantityValue),
-    eachPrice: roomPrice,
+    roomPrice: roomPrice,
   };
 
   const handleCheckBox = () => {
@@ -124,6 +124,7 @@ export const RoomCouponApplier = ({
     setPendingRoomDataList((prev: PendingRoomDataList) =>
       updateRoomDataList(prev, existingItemIndex, newItem),
     );
+    console.log(pendingRoomDataList);
   }, [itemQuantityValue]);
 
   useEffect(() => {

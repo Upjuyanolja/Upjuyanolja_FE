@@ -1,11 +1,11 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { Button, Checkbox } from 'antd';
-import { PendingRoomDataList } from '../type';
-import { numberFormat } from '@/utils/Format/numberFormat';
+import { PendingRoomDataList, SelectedDiscountType } from '../type';
+import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   determinedPriceState,
@@ -31,17 +31,36 @@ export const CouponPreview = () => {
     setIsModalOpen(true);
   };
 
-  const calculateTotalPrice = (pendingRoomDataList: PendingRoomDataList) => {
-    return pendingRoomDataList.reduce((total, room) => {
+  const calculateTotalPrice = (
+    pendingRoomDataList: PendingRoomDataList,
+    selectedDiscountType: SelectedDiscountType,
+  ) => {
+    if (selectedDiscountType === FLAT_DISCOUNT_TYPE) {
+      return pendingRoomDataList.reduce((total, room) => {
+        return (
+          total +
+          parseInt(numberFormat(room.quantity)) *
+            (parseInt(removeNumberFormat(determinedPrice)) * 100)
+        );
+      }, 0);
+    } else {
       return (
-        total +
-        parseInt(numberFormat(room.quantity)) *
-          (parseInt(numberFormat(determinedPrice)) * 100)
+        pendingRoomDataList.reduce((total, room) => {
+          const priceWithoutDiscount =
+            Number(removeNumberFormat(determinedPrice)) * room.roomPrice;
+
+          const calculatedValue = Number(room.quantity) * priceWithoutDiscount;
+
+          return total + calculatedValue;
+        }, 0) / 1000
       );
-    }, 0);
+    }
   };
 
-  const totalPrice = calculateTotalPrice(pendingRoomDataList);
+  const totalPrice = calculateTotalPrice(
+    pendingRoomDataList,
+    selectedDiscountType,
+  );
 
   useEffect(() => {
     if (isChecked && totalPrice) {
@@ -74,21 +93,22 @@ export const CouponPreview = () => {
           )}
         </StyledTitleWrap>
         <StyledPreviewItemWrap>
-          {pendingRoomDataList.length === 0 && (
+          {pendingRoomDataList.length >= 1 && determinedPrice ? (
+            pendingRoomDataList.map((item, index) => (
+              <CouponPreviewItem
+                roomName={item.roomName}
+                roomPrice={item.roomPrice}
+                quantity={item.quantity}
+                key={index}
+              />
+            ))
+          ) : (
             <StyledNotice>
               <TextBox typography="body2" color="black600">
                 전용 객실을 선택해주세요.
               </TextBox>
             </StyledNotice>
           )}
-          {pendingRoomDataList.map((item, index) => (
-            <CouponPreviewItem
-              roomName={item.roomName}
-              eachPrice={item.eachPrice}
-              quantity={item.quantity}
-              key={index}
-            />
-          ))}
         </StyledPreviewItemWrap>
         <Spacing space="16" />
         <StyledCouponTotalPrice>
