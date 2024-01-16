@@ -7,12 +7,7 @@ import {
   PriceHandleInputChangeProps,
   ValidateInputProps,
 } from './type';
-import {
-  MAX_PRICE,
-  MIN_PRICE,
-  MAX_PRICE_LENGTH,
-  MIN_PRICE_LENGTH,
-} from '@/constants/room/room-registration';
+import { MAX_PRICE, MIN_PRICE } from '@/constants/room/room-registration';
 import { TextBox } from '@components/text-box';
 
 export const PriceContainer = ({ header, form }: PriceContainerProps) => {
@@ -57,8 +52,6 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
             id="price"
             placeholder={''}
             type="text"
-            minLength={MIN_PRICE_LENGTH}
-            maxLength={MAX_PRICE_LENGTH}
             style={{
               height: 40,
               width: header === '' ? '440px' : '',
