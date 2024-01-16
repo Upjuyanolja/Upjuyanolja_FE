@@ -8,6 +8,7 @@ import {
 import { AxiosError, AxiosResponse } from 'axios';
 import { Response } from '@/types/api';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 export const usePointCharge = (
   options?: UseMutationOptions<
@@ -17,7 +18,7 @@ export const usePointCharge = (
   >,
 ) => {
   const queryClient = useQueryClient();
-
+  const navigation = useNavigate();
   return useMutation<
     AxiosResponse<Response<PointChargeType>>,
     AxiosError,
@@ -26,15 +27,18 @@ export const usePointCharge = (
     onSuccess: () => {
       queryClient.invalidateQueries(['getPointSummary']);
       message.success({
-        content: '결제 취소신청이 완료되었습니다.',
+        content: '결제가 완료되었습니다.',
+        duration: 2,
       });
+      navigation('/1/main');
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
         message.error({
-          content: '결제 취소신청을 완료하지 못했습니다.',
+          content: '결제를 완료하지 못했습니다.',
         });
       }
+      navigation('/1/main');
     },
     ...options,
   });

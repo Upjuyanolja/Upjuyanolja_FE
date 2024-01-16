@@ -156,14 +156,14 @@ export const PointModal = ({
       await paymentWidget?.requestPayment({
         orderId: orderNumber(),
         orderName: '포인트 충전',
-        successUrl: `${window.location.origin}/${ROUTES.TOSS_SUCCESS}`,
-        failUrl: `${window.location.origin}/${ROUTES.TOSS_FAIL}`,
+        successUrl: `${window.location.origin}${ROUTES.TOSS_SUCCESS}`,
+        failUrl: `${window.location.origin}${ROUTES.TOSS_FAIL}`,
       });
     } catch (error) {
       message.error({
         content: (
           <TextBox typography="body3" fontWeight={'400'}>
-            토스 페이먼츠 에러입니다. 잠시후 다시 진행해주세요.
+            결제가 취소 되었습니다.
           </TextBox>
         ),
         duration: 2,
