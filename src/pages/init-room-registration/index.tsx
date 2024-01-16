@@ -44,33 +44,9 @@ export const InitRoomRegistration = () => {
   const userInputLocalStorage = localStorage.getItem('userInput');
 
   const [sameRoomName, setSameRoomName] = useRecoilState(isSameRoomName);
+  const [recoilUpdated, setRecoilUpdated] = useState(false);
 
   const onFinish = (values: onFinishValues) => {
-    setUserInputValueState((prevUserInputValueState) => {
-      const [userInputValue] = prevUserInputValueState;
-      const [room] = userInputValue.rooms;
-
-      const updatedRoom: Room = {
-        ...room,
-        name: values['room-name'],
-        price: parseInt(values['price'].replace(',', '')),
-        defaultCapacity: values['defaultCapacity'],
-        maxCapacity: values['maxCapacity'],
-        checkInTime: values['checkInTime'].format('HH:mm'),
-        checkOutTime: values['checkOutTime'].format('HH:mm'),
-        count: values['count'],
-        options: selectedOptions,
-        images: selectedImages,
-      };
-
-      const updatedUserInputValue = {
-        ...userInputValue,
-        rooms: [updatedRoom],
-      };
-
-      return [updatedUserInputValue];
-    });
-
     if (userInputLocalStorage !== null) {
       const parsedData = JSON.parse(userInputLocalStorage);
       const roomsArray = parsedData?.userInputValueState[0]?.rooms;
@@ -79,13 +55,36 @@ export const InitRoomRegistration = () => {
         roomsArray.forEach((room: Room) => {
           if (room.name === form.getFieldValue('room-name')) {
             setSameRoomName(true);
-            message.error('동일한 객실명의 상품이 이미 존재합니다.');
-          } else {
-            setSameRoomName(false);
-            navigate(ROUTES.INIT_INFO_CONFIRMATION);
           }
         });
+        message.error('동일한 객실명의 상품이 이미 존재합니다.');
       }
+    }
+    if (sameRoomName === false) {
+      setUserInputValueState((prevUserInputValueState) => {
+        const [userInputValue] = prevUserInputValueState;
+
+        const updatedRoom: Room = {
+          name: values['room-name'],
+          price: parseInt(values['price'].replace(',', '')),
+          defaultCapacity: values['defaultCapacity'],
+          maxCapacity: values['maxCapacity'],
+          checkInTime: values['checkInTime'].format('HH:mm'),
+          checkOutTime: values['checkOutTime'].format('HH:mm'),
+          count: values['count'],
+          options: selectedOptions,
+          images: selectedImages,
+        };
+
+        const updatedUserInputValue = {
+          ...userInputValue,
+          rooms: [...userInputValue.rooms, updatedRoom],
+        };
+
+        return [updatedUserInputValue];
+      });
+
+      setRecoilUpdated(true);
     }
   };
 
@@ -107,6 +106,13 @@ export const InitRoomRegistration = () => {
   useEffect(() => {
     setIsValid(areFormFieldsValid());
   }, [form, selectedImages, selectedOptions]);
+
+  useEffect(() => {
+    if (recoilUpdated && sameRoomName === false) {
+      setRecoilUpdated(false);
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    }
+  }, [recoilUpdated]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
