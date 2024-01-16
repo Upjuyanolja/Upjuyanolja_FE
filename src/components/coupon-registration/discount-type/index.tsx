@@ -155,6 +155,7 @@ export const DiscountType = () => {
           className={`price ${
             selectedDiscountType.typeName === FLAT_DISCOUNT ? 'active' : null
           }`}
+          type="button"
         >
           <TextBox
             typography="h5"
@@ -172,6 +173,7 @@ export const DiscountType = () => {
           className={`rate ${
             selectedDiscountType.typeName === RATE_DISCOUNT ? 'active' : null
           }`}
+          type="button"
         >
           <TextBox
             typography="h5"
