@@ -5,4 +5,9 @@ export type PurchaseContentProps = {
   purchaseData: PurchaseData | undefined;
   handleBatchEditCheckbox: VoidFunction;
   handleChangeBatchValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeNumberOfCoupons: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    couponId: number,
+    roomId: number,
+  ) => void;
 };

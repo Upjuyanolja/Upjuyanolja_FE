@@ -26,6 +26,7 @@ export const Coupon = () => {
     handleBatchEditCheckbox,
     purchaseData,
     handleChangeBatchValue,
+    handleChangeNumberOfCoupons,
   } = useCoupon();
 
   if (!data) return <div>로딩</div>;
@@ -61,6 +62,7 @@ export const Coupon = () => {
           purchaseData={purchaseData}
           handleBatchEditCheckbox={handleBatchEditCheckbox}
           handleChangeBatchValue={handleChangeBatchValue}
+          handleChangeNumberOfCoupons={handleChangeNumberOfCoupons}
         />
       </StyledModal>
     </>

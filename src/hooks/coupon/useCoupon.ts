@@ -2,7 +2,7 @@ import { useDeleteCoupon, useEditCoupon, useGetCoupon } from '@queries/coupon';
 import { Modal, message } from 'antd';
 import { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { CouponData, PurchaseData } from './type';
+import { CouponData, PurchaseCoupons, PurchaseData } from './type';
 import {
   CouponDeleteParams,
   CouponEditParams,
@@ -368,12 +368,19 @@ export const useCoupon = () => {
     setIsModalOpen(false);
   };
 
-  const handleBatchEditCheckbox = () => {
-    if (!purchaseData) return;
-    const data = { ...purchaseData };
-    data.isAppliedBatchEdit = !purchaseData.isAppliedBatchEdit;
-    if (!data.isAppliedBatchEdit) data.batchValue = 0;
-    data.totalPoints = 0;
+  const validateNumberOfCoupons = (value: number, coupon: PurchaseCoupons) => {
+    if (value > 999 || value < 0) return;
+    if (Number.isNaN(value)) coupon.numberOfCoupons = 0;
+    else coupon.numberOfCoupons = value;
+  };
+
+  const validateBatchValue = (value: number, data: PurchaseData) => {
+    if (value > 999 || value < 0) return;
+    if (Number.isNaN(value)) data.batchValue = 0;
+    else data.batchValue = value;
+  };
+
+  const handleBatchUpdate = (data: PurchaseData) => {
     for (const room of data.rooms) {
       if (!room) continue;
       for (const coupon of room.coupons) {
@@ -385,18 +392,40 @@ export const useCoupon = () => {
     setPurchaseData(data);
   };
 
+  const handleBatchEditCheckbox = () => {
+    if (!purchaseData) return;
+    const data = { ...purchaseData };
+    data.isAppliedBatchEdit = !purchaseData.isAppliedBatchEdit;
+    data.batchValue = 0;
+    data.totalPoints = 0;
+    handleBatchUpdate(data);
+  };
+
   const handleChangeBatchValue = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (!purchaseData) return;
     const data = { ...purchaseData };
-    data.batchValue = parseInt(event.currentTarget.value);
+    validateBatchValue(parseInt(event.currentTarget.value), data);
+    data.totalPoints = 0;
+    handleBatchUpdate(data);
+  };
+
+  const handleChangeNumberOfCoupons = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    couponId: number,
+    roomId: number,
+  ) => {
+    if (!purchaseData) return;
+    const data = { ...purchaseData };
     data.totalPoints = 0;
     for (const room of data.rooms) {
       if (!room) continue;
       for (const coupon of room.coupons) {
-        coupon.numberOfCoupons = data.batchValue;
-        coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
+        if (coupon.couponId === couponId && room.roomId === roomId) {
+          validateNumberOfCoupons(parseInt(event.currentTarget.value), coupon);
+          coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
+        }
         data.totalPoints += coupon.totalPoints;
       }
     }
@@ -422,5 +451,6 @@ export const useCoupon = () => {
     handleBatchEditCheckbox,
     purchaseData,
     handleChangeBatchValue,
+    handleChangeNumberOfCoupons,
   };
 };

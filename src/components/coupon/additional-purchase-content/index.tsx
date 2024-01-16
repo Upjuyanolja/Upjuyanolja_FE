@@ -10,6 +10,7 @@ export const AdditionalPurchaseContent = ({
   purchaseData,
   handleBatchEditCheckbox,
   handleChangeBatchValue,
+  handleChangeNumberOfCoupons,
 }: PurchaseContentProps) => {
   if (!purchaseData) return <></>;
   return (
@@ -44,6 +45,8 @@ export const AdditionalPurchaseContent = ({
                   key={coupon.couponId}
                   coupon={coupon}
                   disabled={purchaseData.isAppliedBatchEdit}
+                  handleChangeNumberOfCoupons={handleChangeNumberOfCoupons}
+                  roomId={room.roomId}
                 />
               ))}
             </StyledRoomInfo>
