@@ -13,6 +13,7 @@ export const NameContainer = ({
   header,
   placeholder,
   form,
+  isSameRoomName,
 }: NameContainerProps) => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_NAME_MAX_LENGTH);
@@ -46,6 +47,7 @@ export const NameContainer = ({
           style={{ height: 40, width: header === '객실명' ? '440px' : '' }}
           onChange={handleInputChange}
           data-testid="input-name"
+          status={isSameRoomName ? 'error' : ''}
         />
       </Form.Item>
     </StyledInputWrapper>

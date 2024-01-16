@@ -15,7 +15,10 @@ export const ButtonContainer = ({
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
   const handlePreviousClick = () => {
-    navigate(-1);
+    if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
+      navigate(ROUTES.INIT);
+    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
+      navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
