@@ -28,7 +28,6 @@ export const RoomCouponApplier = ({
   );
   const groupQuantityValue = useRecoilValue(groupQuantityValueState);
   const isGroupQuantitySelected = useRecoilValue(isGroupQuantitySelectedState);
-  const pendingCouponDataList = useRecoilValue(pendingCouponDataListState);
 
   const handleQuantityChange = () => {
     setPendingCouponDataList((prevValues) => {
