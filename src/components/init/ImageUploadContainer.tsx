@@ -11,6 +11,7 @@ import {
   selectedAccommodationFilesState,
   selectedInitRoomFilesState,
 } from '@stores/init/atoms';
+import { ROUTES } from '@/constants/routes';
 
 export const ImageUploadContainer = ({ header }: { header: string }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -66,7 +67,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
         ]);
       } else if (
         header === '객실 사진' &&
-        window.location.pathname === '/init/room-registration'
+        window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
       ) {
         setSelectedInitRoomFiles((prevSelectedFiles) => [
           ...prevSelectedFiles,
