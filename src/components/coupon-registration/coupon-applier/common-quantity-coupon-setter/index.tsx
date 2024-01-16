@@ -10,6 +10,7 @@ import {
   isGroupQuantitySelectedState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
+import { isNumber } from '@/utils/isNumber';
 
 export const CommonQuantityCouponSetter = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
@@ -21,25 +22,32 @@ export const CommonQuantityCouponSetter = () => {
   );
 
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
-    const formattedValue = parseInt(e.target.value);
-    setGroupQuantityValue(formattedValue);
+    const inputValue = e.target.value;
+    if (isNumber(inputValue)) {
+      setGroupQuantityValue(inputValue);
+    }
+    if (!isNumber(inputValue) && inputValue.length < 1) {
+      setGroupQuantityValue('');
+    }
   };
 
   const handleBlur = () => {
     if (!groupQuantityValue) {
-      setGroupQuantityValue(0);
+      return setGroupQuantityValue('0');
     }
+    const formattedValue = groupQuantityValue.replace(/^0+/, '');
+    setGroupQuantityValue(formattedValue);
   };
 
   useEffect(() => {
     if (!isGroupQuantitySelected) {
-      setGroupQuantityValue(0);
+      setGroupQuantityValue('0');
     }
   }, [isGroupQuantitySelected]);
 
   useEffect(() => {
     setIsGroupQuantitySelected(false);
-    setGroupQuantityValue(0);
+    setGroupQuantityValue('0');
   }, [selectedDiscountType]);
 
   return (

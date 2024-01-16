@@ -4,16 +4,12 @@ import styled from 'styled-components';
 import { Input } from 'antd';
 import { Spacing } from '@components/spacing';
 import {
-  FLAT_COUPON,
-  FLAT_COUPON_TYPE,
-  RATE_COUPON,
-  RATE_COUPON_TYPE,
+  FLAT_DISCOUNT,
+  FLAT_DISCOUNT_TYPE,
+  RATE_DISCOUNT,
+  RATE_DISCOUNT_TYPE,
 } from '@/constants/coupon-registration';
 import { useEffect, useState } from 'react';
-import {
-  FlatCouponType,
-  RateCouponType,
-} from '@/constants/coupon-registration/type';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { InputChangeEvent, MouseEvent } from '@/types/event';
 import { isNumber } from '@/utils/is-number';
@@ -25,8 +21,12 @@ import {
   pendingCouponDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
+import {
+  FlatDiscountType,
+  RateDiscountType,
+} from '@/constants/coupon-registration/type';
 
-export const CouponType = () => {
+export const DiscountType = () => {
   const [isValidDiscountRange, setIsValidDiscountRange] = useState(true);
   const [selectedDiscountType, setSelectedDiscountType] = useRecoilState(
     selectedDiscountTypeState,
@@ -57,7 +57,7 @@ export const CouponType = () => {
         {
           roomId: 0,
           roomName: '',
-          quantity: 0,
+          quantity: '',
           roomPrice: 0,
         },
       ]);
@@ -66,21 +66,21 @@ export const CouponType = () => {
 
   const handleBlur = (
     discountValue: string,
-    couponType: FlatCouponType | RateCouponType,
+    discountType: FlatDiscountType | RateDiscountType,
   ) => {
     if (!discountValue) {
       return;
     }
 
-    checkDiscountValidity(discountValue, couponType);
-    normalizeToRange(discountValue, couponType);
+    checkDiscountValidity(discountValue, discountType);
+    normalizeToRange(discountValue, discountType);
 
     let transformedValue;
 
-    if (parseInt(discountValue) >= FLAT_COUPON_TYPE.min) {
+    if (parseInt(discountValue) >= FLAT_DISCOUNT_TYPE.min) {
       transformedValue = (
-        Math.floor(parseInt(discountValue) / FLAT_COUPON_TYPE.min) *
-        FLAT_COUPON_TYPE.min
+        Math.floor(parseInt(discountValue) / FLAT_DISCOUNT_TYPE.min) *
+        FLAT_DISCOUNT_TYPE.min
       ).toString();
     } else {
       transformedValue = discountValue;
@@ -95,16 +95,16 @@ export const CouponType = () => {
 
   const normalizeToRange = (
     discountValue: string,
-    couponType: FlatCouponType | RateCouponType,
+    discountType: FlatDiscountType | RateDiscountType,
   ) => {
-    if (parseInt(discountValue) > couponType.max) {
-      const transformedValue = couponType.max.toString();
+    if (parseInt(discountValue) > discountType.max) {
+      const transformedValue = discountType.max.toString();
       setDiscountValue(transformedValue);
       formattedNumber(transformedValue);
     }
 
-    if (parseInt(discountValue) < couponType.min) {
-      const transformedValue = couponType.min.toString();
+    if (parseInt(discountValue) < discountType.min) {
+      const transformedValue = discountType.min.toString();
       setDiscountValue(transformedValue);
       formattedNumber(transformedValue);
     }
@@ -122,31 +122,34 @@ export const CouponType = () => {
     setDiscountValue(removeFormattedValue);
   };
 
-  const handleCouponType = (e: MouseEvent) => {
+  const handleDiscountType = (e: MouseEvent) => {
     const clickedButtonClassName = e.currentTarget.className;
-    const newCouponType = clickedButtonClassName.includes('price')
-      ? FLAT_COUPON_TYPE
-      : RATE_COUPON_TYPE;
+    const newDiscountType = clickedButtonClassName.includes('price')
+      ? FLAT_DISCOUNT_TYPE
+      : RATE_DISCOUNT_TYPE;
 
-    setSelectedDiscountType(newCouponType);
+    setSelectedDiscountType(newDiscountType);
   };
 
   const handleDiscountInputChange = (e: InputChangeEvent) => {
-    if (!isNumber(e.target.value)) {
-      return setDiscountValue('');
+    const inputValue = e.target.value;
+    if (isNumber(inputValue)) {
+      setDiscountValue(inputValue);
     }
-    setDiscountValue(e.target.value);
+    if (!isNumber(inputValue) && inputValue.length < 1) {
+      setDiscountValue('');
+    }
   };
 
   const checkDiscountValidity = (
     discountValue: string,
-    couponType: FlatCouponType | RateCouponType,
+    discountType: FlatDiscountType | RateDiscountType,
   ) => {
     const numericDiscountValue = parseInt(removeNumberFormat(discountValue));
 
     if (
-      numericDiscountValue < couponType.min ||
-      numericDiscountValue > couponType.max
+      numericDiscountValue < discountType.min ||
+      numericDiscountValue > discountType.max
     ) {
       setIsValidDiscountRange(false);
     } else {
@@ -158,15 +161,15 @@ export const CouponType = () => {
     <Container>
       <StyledButtonWrap>
         <StyledDiscountButton
-          onClick={(e) => handleCouponType(e)}
+          onClick={(e) => handleDiscountType(e)}
           className={`price ${
-            selectedDiscountType.typeName === FLAT_COUPON ? 'active' : null
+            selectedDiscountType.typeName === FLAT_DISCOUNT ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedDiscountType.typeName === FLAT_COUPON
+              selectedDiscountType.typeName === FLAT_DISCOUNT
                 ? 'primary'
                 : 'black900'
             }
@@ -175,15 +178,15 @@ export const CouponType = () => {
           </TextBox>
         </StyledDiscountButton>
         <StyledDiscountButton
-          onClick={(e) => handleCouponType(e)}
+          onClick={(e) => handleDiscountType(e)}
           className={`rate ${
-            selectedDiscountType.typeName === RATE_COUPON ? 'active' : null
+            selectedDiscountType.typeName === RATE_DISCOUNT ? 'active' : null
           }`}
         >
           <TextBox
             typography="h5"
             color={
-              selectedDiscountType.typeName === RATE_COUPON
+              selectedDiscountType.typeName === RATE_DISCOUNT
                 ? 'primary'
                 : 'black900'
             }
@@ -200,7 +203,7 @@ export const CouponType = () => {
           onBlur={() => handleBlur(discountValue, selectedDiscountType)}
           onFocus={() => handleFocus(discountValue)}
           placeholder={
-            selectedDiscountType.typeName === FLAT_COUPON
+            selectedDiscountType.typeName === FLAT_DISCOUNT
               ? '1,000~50,000 까지'
               : '1~50까지'
           }
@@ -209,7 +212,7 @@ export const CouponType = () => {
         />
         <StyledTextWrap>
           <TextBox typography="body2" fontWeight="bold">
-            {selectedDiscountType.typeName === FLAT_COUPON
+            {selectedDiscountType.typeName === FLAT_DISCOUNT
               ? '원 할인'
               : '% 할인'}
           </TextBox>

@@ -1,7 +1,7 @@
-import { FLAT_COUPON_TYPE } from '@/constants/coupon-registration';
+import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import {
-  FlatCouponType,
-  RateCouponType,
+  FlatDiscountType,
+  RateDiscountType,
 } from '@/constants/coupon-registration/type';
 import {
   DeterminedPrice,
@@ -11,9 +11,11 @@ import {
 } from '@components/coupon-registration/type';
 import { atom } from 'recoil';
 
-export const selectedDiscountTypeState = atom<FlatCouponType | RateCouponType>({
+export const selectedDiscountTypeState = atom<
+  FlatDiscountType | RateDiscountType
+>({
   key: 'selectedDiscountType',
-  default: FLAT_COUPON_TYPE,
+  default: FLAT_DISCOUNT_TYPE,
 });
 
 export const discountValueState = atom<DiscountValue>({
@@ -28,12 +30,19 @@ export const determinedPriceState = atom<DeterminedPrice>({
 
 export const pendingCouponDataListState = atom<PendingCouponDataList>({
   key: 'pendingCouponDataList',
-  default: [],
+  default: [
+    {
+      roomId: 0,
+      roomName: '',
+      quantity: '',
+      roomPrice: 0,
+    },
+  ],
 });
 
 export const groupQuantityValueState = atom<GroupQuantityValue>({
   key: 'groupQuantityValue',
-  default: 0,
+  default: '',
 });
 
 export const isGroupQuantitySelectedState = atom<boolean>({

@@ -4,16 +4,16 @@ import { TextBox } from '@components/text-box';
 import { Divider } from 'antd';
 import styled from 'styled-components';
 import { CouponPreviewItemProps } from './type';
-import {
-  FLAT_COUPON_TYPE,
-  RATE_COUPON_TYPE,
-} from '@/constants/coupon-registration';
 import { numberFormat } from '@/utils/Format/numberFormat';
 import { useRecoilValue } from 'recoil';
 import {
   determinedPriceState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
+import {
+  FLAT_DISCOUNT_TYPE,
+  RATE_DISCOUNT_TYPE,
+} from '@/constants/coupon-registration';
 
 export const CouponPreviewItem = ({
   roomName,
@@ -30,12 +30,10 @@ export const CouponPreviewItem = ({
       </TextBox>
       <Spacing space="4" />
       <TextBox typography="body2" color="black900">
-        {selectedDiscountType === FLAT_COUPON_TYPE
-          ? `${determinedPrice}원 할인`
-          : null}
-        {selectedDiscountType === RATE_COUPON_TYPE
-          ? `${determinedPrice}% 할인 (${roomPrice})`
-          : null}
+        {selectedDiscountType === FLAT_DISCOUNT_TYPE &&
+          `${determinedPrice}원 할인`}
+        {selectedDiscountType === RATE_DISCOUNT_TYPE &&
+          `${determinedPrice}% 할인 (${roomPrice})`}
       </TextBox>
       <Spacing space="16" />
       <StyledCouponInfo>
@@ -59,7 +57,7 @@ export const CouponPreviewItem = ({
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          {numberFormat(parseInt(determinedPrice) * 100 * quantity)} P
+          {numberFormat(parseInt(determinedPrice) * 100 * parseInt(quantity))} P
         </TextBox>
       </StyledCouponPrice>
     </Container>

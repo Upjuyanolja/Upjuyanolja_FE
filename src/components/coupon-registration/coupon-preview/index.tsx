@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { Button, Checkbox } from 'antd';
-import { FLAT_COUPON_TYPE } from '@/constants/coupon-registration';
 import { PendingCouponDataList } from '../type';
 import { numberFormat } from '@/utils/Format/numberFormat';
 import { useRecoilValue } from 'recoil';
@@ -13,6 +12,7 @@ import {
   pendingCouponDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
+import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 
 export const CouponPreview = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
@@ -23,7 +23,9 @@ export const CouponPreview = () => {
     pendingCouponDataList: PendingCouponDataList,
   ) => {
     return pendingCouponDataList.reduce((total, room) => {
-      return total + room.quantity * (parseInt(determinedPrice) * 100);
+      return (
+        total + parseInt(room.quantity) * (parseInt(determinedPrice) * 100)
+      );
     }, 0);
   };
 
@@ -38,7 +40,7 @@ export const CouponPreview = () => {
             <TextBox typography="body2" fontWeight="bold" color="primary">
               쿠폰 유형을 선택해 주세요.
             </TextBox>
-          ) : selectedDiscountType === FLAT_COUPON_TYPE ? (
+          ) : selectedDiscountType === FLAT_DISCOUNT_TYPE ? (
             <TextBox typography="h4" fontWeight="bold" color="primary">
               {determinedPrice}원 할인 쿠폰
             </TextBox>

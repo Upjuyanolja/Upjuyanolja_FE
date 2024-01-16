@@ -22,7 +22,7 @@ export const RoomCouponApplier = ({
 }: RoomCouponApplierProps) => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
-  const [itemQuantityValue, setItemQuantityValue] = useState(0);
+  const [itemQuantityValue, setItemQuantityValue] = useState('0');
   const setPendingCouponDataList = useSetRecoilState(
     pendingCouponDataListState,
   );
@@ -30,27 +30,40 @@ export const RoomCouponApplier = ({
   const isGroupQuantitySelected = useRecoilValue(isGroupQuantitySelectedState);
 
   const handleQuantityChange = () => {
-    const newValue = itemQuantityValue;
     setPendingCouponDataList((prevValues) => {
       const newValues = [...prevValues];
-      newValues[index] = { roomId, roomName, roomPrice, quantity: newValue };
+      newValues[index] = {
+        roomId,
+        roomName,
+        roomPrice,
+        quantity: itemQuantityValue,
+      };
       return newValues;
     });
   };
 
   const handleChange = (e: InputChangeEvent) => {
-    if (!isNumber(e.target.value)) return;
-    const formattedValue = parseInt(e.target.value);
-    setItemQuantityValue(formattedValue);
+    const inputValue = e.target.value;
+    if (isNumber(inputValue)) {
+      setItemQuantityValue(inputValue);
+    }
+    if (!isNumber(inputValue) && inputValue.length < 1) {
+      setItemQuantityValue('');
+    }
   };
 
   const handleCheckBox = () => {
     setIsItemQuantitySelected(!isItemQuantitySelected);
-    setItemQuantityValue(0);
+    setItemQuantityValue('0');
     handleQuantityChange();
   };
 
   const handleBlur = () => {
+    if (!itemQuantityValue) {
+      return setItemQuantityValue('0');
+    }
+    const formattedValue = itemQuantityValue.replace(/^0+/, '');
+    setItemQuantityValue(formattedValue);
     handleQuantityChange();
   };
 
@@ -66,7 +79,7 @@ export const RoomCouponApplier = ({
   }, [groupQuantityValue, isItemQuantitySelected]);
 
   useEffect(() => {
-    setItemQuantityValue(0);
+    setItemQuantityValue('0');
     setIsItemQuantitySelected(false);
   }, [selectedDiscountType]);
 

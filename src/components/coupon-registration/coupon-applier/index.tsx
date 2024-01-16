@@ -12,7 +12,7 @@ export const CouponApplier = () => {
       <StyledRoomCouponApplierWrap>
         {couponRoomListData?.rooms.map((item, index) => (
           <RoomCouponApplier
-            key={index}
+            key={item.roomId}
             roomName={item.roomName}
             index={index}
             roomId={item.roomId}

@@ -1,16 +1,16 @@
-import { FlatCouponType, RateCouponType } from './type';
+import { FlatDiscountType, RateDiscountType } from './type';
 
-export const FLAT_COUPON = 'FLAT';
+export const FLAT_DISCOUNT = 'FLAT';
 
-export const RATE_COUPON = 'RATE';
+export const RATE_DISCOUNT = 'RATE';
 
-export const FLAT_COUPON_TYPE: FlatCouponType = {
-  typeName: FLAT_COUPON,
+export const FLAT_DISCOUNT_TYPE: FlatDiscountType = {
+  typeName: FLAT_DISCOUNT,
   min: 1000,
   max: 50000,
 };
-export const RATE_COUPON_TYPE: RateCouponType = {
-  typeName: RATE_COUPON,
+export const RATE_DISCOUNT_TYPE: RateDiscountType = {
+  typeName: RATE_DISCOUNT,
   min: 1,
   max: 50,
 };
