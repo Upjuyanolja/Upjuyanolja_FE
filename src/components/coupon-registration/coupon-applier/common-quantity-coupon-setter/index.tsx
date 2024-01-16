@@ -2,9 +2,9 @@ import { TextBox } from '@components/text-box';
 import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { InputChangeEvent } from '@/types/event';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   groupQuantityValueState,
   isGroupQuantitySelectedState,
@@ -14,39 +14,43 @@ import { isNumber } from '@/utils/isNumber';
 
 export const CommonQuantityCouponSetter = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
-  const [groupQuantityValue, setGroupQuantityValue] = useRecoilState(
-    groupQuantityValueState,
-  );
+  const setGroupQuantityValue = useSetRecoilState(groupQuantityValueState);
   const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useRecoilState(
     isGroupQuantitySelectedState,
   );
+  const [inputValue, setInputValue] = useState('0');
 
-  const handleAllQuantityValueChange = (e: InputChangeEvent) => {
+  const handleChange = (e: InputChangeEvent) => {
     const inputValue = e.target.value;
     if (isNumber(inputValue)) {
-      return setGroupQuantityValue(inputValue);
+      return setInputValue(inputValue);
     }
     if (!isNumber(inputValue) && inputValue.length < 1) {
-      return setGroupQuantityValue('');
+      return setInputValue('');
     }
   };
 
   const handleBlur = () => {
-    if (!groupQuantityValue) {
-      return setGroupQuantityValue('0');
+    if (!inputValue) {
+      setInputValue('0');
+      setGroupQuantityValue('0');
+      return;
     }
-    const formattedValue = groupQuantityValue.replace(/^0+/, '');
+    const formattedValue = inputValue.replace(/^0+/, '');
+    setInputValue(formattedValue);
     setGroupQuantityValue(formattedValue);
   };
 
   useEffect(() => {
     if (!isGroupQuantitySelected) {
+      setInputValue('0');
       setGroupQuantityValue('0');
     }
   }, [isGroupQuantitySelected]);
 
   useEffect(() => {
     setIsGroupQuantitySelected(false);
+    setInputValue('0');
     setGroupQuantityValue('0');
   }, [selectedDiscountType]);
 
@@ -69,8 +73,8 @@ export const CommonQuantityCouponSetter = () => {
           size="small"
           maxLength={3}
           defaultValue={0}
-          value={groupQuantityValue}
-          onChange={handleAllQuantityValueChange}
+          value={inputValue}
+          onChange={handleChange}
           disabled={!isGroupQuantitySelected}
           onKeyDown={handleEnterKeyDown}
           onBlur={handleBlur}

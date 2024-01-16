@@ -35,6 +35,7 @@ export const RoomCouponApplier = ({
     pendingRoomDataListState,
   );
   const discountValue = useRecoilValue(discountValueState);
+  const [inputValue, setInputValue] = useStaet('0');
 
   const handleChange = (e: InputChangeEvent) => {
     const inputValue = e.target.value;
