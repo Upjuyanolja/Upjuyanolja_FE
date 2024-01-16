@@ -14,4 +14,5 @@ export const ROUTES = {
   ROOM: '/room',
   ROOM_REGISTRATION: '/room/registration',
   ROOM_UPDATE: '/room/update',
+  USER_GUIDE: '/user-guide',
 };
