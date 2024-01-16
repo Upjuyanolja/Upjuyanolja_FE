@@ -27,11 +27,11 @@ export const AdditionalPurchaseInfo = ({
             장
           </TextBox>
         </div>
-        <StyledTotalPoints>
+        <StyledEachPoint>
           <TextBox typography="h5" fontWeight={700}>
-            {coupon.totalPoints.toLocaleString()}P
+            {coupon.eachPoint.toLocaleString()}P
           </TextBox>
-        </StyledTotalPoints>
+        </StyledEachPoint>
       </StyledPriceInfo>
     </StyledCouponInfo>
   );
@@ -49,7 +49,7 @@ const StyledPriceInfo = styled.div`
   gap: 40px;
 `;
 
-const StyledTotalPoints = styled.div`
+const StyledEachPoint = styled.div`
   width: 120px;
   display: flex;
   justify-content: flex-end;

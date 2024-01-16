@@ -31,7 +31,6 @@ export const Coupon = () => {
 
   if (!data) return <div>로딩</div>;
   if (isGetCouponError) return <div>에러</div>;
-
   return (
     <>
       <CouponHeader

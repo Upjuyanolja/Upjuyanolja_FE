@@ -9,7 +9,7 @@ export type PurchaseCoupons = {
   name: string;
   points: number;
   numberOfCoupons: number;
-  totalPoints: number;
+  eachPoint: number;
   couponId: number;
 };
 

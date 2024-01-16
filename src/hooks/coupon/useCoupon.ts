@@ -169,7 +169,7 @@ export const useCoupon = () => {
         name: info.name,
         points: calculatedCouponPoints(room.price, discount, discountType),
         numberOfCoupons: 0,
-        totalPoints: 0,
+        eachPoint: 0,
         couponId,
       });
     }
@@ -385,8 +385,8 @@ export const useCoupon = () => {
       if (!room) continue;
       for (const coupon of room.coupons) {
         coupon.numberOfCoupons = data.batchValue;
-        coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
-        data.totalPoints += coupon.totalPoints;
+        coupon.eachPoint = coupon.points * coupon.numberOfCoupons;
+        data.totalPoints += coupon.eachPoint;
       }
     }
     setPurchaseData(data);
@@ -424,9 +424,9 @@ export const useCoupon = () => {
       for (const coupon of room.coupons) {
         if (coupon.couponId === couponId && room.roomId === roomId) {
           validateNumberOfCoupons(parseInt(event.currentTarget.value), coupon);
-          coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
+          coupon.eachPoint = coupon.points * coupon.numberOfCoupons;
         }
-        data.totalPoints += coupon.totalPoints;
+        data.totalPoints += coupon.eachPoint;
       }
     }
     setPurchaseData(data);
