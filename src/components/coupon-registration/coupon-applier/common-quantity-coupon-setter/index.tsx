@@ -24,10 +24,10 @@ export const CommonQuantityCouponSetter = () => {
   const handleAllQuantityValueChange = (e: InputChangeEvent) => {
     const inputValue = e.target.value;
     if (isNumber(inputValue)) {
-      setGroupQuantityValue(inputValue);
+      return setGroupQuantityValue(inputValue);
     }
     if (!isNumber(inputValue) && inputValue.length < 1) {
-      setGroupQuantityValue('');
+      return setGroupQuantityValue('');
     }
   };
 
