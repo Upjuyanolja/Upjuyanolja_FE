@@ -15,6 +15,9 @@ import {
 } from '@tosspayments/payment-widget-sdk';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
+import { currentUrlState } from '@stores/point-charge-modal';
+import { useSetRecoilState } from 'recoil';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
@@ -41,8 +44,13 @@ export const PointModal = ({
     PaymentWidgetInstance['renderPaymentMethods']
   > | null>(null);
 
+  const setCurrentUrl = useSetRecoilState(currentUrlState);
+  const location = useLocation();
+  const navigate = useNavigate();
   const { handleChangeUrl } = useCustomNavigate();
   useEffect(() => {
+    setCurrentUrl(location.pathname);
+    console.log(location.pathname);
     (async () => {
       if (
         process.env.REACT_APP_CLIENT_KEY &&
@@ -80,9 +88,11 @@ export const PointModal = ({
     if (isNumber(removeNumberFormat(inputValue))) {
       setFormattedValue(numberFormat(inputValue));
       setPrice(parseInt(inputValue));
+      console.log('isNumber');
     } else {
       setFormattedValue('');
       setPrice(0);
+      return;
     }
 
     priceComparator(inputValue);
@@ -141,8 +151,8 @@ export const PointModal = ({
         orderName: '토스 티셔츠 외 2건',
         customerName: '김토스',
         customerEmail: 'customer123@gmail.com',
-        successUrl: `${window.location.origin}/success`,
-        failUrl: `${window.location.origin}/fail`,
+        successUrl: `${window.location.origin}/toss-success`,
+        failUrl: `${window.location.origin}/toss-fail`,
       });
       //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
     } catch (error) {
@@ -162,28 +172,37 @@ export const PointModal = ({
       >
         <Layout>
           <Form form={form} layout="vertical" autoComplete="off">
-            <Form.Item name="point" label="충전할 포인트">
-              <Input
-                style={{ width: '95%' }}
-                placeholder="충전할 포인트를 입력해 주세요."
-                value={formattedValue}
-                onChange={handleChangePoint}
-              />
-
-              <TextBox
-                typography="h5"
-                color={'black900'}
-                bold={true}
-                style={{ marginLeft: '8px' }}
-              >
-                P
+            <div>
+              <TextBox typography="h5" color={'black900'} fontWeight={700}>
+                충전할 포인트
               </TextBox>
-              <ErrorContainer>
-                <TextBox typography="body4" color={'error'}>
-                  {pointErrorMessage}
-                </TextBox>
-              </ErrorContainer>
-            </Form.Item>
+            </div>
+
+            <Input
+              style={{ width: '95%' }}
+              placeholder="충전할 포인트를 입력해 주세요."
+              value={formattedValue}
+              onChange={handleChangePoint}
+            />
+
+            <TextBox
+              typography="h5"
+              color={'black900'}
+              fontWeight={700}
+              style={{
+                marginLeft: '8px',
+                top: '40px',
+                right: '0%',
+              }}
+            >
+              P
+            </TextBox>
+
+            <ErrorContainer>
+              <TextBox typography="body4" color={'error'}>
+                {pointErrorMessage}
+              </TextBox>
+            </ErrorContainer>
 
             <PointButtonWrap>
               <Button onClick={() => handleClickAddPoint(PRICE_10000)}>
@@ -210,7 +229,7 @@ export const PointModal = ({
                 <ExclamationCircleOutlined />
               </InfoButton>
 
-              <TextBox typography="h5" color={'primary'} bold={true}>
+              <TextBox typography="h5" color={'primary'} fontWeight={700}>
                 결제 금액 : {formattedValue}원
               </TextBox>
             </PriceWrap>
@@ -240,6 +259,14 @@ export const PointModal = ({
             >
               결제하기
             </SubmitButton>
+            <Button>성공</Button>
+            <Button
+              onClick={() => {
+                navigate('toss-fail?1');
+              }}
+            >
+              실패
+            </Button>
           </Form>
         </Layout>
       </CustomModal>
@@ -273,8 +300,8 @@ const CustomModal = styled(Modal)`
       line-height: 30px;
     }
   }
-  .ant-input-number-input-wrap {
-    margin-right: 8px;
+  .ant-input {
+    margin-top: 12px;
   }
 
   .point-buttonWrap {
