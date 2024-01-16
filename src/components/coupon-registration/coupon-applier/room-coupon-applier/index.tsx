@@ -28,6 +28,7 @@ export const RoomCouponApplier = ({
   );
   const groupQuantityValue = useRecoilValue(groupQuantityValueState);
   const isGroupQuantitySelected = useRecoilValue(isGroupQuantitySelectedState);
+  const pendingCouponDataList = useRecoilValue(pendingCouponDataListState);
 
   const handleQuantityChange = () => {
     setPendingCouponDataList((prevValues) => {
@@ -45,10 +46,10 @@ export const RoomCouponApplier = ({
   const handleChange = (e: InputChangeEvent) => {
     const inputValue = e.target.value;
     if (isNumber(inputValue)) {
-      setItemQuantityValue(inputValue);
+      return setItemQuantityValue(inputValue);
     }
     if (!isNumber(inputValue) && inputValue.length < 1) {
-      setItemQuantityValue('');
+      return setItemQuantityValue('');
     }
   };
 
@@ -68,6 +69,9 @@ export const RoomCouponApplier = ({
   };
 
   useEffect(() => {
+    if (!isGroupQuantitySelected) {
+      return;
+    }
     handleQuantityChange();
   }, [itemQuantityValue]);
 
