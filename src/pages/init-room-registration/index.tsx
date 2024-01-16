@@ -41,7 +41,7 @@ export const InitRoomRegistration = () => {
   const selectedOptions = useRecoilValue(checkedRoomOptions);
   const selectedImages = useRecoilValue(selectedInitRoomFilesState);
 
-  const userInputLocalStorage = localStorage.getItem('localStorage');
+  const userInputLocalStorage = localStorage.getItem('userInput');
 
   const [sameRoomName, setSameRoomName] = useRecoilState(isSameRoomName);
 
@@ -87,7 +87,6 @@ export const InitRoomRegistration = () => {
         });
       }
     }
-    navigate(ROUTES.INIT_INFO_CONFIRMATION);
   };
 
   const areFormFieldsValid = () => {
