@@ -21,11 +21,11 @@ export const CommonQuantityCouponSetter = () => {
   const [inputValue, setInputValue] = useState('0');
 
   const handleChange = (e: InputChangeEvent) => {
-    const inputValue = e.target.value;
-    if (isNumber(inputValue)) {
-      return setInputValue(inputValue);
+    const targetValue = e.target.value;
+    if (isNumber(targetValue)) {
+      return setInputValue(targetValue);
     }
-    if (!isNumber(inputValue) && inputValue.length < 1) {
+    if (!isNumber(targetValue) && targetValue.length < 1) {
       return setInputValue('');
     }
   };
