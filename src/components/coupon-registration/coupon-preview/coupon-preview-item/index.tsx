@@ -31,9 +31,9 @@ export const CouponPreviewItem = ({
       <Spacing space="4" />
       <TextBox typography="body2" color="black900">
         {selectedDiscountType === FLAT_DISCOUNT_TYPE &&
-          `${determinedPrice}원 할인`}
+          `${determinedPrice ? determinedPrice : '0'}원 할인`}
         {selectedDiscountType === RATE_DISCOUNT_TYPE &&
-          `${determinedPrice}% 할인 (${eachPrice})`}
+          `${determinedPrice ? determinedPrice : '0'}% 할인 (${eachPrice})`}
       </TextBox>
       <Spacing space="16" />
       <StyledCouponInfo>
@@ -42,7 +42,10 @@ export const CouponPreviewItem = ({
             장당
           </TextBox>
           <TextBox typography="body2" fontWeight="bold" color="primary">
-            {determinedPrice ? parseInt(determinedPrice) * 100 : 0} P
+            {determinedPrice
+              ? numberFormat(parseInt(determinedPrice) * 100)
+              : 0}{' '}
+            P
           </TextBox>
         </StyledCouponInfoItemWrap>
         <StyledCouponInfoItemWrap>
@@ -57,7 +60,9 @@ export const CouponPreviewItem = ({
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          {1} P
+          {quantity && determinedPrice
+            ? `${numberFormat(parseInt(determinedPrice) * 100 * quantity)} P`
+            : '0 P'}
         </TextBox>
       </StyledCouponPrice>
     </Container>

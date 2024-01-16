@@ -20,7 +20,10 @@ import {
   postAuthenticationResolver,
   getVerifyResolver,
 } from './sign-up';
-import { getCouponRoomListResolver } from './coupon-registration';
+import {
+  buyCouponResolver,
+  getCouponRoomListResolver,
+} from './coupon-registration';
 
 const email = 'ivegaeul@naver.com';
 const verificationCode = '020924';
@@ -38,10 +41,12 @@ export const handlers = [
   http.get('/api/coupons/backoffice/manage', getCouponResolver),
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
+
   http.get(
     '/api/coupons/backoffice/buy/accommodationId',
     getCouponRoomListResolver,
   ),
+  http.post('/api/coupons/backoffice/buy', buyCouponResolver),
 
   http.get('/api/points/summary', getPointSummaryResolver),
 

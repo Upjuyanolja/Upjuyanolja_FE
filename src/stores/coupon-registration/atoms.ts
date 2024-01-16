@@ -40,6 +40,11 @@ export const isGroupQuantitySelectedState = atom<boolean>({
 });
 
 export const pendingRoomDataListState = atom<PendingRoomDataList>({
-  key: 'pendingRoomDataListState',
+  key: 'pendingRoomDataList',
   default: [],
+});
+
+export const isValidCouponRegistrationState = atom<boolean>({
+  key: 'isValidCouponRegistration',
+  default: false,
 });

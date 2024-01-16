@@ -1,3 +1,13 @@
+import {
+  AccommodationId,
+  BuyCouponDiscount,
+  BuyCouponEachPoint,
+  BuyCouponQuantity,
+  BuyCouponTotalPoints,
+  RoomId,
+} from '@/types/coupon-registration';
+import { SelectedDiscountType } from '@components/coupon-registration/type';
+
 export type staticsData = {
   total: number;
   used: number;
@@ -61,4 +71,24 @@ export type CouponRoomList = {
   accommodationId: number;
   accommodationName: string;
   rooms: Pick<room<coupon>, 'roomId' | 'roomName' | 'roomPrice'>[];
+};
+
+export type BuyCouponParams = {
+  accommodationId: AccommodationId;
+  totalPoints: BuyCouponTotalPoints;
+  rooms: BuyCouponRoomData[];
+};
+
+export type BuyCouponData = {
+  message: string;
+  data: null;
+  code?: number;
+};
+
+export type BuyCouponRoomData = {
+  roomId: RoomId;
+  discountType: SelectedDiscountType;
+  discount: BuyCouponDiscount;
+  quantity: BuyCouponQuantity;
+  eachPoint: BuyCouponEachPoint;
 };

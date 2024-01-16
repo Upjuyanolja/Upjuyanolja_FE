@@ -97,9 +97,12 @@ export const RoomCouponApplier = ({
     if (existingItemIndex !== -1) {
       const newValues = [...prev];
       newValues[existingItemIndex] = newItem;
+      newValues.sort((a, b) => a.roomId - b.roomId);
       return newValues;
     } else {
-      return [...prev, newItem];
+      const newValues = [...prev, newItem];
+      newValues.sort((a, b) => a.roomId - b.roomId);
+      return newValues;
     }
   };
 
