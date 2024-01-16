@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {
   CouponNameContainer,
   DayLimitInput,
+  DayLimitTitle,
   RoomContainer,
 } from '../table-cell';
 import { CouponStatusTag } from '../coupon-status-tag';
@@ -65,7 +66,7 @@ export const CouponTable = ({
       width: '232px',
     },
     {
-      title: '일일 제한 수량',
+      title: <DayLimitTitle />,
       dataIndex: 'dayLimit',
       render: (dayLimit: number, record: tableData) => (
         <DayLimitInput
