@@ -6,6 +6,7 @@ import {
   getCouponResolver,
   getRevenueResolver,
   getStaticsResolver,
+  successCouponResolver,
 } from './coupon';
 import { getPointSummaryResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
@@ -38,6 +39,7 @@ export const handlers = [
   http.get('/api/coupons/backoffice/manage', getCouponResolver),
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
+  http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
 
   http.get('/api/points/summary', getPointSummaryResolver),
 
