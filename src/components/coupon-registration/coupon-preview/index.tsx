@@ -39,8 +39,8 @@ export const CouponPreview = () => {
       return pendingRoomDataList.reduce((total, room) => {
         return (
           total +
-          parseInt(numberFormat(room.quantity)) *
-            (parseInt(removeNumberFormat(determinedPrice)) * 100)
+          Number(numberFormat(room.quantity)) *
+            (Number(removeNumberFormat(determinedPrice)) / 10)
         );
       }, 0);
     } else {
