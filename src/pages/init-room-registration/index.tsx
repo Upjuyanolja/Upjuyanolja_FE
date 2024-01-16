@@ -76,7 +76,7 @@ export const InitRoomRegistration = () => {
       const roomsArray = parsedData?.userInputValueState[0]?.rooms;
 
       if (roomsArray.length !== 0) {
-        roomsArray.map((room: Room) => {
+        roomsArray.forEach((room: Room) => {
           if (room.name === form.getFieldValue('room-name')) {
             setSameRoomName(true);
             message.error('동일한 객실명의 상품이 이미 존재합니다.');
