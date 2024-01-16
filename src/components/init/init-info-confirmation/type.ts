@@ -23,3 +23,7 @@ export type RoomData = {
     internet: boolean;
   };
 };
+
+export type Url = {
+  $imageUrl: string;
+};

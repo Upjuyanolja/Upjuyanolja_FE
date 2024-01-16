@@ -1,6 +1,7 @@
 import { Carousel } from 'antd';
 import styled from 'styled-components';
 import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
+import { Url } from './type';
 
 export const ImageCarousel = ({ images }: { images: { url: string }[] }) => {
   return (
@@ -47,10 +48,6 @@ const StyledCarouselWrapper = styled.div`
     display: none;
   }
 `;
-
-type Url = {
-  $imageUrl: string;
-};
 
 const StyledImageWrapper = styled.div<Url>`
   width: 224px;
