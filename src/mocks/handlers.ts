@@ -7,7 +7,6 @@ import {
   getRevenueResolver,
   getStaticsResolver,
 } from './coupon';
-import { getUserInfoResolver } from './member';
 import { getPointSummaryResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
 import {
@@ -21,6 +20,7 @@ import {
   postAuthenticationResolver,
   getVerifyResolver,
 } from './sign-up';
+import { getCouponRoomListResolver } from './coupon-registration';
 
 const email = 'ivegaeul@naver.com';
 const verificationCode = '020924';
@@ -39,7 +39,6 @@ export const handlers = [
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
 
-  http.get('/api/member', getUserInfoResolver),
   http.get('/api/points/summary', getPointSummaryResolver),
 
   http.get('/api/points/total?1', getPointDetailTotalResolver),

@@ -3,39 +3,32 @@ import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
-import { useEffect, useState } from 'react';
 import { Button, Checkbox } from 'antd';
-
-const couponMap = {
-  label: '5000원 할인 쿠폰',
-  coupons: [
-    {
-      roomName: '스탠다드 트윈',
-      couponName: '5000원 할인',
-      couponPrice: 500,
-      couponAmount: 20,
-    },
-    {
-      roomName: '디럭스 더블',
-      couponName: '5000원 할인',
-      couponPrice: 500,
-      couponAmount: 20,
-    },
-  ],
-};
+import { PendingCouponDataList } from '../type';
+import { numberFormat } from '@/utils/Format/numberFormat';
+import { useRecoilValue } from 'recoil';
+import {
+  determinedPriceState,
+  pendingCouponDataListState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
+import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 
 export const CouponPreview = () => {
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
+  const determinedPrice = useRecoilValue(determinedPriceState);
+  const pendingCouponDataList = useRecoilValue(pendingCouponDataListState);
 
-  useEffect(() => {
-    const calculatedTotalPrice = couponMap.coupons.reduce(
-      (accumulator, currentCoupon) =>
-        accumulator + currentCoupon.couponPrice * currentCoupon.couponAmount,
-      0,
-    );
+  const calculateTotalPrice = (
+    pendingCouponDataList: PendingCouponDataList,
+  ) => {
+    return pendingCouponDataList.reduce((total, room) => {
+      return (
+        total + parseInt(room.quantity) * (parseInt(determinedPrice) * 100)
+      );
+    }, 0);
+  };
 
-    setTotalPrice(calculatedTotalPrice);
-  }, [couponMap.coupons]);
   return (
     <Container>
       <TextBox typography="h4" fontWeight="bold" color="black900">
@@ -43,17 +36,35 @@ export const CouponPreview = () => {
       </TextBox>
       <StyledCouponWrap>
         <StyledTitleWrap>
-          <TextBox typography="h4" fontWeight="bold" color="primary">
-            {couponMap.label}
-          </TextBox>
+          {!determinedPrice ? (
+            <TextBox typography="body2" fontWeight="bold" color="primary">
+              쿠폰 유형을 선택해 주세요.
+            </TextBox>
+          ) : selectedDiscountType === FLAT_DISCOUNT_TYPE ? (
+            <TextBox typography="h4" fontWeight="bold" color="primary">
+              {determinedPrice}원 할인 쿠폰
+            </TextBox>
+          ) : (
+            <TextBox typography="h4" fontWeight="bold" color="primary">
+              {determinedPrice}% 할인 쿠폰
+            </TextBox>
+          )}
         </StyledTitleWrap>
-        {couponMap.coupons.map((item, index) => (
-          <CouponPreviewItem data={item} key={index} />
-        ))}
+        <StyledPreviewItemWrap>
+          {pendingCouponDataList.map((item, index) => (
+            <CouponPreviewItem
+              roomId={item.roomId}
+              roomName={item.roomName}
+              roomPrice={item.roomPrice}
+              quantity={item.quantity}
+              key={index}
+            />
+          ))}
+        </StyledPreviewItemWrap>
         <Spacing space="16" />
         <StyledCouponTotalPrice>
           <TextBox typography="h5" fontWeight="bold" color="primary">
-            합계 : {totalPrice}P
+            합계 : {numberFormat(calculateTotalPrice(pendingCouponDataList))} P
           </TextBox>
         </StyledCouponTotalPrice>
         <Spacing space="16" />
@@ -105,7 +116,7 @@ const StyledTitleWrap = styled.div`
 const StyledCouponTotalPrice = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 12px 16px 12px 0;
+  padding: 4px 16px 4px 0;
   margin: 0 12px;
   border: 2px solid ${colors.primary};
   border-radius: 2px;
@@ -132,4 +143,8 @@ const StyledButton = styled(Button)`
   &:active {
     background-color: ${colors.primaryActive};
   }
+`;
+
+const StyledPreviewItemWrap = styled.div`
+  overflow-y: auto;
 `;

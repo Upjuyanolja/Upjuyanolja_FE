@@ -3,6 +3,7 @@ import { instance } from '..';
 import {
   CouponDeleteParams,
   CouponEditParams,
+  CouponRoomList,
   coupons,
   revenueData,
   staticsData,
@@ -21,4 +22,8 @@ export const COUPON_API = {
     }),
   editCoupon: (params: CouponEditParams) =>
     instance.patch<Response<null>>('/api/coupons/backoffice/manage', params),
+  getCouponRoomList: () =>
+    instance.get<Response<CouponRoomList>>(
+      '/api/coupons/backoffice/buy/accommodationId',
+    ),
 };
