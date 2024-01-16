@@ -1,7 +1,7 @@
 import { colors } from '@/constants/colors';
 import { Button } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { MainCouponStatusContainerProps } from './type';
 
@@ -10,13 +10,17 @@ export const MainCouponStatusContainer = ({
   navigateCoupon,
 }: MainCouponStatusContainerProps) => {
   const items = [
-    { name: '발행 쿠폰(A)', value: staticsData.total },
-    { name: '사용 완료 쿠폰(B)', value: staticsData.used },
-    { name: '현재 보유 쿠폰(A-B)', value: staticsData.stock },
+    { id: 1, name: '발행 쿠폰(A)', value: staticsData.total },
+    { id: 2, name: '사용 완료 쿠폰(B)', value: staticsData.used },
+    { id: 3, name: '현재 보유 쿠폰(A-B)', value: staticsData.stock },
   ];
+
+  const date = new Date();
+  const currentYear = date.getFullYear();
+  const currentMonth = date.getMonth() + 1;
   return (
-    <StyledLayout color={colors.primary}>
-      <StyledTitle color={colors.primary}>
+    <StyledLayout>
+      <StyledTitle>
         <StyledButton
           type="link"
           onClick={navigateCoupon}
@@ -26,12 +30,12 @@ export const MainCouponStatusContainer = ({
           <RightOutlined color="white" />
         </StyledButton>
         <TextBox typography="body4" color="white">
-          (2023.10월 기준)
+          ({currentYear}.{currentMonth}월 기준)
         </TextBox>
       </StyledTitle>
       <StyledStatusLayout>
-        {items.map((item, index) => (
-          <StyledSpace key={index} color={colors.blue}>
+        {items.map((item) => (
+          <StyledSpace key={item.id} id={item.id}>
             <TextBox typography="h5" fontWeight={700} color="blue">
               {item.name}
             </TextBox>
@@ -51,7 +55,7 @@ export const MainCouponStatusContainer = ({
 };
 
 const StyledLayout = styled('div')`
-  border: 2px solid ${(props) => props.color};
+  border: 2px solid ${colors.primary};
   border-radius: 8px;
 
   width: 100%;
@@ -67,7 +71,7 @@ const StyledTitle = styled('div')`
   justify-content: space-between;
   align-items: center;
 
-  background-color: ${(props) => props.color};
+  background-color: ${colors.primary};
 `;
 
 const StyledButton = styled(Button)`
@@ -88,7 +92,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const StyledSpace = styled('div')`
+const StyledSpace = styled('div')<{ id: number }>`
   width: 231px;
   height: 112px;
 
@@ -96,8 +100,11 @@ const StyledSpace = styled('div')`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
-  border-right: 1px dashed ${(props) => props.color};
+  ${(props) =>
+    props.id !== 3 &&
+    css`
+      border-right: 1px dashed ${colors.blue};
+    `}
 `;
 
 const StyledStatusLayout = styled('div')`

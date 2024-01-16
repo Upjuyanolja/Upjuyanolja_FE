@@ -1,11 +1,11 @@
 import { MainChart } from '@components/main/main-chart';
 import { MainCouponStatusContainer } from '@components/main/main-coupon-status-container';
-import { MainNavigationContainer } from '@components/main/main-navigation-container';
+import { CouponRegistrationContainer } from '@components/main/coupon-navigation-container';
 import promotionImage from '@assets/image/mainPromotionImage.png';
-import promotionImage2 from '@assets/image/mainPromotionImage2.png';
 import { Image, Layout } from 'antd';
 import styled from 'styled-components';
 import { useMain } from '@hooks/main/useMain';
+import { UserGuidNavigationContainer } from '@components/main/user-guide-navigation-container';
 
 export const Main = () => {
   const {
@@ -16,6 +16,7 @@ export const Main = () => {
     revenueData,
     isRevenueError,
     couponMessage,
+    navigateUserGuide,
   } = useMain();
 
   if (!staticsData || !revenueData) return <></>;
@@ -31,11 +32,11 @@ export const Main = () => {
           <MainChart revenueData={revenueData} couponMessage={couponMessage} />
         </StyledMainContainer>
         <StyledMainInfo>
-          <MainNavigationContainer
+          <CouponRegistrationContainer
             navigateCouponRegistration={navigateCouponRegistration}
           />
+          <UserGuidNavigationContainer navigateUserGuide={navigateUserGuide} />
           <StyledImage src={promotionImage} preview={false} />
-          <StyledImage src={promotionImage2} preview={false} />
         </StyledMainInfo>
       </StyledLayout>
     </StyledMainLayout>

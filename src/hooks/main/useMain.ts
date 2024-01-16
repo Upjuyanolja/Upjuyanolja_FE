@@ -14,6 +14,10 @@ export const useMain = () => {
     navigate(`/${accommodationId}${ROUTES.COUPON_REGISTRATION}`);
   };
 
+  const navigateUserGuide = () => {
+    navigate(ROUTES.USER_GUIDE);
+  };
+
   const handleRevenueDataFormat = (data: dailyRevenue[] | undefined) => {
     const revenueData = [];
     if (!data) return undefined;
@@ -62,5 +66,6 @@ export const useMain = () => {
     revenueData,
     isRevenueError,
     couponMessage: data?.couponMessage,
+    navigateUserGuide,
   };
 };
