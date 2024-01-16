@@ -2,17 +2,26 @@ import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
 import { Button, Checkbox } from 'antd';
 import styled from 'styled-components';
+import { PurchaseFooterProps } from './type';
+import { useState } from 'react';
 
-export const AdditionalPurchaseFooter = () => {
+export const AdditionalPurchaseFooter = ({
+  totalPoints,
+}: PurchaseFooterProps) => {
+  const [isAgreed, setIsAgreed] = useState(false);
   return (
     <>
       <StyledTotalPriceContainer>
         <TextBox typography="h5" fontWeight={700} color="primary">
-          합계 : 36,000P
+          합계 : {totalPoints?.toLocaleString()}P
         </TextBox>
       </StyledTotalPriceContainer>
       <StyledCheckBoxContainer>
-        <Checkbox />
+        <Checkbox
+          onChange={() => {
+            setIsAgreed((prev) => !prev);
+          }}
+        />
         <TextBox typography="body3" fontWeight={400}>
           주문 내용을 확인하였으며,
         </TextBox>
@@ -24,7 +33,7 @@ export const AdditionalPurchaseFooter = () => {
         </TextBox>
       </StyledCheckBoxContainer>
 
-      <StyledButton type="primary" size="large">
+      <StyledButton type="primary" size="large" disabled={!isAgreed}>
         <TextBox fontWeight={700} typography="h5">
           구매하기
         </TextBox>
