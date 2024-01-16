@@ -102,6 +102,7 @@ const StyledTextWrapper = styled.div`
 const StyledMainContent = styled(Layout.Content)`
   max-width: 1024px;
   width: 1024px;
+  height: 100%;
 
   margin: 204px auto 0;
 
