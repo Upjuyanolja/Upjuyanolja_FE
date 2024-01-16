@@ -6,10 +6,11 @@ import {
   useQuery,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import { Response } from '@/types/api';
+import { ErrorResponse, Response } from '@/types/api';
 import {
   CouponDeleteParams,
   CouponEditParams,
+  PurchaseCouponParams,
   coupons,
   dailyRevenue,
   revenueData,
@@ -22,13 +23,12 @@ export const useGetStatics = (
     AxiosError,
     staticsData
   >,
-) => {
-  return useQuery<
-    AxiosResponse<Response<staticsData>>,
-    AxiosError,
-    staticsData
-  >(['getStatics'], () => COUPON_API.getStatics(), { ...options });
-};
+) =>
+  useQuery<AxiosResponse<Response<staticsData>>, AxiosError, staticsData>(
+    ['getStatics'],
+    () => COUPON_API.getStatics(),
+    { ...options },
+  );
 
 export const useGetRevenue = (
   options?: UseQueryOptions<
@@ -36,13 +36,12 @@ export const useGetRevenue = (
     AxiosError,
     dailyRevenue[]
   >,
-) => {
-  return useQuery<
-    AxiosResponse<Response<revenueData>>,
-    AxiosError,
-    dailyRevenue[]
-  >(['getRevenue'], () => COUPON_API.getRevenue(), { ...options });
-};
+) =>
+  useQuery<AxiosResponse<Response<revenueData>>, AxiosError, dailyRevenue[]>(
+    ['getRevenue'],
+    () => COUPON_API.getRevenue(),
+    { ...options },
+  );
 
 export const useGetCoupon = (
   options?: UseQueryOptions<
@@ -50,13 +49,12 @@ export const useGetCoupon = (
     AxiosError,
     coupons
   >,
-) => {
-  return useQuery<AxiosResponse<Response<coupons>>, AxiosError, coupons>(
+) =>
+  useQuery<AxiosResponse<Response<coupons>>, AxiosError, coupons>(
     ['getCoupon'],
     () => COUPON_API.getCoupon(),
     { ...options },
   );
-};
 
 export const useDeleteCoupon = (
   options?: UseMutationOptions<
@@ -64,15 +62,13 @@ export const useDeleteCoupon = (
     AxiosError,
     CouponDeleteParams
   >,
-) => {
-  return useMutation<
-    AxiosResponse<Response<null>>,
-    AxiosError,
-    CouponDeleteParams
-  >((params: CouponDeleteParams) => COUPON_API.deleteCoupon(params), {
-    ...options,
-  });
-};
+) =>
+  useMutation<AxiosResponse<Response<null>>, AxiosError, CouponDeleteParams>(
+    (params: CouponDeleteParams) => COUPON_API.deleteCoupon(params),
+    {
+      ...options,
+    },
+  );
 
 export const useEditCoupon = (
   options?: UseMutationOptions<
@@ -80,12 +76,29 @@ export const useEditCoupon = (
     AxiosError,
     CouponEditParams
   >,
-) => {
-  return useMutation<
+) =>
+  useMutation<AxiosResponse<Response<null>>, AxiosError, CouponEditParams>(
+    (params: CouponEditParams) => COUPON_API.editCoupon(params),
+    {
+      ...options,
+    },
+  );
+
+export const usePurchaseAdditionalCoupon = (
+  options?: UseMutationOptions<
     AxiosResponse<Response<null>>,
-    AxiosError,
-    CouponEditParams
-  >((params: CouponEditParams) => COUPON_API.editCoupon(params), {
-    ...options,
-  });
-};
+    AxiosError<ErrorResponse>,
+    PurchaseCouponParams
+  >,
+) =>
+  useMutation<
+    AxiosResponse<Response<null>>,
+    AxiosError<ErrorResponse>,
+    PurchaseCouponParams
+  >(
+    (params: PurchaseCouponParams) =>
+      COUPON_API.purchaseAdditionalCoupon(params),
+    {
+      ...options,
+    },
+  );
