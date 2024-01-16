@@ -1,7 +1,7 @@
 import { CouponApplier } from '@components/coupon-registration/coupon-applier';
 import { CouponCard } from '@components/coupon-registration/coupon-card';
 import { CouponPreview } from '@components/coupon-registration/coupon-preview';
-import { CouponType } from '@components/coupon-registration/coupon-type';
+import { DiscountType } from '@components/coupon-registration/discount-type';
 import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
@@ -14,13 +14,15 @@ export const CouponRegistration = () => {
           쿠폰 만들기
         </TextBox>
         <Spacing space="8" />
-        <CouponCard title="1. 쿠폰 유형 선택">
-          <CouponType />
-        </CouponCard>
-        <Spacing space="32" />
-        <CouponCard title="2. 적용 객실 선택">
-          <CouponApplier />
-        </CouponCard>
+        <StyledCouponCardWrap>
+          <CouponCard title="1. 쿠폰 유형 선택">
+            <DiscountType />
+          </CouponCard>
+          <Spacing space="32" />
+          <CouponCard title="2. 적용 객실 선택">
+            <CouponApplier />
+          </CouponCard>
+        </StyledCouponCardWrap>
       </StyledLeftWrap>
       <div>
         <CouponPreview />
@@ -38,4 +40,9 @@ const Container = styled.section`
 
 const StyledLeftWrap = styled.div`
   width: 580px;
+`;
+
+const StyledCouponCardWrap = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
 `;

@@ -77,10 +77,6 @@ function App() {
           />
           <Route path={'/'} element={<MainRedirect />} />
           <Route
-            path={`/:accommodationId${ROUTES.COUPON_REGISTRATION}/:percent`}
-            element={<CouponRegistration />}
-          />
-          <Route
             path={`/:accommodationId${ROUTES.COUPON_REGISTRATION}`}
             element={<CouponRegistration />}
           />

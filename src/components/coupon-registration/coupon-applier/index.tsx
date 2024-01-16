@@ -1,34 +1,23 @@
 import styled from 'styled-components';
 import { CommonQuantityCouponSetter } from './common-quantity-coupon-setter';
 import { RoomCouponApplier } from './room-coupon-applier';
-
-const roomMap = [
-  {
-    label: '스탠다드 트윈',
-  },
-  {
-    label: '스탠다드 더블',
-  },
-  {
-    label: '디럭스 더블',
-  },
-  {
-    label: '스위트룸',
-  },
-  {
-    label: '스위트룸 조식 PKG',
-  },
-];
+import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 
 export const CouponApplier = () => {
+  const { couponRoomListData } = useCouponRegistration();
+
   return (
     <Container>
       <CommonQuantityCouponSetter />
       <StyledRoomCouponApplierWrap>
-        {roomMap.map((item) => (
-          <div key={item.label}>
-            <RoomCouponApplier roomName={item.label} />
-          </div>
+        {couponRoomListData?.rooms.map((item, index) => (
+          <RoomCouponApplier
+            key={item.roomId}
+            roomName={item.roomName}
+            index={index}
+            roomId={item.roomId}
+            roomPrice={item.roomPrice}
+          />
         ))}
       </StyledRoomCouponApplierWrap>
     </Container>
