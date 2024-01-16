@@ -9,6 +9,7 @@ import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   determinedPriceState,
+  isTermsCheckedState,
   isValidCouponRegistrationState,
   pendingRoomDataListState,
   selectedDiscountTypeState,
@@ -24,7 +25,8 @@ export const CouponPreview = () => {
   const pendingRoomDataList = useRecoilValue(pendingRoomDataListState);
   const [isValidCouponRegistration, setIsValidCouponRegistration] =
     useRecoilState(isValidCouponRegistrationState);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isTermsChecked, setIsTermsChecked] =
+    useRecoilState(isTermsCheckedState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();
@@ -63,13 +65,8 @@ export const CouponPreview = () => {
   );
 
   useEffect(() => {
-    if (isChecked && totalPrice) {
-      setIsValidCouponRegistration(true);
-    }
-    if (!isChecked || !totalPrice) {
-      return setIsValidCouponRegistration(false);
-    }
-  }, [isChecked, totalPrice]);
+    setIsValidCouponRegistration(!!(isTermsChecked && totalPrice));
+  }, [isTermsChecked, totalPrice]);
 
   return (
     <Container>
@@ -121,7 +118,7 @@ export const CouponPreview = () => {
           <Checkbox
             id="agreement"
             onChange={() => {
-              setIsChecked(!isChecked);
+              setIsTermsChecked(!isTermsChecked);
             }}
           />
           <label htmlFor="agreement">

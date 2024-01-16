@@ -18,6 +18,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   determinedPriceState,
   discountValueState,
+  isTermsCheckedState,
   pendingRoomDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
@@ -34,6 +35,7 @@ export const DiscountType = () => {
   const [discountValue, setDiscountValue] = useRecoilState(discountValueState);
   const setDeterminedPrice = useSetRecoilState(determinedPriceState);
   const setPendingRoomDataList = useSetRecoilState(pendingRoomDataListState);
+  const setIsTermsChecked = useSetRecoilState(isTermsCheckedState);
 
   useEffect(() => {
     initializeValue();
@@ -51,6 +53,7 @@ export const DiscountType = () => {
     setDiscountValue('');
     setDeterminedPrice('');
     setPendingRoomDataList([]);
+    setIsTermsChecked(false);
   };
 
   const handleBlur = (
@@ -192,6 +195,7 @@ export const DiscountType = () => {
         <StyledInput
           onChange={handleDiscountInputChange}
           value={discountValue || ''}
+          maxLength={5}
           onBlur={() => handleBlur(discountValue, selectedDiscountType)}
           onFocus={() => handleFocus(discountValue)}
           placeholder={

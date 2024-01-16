@@ -6,7 +6,6 @@ import {
   DeterminedPrice,
   DiscountValue,
   GroupQuantityValue,
-  PendingCouponDataList,
   PendingRoomDataList,
 } from '@components/coupon-registration/type';
 import { atom } from 'recoil';
@@ -46,5 +45,10 @@ export const pendingRoomDataListState = atom<PendingRoomDataList>({
 
 export const isValidCouponRegistrationState = atom<boolean>({
   key: 'isValidCouponRegistration',
+  default: false,
+});
+
+export const isTermsCheckedState = atom<boolean>({
+  key: 'isTermsChecked',
   default: false,
 });
