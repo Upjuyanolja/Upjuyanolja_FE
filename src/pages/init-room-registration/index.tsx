@@ -14,14 +14,13 @@ import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
 import {
   checkedRoomOptions,
-  isSameRoomName,
   selectedInitRoomFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { Form, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitRoomRegistration = () => {
@@ -43,7 +42,7 @@ export const InitRoomRegistration = () => {
 
   const userInputLocalStorage = localStorage.getItem('userInput');
 
-  const [sameRoomName, setSameRoomName] = useRecoilState(isSameRoomName);
+  const [sameRoomName, setSameRoomName] = useState(false);
   const [recoilUpdated, setRecoilUpdated] = useState(false);
 
   const onFinish = (values: onFinishValues) => {
@@ -55,9 +54,13 @@ export const InitRoomRegistration = () => {
         roomsArray.forEach((room: Room) => {
           if (room.name === form.getFieldValue('room-name')) {
             setSameRoomName(true);
+            return;
+          } else {
+            setSameRoomName(false);
           }
         });
         message.error('동일한 객실명의 상품이 이미 존재합니다.');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
     if (sameRoomName === false) {
@@ -105,7 +108,7 @@ export const InitRoomRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, selectedImages, selectedOptions]);
+  }, [selectedImages, selectedOptions]);
 
   useEffect(() => {
     if (recoilUpdated && sameRoomName === false) {
