@@ -60,6 +60,16 @@ export type Room = {
   options: RoomOptions;
 };
 
+export type onFinishValues = {
+  'room-name': string;
+  price: string;
+  defaultCapacity: number;
+  maxCapacity: number;
+  checkInTime: moment.Moment;
+  checkOutTime: moment.Moment;
+  count: number;
+};
+
 export type UserInputValue = {
   name: string;
   address: string;

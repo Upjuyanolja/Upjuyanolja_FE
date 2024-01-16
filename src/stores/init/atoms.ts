@@ -55,21 +55,6 @@ export const userInputValueState = atom<UserInputValue[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const isUploadedAccommodationImage = atom({
-  key: 'isUploadedAccommodationImage',
-  default: false,
-});
-
-export const nameErrorMessage = atom({
-  key: 'nameErrorMessage',
-  default: '',
-});
-
-export const descErrorMessage = atom({
-  key: 'descErrorMessage',
-  default: '',
-});
-
 export const checkedRoomOptions = atom({
   key: 'checkedAccommodationOptions',
   default: {
@@ -102,4 +87,9 @@ export const selectedAccommodationFilesState = atom<Image[]>({
 export const selectedInitRoomFilesState = atom<Image[]>({
   key: 'selectedInitRoomFilesState',
   default: [],
+});
+
+export const isSameRoomName = atom({
+  key: 'isSameRoomName',
+  default: false,
 });
