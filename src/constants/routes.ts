@@ -14,6 +14,6 @@ export const ROUTES = {
   ROOM: '/room',
   ROOM_REGISTRATION: '/room/registration',
   ROOM_UPDATE: '/room/update',
-  SUCCESS: '/toss-success',
-  FAIL: '/toss-fail',
+  TOSS_SUCCESS: '/toss-success',
+  TOSS_FAIL: '/toss-fail',
 };

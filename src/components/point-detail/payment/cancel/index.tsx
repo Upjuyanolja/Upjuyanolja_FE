@@ -38,7 +38,7 @@ export const CancelModal = ({
       message.error({
         content: (
           <TextBox typography="body3" fontWeight={'400'}>
-            결제 취소신청이 완료하지 못했습니다.
+            결제 취소신청을 완료하지 못했습니다.
           </TextBox>
         ),
         duration: 2,

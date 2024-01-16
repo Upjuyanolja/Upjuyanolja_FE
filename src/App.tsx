@@ -51,8 +51,8 @@ function App() {
           path={ROUTES.SIGNUP_SUCCESS}
           element={accessToken ? <Navigate to="/" /> : <SignUpSuccess />}
         />
-        <Route path={ROUTES.SUCCESS} element={<TossSuccess />} />
-        <Route path={ROUTES.FAIL} element={<TossFail />} />
+        <Route path={ROUTES.TOSS_SUCCESS} element={<TossSuccess />} />
+        <Route path={ROUTES.TOSS_FAIL} element={<TossFail />} />
         <Route path={ROUTES.INIT} element={<Init />} />
         <Route element={<InitLayout />}>
           <Route

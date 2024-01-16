@@ -24,10 +24,10 @@ import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
 import { currentUrlState } from '@stores/point-charge-modal';
 import { useSetRecoilState } from 'recoil';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { AgreementModal } from '../agreement-modal';
 import { orderNumber } from '@/utils/orderNumber';
-
+import { ROUTES } from '@/constants/routes';
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
 const PRICE_10000 = 10000;
@@ -55,7 +55,6 @@ export const PointModal = ({
 
   const setCurrentUrl = useSetRecoilState(currentUrlState);
   const location = useLocation();
-  const navigate = useNavigate();
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState(false);
 
   const agreementShowModal = () => {
@@ -163,8 +162,8 @@ export const PointModal = ({
       await paymentWidget?.requestPayment({
         orderId: orderNumber(),
         orderName: '포인트 충전',
-        successUrl: `${window.location.origin}/toss-success`,
-        failUrl: `${window.location.origin}/toss-fail`,
+        successUrl: `${window.location.origin}/${ROUTES.TOSS_SUCCESS}`,
+        failUrl: `${window.location.origin}/${ROUTES.TOSS_FAIL}`,
       });
     } catch (error) {
       message.error({
@@ -286,14 +285,6 @@ export const PointModal = ({
             >
               결제하기
             </SubmitButton>
-            <Button>성공</Button>
-            <Button
-              onClick={() => {
-                navigate('toss-fail?1');
-              }}
-            >
-              실패
-            </Button>
           </Form>
         </Layout>
       </CustomModal>
