@@ -65,6 +65,7 @@ export const CouponPreview = () => {
   );
 
   useEffect(() => {
+    console.log('isValidCouponRegistration', isValidCouponRegistration);
     setIsValidCouponRegistration(!!(isTermsChecked && totalPrice));
   }, [isTermsChecked, totalPrice]);
 
@@ -117,6 +118,7 @@ export const CouponPreview = () => {
         <StyledTermsAgreement>
           <Checkbox
             id="agreement"
+            checked={isTermsChecked}
             onChange={() => {
               setIsTermsChecked(!isTermsChecked);
             }}
