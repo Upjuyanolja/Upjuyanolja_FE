@@ -25,6 +25,11 @@ import { isNumber } from '@/utils/isNumber';
 import { AgreementModal } from '../agreement-modal';
 import { orderNumber } from '@/utils/orderNumber';
 import { ROUTES } from '@/constants/routes';
+
+import { currentUrlState } from '@stores/point-charge-modal';
+import { useSetRecoilState } from 'recoil';
+import { useLocation } from 'react-router-dom';
+
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
 const PRICE_10000 = 10000;
@@ -55,10 +60,12 @@ export const PointModal = ({
   const agreementShowModal = () => {
     setIsAgreementModalOpen(true);
   };
-
+  const location = useLocation();
+  const setCurrentUrl = useSetRecoilState(currentUrlState);
   const { handleChangeUrl } = useCustomNavigate();
 
   useEffect(() => {
+    setCurrentUrl(location.pathname);
     (async () => {
       if (
         process.env.REACT_APP_CLIENT_KEY &&

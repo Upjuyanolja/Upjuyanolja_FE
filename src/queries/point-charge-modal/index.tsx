@@ -9,6 +9,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { Response } from '@/types/api';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { currentUrlState } from '@stores/point-charge-modal';
+import { useRecoilValue } from 'recoil';
 
 export const usePointCharge = (
   options?: UseMutationOptions<
@@ -19,6 +21,7 @@ export const usePointCharge = (
 ) => {
   const queryClient = useQueryClient();
   const navigation = useNavigate();
+  const currentUrl = useRecoilValue(currentUrlState);
   return useMutation<
     AxiosResponse<Response<PointChargeType>>,
     AxiosError,
@@ -30,7 +33,7 @@ export const usePointCharge = (
         content: '결제가 완료되었습니다.',
         duration: 2,
       });
-      navigation('/1/main');
+      navigation(currentUrl);
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
@@ -38,7 +41,7 @@ export const usePointCharge = (
           content: '결제를 완료하지 못했습니다.',
         });
       }
-      navigation('/1/main');
+      navigation(currentUrl);
     },
     ...options,
   });
