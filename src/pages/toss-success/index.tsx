@@ -1,14 +1,10 @@
-import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePointCharge } from '@queries/point-charge-modal';
 import { useEffect } from 'react';
-
-import { currentUrlState } from '@stores/point-charge-modal';
-import { useRecoilValue } from 'recoil';
 import { TextBox } from '@components/text-box';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 export const TossSuccess = () => {
-  const { handleChangeUrl } = useCustomNavigate();
   const urlParams = new URLSearchParams(window.location.search);
 
   const orderId = urlParams.get('orderId');
@@ -16,8 +12,7 @@ export const TossSuccess = () => {
   const amount = urlParams.get('amount');
   const pointChargeMutation = usePointCharge();
 
-  const currentUrl = useRecoilValue(currentUrlState);
-
+  const navigation = useNavigate();
   useEffect(() => {
     if (orderId && paymentKey && amount) {
       const data = {
@@ -34,7 +29,7 @@ export const TossSuccess = () => {
           ),
           duration: 2,
         });
-        handleChangeUrl(currentUrl);
+        navigation(-1);
       });
     }
   }, []);

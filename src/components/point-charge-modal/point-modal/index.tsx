@@ -22,9 +22,6 @@ import {
 } from '@tosspayments/payment-widget-sdk';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
-import { currentUrlState } from '@stores/point-charge-modal';
-import { useSetRecoilState } from 'recoil';
-import { useLocation } from 'react-router-dom';
 import { AgreementModal } from '../agreement-modal';
 import { orderNumber } from '@/utils/orderNumber';
 import { ROUTES } from '@/constants/routes';
@@ -53,8 +50,6 @@ export const PointModal = ({
     PaymentWidgetInstance['renderPaymentMethods']
   > | null>(null);
 
-  const setCurrentUrl = useSetRecoilState(currentUrlState);
-  const location = useLocation();
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState(false);
 
   const agreementShowModal = () => {
@@ -64,7 +59,6 @@ export const PointModal = ({
   const { handleChangeUrl } = useCustomNavigate();
 
   useEffect(() => {
-    setCurrentUrl(location.pathname);
     (async () => {
       if (
         process.env.REACT_APP_CLIENT_KEY &&

@@ -1,14 +1,10 @@
-import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { useEffect } from 'react';
-import { currentUrlState } from '@stores/point-charge-modal';
-import { useRecoilValue } from 'recoil';
 import { message } from 'antd';
 import { TextBox } from '@components/text-box';
+import { useNavigate } from 'react-router-dom';
 
 export const TossFail = () => {
-  const { handleChangeUrl } = useCustomNavigate();
-  const currentUrl = useRecoilValue(currentUrlState);
-
+  const navigation = useNavigate();
   useEffect(() => {
     message.error({
       content: (
@@ -19,7 +15,7 @@ export const TossFail = () => {
       duration: 2,
     });
 
-    handleChangeUrl(currentUrl);
+    navigation(-1);
   }, []);
 
   return <div></div>;
