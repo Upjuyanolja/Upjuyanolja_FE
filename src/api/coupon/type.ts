@@ -22,7 +22,7 @@ export type coupon = {
   dayLimit: number;
   quantity: number;
   discount: number;
-  couponType: 'WEEKDAYS' | 'WEEKENDS' | 'ALL_DAYS';
+  couponType: string;
 };
 
 export type EditCoupon = {
@@ -61,4 +61,18 @@ export type CouponRoomList = {
   accommodationId: number;
   accommodationName: string;
   rooms: Pick<room<coupon>, 'roomId' | 'roomName' | 'roomPrice'>[];
+};
+
+export type PurchaseCouponParams = {
+  accommodationId: number;
+  expiry: string;
+  totalPoints: number;
+  rooms: Omit<
+    room<
+      Omit<coupon, 'couponName' | 'appliedPrice'> & {
+        eachPoint: number;
+      }
+    >,
+    'roomName' | 'roomPrice'
+  >[];
 };

@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export const AdditionalPurchaseFooter = ({
   totalPoints,
+  handlePurchaseButton,
 }: PurchaseFooterProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
   return (
@@ -33,7 +34,12 @@ export const AdditionalPurchaseFooter = ({
         </TextBox>
       </StyledCheckBoxContainer>
 
-      <StyledButton type="primary" size="large" disabled={!isAgreed}>
+      <StyledButton
+        type="primary"
+        size="large"
+        disabled={!isAgreed}
+        onClick={handlePurchaseButton}
+      >
         <TextBox fontWeight={700} typography="h5">
           구매하기
         </TextBox>

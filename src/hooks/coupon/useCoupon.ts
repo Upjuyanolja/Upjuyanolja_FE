@@ -1,4 +1,9 @@
-import { useDeleteCoupon, useEditCoupon, useGetCoupon } from '@queries/coupon';
+import {
+  useDeleteCoupon,
+  useEditCoupon,
+  useGetCoupon,
+  usePurchaseAdditionalCoupon,
+} from '@queries/coupon';
 import { Modal, message } from 'antd';
 import { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
@@ -7,9 +12,13 @@ import {
   CouponDeleteParams,
   CouponEditParams,
   EditCoupon,
+  PurchaseCouponParams,
+  coupon,
   coupons,
 } from '@api/coupon/type';
 import { calculatedCouponPoints } from '@/utils/discountCoupon';
+import { useParams } from 'react-router-dom';
+import { RESPONSE_CODE } from '@/constants/api';
 /**
  * @description 쿠폰 관리 페이지 로직을 다루는 hook
  * 
@@ -35,8 +44,14 @@ export const useCoupon = () => {
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
   const originCouponTableData = useRef<CouponData>();
-  const [purchaseData, setPurchaseData] = useState<PurchaseData>();
+  const [purchaseData, setPurchaseData] = useState<PurchaseData>({
+    batchValue: 0,
+    isAppliedBatchEdit: false,
+    totalPoints: 0,
+    rooms: [],
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { accommodationId } = useParams();
 
   const {
     data,
@@ -76,10 +91,41 @@ export const useCoupon = () => {
     },
   });
 
+  const { mutate: purchaseAdditionalCoupon } = usePurchaseAdditionalCoupon({
+    onSuccess() {
+      message.success({
+        content: '쿠폰이 발급되었습니다',
+        className: 'coupon-message',
+      });
+      getCouponRemove();
+      setIsModalOpen(false);
+    },
+    onError(error) {
+      if (!(error instanceof AxiosError)) return;
+      if (
+        error.response?.data.code === RESPONSE_CODE.INSUFFICIENT_POINT_BALANCE
+      ) {
+        Modal.confirm({
+          title: '포인트 잔액이 부족합니다.',
+          content: '포인트를 충전하시겠습니까?',
+          cancelText: '취소',
+          okText: '충전',
+          className: 'confirm-modal',
+        });
+      } else {
+        message.error({
+          content: '요청에 실패했습니다. 잠시 후 다시 시도해 주세요.',
+          className: 'coupon-message',
+        });
+      }
+    },
+  });
+
   useEffect(() => {
     if (data) {
       processCouponTableData(data);
       setSelectedStatus('');
+      setSelectedRowKeys([]);
     }
   }, [data]);
 
@@ -156,8 +202,17 @@ export const useCoupon = () => {
     };
     for (let index = 0; index < selectedRowKeys.length; index++) {
       const key = selectedRowKeys[index];
-      const { room, discount, discountType, info, couponId } =
-        couponData.coupons[key];
+      const {
+        room,
+        discount,
+        discountType,
+        info,
+        couponId,
+        status,
+        dayLimit,
+        quantity,
+        couponType,
+      } = couponData.coupons[key];
       if (!data.rooms[room.id]) {
         data.rooms[room.id] = {
           roomId: room.id,
@@ -166,11 +221,17 @@ export const useCoupon = () => {
         };
       }
       data.rooms[room.id].coupons.push({
-        name: info.name,
+        couponName: info.name,
         points: calculatedCouponPoints(room.price, discount, discountType),
         numberOfCoupons: 0,
         eachPoint: 0,
         couponId,
+        status,
+        discount,
+        discountType,
+        quantity,
+        couponType,
+        dayLimit,
       });
     }
     setPurchaseData(data);
@@ -432,6 +493,52 @@ export const useCoupon = () => {
     setPurchaseData(data);
   };
 
+  const processPurchasePostData = () => {
+    const data: PurchaseCouponParams = {
+      accommodationId: Number(accommodationId as string),
+      totalPoints: purchaseData.totalPoints,
+      expiry: couponData.expiry,
+      rooms: [],
+    };
+    const roomData: PurchaseCouponParams['rooms'] = [];
+    for (let index = 0; index < purchaseData.rooms.length; index++) {
+      const room = purchaseData.rooms[index];
+      if (!room) continue;
+      const coupons: (Omit<coupon, 'couponName' | 'appliedPrice'> & {
+        eachPoint: number;
+      })[] = [];
+      for (const coupon of room.coupons) {
+        coupons.push({
+          couponId: coupon.couponId,
+          status: coupon.status,
+          discount: coupon.discount,
+          discountType: coupon.discountType,
+          couponType: coupon.couponType,
+          eachPoint: coupon.eachPoint,
+          dayLimit: coupon.dayLimit,
+          quantity: coupon.quantity,
+        });
+      }
+      roomData.push({
+        roomId: room.roomId,
+        coupons,
+      });
+    }
+    data.rooms = roomData;
+    return data;
+  };
+  const handlePurchaseButton = () => {
+    Modal.confirm({
+      content: '쿠폰을 구매하시겠습니까?',
+      cancelText: '취소',
+      okText: '구매',
+      className: 'confirm-modal',
+      onOk: () => {
+        purchaseAdditionalCoupon(processPurchasePostData());
+      },
+    });
+  };
+
   return {
     data,
     isGetCouponError,
@@ -452,5 +559,6 @@ export const useCoupon = () => {
     purchaseData,
     handleChangeBatchValue,
     handleChangeNumberOfCoupons,
+    handlePurchaseButton,
   };
 };

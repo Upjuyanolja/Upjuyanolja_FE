@@ -27,6 +27,7 @@ export const Coupon = () => {
     purchaseData,
     handleChangeBatchValue,
     handleChangeNumberOfCoupons,
+    handlePurchaseButton,
   } = useCoupon();
 
   if (!data) return <div>로딩</div>;
@@ -54,7 +55,10 @@ export const Coupon = () => {
         title="추가 구매"
         onCancel={handleModalClose}
         footer={
-          <AdditionalPurchaseFooter totalPoints={purchaseData?.totalPoints} />
+          <AdditionalPurchaseFooter
+            totalPoints={purchaseData?.totalPoints}
+            handlePurchaseButton={handlePurchaseButton}
+          />
         }
       >
         <AdditionalPurchaseContent

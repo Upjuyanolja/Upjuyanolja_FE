@@ -12,7 +12,7 @@ export const AdditionalPurchaseInfo = ({
   return (
     <StyledCouponInfo>
       <TextBox typography="body2" fontWeight={400}>
-        {coupon.name} | {coupon.points.toLocaleString()}P
+        {coupon.couponName} | {coupon.points.toLocaleString()}P
       </TextBox>
       <StyledPriceInfo>
         <div>
