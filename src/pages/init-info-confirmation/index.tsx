@@ -7,7 +7,7 @@ export const InitInfoConfirmation = () => {
   const hardRoomData = [
     {
       name: '봄',
-      price: 100000,
+      price: 120000,
       defaultCapacity: 2,
       maxCapacity: 6,
       checkInTime: '15:00',
