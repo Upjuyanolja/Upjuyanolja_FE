@@ -1,9 +1,9 @@
-export type signInData = {
+export type SignInData = {
   email: string;
   password: string;
 };
 
-export type memberData = {
+export type MemberData = {
   accessToken: string;
   refreshToken: string;
   memberResponse: {

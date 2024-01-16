@@ -1,8 +1,3 @@
-export type CouponPreviewItemProps = {
-  data: {
-    roomName: string;
-    couponName: string;
-    couponPrice: number;
-    couponAmount: number;
-  };
-};
+import { PendingCouponData } from '@components/coupon-registration/type';
+
+export type CouponPreviewItemProps = PendingCouponData;

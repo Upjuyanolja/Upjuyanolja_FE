@@ -1,11 +1,11 @@
-import { memberData } from '@api/sign-in/type';
+import { MemberData } from '@api/sign-in/type';
 import { instance } from '..';
-import { signInData } from './type';
+import { SignInData } from './type';
 import { Response } from '@/types/api';
 
 export const SIGN_IN_API = {
-  postLogin: (data: signInData) =>
-    instance.post<Response<memberData>>('/api/auth/owner/signin', {
+  postLogin: (data: SignInData) =>
+    instance.post<Response<MemberData>>('/api/auth/owner/signin', {
       data,
     }),
 };
