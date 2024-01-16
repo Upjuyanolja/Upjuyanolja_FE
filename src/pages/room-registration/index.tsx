@@ -9,6 +9,9 @@ import { PriceContainer } from '@components/room/price-container';
 import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import axios from 'axios';
+import { RoomData } from '@api/room/type';
 
 const RoomRegistration = () => {
   const isValid = true;
@@ -20,9 +23,18 @@ const RoomRegistration = () => {
 
   const [form] = Form.useForm();
 
+  const onFinish = async (formData: RoomData) => {
+    try {
+      const res = await axios.post('', formData);
+      console.log('Success:', res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <StyledWrapper color={colors.white}>
-      <Form form={form}>
+      <Form form={form} onFinish={onFinish}>
         <NameContainer
           header="객실명"
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"

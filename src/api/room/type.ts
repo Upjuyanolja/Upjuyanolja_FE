@@ -9,23 +9,34 @@ export type Options = {
 };
 
 export type Image = {
+  id?: number;
   url: string;
 };
 
 export type RoomData = {
   name: string;
-  amount: number | null;
+  price: number | null;
   defaultCapacity: number | null;
   maxCapacity: number | null;
   checkInTime: string;
   checkOutTime: string;
-  count: number | null;
+  amount: number | null;
   images: Image[];
   options: Options;
 };
 
-export type AddRoomParams = {
-  accommodationId: number;
+export type RoomPostResponseData = {
+  roomId: number;
+  name: string;
+  price: number | null;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  status: string;
+  amount: number | null;
+  images: Image[];
+  options: Options;
 };
 
 export type AccommodationData = {
