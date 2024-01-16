@@ -28,22 +28,22 @@ export const RoomCouponApplier = ({
 }: RoomCouponApplierProps) => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
-  const [itemQuantityValue, setItemQuantityValue] = useState('0');
+  const [itemQuantityValue, setItemQuantityValue] = useState('');
   const groupQuantityValue = useRecoilValue(groupQuantityValueState);
   const isGroupQuantitySelected = useRecoilValue(isGroupQuantitySelectedState);
   const [pendingRoomDataList, setPendingRoomDataList] = useRecoilState(
     pendingRoomDataListState,
   );
   const discountValue = useRecoilValue(discountValueState);
-  const [inputValue, setInputValue] = useStaet('0');
+  const [inputValue, setInputValue] = useState('0');
 
   const handleChange = (e: InputChangeEvent) => {
-    const inputValue = e.target.value;
-    if (isNumber(inputValue)) {
-      return setItemQuantityValue(inputValue);
+    const targetValue = e.target.value;
+    if (isNumber(targetValue)) {
+      return setInputValue(targetValue);
     }
-    if (!isNumber(inputValue) && inputValue.length < 1) {
-      return setItemQuantityValue('');
+    if (!isNumber(targetValue) && targetValue.length < 1) {
+      return setInputValue('');
     }
   };
 
@@ -64,6 +64,7 @@ export const RoomCouponApplier = ({
   const handleCheckBox = () => {
     setIsItemQuantitySelected(!isItemQuantitySelected);
     setItemQuantityValue('0');
+    setInputValue('0');
 
     //
 
@@ -88,17 +89,22 @@ export const RoomCouponApplier = ({
     }
   };
 
-  useEffect(() => {
-    console.log(pendingRoomDataList);
-  }, [isItemQuantitySelected]);
-
   const handleBlur = () => {
-    if (!itemQuantityValue) {
-      return setItemQuantityValue('0');
+    if (!inputValue) {
+      setInputValue('0');
+      setItemQuantityValue('0');
     }
-    const formattedValue = itemQuantityValue.replace(/^0+/, '');
-    setItemQuantityValue(formattedValue);
+    const formattedValue =
+      inputValue.length > 1 ? inputValue.replace(/^0+/, '') : inputValue;
 
+    setInputValue(formattedValue);
+    setItemQuantityValue(formattedValue);
+  };
+
+  useEffect(() => {
+    if (itemQuantityValue === '') {
+      return;
+    }
     setPendingRoomDataList((prev: PendingRoomDataList) => {
       if (existingItemIndex !== -1) {
         const newValues = [...prev];
@@ -108,30 +114,25 @@ export const RoomCouponApplier = ({
         return [...prev, newItem];
       }
     });
-  };
-
-  useEffect(() => {
-    if (!itemQuantityValue) {
-      return;
-    }
-    console.log('2', pendingRoomDataList);
   }, [itemQuantityValue]);
-
-  useEffect(() => {
-    if (!isItemQuantitySelected) {
-      return;
-    }
-  }, [isItemQuantitySelected]);
 
   useEffect(() => {
     if (!isGroupQuantitySelected || !isItemQuantitySelected) {
       return;
     }
+    setInputValue(groupQuantityValue);
     setItemQuantityValue(groupQuantityValue);
   }, [groupQuantityValue, isItemQuantitySelected]);
 
   useEffect(() => {
-    setItemQuantityValue('0');
+    if (!isGroupQuantitySelected && !isItemQuantitySelected) {
+      setPendingRoomDataList([]);
+    }
+  }, [groupQuantityValue, isItemQuantitySelected]);
+
+  useEffect(() => {
+    setInputValue('0');
+    setItemQuantityValue('');
     setIsItemQuantitySelected(false);
   }, [selectedDiscountType]);
 
@@ -156,7 +157,7 @@ export const RoomCouponApplier = ({
           value={
             isGroupQuantitySelected && isItemQuantitySelected
               ? groupQuantityValue
-              : itemQuantityValue
+              : inputValue
           }
           onChange={handleChange}
           disabled={isGroupQuantitySelected || !isItemQuantitySelected}

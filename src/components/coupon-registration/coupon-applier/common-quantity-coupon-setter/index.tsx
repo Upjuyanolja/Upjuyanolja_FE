@@ -31,14 +31,17 @@ export const CommonQuantityCouponSetter = () => {
   };
 
   const handleBlur = () => {
+    const formattedValue =
+      inputValue.length > 1 ? inputValue.replace(/^0+/, '') : inputValue;
+
+    setInputValue(formattedValue);
+    setGroupQuantityValue(formattedValue);
+
     if (!inputValue) {
       setInputValue('0');
       setGroupQuantityValue('0');
       return;
     }
-    const formattedValue = inputValue.replace(/^0+/, '');
-    setInputValue(formattedValue);
-    setGroupQuantityValue(formattedValue);
   };
 
   useEffect(() => {
