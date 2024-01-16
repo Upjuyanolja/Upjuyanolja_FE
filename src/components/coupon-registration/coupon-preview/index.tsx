@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { Button, Checkbox } from 'antd';

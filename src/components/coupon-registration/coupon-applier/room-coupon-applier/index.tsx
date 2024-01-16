@@ -124,7 +124,6 @@ export const RoomCouponApplier = ({
     setPendingRoomDataList((prev: PendingRoomDataList) =>
       updateRoomDataList(prev, existingItemIndex, newItem),
     );
-    console.log(pendingRoomDataList);
   }, [itemQuantityValue]);
 
   useEffect(() => {
