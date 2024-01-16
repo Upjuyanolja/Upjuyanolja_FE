@@ -8,7 +8,6 @@ import {
 import { Response } from '@/types/api';
 import { RoomData, RoomPostResponseData } from '@api/room/type';
 import { ROOM_API } from '@api/room';
-import { Room } from '@components/init/init-accommodation-registration/type';
 
 export const useAddRoom = (
   options?: UseMutationOptions<
