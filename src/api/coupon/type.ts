@@ -56,3 +56,9 @@ export type CouponEditParams = {
   expiry: string;
   rooms: Omit<room<EditCoupon>, 'roomPrice' | 'roomName'>[];
 };
+
+export type CouponRoomList = {
+  accommodationId: number;
+  accommodationName: string;
+  rooms: Pick<room<coupon>, 'roomId' | 'roomName' | 'roomPrice'>[];
+};
