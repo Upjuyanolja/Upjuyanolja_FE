@@ -169,7 +169,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledAccommodationInfoContainer = styled.div`
-  height: 360px;
+  max-height: 360px;
 
   border-radius: 8px;
   border: 2px solid ${colors.primary};
