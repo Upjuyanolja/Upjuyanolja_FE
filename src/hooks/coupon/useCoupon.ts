@@ -57,7 +57,7 @@ export const useCoupon = () => {
     data,
     isError: isGetCouponError,
     remove: getCouponRemove,
-  } = useGetCoupon({
+  } = useGetCoupon(accommodationId as string, {
     select(data) {
       return data.data.data;
     },
@@ -310,7 +310,7 @@ export const useCoupon = () => {
       rooms[room.id].push({ couponId });
     }
     const data: CouponDeleteParams = {
-      accommodationId: 1,
+      accommodationId: Number(accommodationId as string),
       rooms: [],
     };
     for (let index = 0; index < rooms.length; index++) {
@@ -350,7 +350,7 @@ export const useCoupon = () => {
       });
     }
     const data: CouponEditParams = {
-      accommodationId: 1,
+      accommodationId: Number(accommodationId as string),
       expiry: couponData.expiry,
       rooms: [],
     };

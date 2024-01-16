@@ -15,10 +15,12 @@ export const COUPON_API = {
     instance.get<Response<staticsData>>('/api/coupons/backoffice/statistics'),
   getRevenue: () =>
     instance.get<Response<revenueData>>('/api/coupons/backoffice/revenue'),
-  getCoupon: () =>
-    instance.get<Response<coupons>>('/api/coupons/backoffice/manage'),
+  getCoupon: (accommodationId: string) =>
+    instance.get<Response<coupons>>(
+      `/api/coupons/backoffice/manage/${accommodationId}`,
+    ),
   deleteCoupon: (params: CouponDeleteParams) =>
-    instance.get<Response<null>>('/api/coupons/backoffice/manage', {
+    instance.delete<Response<null>>('/api/coupons/backoffice/manage', {
       data: params,
     }),
   editCoupon: (params: CouponEditParams) =>
