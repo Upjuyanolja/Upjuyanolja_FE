@@ -49,6 +49,7 @@ const StyledCouponNameContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  width: 232px;
 `;
 
 export const DayLimitInput = ({

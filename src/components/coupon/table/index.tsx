@@ -45,6 +45,7 @@ export const CouponTable = ({
       onCell: (record) => {
         return { rowSpan: record.room.length };
       },
+      width: '144px',
     },
     Table.SELECTION_COLUMN,
     {
@@ -53,6 +54,7 @@ export const CouponTable = ({
       render: (status: string) => {
         return <CouponStatusTag status={status} />;
       },
+      width: '104px',
     },
     {
       title: '쿠폰 종류',
@@ -60,6 +62,7 @@ export const CouponTable = ({
       render: (info: couponNameContainerProps['info'], record: tableData) => (
         <CouponNameContainer info={info} isSoldOut={record.isSoldOut} />
       ),
+      width: '232px',
     },
     {
       title: '일일 제한 수량',
@@ -72,6 +75,7 @@ export const CouponTable = ({
           record={record}
         />
       ),
+      width: '160px',
     },
     {
       title: '잔여 수량',
@@ -85,6 +89,7 @@ export const CouponTable = ({
           {quantity}장
         </TextBox>
       ),
+      width: '124px',
     },
     {
       title: '노출 기준',
@@ -100,6 +105,7 @@ export const CouponTable = ({
           }}
         />
       ),
+      width: '124px',
     },
   ];
 
@@ -109,6 +115,7 @@ export const CouponTable = ({
       columns={columns}
       dataSource={couponTableData}
       pagination={false}
+      scroll={{ y: 510 }}
     />
   );
 };
