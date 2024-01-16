@@ -15,11 +15,18 @@ export const Coupon = () => {
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
-    handleChangeInput,
+    handleChangeDayLimit,
     handleDeleteButton,
     isModified,
     handleChangeDate,
     handleEditButton,
+    handleModalOpen,
+    isModalOpen,
+    handleModalClose,
+    handleBatchEditCheckbox,
+    purchaseData,
+    handleChangeBatchValue,
+    handleChangeNumberOfCoupons,
   } = useCoupon();
 
   if (!data) return <div>로딩</div>;
@@ -34,20 +41,29 @@ export const Coupon = () => {
         isModified={isModified}
         handleChangeDate={handleChangeDate}
         handleEditButton={handleEditButton}
+        handleModalOpen={handleModalOpen}
       />
 
       <CouponTable
         couponTableData={couponData.coupons}
         handleSelectRecord={handleSelectRecord}
         handleSelectCouponType={handleSelectCouponType}
-        handleChangeInput={handleChangeInput}
+        handleChangeDayLimit={handleChangeDayLimit}
       />
       <StyledModal
-        open={false}
+        open={isModalOpen}
         title="추가 구매"
-        footer={<AdditionalPurchaseFooter />}
+        onCancel={handleModalClose}
+        footer={
+          <AdditionalPurchaseFooter totalPoints={purchaseData?.totalPoints} />
+        }
       >
-        <AdditionalPurchaseContent />
+        <AdditionalPurchaseContent
+          purchaseData={purchaseData}
+          handleBatchEditCheckbox={handleBatchEditCheckbox}
+          handleChangeBatchValue={handleChangeBatchValue}
+          handleChangeNumberOfCoupons={handleChangeNumberOfCoupons}
+        />
       </StyledModal>
     </>
   );

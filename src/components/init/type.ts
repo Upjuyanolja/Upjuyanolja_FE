@@ -34,4 +34,5 @@ export type NameContainerProps = {
   header: string;
   placeholder: string;
   form: FormInstance;
+  isSameRoomName?: boolean;
 };

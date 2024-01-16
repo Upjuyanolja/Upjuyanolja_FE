@@ -2,13 +2,14 @@ import { useDeleteCoupon, useEditCoupon, useGetCoupon } from '@queries/coupon';
 import { Modal, message } from 'antd';
 import { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { CouponData } from './type';
+import { CouponData, PurchaseCoupons, PurchaseData } from './type';
 import {
   CouponDeleteParams,
   CouponEditParams,
   EditCoupon,
   coupons,
 } from '@api/coupon/type';
+import { calculatedCouponPoints } from '@/utils/discountCoupon';
 /**
  * @description 쿠폰 관리 페이지 로직을 다루는 hook
  * 
@@ -20,7 +21,7 @@ import {
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
-    handleChangeInput,
+    handleChangeDayLimit,
     handleDeleteButton,
     isModified,
     handleChangeDate,
@@ -34,6 +35,8 @@ export const useCoupon = () => {
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
   const originCouponTableData = useRef<CouponData>();
+  const [purchaseData, setPurchaseData] = useState<PurchaseData>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     data,
@@ -79,6 +82,10 @@ export const useCoupon = () => {
       setSelectedStatus('');
     }
   }, [data]);
+
+  useEffect(() => {
+    processPurchaseData();
+  }, [isModalOpen]);
 
   const processCouponTableData = (data: coupons) => {
     const couponTableData = [];
@@ -140,6 +147,35 @@ export const useCoupon = () => {
     };
   };
 
+  const processPurchaseData = () => {
+    const data: PurchaseData = {
+      batchValue: 0,
+      totalPoints: 0,
+      isAppliedBatchEdit: false,
+      rooms: [],
+    };
+    for (let index = 0; index < selectedRowKeys.length; index++) {
+      const key = selectedRowKeys[index];
+      const { room, discount, discountType, info, couponId } =
+        couponData.coupons[key];
+      if (!data.rooms[room.id]) {
+        data.rooms[room.id] = {
+          roomId: room.id,
+          roomName: room.name,
+          coupons: [],
+        };
+      }
+      data.rooms[room.id].coupons.push({
+        name: info.name,
+        points: calculatedCouponPoints(room.price, discount, discountType),
+        numberOfCoupons: 0,
+        totalPoints: 0,
+        couponId,
+      });
+    }
+    setPurchaseData(data);
+  };
+
   const handleSelectStatus = (value: string) => {
     setSelectedStatus(value);
     const { expiry, coupons: data } = { ...couponData };
@@ -166,11 +202,16 @@ export const useCoupon = () => {
     setCouponData({ expiry, coupons: data });
   };
 
-  const handleChangeInput = (
-    event: React.KeyboardEvent<HTMLInputElement>,
+  const handleChangeDayLimit = (
+    event: React.ChangeEvent<HTMLInputElement>,
     key: number,
   ) => {
-    // 수정 예정
+    const value = parseInt(event.currentTarget.value);
+    if (value > 99 || value < 1) return;
+    const { expiry, coupons: data } = { ...couponData };
+    if (Number.isNaN(value)) data[key].dayLimit = -1;
+    else data[key].dayLimit = value;
+    setCouponData({ expiry, coupons: data });
   };
 
   const handleChangeDate = (date: string) => {
@@ -311,6 +352,86 @@ export const useCoupon = () => {
     });
   };
 
+  const handleModalOpen = () => {
+    if (!isSelectedRow()) {
+      message.warning('구매할 쿠폰을 먼저 선택하세요');
+      return;
+    }
+    if (isModified()) {
+      message.warning('수정 중인 내용을 먼저 저장하세요');
+      return;
+    }
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const validateNumberOfCoupons = (value: number, coupon: PurchaseCoupons) => {
+    if (value > 999 || value < 0) return;
+    if (Number.isNaN(value)) coupon.numberOfCoupons = 0;
+    else coupon.numberOfCoupons = value;
+  };
+
+  const validateBatchValue = (value: number, data: PurchaseData) => {
+    if (value > 999 || value < 0) return;
+    if (Number.isNaN(value)) data.batchValue = 0;
+    else data.batchValue = value;
+  };
+
+  const handleBatchUpdate = (data: PurchaseData) => {
+    for (const room of data.rooms) {
+      if (!room) continue;
+      for (const coupon of room.coupons) {
+        coupon.numberOfCoupons = data.batchValue;
+        coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
+        data.totalPoints += coupon.totalPoints;
+      }
+    }
+    setPurchaseData(data);
+  };
+
+  const handleBatchEditCheckbox = () => {
+    if (!purchaseData) return;
+    const data = { ...purchaseData };
+    data.isAppliedBatchEdit = !purchaseData.isAppliedBatchEdit;
+    data.batchValue = 0;
+    data.totalPoints = 0;
+    handleBatchUpdate(data);
+  };
+
+  const handleChangeBatchValue = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!purchaseData) return;
+    const data = { ...purchaseData };
+    validateBatchValue(parseInt(event.currentTarget.value), data);
+    data.totalPoints = 0;
+    handleBatchUpdate(data);
+  };
+
+  const handleChangeNumberOfCoupons = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    couponId: number,
+    roomId: number,
+  ) => {
+    if (!purchaseData) return;
+    const data = { ...purchaseData };
+    data.totalPoints = 0;
+    for (const room of data.rooms) {
+      if (!room) continue;
+      for (const coupon of room.coupons) {
+        if (coupon.couponId === couponId && room.roomId === roomId) {
+          validateNumberOfCoupons(parseInt(event.currentTarget.value), coupon);
+          coupon.totalPoints = coupon.points * coupon.numberOfCoupons;
+        }
+        data.totalPoints += coupon.totalPoints;
+      }
+    }
+    setPurchaseData(data);
+  };
+
   return {
     data,
     isGetCouponError,
@@ -319,10 +440,17 @@ export const useCoupon = () => {
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
-    handleChangeInput,
+    handleChangeDayLimit,
     handleDeleteButton,
     isModified,
     handleChangeDate,
     handleEditButton,
+    handleModalOpen,
+    handleModalClose,
+    isModalOpen,
+    handleBatchEditCheckbox,
+    purchaseData,
+    handleChangeBatchValue,
+    handleChangeNumberOfCoupons,
   };
 };

@@ -4,35 +4,54 @@ import { Checkbox, Input } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import { AdditionalPurchaseInfo } from '../additional-purchase-info';
+import { PurchaseContentProps } from './type';
 
-export const AdditionalPurchaseContent = () => {
+export const AdditionalPurchaseContent = ({
+  purchaseData,
+  handleBatchEditCheckbox,
+  handleChangeBatchValue,
+  handleChangeNumberOfCoupons,
+}: PurchaseContentProps) => {
+  if (!purchaseData) return <></>;
   return (
     <>
       <StyledBatchEditContainer>
-        <Checkbox />
+        <Checkbox
+          onChange={handleBatchEditCheckbox}
+          checked={purchaseData.isAppliedBatchEdit}
+        />
         <TextBox color="primary" typography="h5" fontWeight={700}>
           수량 일괄 적용
         </TextBox>
-        <StyledInput />
+        <StyledInput
+          value={purchaseData.batchValue}
+          disabled={!purchaseData.isAppliedBatchEdit}
+          onChange={handleChangeBatchValue}
+        />
         <TextBox typography="body1" fontWeight={400}>
           장
         </TextBox>
       </StyledBatchEditContainer>
       <StyledInfoContainer>
-        <StyledRoomInfo>
-          <TextBox typography="h5" fontWeight={700}>
-            스탠다드 트윈룸
-          </TextBox>
-          <AdditionalPurchaseInfo />
-          <AdditionalPurchaseInfo />
-        </StyledRoomInfo>
-        <StyledRoomInfo>
-          <TextBox typography="h5" fontWeight={700}>
-            더블룸
-          </TextBox>
-          <AdditionalPurchaseInfo />
-          <AdditionalPurchaseInfo />
-        </StyledRoomInfo>
+        {purchaseData.rooms.map((room) => {
+          if (!room) return <></>;
+          return (
+            <StyledRoomInfo key={room.roomId}>
+              <TextBox typography="h5" fontWeight={700}>
+                {room.roomName}
+              </TextBox>
+              {room.coupons.map((coupon) => (
+                <AdditionalPurchaseInfo
+                  key={coupon.couponId}
+                  coupon={coupon}
+                  disabled={purchaseData.isAppliedBatchEdit}
+                  handleChangeNumberOfCoupons={handleChangeNumberOfCoupons}
+                  roomId={room.roomId}
+                />
+              ))}
+            </StyledRoomInfo>
+          );
+        })}
       </StyledInfoContainer>
     </>
   );
