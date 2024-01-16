@@ -20,3 +20,15 @@ export type DiscountValue = string;
 export type DeterminedPrice = string;
 
 export type GroupQuantityValue = string;
+
+export type PendingRoomData = {
+  isChecked: boolean;
+  roomId: number;
+  roomName: string;
+  discountType: string;
+  discount: number;
+  quantity: number;
+  eachPrice: number;
+};
+
+export type PendingRoomDataList = PendingRoomData[];

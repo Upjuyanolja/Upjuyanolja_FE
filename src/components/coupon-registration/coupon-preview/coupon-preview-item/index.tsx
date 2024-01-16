@@ -17,8 +17,8 @@ import {
 
 export const CouponPreviewItem = ({
   roomName,
+  eachPrice,
   quantity,
-  roomPrice,
 }: CouponPreviewItemProps) => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const determinedPrice = useRecoilValue(determinedPriceState);
@@ -33,7 +33,7 @@ export const CouponPreviewItem = ({
         {selectedDiscountType === FLAT_DISCOUNT_TYPE &&
           `${determinedPrice}원 할인`}
         {selectedDiscountType === RATE_DISCOUNT_TYPE &&
-          `${determinedPrice}% 할인 (${roomPrice})`}
+          `${determinedPrice}% 할인 (${eachPrice})`}
       </TextBox>
       <Spacing space="16" />
       <StyledCouponInfo>
@@ -57,7 +57,7 @@ export const CouponPreviewItem = ({
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          {numberFormat(parseInt(determinedPrice) * 100 * parseInt(quantity))} P
+          {1} P
         </TextBox>
       </StyledCouponPrice>
     </Container>

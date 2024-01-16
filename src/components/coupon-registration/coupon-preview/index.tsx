@@ -9,7 +9,7 @@ import { numberFormat } from '@/utils/Format/numberFormat';
 import { useRecoilValue } from 'recoil';
 import {
   determinedPriceState,
-  pendingCouponDataListState,
+  pendingRoomDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
@@ -17,7 +17,7 @@ import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 export const CouponPreview = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const determinedPrice = useRecoilValue(determinedPriceState);
-  const pendingCouponDataList = useRecoilValue(pendingCouponDataListState);
+  const pendingRoomData = useRecoilValue(pendingRoomDataListState);
 
   const calculateTotalPrice = (
     pendingCouponDataList: PendingCouponDataList,
@@ -51,11 +51,11 @@ export const CouponPreview = () => {
           )}
         </StyledTitleWrap>
         <StyledPreviewItemWrap>
-          {pendingCouponDataList.map((item, index) => (
+          {pendingRoomData.length === 0 && <p>하이하이</p>}
+          {pendingRoomData.map((item, index) => (
             <CouponPreviewItem
-              roomId={item.roomId}
               roomName={item.roomName}
-              roomPrice={item.roomPrice}
+              eachPrice={item.eachPrice}
               quantity={item.quantity}
               key={index}
             />
@@ -64,7 +64,7 @@ export const CouponPreview = () => {
         <Spacing space="16" />
         <StyledCouponTotalPrice>
           <TextBox typography="h5" fontWeight="bold" color="primary">
-            합계 : {numberFormat(calculateTotalPrice(pendingCouponDataList))} P
+            합계 : 1 P
           </TextBox>
         </StyledCouponTotalPrice>
         <Spacing space="16" />

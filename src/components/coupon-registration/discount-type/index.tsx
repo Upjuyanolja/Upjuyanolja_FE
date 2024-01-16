@@ -18,7 +18,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   determinedPriceState,
   discountValueState,
-  pendingCouponDataListState,
+  pendingRoomDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
 import {
@@ -33,9 +33,7 @@ export const DiscountType = () => {
   );
   const [discountValue, setDiscountValue] = useRecoilState(discountValueState);
   const setDeterminedPrice = useSetRecoilState(determinedPriceState);
-  const [pendingCouponDataList, setPendingCouponDataList] = useRecoilState(
-    pendingCouponDataListState,
-  );
+  const setPendingRoomDataList = useSetRecoilState(pendingRoomDataListState);
 
   useEffect(() => {
     initializeValue();
@@ -52,16 +50,7 @@ export const DiscountType = () => {
   const initializeValue = () => {
     setDiscountValue('');
     setDeterminedPrice('');
-    if (pendingCouponDataList.length > 0) {
-      setPendingCouponDataList([
-        {
-          roomId: 0,
-          roomName: '',
-          quantity: '',
-          roomPrice: 0,
-        },
-      ]);
-    }
+    setPendingRoomDataList([]);
   };
 
   const handleBlur = (
@@ -69,6 +58,7 @@ export const DiscountType = () => {
     discountType: FlatDiscountType | RateDiscountType,
   ) => {
     if (!discountValue) {
+      setDeterminedPrice('');
       return;
     }
 

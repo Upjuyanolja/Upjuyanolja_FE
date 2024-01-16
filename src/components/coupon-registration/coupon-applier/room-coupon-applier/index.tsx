@@ -6,13 +6,19 @@ import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/utils/is-number';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
+  discountValueState,
   groupQuantityValueState,
   isGroupQuantitySelectedState,
-  pendingCouponDataListState,
+  pendingRoomDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
+import {
+  PendingRoomData,
+  PendingRoomDataList,
+} from '@components/coupon-registration/type';
+import { removeNumberFormat } from '@/utils/Format/numberFormat';
 
 export const RoomCouponApplier = ({
   roomName,
@@ -23,24 +29,12 @@ export const RoomCouponApplier = ({
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
   const [itemQuantityValue, setItemQuantityValue] = useState('0');
-  const setPendingCouponDataList = useSetRecoilState(
-    pendingCouponDataListState,
-  );
   const groupQuantityValue = useRecoilValue(groupQuantityValueState);
   const isGroupQuantitySelected = useRecoilValue(isGroupQuantitySelectedState);
-
-  const handleQuantityChange = () => {
-    setPendingCouponDataList((prevValues) => {
-      const newValues = [...prevValues];
-      newValues[index] = {
-        roomId,
-        roomName,
-        roomPrice,
-        quantity: itemQuantityValue,
-      };
-      return newValues;
-    });
-  };
+  const [pendingRoomDataList, setPendingRoomDataList] = useRecoilState(
+    pendingRoomDataListState,
+  );
+  const discountValue = useRecoilValue(discountValueState);
 
   const handleChange = (e: InputChangeEvent) => {
     const inputValue = e.target.value;
@@ -52,11 +46,50 @@ export const RoomCouponApplier = ({
     }
   };
 
+  const existingItemIndex = pendingRoomDataList.findIndex(
+    (item) => item.roomId === roomId,
+  );
+
+  const newItem: PendingRoomData = {
+    isChecked: isItemQuantitySelected,
+    roomId,
+    roomName,
+    discountType: selectedDiscountType.typeName,
+    discount: Number(removeNumberFormat(discountValue)),
+    quantity: Number(itemQuantityValue),
+    eachPrice: roomPrice,
+  };
+
   const handleCheckBox = () => {
     setIsItemQuantitySelected(!isItemQuantitySelected);
     setItemQuantityValue('0');
-    handleQuantityChange();
+
+    //
+
+    if (!isItemQuantitySelected) {
+      setPendingRoomDataList((prev: PendingRoomDataList) => {
+        if (existingItemIndex !== -1) {
+          const newValues = [...prev];
+          newValues[existingItemIndex] = newItem;
+          return newValues;
+        } else {
+          return [...prev, newItem];
+        }
+      });
+    } else {
+      setPendingRoomDataList((prev: PendingRoomDataList) => {
+        if (existingItemIndex !== -1) {
+          return prev.filter((item) => item.roomId !== roomId);
+        } else {
+          return [...prev, newItem];
+        }
+      });
+    }
   };
+
+  useEffect(() => {
+    console.log(pendingRoomDataList);
+  }, [isItemQuantitySelected]);
 
   const handleBlur = () => {
     if (!itemQuantityValue) {
@@ -64,15 +97,30 @@ export const RoomCouponApplier = ({
     }
     const formattedValue = itemQuantityValue.replace(/^0+/, '');
     setItemQuantityValue(formattedValue);
-    handleQuantityChange();
+
+    setPendingRoomDataList((prev: PendingRoomDataList) => {
+      if (existingItemIndex !== -1) {
+        const newValues = [...prev];
+        newValues[existingItemIndex] = newItem;
+        return newValues;
+      } else {
+        return [...prev, newItem];
+      }
+    });
   };
 
   useEffect(() => {
-    if (!isGroupQuantitySelected) {
+    if (!itemQuantityValue) {
       return;
     }
-    handleQuantityChange();
+    console.log('2', pendingRoomDataList);
   }, [itemQuantityValue]);
+
+  useEffect(() => {
+    if (!isItemQuantitySelected) {
+      return;
+    }
+  }, [isItemQuantitySelected]);
 
   useEffect(() => {
     if (!isGroupQuantitySelected || !isItemQuantitySelected) {
