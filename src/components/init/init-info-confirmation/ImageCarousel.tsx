@@ -1,7 +1,6 @@
 import { Carousel } from 'antd';
 import styled from 'styled-components';
 import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
-import { Url } from './type';
 
 export const ImageCarousel = ({ images }: { images: { url: string }[] }) => {
   return (
@@ -12,7 +11,7 @@ export const ImageCarousel = ({ images }: { images: { url: string }[] }) => {
         nextArrow={<AiFillRightCircle size={24} color="#9199A4B2" />}
       >
         {images.map((image, index) => (
-          <StyledImageWrapper $imageUrl={image.url} key={index} />
+          <StyledImage src={image.url} key={index} />
         ))}
       </Carousel>
     </StyledCarouselWrapper>
@@ -49,10 +48,9 @@ const StyledCarouselWrapper = styled.div`
   }
 `;
 
-const StyledImageWrapper = styled.div<Url>`
+const StyledImage = styled.img`
   width: 224px;
   height: 144px;
 
-  background-image: url(${(props) => props.$imageUrl});
-  object-fit: contain;
+  object-fit: cover;
 `;
