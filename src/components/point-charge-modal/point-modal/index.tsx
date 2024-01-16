@@ -1,4 +1,13 @@
-import { Button, Checkbox, Form, Input, Layout, Modal, Space } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Layout,
+  Modal,
+  Space,
+  message,
+} from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
@@ -57,7 +66,6 @@ export const PointModal = ({
 
   useEffect(() => {
     setCurrentUrl(location.pathname);
-    console.log(location.pathname);
     (async () => {
       if (
         process.env.REACT_APP_CLIENT_KEY &&
@@ -95,7 +103,6 @@ export const PointModal = ({
     if (isNumber(removeNumberFormat(inputValue))) {
       setFormattedValue(numberFormat(inputValue));
       setPrice(parseInt(inputValue));
-      console.log('isNumber');
     } else {
       setFormattedValue('');
       setPrice(0);
@@ -159,10 +166,16 @@ export const PointModal = ({
         successUrl: `${window.location.origin}/toss-success`,
         failUrl: `${window.location.origin}/toss-fail`,
       });
-      //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
-      // 이 부분 로직은 다음 PR에 작성하도록 하겠습니다.
     } catch (error) {
-      handleChangeUrl('/point-detail');
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            토스 페이먼츠 에러입니다. 잠시후 다시 진행해주세요.
+          </TextBox>
+        ),
+        duration: 2,
+      });
+      handleChangeUrl(window.location.pathname);
     }
   };
 

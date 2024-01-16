@@ -1,4 +1,4 @@
-import { Button, Layout, Modal } from 'antd';
+import { Button, Layout, Modal, message } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { OrderInfo } from '../common/order-info';
@@ -24,7 +24,26 @@ export const CancelModal = ({
   };
 
   const orderCancel = async (chargeId: number) => {
-    await deleteOrderCancelMutation.mutateAsync(chargeId);
+    try {
+      await deleteOrderCancelMutation.mutateAsync(chargeId);
+      message.success({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            결제 취소신청이 완료되었습니다.
+          </TextBox>
+        ),
+        duration: 2,
+      });
+    } catch {
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            결제 취소신청이 완료하지 못했습니다.
+          </TextBox>
+        ),
+        duration: 2,
+      });
+    }
   };
 
   const pointDetailData = useRecoilValue(pointDetailDataState);
