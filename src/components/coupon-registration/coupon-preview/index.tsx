@@ -51,7 +51,13 @@ export const CouponPreview = () => {
           )}
         </StyledTitleWrap>
         <StyledPreviewItemWrap>
-          {pendingRoomData.length === 0 && <p>하이하이</p>}
+          {pendingRoomData.length === 0 && (
+            <StyledNotice>
+              <TextBox typography="body2" color="black600">
+                전용 객실을 선택해주세요.
+              </TextBox>
+            </StyledNotice>
+          )}
           {pendingRoomData.map((item, index) => (
             <CouponPreviewItem
               roomName={item.roomName}
@@ -147,4 +153,11 @@ const StyledButton = styled(Button)`
 
 const StyledPreviewItemWrap = styled.div`
   overflow-y: auto;
+`;
+
+const StyledNotice = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0 24px;
 `;

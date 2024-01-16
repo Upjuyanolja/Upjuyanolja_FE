@@ -38,6 +38,10 @@ export const handlers = [
   http.get('/api/coupons/backoffice/manage', getCouponResolver),
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
+  http.get(
+    '/api/coupons/backoffice/buy/accommodationId',
+    getCouponRoomListResolver,
+  ),
 
   http.get('/api/points/summary', getPointSummaryResolver),
 
