@@ -22,12 +22,10 @@ export const ReceiptModal = ({
   const [modalTitle, setModalTitle] = useState('');
 
   useEffect(() => {
-    if (pointDetailData.histories[index].type === '쿠폰') {
-      setModalTitle('쿠폰 결제 영수증');
-    } else if (pointDetailData.histories[index].type === '포인트') {
-      setModalTitle('포인트 결제 영수증');
-    } else {
+    if (pointDetailData.histories[index].type === '취소') {
       setModalTitle('결제 취소 영수증');
+    } else {
+      setModalTitle(`${pointDetailData.histories[index].type} 결제 영수증`);
     }
   }, [pointDetailData.histories, index]);
   return (

@@ -93,7 +93,7 @@ export const PointDetailList = () => {
                   isModalOpen={isReceiptModalOpenList[index]}
                   setIsModalOpen={() => showReceiptModal(index)}
                   index={index}
-                ></ReceiptModal>
+                />
               </div>
               <div>
                 <StyledButton
@@ -107,7 +107,7 @@ export const PointDetailList = () => {
                   isModalOpen={isCancelModalOpenList[index]}
                   setIsModalOpen={() => showCancelModal(index)}
                   index={index}
-                ></CancelModal>
+                />
               </div>
             </StyledListItem>
           </StyledList>
