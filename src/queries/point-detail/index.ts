@@ -12,6 +12,7 @@ import {
   menuStatusType,
 } from '@api/point-detail/get-point-detail/type';
 import { ORDER_CANCEL_API } from '@api/point-detail/orderCancel';
+import { message } from 'antd';
 
 export const useGetPointDetail = (
   menuStatus: menuStatusType,
@@ -42,6 +43,16 @@ export const useDeleteOrderCancel = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['getPointDetail']);
+        message.success({
+          content: '결제 취소신청이 완료되었습니다.',
+        });
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          message.error({
+            content: '결제 취소신청을 완료하지 못했습니다.',
+          });
+        }
       },
     },
   );
