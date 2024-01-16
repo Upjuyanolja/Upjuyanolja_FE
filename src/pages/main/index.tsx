@@ -2,7 +2,7 @@ import { MainChart } from '@components/main/main-chart';
 import { MainCouponStatusContainer } from '@components/main/main-coupon-status-container';
 import { CouponRegistrationContainer } from '@components/main/coupon-navigation-container';
 import promotionImage from '@assets/image/mainPromotionImage.png';
-import { Image, Layout } from 'antd';
+import { Image, Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import { useMain } from '@hooks/main/useMain';
 import { UserGuidNavigationContainer } from '@components/main/user-guide-navigation-container';
@@ -19,7 +19,12 @@ export const Main = () => {
     navigateUserGuide,
   } = useMain();
 
-  if (!staticsData || !revenueData) return <></>;
+  if (!staticsData || !revenueData)
+    return (
+      <StyledMainLayout>
+        <Spin tip="Loading..." size="large" />
+      </StyledMainLayout>
+    );
   if (isStaticsError || isRevenueError) return <div>에러</div>;
   return (
     <StyledMainLayout>
