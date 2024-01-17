@@ -4,6 +4,8 @@ import { Button, Checkbox } from 'antd';
 import styled from 'styled-components';
 import { PurchaseFooterProps } from './type';
 import { useState } from 'react';
+import { PurchaseFooterProps } from './type';
+import { useState } from 'react';
 
 export const AdditionalPurchaseFooter = ({
   totalPoints,
@@ -14,10 +16,16 @@ export const AdditionalPurchaseFooter = ({
     <>
       <StyledTotalPriceContainer>
         <TextBox typography="h5" fontWeight={700} color="primary">
-          합계 : {totalPoints?.toLocaleString()}P
+          합계 : {totalPoints?.toLocaleString()}P 합계 :{' '}
+          {totalPoints?.toLocaleString()}P
         </TextBox>
       </StyledTotalPriceContainer>
       <StyledCheckBoxContainer>
+        <Checkbox
+          onChange={() => {
+            setIsAgreed((prev) => !prev);
+          }}
+        />
         <Checkbox
           onChange={() => {
             setIsAgreed((prev) => !prev);
