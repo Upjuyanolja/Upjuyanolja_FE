@@ -47,7 +47,7 @@ export const SignUp = () => {
         ),
         duration: 2,
         style: {
-          width: '346px',
+          width: '1000px',
           height: '41px',
         },
       });
