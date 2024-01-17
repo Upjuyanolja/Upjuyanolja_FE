@@ -4,6 +4,12 @@ import {
   UserInputValue,
 } from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist({
+  key: 'userInput',
+  storage: localStorage,
+});
 
 export const userInputValueState = atom<UserInputValue[]>({
   key: 'userInputValueState',
@@ -30,6 +36,7 @@ export const userInputValueState = atom<UserInputValue[]>({
       rooms: [],
     },
   ],
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const checkedRoomOptions = atom({
