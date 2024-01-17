@@ -14,6 +14,10 @@ export const useMain = () => {
     navigate(`/${accommodationId}${ROUTES.COUPON_REGISTRATION}`);
   };
 
+  const navigateUserGuide = () => {
+    navigate(ROUTES.USER_GUIDE);
+  };
+
   const handleRevenueDataFormat = (data: dailyRevenue[] | undefined) => {
     const revenueData = [];
     if (!data) return undefined;
@@ -33,21 +37,27 @@ export const useMain = () => {
     return revenueData;
   };
 
-  const { data: staticsData, isError: isStaticsError } = useGetStatics({
-    select(data) {
-      return data.data.data;
+  const { data: staticsData, isError: isStaticsError } = useGetStatics(
+    accommodationId as string,
+    {
+      select(data) {
+        return data.data.data;
+      },
+      staleTime: 60 * 60 * 1000,
     },
-    staleTime: 60 * 60 * 1000,
-  });
+  );
 
-  const { data, isError: isRevenueError } = useGetRevenue({
-    select(data) {
-      return data.data.data.revenue;
+  const { data, isError: isRevenueError } = useGetRevenue(
+    accommodationId as string,
+    {
+      select(data) {
+        return data.data.data;
+      },
+      staleTime: 60 * 60 * 1000,
     },
-    staleTime: 60 * 60 * 1000,
-  });
+  );
 
-  const revenueData = handleRevenueDataFormat(data);
+  const revenueData = handleRevenueDataFormat(data?.revenue);
   return {
     navigateCoupon,
     navigateCouponRegistration,
@@ -55,5 +65,7 @@ export const useMain = () => {
     isStaticsError,
     revenueData,
     isRevenueError,
+    couponMessage: data?.couponMessage,
+    navigateUserGuide,
   };
 };

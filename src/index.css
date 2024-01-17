@@ -80,6 +80,14 @@
 .ant-btn-lg {
   width: 100%;
 }
+.ant-btn-primary[disabled] {
+  background-color: #9199a4;
+  color: white;
+}
+.ant-btn-primary[disabled]:hover {
+  background-color: #9199a4;
+  color: white;
+}
 
 /*drop down custom style*/
 .ant-dropdown-trigger {
@@ -208,4 +216,18 @@
     display: flex;
     align-items: center;
   }
+}
+
+/*loading style*/
+.ant-spin-text {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+.ant-spin-nested-loading > div > .ant-spin-lg .ant-spin-dot {
+  margin: 0 0 0 16px;
+}
+
+.ant-checkbox-inner {
+  border: 1px solid #0349e6;
 }

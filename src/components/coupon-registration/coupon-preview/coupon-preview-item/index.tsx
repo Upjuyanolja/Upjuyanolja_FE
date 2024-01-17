@@ -4,16 +4,47 @@ import { TextBox } from '@components/text-box';
 import { Divider } from 'antd';
 import styled from 'styled-components';
 import { CouponPreviewItemProps } from './type';
+import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
+import { useRecoilValue } from 'recoil';
+import {
+  determinedPriceState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
+import {
+  FLAT_DISCOUNT_TYPE,
+  RATE_DISCOUNT_TYPE,
+} from '@/constants/coupon-registration';
+import { calculatedCouponPoints } from '@/utils/discountCoupon';
 
-export const CouponPreviewItem = ({ data }: CouponPreviewItemProps) => {
+export const CouponPreviewItem = ({
+  roomName,
+  roomPrice,
+  quantity,
+}: CouponPreviewItemProps) => {
+  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
+  const determinedPrice = useRecoilValue(determinedPriceState);
+
+  const formattedDeterminedPrice = Number(removeNumberFormat(determinedPrice));
+  const isValidDiscountFlatType =
+    selectedDiscountType === FLAT_DISCOUNT_TYPE && determinedPrice && roomPrice;
+
+  const isValidDiscountRateType =
+    selectedDiscountType === RATE_DISCOUNT_TYPE && determinedPrice && roomPrice;
   return (
     <Container>
       <TextBox typography="h5" fontWeight="bold" color="black900">
-        {data.roomName}
+        {roomName}
       </TextBox>
       <Spacing space="4" />
       <TextBox typography="body2" color="black900">
-        {data.couponName}
+        {selectedDiscountType === FLAT_DISCOUNT_TYPE &&
+          `${determinedPrice ? determinedPrice : '0'}원 할인`}
+        {selectedDiscountType === RATE_DISCOUNT_TYPE &&
+          `${determinedPrice ? determinedPrice : '0'}% 할인 (${
+            roomPrice
+              ? numberFormat((roomPrice * formattedDeterminedPrice) / 100)
+              : 0
+          }원)`}
       </TextBox>
       <Spacing space="16" />
       <StyledCouponInfo>
@@ -22,7 +53,23 @@ export const CouponPreviewItem = ({ data }: CouponPreviewItemProps) => {
             장당
           </TextBox>
           <TextBox typography="body2" fontWeight="bold" color="primary">
-            {data.couponPrice}P
+            {isValidDiscountFlatType &&
+              numberFormat(
+                calculatedCouponPoints(
+                  roomPrice,
+                  formattedDeterminedPrice,
+                  'FLAT',
+                ),
+              )}
+            {isValidDiscountRateType &&
+              numberFormat(
+                calculatedCouponPoints(
+                  roomPrice,
+                  formattedDeterminedPrice,
+                  'RATE',
+                ),
+              )}
+            P
           </TextBox>
         </StyledCouponInfoItemWrap>
         <StyledCouponInfoItemWrap>
@@ -30,14 +77,31 @@ export const CouponPreviewItem = ({ data }: CouponPreviewItemProps) => {
             수량
           </TextBox>
           <TextBox typography="body2" fontWeight="bold" color="primary">
-            {data.couponAmount}장
+            {quantity}장
           </TextBox>
         </StyledCouponInfoItemWrap>
       </StyledCouponInfo>
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          {data.couponPrice * data.couponAmount}P
+          {isValidDiscountFlatType &&
+            quantity &&
+            `${numberFormat(
+              calculatedCouponPoints(
+                roomPrice,
+                formattedDeterminedPrice,
+                'FLAT',
+              ) * quantity,
+            )}P`}
+          {isValidDiscountRateType &&
+            quantity &&
+            `${numberFormat(
+              calculatedCouponPoints(
+                roomPrice,
+                formattedDeterminedPrice,
+                'RATE',
+              ) * quantity,
+            )}P`}
         </TextBox>
       </StyledCouponPrice>
     </Container>
@@ -49,6 +113,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 24px 12px;
   border-bottom: 12px solid ${colors.white200};
+  max-height: 80vh;
 `;
 
 const StyledCouponInfo = styled.div`

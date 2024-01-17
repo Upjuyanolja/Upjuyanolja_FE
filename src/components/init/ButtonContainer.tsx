@@ -7,6 +7,7 @@ import {
 } from './type';
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -14,7 +15,10 @@ export const ButtonContainer = ({
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
   const handlePreviousClick = () => {
-    navigate(-1);
+    if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
+      navigate(ROUTES.INIT);
+    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
+      navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -116,7 +120,10 @@ export const ButtonContainer = ({
             등록이 완료되었습니다.
           </TextBox>
         </StyledTextContainer>
-        <StyledToMainButton type="primary" onClick={() => navigate('/')}>
+        <StyledToMainButton
+          type="primary"
+          onClick={() => navigate(ROUTES.MAIN)}
+        >
           홈으로 이동
         </StyledToMainButton>
       </Modal>

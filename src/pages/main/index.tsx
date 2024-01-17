@@ -1,11 +1,11 @@
 import { MainChart } from '@components/main/main-chart';
 import { MainCouponStatusContainer } from '@components/main/main-coupon-status-container';
-import { MainNavigationContainer } from '@components/main/main-navigation-container';
+import { CouponRegistrationContainer } from '@components/main/coupon-navigation-container';
 import promotionImage from '@assets/image/mainPromotionImage.png';
-import promotionImage2 from '@assets/image/mainPromotionImage2.png';
-import { Image, Layout } from 'antd';
+import { Image, Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import { useMain } from '@hooks/main/useMain';
+import { UserGuidNavigationContainer } from '@components/main/user-guide-navigation-container';
 
 export const Main = () => {
   const {
@@ -15,9 +15,16 @@ export const Main = () => {
     isStaticsError,
     revenueData,
     isRevenueError,
+    couponMessage,
+    navigateUserGuide,
   } = useMain();
 
-  if (!staticsData || !revenueData) return <></>;
+  if (!staticsData || !revenueData)
+    return (
+      <StyledMainLayout>
+        <Spin tip="Loading..." size="large" />
+      </StyledMainLayout>
+    );
   if (isStaticsError || isRevenueError) return <div>에러</div>;
   return (
     <StyledMainLayout>
@@ -27,14 +34,14 @@ export const Main = () => {
             staticsData={staticsData}
             navigateCoupon={navigateCoupon}
           />
-          <MainChart revenueData={revenueData} />
+          <MainChart revenueData={revenueData} couponMessage={couponMessage} />
         </StyledMainContainer>
         <StyledMainInfo>
-          <MainNavigationContainer
+          <CouponRegistrationContainer
             navigateCouponRegistration={navigateCouponRegistration}
           />
+          <UserGuidNavigationContainer navigateUserGuide={navigateUserGuide} />
           <StyledImage src={promotionImage} preview={false} />
-          <StyledImage src={promotionImage2} preview={false} />
         </StyledMainInfo>
       </StyledLayout>
     </StyledMainLayout>

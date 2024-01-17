@@ -1,42 +1,44 @@
 {
   "message": "쿠폰 통계 조회에 성공했습니다.",
   "data": {
+    "accommodationId": 1,
     "revenue": [
       {
         "day": "12/05",
-        "couponRevenue": 6748540,
-        "normalRevenue": 1348540
+        "couponRevenue": 540,
+        "normalRevenue": 240
       },
       {
         "day": "12/06",
-        "couponRevenue": 2748540,
-        "normalRevenue": 648540
+        "couponRevenue": 640,
+        "normalRevenue": 110
       },
       {
         "day": "12/08",
-        "couponRevenue": 3748540,
-        "normalRevenue": 848540
+        "couponRevenue": 40,
+        "normalRevenue": 120
       },
       {
         "day": "12/09",
-        "couponRevenue": 748540,
-        "normalRevenue": 768540
+        "couponRevenue": 340,
+        "normalRevenue": 330
       },
       {
         "day": "12/10",
-        "couponRevenue": 4748540,
-        "normalRevenue": 1648540
+        "couponRevenue": 344,
+        "normalRevenue": 555
       },
       {
         "day": "12/11",
-        "couponRevenue": 5748540,
-        "normalRevenue": 1548540
+        "couponRevenue": 654,
+        "normalRevenue": 234
       },
       {
         "day": "12/12",
-        "couponRevenue": 1748540,
-        "normalRevenue": 948540
+        "couponRevenue": 444,
+        "normalRevenue": 111
       }
-    ]
+    ],
+    "couponMessage": "김업주님. 쿠폰 발급 후 매출이 100% 늘어났어요!"
   }
 }

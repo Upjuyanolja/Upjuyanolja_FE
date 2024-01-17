@@ -11,9 +11,6 @@ import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
   checkedAccommodationOptions,
-  descErrorMessage,
-  isUploadedImage,
-  nameErrorMessage,
   selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
@@ -65,7 +62,7 @@ export const InitAccommodationRegistration = () => {
         type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],
-        detailAddress: values['accommodation-detailAddress'].toString(),
+        detailAddress: values['accommodation-detailAddress'],
         zipCode: values['accommodation-postCode'],
         description: values['accommodation-desc'],
         options: selectedOptions,
@@ -76,24 +73,15 @@ export const InitAccommodationRegistration = () => {
 
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
-
-  const accommodationNameErrorMessage = useRecoilValue(nameErrorMessage);
-  const accommodationDescErrorMessage = useRecoilValue(descErrorMessage);
-
-  const uploadedImage = useRecoilValue(isUploadedImage);
-
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
-    const isNameValid = !accommodationNameErrorMessage;
-    const isDescValid = !accommodationDescErrorMessage;
+
     const commonConditions =
       values['accommodation-postCode'] &&
-      isDescValid &&
-      isNameValid &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
       values['accommodation-desc'] &&
-      isUploadedImage;
+      selectedImages.length !== 0;
 
     const hotelResortConditions =
       values['accommodation-category'] === 'HOTEL/RESORT' &&
@@ -103,6 +91,7 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-guest-category'];
 
     return (
+      !form.getFieldsError().some(({ errors }) => errors.length) &&
       commonConditions &&
       (values['accommodation-category'] ||
         hotelResortConditions ||
@@ -112,13 +101,7 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [
-    form,
-    uploadedImage,
-    accommodationNameErrorMessage,
-    accommodationDescErrorMessage,
-    selectedOptions,
-  ]);
+  }, [form, selectedImages, selectedOptions]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
@@ -129,7 +112,7 @@ export const InitAccommodationRegistration = () => {
       <Form
         onFinish={onFinish}
         form={form}
-        onValuesChange={handleFormValuesChange}
+        onFieldsChange={handleFormValuesChange}
       >
         <AccommodationCategory form={form} />
         <NameContainer

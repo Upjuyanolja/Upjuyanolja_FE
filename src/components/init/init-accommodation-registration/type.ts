@@ -41,7 +41,14 @@ export type Options = {
   seminar: boolean;
 };
 
-type Room = {
+/** room 관련 타입 */
+export type RoomOptions = {
+  airCondition: boolean;
+  tv: boolean;
+  internet: boolean;
+};
+
+export type Room = {
   name: string;
   price: number | null;
   defaultCapacity: number | null;
@@ -50,11 +57,17 @@ type Room = {
   checkOutTime: string;
   count: number | null;
   images: Image[];
-  options: {
-    airCondition: boolean;
-    tv: boolean;
-    internet: boolean;
-  };
+  options: RoomOptions;
+};
+
+export type onFinishValues = {
+  'room-name': string;
+  price: string;
+  defaultCapacity: number;
+  maxCapacity: number;
+  checkInTime: moment.Moment;
+  checkOutTime: moment.Moment;
+  count: number;
 };
 
 export type UserInputValue = {

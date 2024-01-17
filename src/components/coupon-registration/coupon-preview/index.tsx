@@ -3,39 +3,72 @@ import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
-import { useEffect, useState } from 'react';
 import { Button, Checkbox } from 'antd';
-
-const couponMap = {
-  label: '5000원 할인 쿠폰',
-  coupons: [
-    {
-      roomName: '스탠다드 트윈',
-      couponName: '5000원 할인',
-      couponPrice: 500,
-      couponAmount: 20,
-    },
-    {
-      roomName: '디럭스 더블',
-      couponName: '5000원 할인',
-      couponPrice: 500,
-      couponAmount: 20,
-    },
-  ],
-};
+import { PendingRoomDataList, SelectedDiscountType } from '../type';
+import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  determinedPriceState,
+  isTermsCheckedState,
+  isValidCouponRegistrationState,
+  pendingRoomDataListState,
+  selectedDiscountTypeState,
+} from '@stores/coupon-registration/atoms';
+import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
+import { useEffect, useState } from 'react';
+import { AgreementModal } from '@components/point-charge-modal/agreement-modal';
+import { MouseEvent } from '@/types/event';
 
 export const CouponPreview = () => {
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
+  const determinedPrice = useRecoilValue(determinedPriceState);
+  const pendingRoomDataList = useRecoilValue(pendingRoomDataListState);
+  const [isValidCouponRegistration, setIsValidCouponRegistration] =
+    useRecoilState(isValidCouponRegistrationState);
+  const [isTermsChecked, setIsTermsChecked] =
+    useRecoilState(isTermsCheckedState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleClick = (e: MouseEvent) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
+
+  const calculateTotalPrice = (
+    pendingRoomDataList: PendingRoomDataList,
+    selectedDiscountType: SelectedDiscountType,
+  ) => {
+    if (selectedDiscountType === FLAT_DISCOUNT_TYPE) {
+      return pendingRoomDataList.reduce((total, room) => {
+        return (
+          total +
+          Number(numberFormat(room.quantity)) *
+            (Number(removeNumberFormat(determinedPrice)) / 10)
+        );
+      }, 0);
+    } else {
+      return (
+        pendingRoomDataList.reduce((total, room) => {
+          const priceWithoutDiscount =
+            Number(removeNumberFormat(determinedPrice)) * room.roomPrice;
+
+          const calculatedValue = Number(room.quantity) * priceWithoutDiscount;
+
+          return total + calculatedValue;
+        }, 0) / 1000
+      );
+    }
+  };
+
+  const totalPrice = calculateTotalPrice(
+    pendingRoomDataList,
+    selectedDiscountType,
+  );
 
   useEffect(() => {
-    const calculatedTotalPrice = couponMap.coupons.reduce(
-      (accumulator, currentCoupon) =>
-        accumulator + currentCoupon.couponPrice * currentCoupon.couponAmount,
-      0,
-    );
+    console.log('isValidCouponRegistration', isValidCouponRegistration);
+    setIsValidCouponRegistration(!!(isTermsChecked && totalPrice));
+  }, [isTermsChecked, totalPrice]);
 
-    setTotalPrice(calculatedTotalPrice);
-  }, [couponMap.coupons]);
   return (
     <Container>
       <TextBox typography="h4" fontWeight="bold" color="black900">
@@ -43,38 +76,82 @@ export const CouponPreview = () => {
       </TextBox>
       <StyledCouponWrap>
         <StyledTitleWrap>
-          <TextBox typography="h4" fontWeight="bold" color="primary">
-            {couponMap.label}
-          </TextBox>
+          {!determinedPrice ? (
+            <TextBox typography="body2" fontWeight="bold" color="primary">
+              쿠폰 유형을 선택해 주세요.
+            </TextBox>
+          ) : selectedDiscountType === FLAT_DISCOUNT_TYPE ? (
+            <TextBox typography="h4" fontWeight="bold" color="primary">
+              {determinedPrice}원 할인 쿠폰
+            </TextBox>
+          ) : (
+            <TextBox typography="h4" fontWeight="bold" color="primary">
+              {determinedPrice}% 할인 쿠폰
+            </TextBox>
+          )}
         </StyledTitleWrap>
-        {couponMap.coupons.map((item, index) => (
-          <CouponPreviewItem data={item} key={index} />
-        ))}
+        <StyledPreviewItemWrap>
+          {pendingRoomDataList.length >= 1 && determinedPrice ? (
+            pendingRoomDataList.map((item, index) => (
+              <CouponPreviewItem
+                roomName={item.roomName}
+                roomPrice={item.roomPrice}
+                quantity={item.quantity}
+                key={index}
+              />
+            ))
+          ) : (
+            <StyledNotice>
+              <TextBox typography="body2" color="black600">
+                전용 객실을 선택해주세요.
+              </TextBox>
+            </StyledNotice>
+          )}
+        </StyledPreviewItemWrap>
         <Spacing space="16" />
         <StyledCouponTotalPrice>
           <TextBox typography="h5" fontWeight="bold" color="primary">
-            합계 : {totalPrice}P
+            합계: {determinedPrice ? numberFormat(totalPrice) : '0'}P
           </TextBox>
         </StyledCouponTotalPrice>
         <Spacing space="16" />
         <StyledTermsAgreement>
-          <Checkbox />
-          <TextBox typography="body4" color="black900">
-            주문 내용을 확인하였으며,{' '}
-            <TextBox typography="body4" color="primaryHover">
-              구매 약관
-            </TextBox>{' '}
-            등에 동의합니다.
-          </TextBox>
+          <Checkbox
+            id="agreement"
+            checked={isTermsChecked}
+            onChange={() => {
+              setIsTermsChecked(!isTermsChecked);
+            }}
+          />
+          <label htmlFor="agreement">
+            <TextBox typography="body4" color="black900">
+              주문 내용을 확인하였으며,{' '}
+              <TextBox
+                typography="body4"
+                color="primaryHover"
+                cursor="pointer"
+                onClick={handleClick}
+              >
+                구매 약관
+              </TextBox>{' '}
+              등에 동의합니다.
+            </TextBox>
+          </label>
         </StyledTermsAgreement>
         <Spacing space="16" />
-        <StyledButton>
+        <StyledButton htmlType="submit" disabled={!isValidCouponRegistration}>
           <TextBox typography="h5" fontWeight="bold" color="white">
             구매하기
           </TextBox>
         </StyledButton>
         <Spacing space="16" />
       </StyledCouponWrap>
+      {isModalOpen && (
+        <AgreementModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </Container>
   );
 };
@@ -91,6 +168,7 @@ const StyledCouponWrap = styled.div`
   width: 324px;
   border: 2px solid ${colors.primary};
   border-radius: 8px;
+  max-height: 80vh;
   overflow: hidden;
 `;
 
@@ -105,7 +183,7 @@ const StyledTitleWrap = styled.div`
 const StyledCouponTotalPrice = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 12px 16px 12px 0;
+  padding: 4px 16px 4px 0;
   margin: 0 12px;
   border: 2px solid ${colors.primary};
   border-radius: 2px;
@@ -129,7 +207,29 @@ const StyledButton = styled(Button)`
   &:hover {
     background-color: ${colors.primaryHover};
   }
+  &:focus {
+    background-color: ${colors.primaryActive};
+  }
   &:active {
     background-color: ${colors.primaryActive};
   }
+  &:disabled {
+    background-color: ${colors.black600};
+    color: ${colors.white};
+  }
+  &:disabled:hover {
+    background-color: ${colors.black600};
+    color: ${colors.white};
+  }
+`;
+
+const StyledPreviewItemWrap = styled.div`
+  overflow-y: auto;
+`;
+
+const StyledNotice = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0 24px;
 `;

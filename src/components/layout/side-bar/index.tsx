@@ -7,26 +7,19 @@ import { useSideBar } from '@hooks/side-bar/useSideBar';
 
 export const SideBar = () => {
   const {
-    userInfoData,
-    isUserInfoError,
     pointSummaryData,
     isPointSummaryError,
     accommodationListData,
     isAccommodationListError,
   } = useSideBar();
 
-  if (!userInfoData || !pointSummaryData || !accommodationListData)
-    return <div>로딩</div>;
-  if (isUserInfoError || isPointSummaryError || isAccommodationListError)
-    return <div>에러</div>;
+  if (!pointSummaryData || !accommodationListData) return <div>로딩</div>;
+  if (isPointSummaryError || isAccommodationListError) return <div>에러</div>;
 
   return (
     <Container>
       <div>
-        <UserProfile
-          userInfoData={userInfoData}
-          pointSummaryData={pointSummaryData}
-        />
+        <UserProfile pointSummaryData={pointSummaryData} />
         <AccommodationList accommodationListData={accommodationListData} />
         <Navigation />
       </div>
