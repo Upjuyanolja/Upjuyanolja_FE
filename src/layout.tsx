@@ -7,16 +7,16 @@ import { colors } from '@/constants/colors';
 export const RootLayout = () => {
   const location = useLocation();
   const currentRoute = location.pathname;
+  const isRoomRegistrationRoute = currentRoute.includes(
+    ROUTES.ROOM_REGISTRATION,
+  );
 
   return (
     <Layout>
       <Layout.Header>Header</Layout.Header>
       <Layout
         style={{
-          backgroundColor:
-            currentRoute === ROUTES.ROOM_REGISTRATION
-              ? colors.midGray
-              : 'white',
+          backgroundColor: isRoomRegistrationRoute ? colors.midGray : 'white',
         }}
       >
         <Layout.Sider width="256" theme={'light'}>
