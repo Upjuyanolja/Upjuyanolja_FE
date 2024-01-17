@@ -134,12 +134,6 @@ export const RoomCouponApplier = ({
     setItemQuantityValue(groupQuantityValue);
   }, [groupQuantityValue, isItemQuantitySelected]);
 
-  useEffect(() => {
-    setInputValue('0');
-    setItemQuantityValue('');
-    setIsItemQuantitySelected(false);
-  }, [selectedDiscountType]);
-
   return (
     <Container>
       <StyledLeftWrap>

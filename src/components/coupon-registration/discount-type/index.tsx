@@ -52,7 +52,6 @@ export const DiscountType = () => {
   const initializeValue = () => {
     setDiscountValue('');
     setDeterminedPrice('');
-    setPendingRoomDataList([]);
     setIsTermsChecked(false);
   };
 
