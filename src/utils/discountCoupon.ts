@@ -6,11 +6,15 @@ export const calculatedCouponPoints = (
   discount: number,
   discountType: coupon['discountType'],
 ) => {
-  const roundingUnit = 10;
+  const rateRoundingUnit = 1000;
+  const roundingUnit = 100;
   let unitPrice = 0;
+
   if (discountType === DISCOUNT_TYPE.RATE) {
-    unitPrice = (price * discount) / 1000;
+    unitPrice = (price * discount) / rateRoundingUnit;
+    return Math.floor(unitPrice / roundingUnit) * roundingUnit;
   }
+
   if (discountType === DISCOUNT_TYPE.FLAT) {
     unitPrice = discount / roundingUnit;
   }
