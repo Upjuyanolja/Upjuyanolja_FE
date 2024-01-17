@@ -5,13 +5,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { RightOutlined } from '@ant-design/icons';
-import { mainNavigationContainerProps } from './type';
+import { CouponRegistrationContainerProps } from './type';
 
-export const MainNavigationContainer = ({
+export const CouponRegistrationContainer = ({
   navigateCouponRegistration,
-}: mainNavigationContainerProps) => {
+}: CouponRegistrationContainerProps) => {
   return (
-    <StyledContainer color={colors.primary}>
+    <StyledContainer>
       <Image width={50} height={50} src={coinImage} preview={false} />
       <TextBox typography="h5" color="white">
         지금 바로!
@@ -31,7 +31,7 @@ const StyledContainer = styled('div')`
   width: 224px;
   height: 171px;
 
-  background-color: ${(props) => props.color};
+  background-color: ${colors.primary};
   border-radius: 8px;
   padding: 0px 24px;
 

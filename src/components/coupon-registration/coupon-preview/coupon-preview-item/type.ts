@@ -1,3 +1,3 @@
-import { PendingCouponData } from '@components/coupon-registration/type';
+import { PendingRoomData } from '@components/coupon-registration/type';
 
-export type CouponPreviewItemProps = PendingCouponData;
+export type CouponPreviewItemProps = Partial<PendingRoomData>;

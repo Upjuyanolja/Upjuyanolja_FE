@@ -1,4 +1,3 @@
-import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import {
   FlatDiscountType,
   RateDiscountType,
@@ -7,9 +6,10 @@ import {
   DeterminedPrice,
   DiscountValue,
   GroupQuantityValue,
-  PendingCouponDataList,
+  PendingRoomDataList,
 } from '@components/coupon-registration/type';
 import { atom } from 'recoil';
+import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 
 export const selectedDiscountTypeState = atom<
   FlatDiscountType | RateDiscountType
@@ -28,18 +28,6 @@ export const determinedPriceState = atom<DeterminedPrice>({
   default: '',
 });
 
-export const pendingCouponDataListState = atom<PendingCouponDataList>({
-  key: 'pendingCouponDataList',
-  default: [
-    {
-      roomId: 0,
-      roomName: '',
-      quantity: '',
-      roomPrice: 0,
-    },
-  ],
-});
-
 export const groupQuantityValueState = atom<GroupQuantityValue>({
   key: 'groupQuantityValue',
   default: '',
@@ -47,5 +35,20 @@ export const groupQuantityValueState = atom<GroupQuantityValue>({
 
 export const isGroupQuantitySelectedState = atom<boolean>({
   key: 'isGroupQuantitySelected',
+  default: false,
+});
+
+export const pendingRoomDataListState = atom<PendingRoomDataList>({
+  key: 'pendingRoomDataList',
+  default: [],
+});
+
+export const isValidCouponRegistrationState = atom<boolean>({
+  key: 'isValidCouponRegistration',
+  default: false,
+});
+
+export const isTermsCheckedState = atom<boolean>({
+  key: 'isTermsChecked',
   default: false,
 });

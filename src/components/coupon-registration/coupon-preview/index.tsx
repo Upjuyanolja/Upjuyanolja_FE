@@ -4,30 +4,70 @@ import styled from 'styled-components';
 import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { Button, Checkbox } from 'antd';
-import { PendingCouponDataList } from '../type';
-import { numberFormat } from '@/utils/Format/numberFormat';
-import { useRecoilValue } from 'recoil';
+import { PendingRoomDataList, SelectedDiscountType } from '../type';
+import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   determinedPriceState,
-  pendingCouponDataListState,
+  isTermsCheckedState,
+  isValidCouponRegistrationState,
+  pendingRoomDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
+import { useEffect, useState } from 'react';
+import { AgreementModal } from '@components/point-charge-modal/agreement-modal';
+import { MouseEvent } from '@/types/event';
 
 export const CouponPreview = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const determinedPrice = useRecoilValue(determinedPriceState);
-  const pendingCouponDataList = useRecoilValue(pendingCouponDataListState);
+  const pendingRoomDataList = useRecoilValue(pendingRoomDataListState);
+  const [isValidCouponRegistration, setIsValidCouponRegistration] =
+    useRecoilState(isValidCouponRegistrationState);
+  const [isTermsChecked, setIsTermsChecked] =
+    useRecoilState(isTermsCheckedState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleClick = (e: MouseEvent) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
 
   const calculateTotalPrice = (
-    pendingCouponDataList: PendingCouponDataList,
+    pendingRoomDataList: PendingRoomDataList,
+    selectedDiscountType: SelectedDiscountType,
   ) => {
-    return pendingCouponDataList.reduce((total, room) => {
+    if (selectedDiscountType === FLAT_DISCOUNT_TYPE) {
+      return pendingRoomDataList.reduce((total, room) => {
+        return (
+          total +
+          Number(numberFormat(room.quantity)) *
+            (Number(removeNumberFormat(determinedPrice)) / 10)
+        );
+      }, 0);
+    } else {
       return (
-        total + parseInt(room.quantity) * (parseInt(determinedPrice) * 100)
+        pendingRoomDataList.reduce((total, room) => {
+          const priceWithoutDiscount =
+            Number(removeNumberFormat(determinedPrice)) * room.roomPrice;
+
+          const calculatedValue = Number(room.quantity) * priceWithoutDiscount;
+
+          return total + calculatedValue;
+        }, 0) / 1000
       );
-    }, 0);
+    }
   };
+
+  const totalPrice = calculateTotalPrice(
+    pendingRoomDataList,
+    selectedDiscountType,
+  );
+
+  useEffect(() => {
+    console.log('isValidCouponRegistration', isValidCouponRegistration);
+    setIsValidCouponRegistration(!!(isTermsChecked && totalPrice));
+  }, [isTermsChecked, totalPrice]);
 
   return (
     <Container>
@@ -51,41 +91,67 @@ export const CouponPreview = () => {
           )}
         </StyledTitleWrap>
         <StyledPreviewItemWrap>
-          {pendingCouponDataList.map((item, index) => (
-            <CouponPreviewItem
-              roomId={item.roomId}
-              roomName={item.roomName}
-              roomPrice={item.roomPrice}
-              quantity={item.quantity}
-              key={index}
-            />
-          ))}
+          {pendingRoomDataList.length >= 1 && determinedPrice ? (
+            pendingRoomDataList.map((item, index) => (
+              <CouponPreviewItem
+                roomName={item.roomName}
+                roomPrice={item.roomPrice}
+                quantity={item.quantity}
+                key={index}
+              />
+            ))
+          ) : (
+            <StyledNotice>
+              <TextBox typography="body2" color="black600">
+                전용 객실을 선택해주세요.
+              </TextBox>
+            </StyledNotice>
+          )}
         </StyledPreviewItemWrap>
         <Spacing space="16" />
         <StyledCouponTotalPrice>
           <TextBox typography="h5" fontWeight="bold" color="primary">
-            합계 : {numberFormat(calculateTotalPrice(pendingCouponDataList))} P
+            합계: {determinedPrice ? numberFormat(totalPrice) : '0'}P
           </TextBox>
         </StyledCouponTotalPrice>
         <Spacing space="16" />
         <StyledTermsAgreement>
-          <Checkbox />
-          <TextBox typography="body4" color="black900">
-            주문 내용을 확인하였으며,{' '}
-            <TextBox typography="body4" color="primaryHover">
-              구매 약관
-            </TextBox>{' '}
-            등에 동의합니다.
-          </TextBox>
+          <Checkbox
+            id="agreement"
+            checked={isTermsChecked}
+            onChange={() => {
+              setIsTermsChecked(!isTermsChecked);
+            }}
+          />
+          <label htmlFor="agreement">
+            <TextBox typography="body4" color="black900">
+              주문 내용을 확인하였으며,{' '}
+              <TextBox
+                typography="body4"
+                color="primaryHover"
+                cursor="pointer"
+                onClick={handleClick}
+              >
+                구매 약관
+              </TextBox>{' '}
+              등에 동의합니다.
+            </TextBox>
+          </label>
         </StyledTermsAgreement>
         <Spacing space="16" />
-        <StyledButton>
+        <StyledButton htmlType="submit" disabled={!isValidCouponRegistration}>
           <TextBox typography="h5" fontWeight="bold" color="white">
             구매하기
           </TextBox>
         </StyledButton>
         <Spacing space="16" />
       </StyledCouponWrap>
+      {isModalOpen && (
+        <AgreementModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </Container>
   );
 };
@@ -102,6 +168,7 @@ const StyledCouponWrap = styled.div`
   width: 324px;
   border: 2px solid ${colors.primary};
   border-radius: 8px;
+  max-height: 80vh;
   overflow: hidden;
 `;
 
@@ -140,11 +207,29 @@ const StyledButton = styled(Button)`
   &:hover {
     background-color: ${colors.primaryHover};
   }
+  &:focus {
+    background-color: ${colors.primaryActive};
+  }
   &:active {
     background-color: ${colors.primaryActive};
+  }
+  &:disabled {
+    background-color: ${colors.black600};
+    color: ${colors.white};
+  }
+  &:disabled:hover {
+    background-color: ${colors.black600};
+    color: ${colors.white};
   }
 `;
 
 const StyledPreviewItemWrap = styled.div`
   overflow-y: auto;
+`;
+
+const StyledNotice = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0 24px;
 `;
