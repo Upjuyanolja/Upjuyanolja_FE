@@ -7,7 +7,7 @@ import {
   getRevenueResolver,
   getStaticsResolver,
 } from './coupon';
-import { getPointSummaryResolver } from './point';
+import { getPointSummaryResolver, postPointChargeResolver } from './point';
 import { getAccommodationsResolver } from './accommodation';
 import {
   getPointDetailTotalResolver,
@@ -47,6 +47,7 @@ export const handlers = [
 
   http.get('/api/points/summary', getPointSummaryResolver),
 
+  http.post('/api/points/charges', postPointChargeResolver),
   http.get('/api/points/total?1', getPointDetailTotalResolver),
   http.get('/api/points/usage?1', getPointDetailUsageResolver),
   http.get('/api/points/charges?1', getPointDetailChargesResolver),
