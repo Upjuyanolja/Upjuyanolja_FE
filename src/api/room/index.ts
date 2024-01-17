@@ -6,9 +6,9 @@ import {
   RoomPostResponseData,
   AccommodationData,
 } from './type';
-import { getCookie } from '@hooks/sign-in/useSignIn';
+import { useParams } from 'react-router-dom';
 
-const accommodationId = getCookie('accommodationId');
+const { accommodationId } = useParams();
 
 export const ROOM_API = {
   addRoom: (data: RoomData) =>
