@@ -26,6 +26,8 @@ import { RoomLayout } from '@components/room/room-layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
 import { InitLayout } from '@components/layout/init-layout/InitLayout';
 import { MainRedirect } from '@pages/main-redirect';
+import { TossSuccess } from '@pages/toss-success';
+import { TossFail } from '@pages/toss-fail';
 
 function App() {
   const accessToken = getCookie('accessToken');
@@ -49,6 +51,8 @@ function App() {
           path={ROUTES.SIGNUP_SUCCESS}
           element={accessToken ? <Navigate to="/" /> : <SignUpSuccess />}
         />
+        <Route path={ROUTES.TOSS_SUCCESS} element={<TossSuccess />} />
+        <Route path={ROUTES.TOSS_FAIL} element={<TossFail />} />
         <Route path={ROUTES.INIT} element={<Init />} />
         <Route element={<InitLayout />}>
           <Route

@@ -1,4 +1,13 @@
-import { Button, Checkbox, Form, Input, Layout, Modal, Space } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Layout,
+  Modal,
+  Space,
+  message,
+} from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
@@ -15,6 +24,11 @@ import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
 import { AgreementModal } from '../agreement-modal';
 import { orderNumber } from '@/utils/orderNumber';
+import { ROUTES } from '@/constants/routes';
+
+import { currentUrlState } from '@stores/point-charge-modal';
+import { useSetRecoilState } from 'recoil';
+import { useLocation } from 'react-router-dom';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
@@ -46,10 +60,12 @@ export const PointModal = ({
   const agreementShowModal = () => {
     setIsAgreementModalOpen(true);
   };
-
+  const location = useLocation();
+  const setCurrentUrl = useSetRecoilState(currentUrlState);
   const { handleChangeUrl } = useCustomNavigate();
 
   useEffect(() => {
+    setCurrentUrl(location.pathname);
     (async () => {
       if (
         process.env.REACT_APP_CLIENT_KEY &&
@@ -90,6 +106,7 @@ export const PointModal = ({
     } else {
       setFormattedValue('');
       setPrice(0);
+      return;
     }
 
     priceComparator(inputValue);
@@ -146,13 +163,19 @@ export const PointModal = ({
       await paymentWidget?.requestPayment({
         orderId: orderNumber(),
         orderName: '포인트 충전',
-        successUrl: `${window.location.origin}/success`,
-        failUrl: `${window.location.origin}/fail`,
+        successUrl: `${window.location.origin}${ROUTES.TOSS_SUCCESS}`,
+        failUrl: `${window.location.origin}${ROUTES.TOSS_FAIL}`,
       });
-      //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
-      // 이 부분 로직은 다음 PR에 작성하도록 하겠습니다.
     } catch (error) {
-      handleChangeUrl('/point-detail');
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            결제가 취소 되었습니다.
+          </TextBox>
+        ),
+        duration: 2,
+      });
+      handleChangeUrl(window.location.pathname);
     }
   };
 
@@ -168,28 +191,37 @@ export const PointModal = ({
       >
         <Layout>
           <Form form={form} layout="vertical" autoComplete="off">
-            <Form.Item name="point" label="충전할 포인트">
-              <Input
-                style={{ width: '95%' }}
-                placeholder="충전할 포인트를 입력해 주세요."
-                value={formattedValue}
-                onChange={handleChangePoint}
-              />
-
-              <TextBox
-                typography="h5"
-                color={'black900'}
-                bold={true}
-                style={{ marginLeft: '8px' }}
-              >
-                P
+            <div>
+              <TextBox typography="h5" color={'black900'} fontWeight={700}>
+                충전할 포인트
               </TextBox>
-              <ErrorContainer>
-                <TextBox typography="body4" color={'error'}>
-                  {pointErrorMessage}
-                </TextBox>
-              </ErrorContainer>
-            </Form.Item>
+            </div>
+
+            <Input
+              style={{ width: '95%' }}
+              placeholder="충전할 포인트를 입력해 주세요."
+              value={formattedValue}
+              onChange={handleChangePoint}
+            />
+
+            <TextBox
+              typography="h5"
+              color={'black900'}
+              fontWeight={700}
+              style={{
+                marginLeft: '8px',
+                top: '40px',
+                right: '0%',
+              }}
+            >
+              P
+            </TextBox>
+
+            <ErrorContainer>
+              <TextBox typography="body4" color={'error'}>
+                {pointErrorMessage}
+              </TextBox>
+            </ErrorContainer>
 
             <PointButtonWrap>
               <Button onClick={() => handleClickAddPoint(PRICE_10000)}>
@@ -216,7 +248,7 @@ export const PointModal = ({
                 <ExclamationCircleOutlined />
               </InfoButton>
 
-              <TextBox typography="h5" color={'primary'} bold={true}>
+              <TextBox typography="h5" color={'primary'} fontWeight={700}>
                 결제 금액 : {formattedValue}원
               </TextBox>
             </PriceWrap>
@@ -287,8 +319,8 @@ const CustomModal = styled(Modal)`
       line-height: 30px;
     }
   }
-  .ant-input-number-input-wrap {
-    margin-right: 8px;
+  .ant-input {
+    margin-top: 12px;
   }
 
   .point-buttonWrap {
