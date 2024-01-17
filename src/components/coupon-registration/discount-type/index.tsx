@@ -19,7 +19,6 @@ import {
   determinedPriceState,
   discountValueState,
   isTermsCheckedState,
-  pendingRoomDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
 import {
@@ -34,11 +33,10 @@ export const DiscountType = () => {
   );
   const [discountValue, setDiscountValue] = useRecoilState(discountValueState);
   const setDeterminedPrice = useSetRecoilState(determinedPriceState);
-  const setPendingRoomDataList = useSetRecoilState(pendingRoomDataListState);
   const setIsTermsChecked = useSetRecoilState(isTermsCheckedState);
 
   useEffect(() => {
-    initializeValue();
+    resetStateValues();
   }, [selectedDiscountType]);
 
   useEffect(() => {
@@ -49,7 +47,7 @@ export const DiscountType = () => {
     checkDiscountValidity(discountValue, selectedDiscountType);
   }, [discountValue]);
 
-  const initializeValue = () => {
+  const resetStateValues = () => {
     setDiscountValue('');
     setDeterminedPrice('');
     setIsTermsChecked(false);
