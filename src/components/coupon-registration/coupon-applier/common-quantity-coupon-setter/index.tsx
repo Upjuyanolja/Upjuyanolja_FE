@@ -51,12 +51,6 @@ export const CommonQuantityCouponSetter = () => {
     }
   }, [isGroupQuantitySelected]);
 
-  useEffect(() => {
-    setIsGroupQuantitySelected(false);
-    setInputValue('0');
-    setGroupQuantityValue('0');
-  }, [selectedDiscountType]);
-
   return (
     <Container>
       <StyledCheckBoxWrap>
