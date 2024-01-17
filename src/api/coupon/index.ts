@@ -1,6 +1,8 @@
 import { Response } from '@/types/api';
 import { instance } from '..';
 import {
+  BuyCouponData,
+  BuyCouponParams,
   CouponDeleteParams,
   CouponEditParams,
   CouponRoomList,
@@ -11,10 +13,14 @@ import {
 } from './type';
 
 export const COUPON_API = {
-  getStatics: () =>
-    instance.get<Response<staticsData>>('/api/coupons/backoffice/statistics'),
-  getRevenue: () =>
-    instance.get<Response<revenueData>>('/api/coupons/backoffice/revenue'),
+  getStatics: (accommodationId: string) =>
+    instance.get<Response<staticsData>>(
+      `/api/coupons/backoffice/statistics/${accommodationId}`,
+    ),
+  getRevenue: (accommodationId: string) =>
+    instance.get<Response<revenueData>>(
+      `/api/coupons/backoffice/revenue/${accommodationId}`,
+    ),
   getCoupon: (accommodationId: string) =>
     instance.get<Response<coupons>>(
       `/api/coupons/backoffice/manage/${accommodationId}`,
@@ -29,6 +35,10 @@ export const COUPON_API = {
     instance.get<Response<CouponRoomList>>(
       '/api/coupons/backoffice/buy/accommodationId',
     ),
+  buyCoupon: (params: BuyCouponParams) =>
+    instance.post<Response<BuyCouponData>>('/api/coupons/backoffice/buy', {
+      params,
+    }),
   purchaseAdditionalCoupon: (params: PurchaseCouponParams) =>
     instance.patch<Response<null>>(
       '/api/coupons/backoffice/manage/buy',

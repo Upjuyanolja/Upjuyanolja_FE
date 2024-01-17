@@ -21,7 +21,11 @@ import {
   postAuthenticationResolver,
   getVerifyResolver,
 } from './sign-up';
-import { getCouponRoomListResolver } from './coupon-registration';
+import {
+  buyCouponResolver,
+  getCouponRoomListResolver,
+} from './coupon-registration';
+import { postRoomResolver } from './room';
 
 const email = 'ivegaeul@naver.com';
 const verificationCode = '020924';
@@ -35,14 +39,26 @@ export const handlers = [
     getVerifyResolver,
   ),
   http.get('/api/accommodations/backoffice', getAccommodationsResolver),
-  http.get('/api/coupons/backoffice/statistics', getStaticsResolver),
-  http.get('/api/coupons/backoffice/revenue', getRevenueResolver),
+  http.get(
+    `/api/coupons/backoffice/statistics/${accommodationId}`,
+    getStaticsResolver,
+  ),
+  http.get(
+    `/api/coupons/backoffice/revenue/${accommodationId}`,
+    getRevenueResolver,
+  ),
   http.get(
     `/api/coupons/backoffice/manage/${accommodationId}`,
     getCouponResolver,
   ),
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
+
+  http.get(
+    '/api/coupons/backoffice/buy/accommodationId',
+    getCouponRoomListResolver,
+  ),
+  http.post('/api/coupons/backoffice/buy', buyCouponResolver),
   http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
 
   http.get('/api/points/summary', getPointSummaryResolver),
@@ -52,4 +68,6 @@ export const handlers = [
   http.get('/api/points/usage?1', getPointDetailUsageResolver),
   http.get('/api/points/charges?1', getPointDetailChargesResolver),
   http.delete('/api/points/charges/1', deleteOrderCancelResolver),
+
+  http.post(`/api/rooms/${accommodationId}`, postRoomResolver),
 ];

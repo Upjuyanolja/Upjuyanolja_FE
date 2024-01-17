@@ -34,7 +34,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     const selectedFile = inputElement.files?.[0];
 
     inputElement.value = '';
-
+    console.log(selectedFile + '!!!!!!!!!!!!');
     if (!selectedFile) {
       return;
     }
@@ -65,10 +65,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           ...prevSelectedFiles,
           { url: URL.createObjectURL(selectedFile) },
         ]);
-      } else if (
-        header === '객실 사진' &&
-        window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
-      ) {
+      } else if (header === '객실 사진') {
         setSelectedInitRoomFiles((prevSelectedFiles) => [
           ...prevSelectedFiles,
           { url: URL.createObjectURL(selectedFile) },

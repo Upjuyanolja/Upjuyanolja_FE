@@ -5,4 +5,5 @@ export type chart = {
 };
 export type mainChartProps = {
   revenueData: chart[];
+  couponMessage: string | undefined;
 };

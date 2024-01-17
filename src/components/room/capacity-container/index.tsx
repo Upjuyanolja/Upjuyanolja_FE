@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { InputNumber, Col, Form } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
@@ -11,8 +11,15 @@ import {
 
 export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
   const [defaultCapacity, setDefaultCapacity] = useState<number>(1);
-  const [maxCapacityValue, setMaxCapacityValue] = useState<number>(1);
+  const [maxCapacity, setMaxCapacity] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setError(null);
+    if (defaultCapacity > maxCapacity) {
+      setError('최대 인원은 기준 인원보다 작을 수 없습니다.');
+    }
+  }, [defaultCapacity, maxCapacity]);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     setError(null);
@@ -29,7 +36,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
         setDefaultCapacity(newValue);
         form.setFieldValue('defaultCapacity', newValue);
       } else {
-        setMaxCapacityValue(newValue);
+        setMaxCapacity(newValue);
         form.setFieldValue('maxCapacity', newValue);
       }
     };
@@ -77,7 +84,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
             <StyledInputNumber
               min={1}
               max={15}
-              value={maxCapacityValue}
+              value={maxCapacity}
               onChange={handleCapacityChange('maximum')}
             />
           </Form.Item>

@@ -12,36 +12,43 @@ import {
   CouponEditParams,
   PurchaseCouponParams,
   coupons,
-  dailyRevenue,
   revenueData,
   staticsData,
 } from '@api/coupon/type';
 
 export const useGetStatics = (
+  accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<Response<staticsData>>,
     AxiosError,
     staticsData
   >,
-) =>
-  useQuery<AxiosResponse<Response<staticsData>>, AxiosError, staticsData>(
-    ['getStatics'],
-    () => COUPON_API.getStatics(),
-    { ...options },
-  );
+) => {
+  return useQuery<
+    AxiosResponse<Response<staticsData>>,
+    AxiosError,
+    staticsData
+  >(['getStatics'], () => COUPON_API.getStatics(accommodationId), {
+    ...options,
+  });
+};
 
 export const useGetRevenue = (
+  accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<Response<revenueData>>,
     AxiosError,
-    dailyRevenue[]
+    revenueData
   >,
-) =>
-  useQuery<AxiosResponse<Response<revenueData>>, AxiosError, dailyRevenue[]>(
-    ['getRevenue'],
-    () => COUPON_API.getRevenue(),
-    { ...options },
-  );
+) => {
+  return useQuery<
+    AxiosResponse<Response<revenueData>>,
+    AxiosError,
+    revenueData
+  >(['getRevenue'], () => COUPON_API.getRevenue(accommodationId), {
+    ...options,
+  });
+};
 
 export const useGetCoupon = (
   accommodationId: string,
