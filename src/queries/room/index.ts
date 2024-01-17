@@ -10,6 +10,7 @@ import { RoomData, RoomPostResponseData } from '@api/room/type';
 import { ROOM_API } from '@api/room';
 
 export const useAddRoom = (
+  accommodationId: string,
   options?: UseMutationOptions<
     AxiosResponse<Response<RoomPostResponseData>>,
     AxiosError,
@@ -20,7 +21,7 @@ export const useAddRoom = (
     AxiosResponse<Response<RoomPostResponseData>>,
     AxiosError,
     RoomData
-  >((data: RoomData) => ROOM_API.addRoom(data), {
+  >((data: RoomData) => ROOM_API.addRoom(data, accommodationId), {
     ...options,
   });
 };

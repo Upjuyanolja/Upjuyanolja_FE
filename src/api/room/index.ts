@@ -8,10 +8,8 @@ import {
 } from './type';
 import { useParams } from 'react-router-dom';
 
-const { accommodationId } = useParams();
-
 export const ROOM_API = {
-  addRoom: (data: RoomData) =>
+  addRoom: (data: RoomData, accommodationId: string) =>
     instance.post<Response<RoomPostResponseData>>(
       `/api/rooms/${accommodationId}`,
       {

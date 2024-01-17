@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 import { ButtonContainer } from '@components/room/room-buttons';
 import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
@@ -9,11 +9,16 @@ import { PriceContainer } from '@components/room/price-container';
 import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import {
+  checkedRoomOptions,
+  selectedInitRoomFilesState,
+} from '@stores/init/atoms';
 import { RoomData } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
-//import { getRoomData } from '@hooks/room/useAddRoom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
+import { AxiosError } from 'axios';
 
 const RoomRegistration = () => {
   const isValid = true;
@@ -23,13 +28,50 @@ const RoomRegistration = () => {
     internet: '인터넷',
   };
 
-  const [form] = Form.useForm();
+  const { accommodationId } = useParams();
+  const navigate = useNavigate();
 
-  const onFinish = useAddRoom({
-    onSuccess: (response) => {
-      console.log(response);
+  const [form] = Form.useForm();
+  const { mutate } = useAddRoom(accommodationId as string, {
+    onSuccess() {
+      message.success({
+        content: '등록되었습니다',
+        className: 'coupon-message',
+      });
+      navigate(`/${accommodationId}${ROUTES.ROOM}`);
+      setSelectedInitRoomFiles([]);
+      setSelectedInitRoomOptions({
+        airCondition: false,
+        tv: false,
+        internet: false,
+      });
+    },
+    onError(error) {
+      if (error instanceof AxiosError)
+        message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
     },
   });
+
+  const [selectedImages, setSelectedInitRoomFiles] = useRecoilState(
+    selectedInitRoomFilesState,
+  );
+  const [selectedOptions, setSelectedInitRoomOptions] =
+    useRecoilState(checkedRoomOptions);
+
+  const onFinish = (value: any) => {
+    const data: RoomData = {
+      name: value['room-name'],
+      price: parseInt(value['price'].replace(',', '')),
+      defaultCapacity: value.defaultCapacity,
+      maxCapacity: value.maxCapacity,
+      checkInTime: value['checkInTime'].format('HH:mm'),
+      checkOutTime: value['checkOutTime'].format('HH:mm'),
+      amount: value.count,
+      options: selectedOptions,
+      images: selectedImages,
+    };
+    mutate(data);
+  };
   // async (formData: RoomData) => {
   //   try {
   //     //postRoomData(formData);
@@ -43,7 +85,7 @@ const RoomRegistration = () => {
 
   return (
     <StyledWrapper color={colors.white}>
-      <Form form={form}>
+      <Form form={form} onFinish={onFinish}>
         <NameContainer
           header="객실명"
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
