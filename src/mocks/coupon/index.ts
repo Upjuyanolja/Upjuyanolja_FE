@@ -34,3 +34,13 @@ export const editCouponResolver = () => {
     { status: 200 },
   );
 };
+
+export const successCouponResolver = () => {
+  return HttpResponse.json(
+    {
+      message: '쿠폰 추가 구매에 성공하였습니다.',
+      data: null,
+    },
+    { status: 200 },
+  );
+};

@@ -10,7 +10,7 @@ export const AdditionalPurchaseContent = ({
   purchaseData,
   handleBatchEditCheckbox,
   handleChangeBatchValue,
-  handleChangeNumberOfCoupons,
+  handleChangeBuyQuantity,
 }: PurchaseContentProps) => {
   if (!purchaseData) return <></>;
   return (
@@ -20,9 +20,18 @@ export const AdditionalPurchaseContent = ({
           onChange={handleBatchEditCheckbox}
           checked={purchaseData.isAppliedBatchEdit}
         />
+        <Checkbox
+          onChange={handleBatchEditCheckbox}
+          checked={purchaseData.isAppliedBatchEdit}
+        />
         <TextBox color="primary" typography="h5" fontWeight={700}>
           수량 일괄 적용
         </TextBox>
+        <StyledInput
+          value={purchaseData.batchValue}
+          disabled={!purchaseData.isAppliedBatchEdit}
+          onChange={handleChangeBatchValue}
+        />
         <StyledInput
           value={purchaseData.batchValue}
           disabled={!purchaseData.isAppliedBatchEdit}
@@ -45,7 +54,7 @@ export const AdditionalPurchaseContent = ({
                   key={coupon.couponId}
                   coupon={coupon}
                   disabled={purchaseData.isAppliedBatchEdit}
-                  handleChangeNumberOfCoupons={handleChangeNumberOfCoupons}
+                  handleChangeBuyQuantity={handleChangeBuyQuantity}
                   roomId={room.roomId}
                 />
               ))}
