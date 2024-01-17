@@ -6,7 +6,6 @@ import {
   RoomPostResponseData,
   AccommodationData,
 } from './type';
-import { useParams } from 'react-router-dom';
 
 export const ROOM_API = {
   addRoom: (data: RoomData, accommodationId: string) =>
