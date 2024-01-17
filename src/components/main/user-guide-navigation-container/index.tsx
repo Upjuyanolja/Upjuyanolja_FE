@@ -39,7 +39,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledTextContainer = styled.div`
-  padding: 18px 24px 0 24px;
+  padding: 18px 24px 0;
 `;
 const StyledButton = styled(Button)`
   padding: 0;

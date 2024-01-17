@@ -1,7 +1,7 @@
 import { colors } from '@/constants/colors';
 import { Button } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { MainCouponStatusContainerProps } from './type';
 
@@ -100,11 +100,7 @@ const StyledSpace = styled('div')<{ id: number }>`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  ${(props) =>
-    props.id !== 3 &&
-    css`
-      border-right: 1px dashed ${colors.blue};
-    `}
+  ${(props) => props.id !== 3 && `border-right: 1px dashed ${colors.blue};`}
 `;
 
 const StyledStatusLayout = styled('div')`
