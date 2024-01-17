@@ -90,10 +90,12 @@ function App() {
               element={<RoomRegistration />}
             />
           </Route>
-          <Route
-            path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
-            element={<RoomUpdate />}
-          />
+          <Route element={<RoomLayout />}>
+            <Route
+              path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
+              element={<RoomUpdate />}
+            />
+          </Route>
           <Route path={ROUTES.USER_GUIDE} element={<UserGuide />} />
         </Route>
       </Routes>

@@ -111,7 +111,9 @@ const RoomUpdate = () => {
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
           form={form}
         />
-        <StatusContainer />
+        <StyledCenterVertically>
+          <StatusContainer />
+        </StyledCenterVertically>
         <StyledInputWrapper>
           <PriceContainer header="객실 가격" form={form} />
         </StyledInputWrapper>
@@ -145,4 +147,12 @@ const StyledWrapper = styled.div`
 
 const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
+`;
+
+const StyledCenterVertically = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 0px;
 `;

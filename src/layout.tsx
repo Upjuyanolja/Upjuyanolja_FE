@@ -10,13 +10,17 @@ export const RootLayout = () => {
   const isRoomRegistrationRoute = currentRoute.includes(
     ROUTES.ROOM_REGISTRATION,
   );
+  const isRoomUpdateRoute = currentRoute.includes(ROUTES.ROOM_UPDATE);
+
+  const shouldApplyGrayBackground =
+    isRoomRegistrationRoute || isRoomUpdateRoute;
 
   return (
     <Layout>
       <Layout.Header>Header</Layout.Header>
       <Layout
         style={{
-          backgroundColor: isRoomRegistrationRoute ? colors.midGray : 'white',
+          backgroundColor: shouldApplyGrayBackground ? colors.midGray : 'white',
         }}
       >
         <Layout.Sider width="256" theme={'light'}>

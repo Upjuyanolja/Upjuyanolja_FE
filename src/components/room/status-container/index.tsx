@@ -20,7 +20,10 @@ export const StatusContainer = () => {
       </StyledDesc>
       <StyledRow>
         <Form.Item name="status">
-          <Switch defaultChecked={isOnSale} onChange={handleInputChange} />
+          <StyledSwitch
+            defaultChecked={isOnSale}
+            onChange={handleInputChange}
+          />
         </Form.Item>
         <StyledTextBoxWrapper>
           <TextBox typography="body1" color="black900" fontWeight="normal">
@@ -36,21 +39,6 @@ const StyledInputWrapper = styled.div`
   margin-bottom: 48px;
   position: relative;
 
-  .ant-form-item-header {
-    header {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 36px;
-    }
-  }
-
-  .ant-form-item-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
   .ant-form-item-control {
     width: 100%;
   }
@@ -61,6 +49,7 @@ const StyledInputWrapper = styled.div`
 `;
 
 const StyledTextBoxWrapper = styled.div`
+  margin-bottom: 24px;
   margin-right: 12px;
 
   &:last-child {
@@ -69,15 +58,18 @@ const StyledTextBoxWrapper = styled.div`
 `;
 
 const StyledRow = styled.div`
-  height: 40px;
+  height: 30px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-top: 8;
 `;
 
 const StyledDesc = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
   margin-bottom: 8px;
+`;
+
+const StyledSwitch = styled(Switch)`
+  margin-right: 7px;
 `;
