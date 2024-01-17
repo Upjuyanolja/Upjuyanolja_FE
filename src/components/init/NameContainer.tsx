@@ -17,11 +17,12 @@ export const NameContainer = ({
 }: NameContainerProps) => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_NAME_MAX_LENGTH);
-    if (!NAME_REGEX.test(newValue)) {
-      if (header === '숙소명') form.setFieldValue('accommodation-name', '');
-      else if (header === '객실명') form.setFieldValue('room-name', '');
-      return;
-    }
+    const cleanedStringValue = newValue.replace(NAME_REGEX, '');
+
+    if (header === '숙소명')
+      form.setFieldValue('accommodation-name', cleanedStringValue);
+    else if (header === '객실명')
+      form.setFieldValue('room-name', cleanedStringValue);
   };
 
   return (
