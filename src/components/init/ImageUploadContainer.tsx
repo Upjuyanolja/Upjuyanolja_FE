@@ -34,7 +34,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     const selectedFile = inputElement.files?.[0];
 
     inputElement.value = '';
-    console.log(selectedFile + '!!!!!!!!!!!!');
     if (!selectedFile) {
       return;
     }
