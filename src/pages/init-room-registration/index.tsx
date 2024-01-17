@@ -50,21 +50,17 @@ export const InitRoomRegistration = () => {
       const parsedData = JSON.parse(userInputLocalStorage);
       const roomsArray = parsedData?.userInputValueState[0]?.rooms;
 
-      if (roomsArray.length !== 0) {
-        if (
-          roomsArray &&
-          roomsArray.some(
-            (room: Room) => room.name === form.getFieldValue('room-name'),
-          )
-        ) {
-          setSameRoomName(true);
-          message.error('동일한 객실명의 상품이 이미 존재합니다.');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-        }
+      const hasDuplicate = roomsArray.some(
+        (room: Room) => room.name === values['room-name'],
+      );
+
+      if (hasDuplicate) {
+        setSameRoomName(true);
+        message.error('동일한 객실명의 상품이 이미 존재합니다.');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
       }
-    }
-    if (sameRoomName === false) {
+
       setUserInputValueState((prevUserInputValueState) => {
         const [userInputValue] = prevUserInputValueState;
 
@@ -89,9 +85,6 @@ export const InitRoomRegistration = () => {
       });
 
       setRecoilUpdated(true);
-    }
-
-    if (sameRoomName === true) {
       setSameRoomName(false);
     }
   };
@@ -121,10 +114,6 @@ export const InitRoomRegistration = () => {
       navigate(ROUTES.INIT_INFO_CONFIRMATION);
     }
   }, [recoilUpdated, sameRoomName]);
-
-  useEffect(() => {
-    console.log(sameRoomName);
-  }, [sameRoomName]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
