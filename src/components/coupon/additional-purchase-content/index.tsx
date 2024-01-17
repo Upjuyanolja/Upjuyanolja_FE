@@ -5,7 +5,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { AdditionalPurchaseInfo } from '../additional-purchase-info';
 import { PurchaseContentProps } from './type';
-import { PurchaseContentProps } from './type';
 
 export const AdditionalPurchaseContent = ({
   purchaseData,

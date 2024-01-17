@@ -14,8 +14,6 @@ import {
 } from '@/constants/coupon';
 import 'moment/locale/ko';
 import locale from 'antd/es/locale/ko_KR';
-import 'moment/locale/ko';
-import locale from 'antd/es/locale/ko_KR';
 export const CouponHeader = ({
   expiry,
   handleSelectStatus,
@@ -23,7 +21,6 @@ export const CouponHeader = ({
   isModified,
   handleChangeDate,
   handleEditButton,
-  handleModalOpen,
   handleModalOpen,
 }: CouponHeaderProps) => {
   const couponStatusOption = [

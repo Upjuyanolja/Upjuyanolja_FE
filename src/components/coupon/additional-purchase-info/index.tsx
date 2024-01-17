@@ -2,7 +2,6 @@ import { TextBox } from '@components/text-box';
 import { Input } from 'antd';
 import styled from 'styled-components';
 import { PurchaseInfoProps } from './type';
-import { PurchaseInfoProps } from './type';
 
 export const AdditionalPurchaseInfo = ({
   coupon,

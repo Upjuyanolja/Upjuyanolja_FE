@@ -4,8 +4,6 @@ import { Button, Checkbox } from 'antd';
 import styled from 'styled-components';
 import { PurchaseFooterProps } from './type';
 import { useState } from 'react';
-import { PurchaseFooterProps } from './type';
-import { useState } from 'react';
 
 export const AdditionalPurchaseFooter = ({
   totalPoints,
