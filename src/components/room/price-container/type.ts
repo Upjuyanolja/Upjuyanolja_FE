@@ -4,6 +4,7 @@ import { FormInstance } from 'antd';
 export type PriceContainerProps = {
   header: string;
   form: FormInstance;
+  onValidate: (isValid: boolean) => void;
 };
 
 export type PriceHandleInputChangeProps = {

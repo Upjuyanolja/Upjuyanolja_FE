@@ -10,14 +10,20 @@ import {
 import { MAX_PRICE, MIN_PRICE } from '@/constants/room/room-registration';
 import { TextBox } from '@components/text-box';
 
-export const PriceContainer = ({ header, form }: PriceContainerProps) => {
+export const PriceContainer = ({
+  header,
+  form,
+  onValidate,
+}: PriceContainerProps) => {
   const [outOfRangeError, setOutOfRangeError] = useState<string | null>(null);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value < MIN_PRICE || value > MAX_PRICE) {
       setOutOfRangeError('10,000~1,000,000까지만 입력 가능합니다.');
+      onValidate(false);
     } else {
       setOutOfRangeError(null);
+      onValidate(true);
     }
   };
 
