@@ -9,6 +9,7 @@ import {
 } from '@components/coupon-registration/type';
 
 export type staticsData = {
+  accommodationId: number;
   total: number;
   used: number;
   stock: number;
@@ -20,7 +21,9 @@ export type dailyRevenue = {
   normalRevenue: number;
 };
 export type revenueData = {
+  accommodationId: number;
   revenue: dailyRevenue[];
+  couponMessage: string;
 };
 
 export type coupon = {
