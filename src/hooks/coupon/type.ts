@@ -6,8 +6,8 @@ export type CouponData = {
   coupons: tableData[];
 };
 
-export type PurchaseCoupons = Omit<coupon, 'appliedPrice'> & {
-  numberOfCoupons: number;
+export type PurchaseCoupons = Omit<coupon, 'appliedPrice' | 'quantity'> & {
+  buyQuantity: number;
   eachPoint: number;
   points: number;
 };

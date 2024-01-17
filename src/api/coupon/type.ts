@@ -69,8 +69,9 @@ export type PurchaseCouponParams = {
   totalPoints: number;
   rooms: Omit<
     room<
-      Omit<coupon, 'couponName' | 'appliedPrice'> & {
+      Omit<coupon, 'couponName' | 'appliedPrice' | 'quantity'> & {
         eachPoint: number;
+        buyQuantity: number;
       }
     >,
     'roomName' | 'roomPrice'

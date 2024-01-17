@@ -6,7 +6,7 @@ import { PurchaseInfoProps } from './type';
 export const AdditionalPurchaseInfo = ({
   coupon,
   disabled,
-  handleChangeNumberOfCoupons,
+  handleChangeBuyQuantity,
   roomId,
 }: PurchaseInfoProps) => {
   return (
@@ -17,10 +17,10 @@ export const AdditionalPurchaseInfo = ({
       <StyledPriceInfo>
         <div>
           <StyledInput
-            value={coupon.numberOfCoupons}
+            value={coupon.buyQuantity}
             disabled={disabled}
             onChange={(event) =>
-              handleChangeNumberOfCoupons(event, coupon.couponId, roomId)
+              handleChangeBuyQuantity(event, coupon.couponId, roomId)
             }
           />
           <TextBox fontWeight={400} typography="body3">

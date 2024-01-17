@@ -26,7 +26,7 @@ export const Coupon = () => {
     handleBatchEditCheckbox,
     purchaseData,
     handleChangeBatchValue,
-    handleChangeNumberOfCoupons,
+    handleChangeBuyQuantity,
     handlePurchaseButton,
   } = useCoupon();
 
@@ -65,7 +65,7 @@ export const Coupon = () => {
           purchaseData={purchaseData}
           handleBatchEditCheckbox={handleBatchEditCheckbox}
           handleChangeBatchValue={handleChangeBatchValue}
-          handleChangeNumberOfCoupons={handleChangeNumberOfCoupons}
+          handleChangeBuyQuantity={handleChangeBuyQuantity}
         />
       </StyledModal>
     </>

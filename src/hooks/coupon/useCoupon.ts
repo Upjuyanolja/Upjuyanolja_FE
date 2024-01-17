@@ -210,7 +210,6 @@ export const useCoupon = () => {
         couponId,
         status,
         dayLimit,
-        quantity,
         couponType,
       } = couponData.coupons[key];
       if (!data.rooms[room.id]) {
@@ -223,13 +222,12 @@ export const useCoupon = () => {
       data.rooms[room.id].coupons.push({
         couponName: info.name,
         points: calculatedCouponPoints(room.price, discount, discountType),
-        numberOfCoupons: 0,
+        buyQuantity: 0,
         eachPoint: 0,
         couponId,
         status,
         discount,
         discountType,
-        quantity,
         couponType,
         dayLimit,
       });
@@ -366,12 +364,12 @@ export const useCoupon = () => {
   };
 
   const handleDeleteButton = () => {
-    if (!isSelectedRow()) {
-      message.warning('삭제할 쿠폰을 먼저 선택하세요');
-      return;
-    }
     if (isModified()) {
       message.warning('수정 중인 내용을 먼저 저장하세요');
+      return;
+    }
+    if (!isSelectedRow()) {
+      message.warning('삭제할 쿠폰을 먼저 선택하세요');
       return;
     }
     if (findNotSoldOutData(selectedRowKeys)) {
@@ -414,12 +412,12 @@ export const useCoupon = () => {
   };
 
   const handleModalOpen = () => {
-    if (!isSelectedRow()) {
-      message.warning('구매할 쿠폰을 먼저 선택하세요');
-      return;
-    }
     if (isModified()) {
       message.warning('수정 중인 내용을 먼저 저장하세요');
+      return;
+    }
+    if (!isSelectedRow()) {
+      message.warning('구매할 쿠폰을 먼저 선택하세요');
       return;
     }
     setIsModalOpen(true);
@@ -429,10 +427,10 @@ export const useCoupon = () => {
     setIsModalOpen(false);
   };
 
-  const validateNumberOfCoupons = (value: number, coupon: PurchaseCoupons) => {
+  const validateBuyQuantity = (value: number, coupon: PurchaseCoupons) => {
     if (value > 999 || value < 0) return;
-    if (Number.isNaN(value)) coupon.numberOfCoupons = 0;
-    else coupon.numberOfCoupons = value;
+    if (Number.isNaN(value)) coupon.buyQuantity = 0;
+    else coupon.buyQuantity = value;
   };
 
   const validateBatchValue = (value: number, data: PurchaseData) => {
@@ -445,8 +443,8 @@ export const useCoupon = () => {
     for (const room of data.rooms) {
       if (!room) continue;
       for (const coupon of room.coupons) {
-        coupon.numberOfCoupons = data.batchValue;
-        coupon.eachPoint = coupon.points * coupon.numberOfCoupons;
+        coupon.buyQuantity = data.batchValue;
+        coupon.eachPoint = coupon.points * coupon.buyQuantity;
         data.totalPoints += coupon.eachPoint;
       }
     }
@@ -472,7 +470,7 @@ export const useCoupon = () => {
     handleBatchUpdate(data);
   };
 
-  const handleChangeNumberOfCoupons = (
+  const handleChangeBuyQuantity = (
     event: React.ChangeEvent<HTMLInputElement>,
     couponId: number,
     roomId: number,
@@ -484,8 +482,8 @@ export const useCoupon = () => {
       if (!room) continue;
       for (const coupon of room.coupons) {
         if (coupon.couponId === couponId && room.roomId === roomId) {
-          validateNumberOfCoupons(parseInt(event.currentTarget.value), coupon);
-          coupon.eachPoint = coupon.points * coupon.numberOfCoupons;
+          validateBuyQuantity(parseInt(event.currentTarget.value), coupon);
+          coupon.eachPoint = coupon.points * coupon.buyQuantity;
         }
         data.totalPoints += coupon.eachPoint;
       }
@@ -504,8 +502,12 @@ export const useCoupon = () => {
     for (let index = 0; index < purchaseData.rooms.length; index++) {
       const room = purchaseData.rooms[index];
       if (!room) continue;
-      const coupons: (Omit<coupon, 'couponName' | 'appliedPrice'> & {
+      const coupons: (Omit<
+        coupon,
+        'couponName' | 'appliedPrice' | 'quantity'
+      > & {
         eachPoint: number;
+        buyQuantity: number;
       })[] = [];
       for (const coupon of room.coupons) {
         coupons.push({
@@ -516,7 +518,7 @@ export const useCoupon = () => {
           couponType: coupon.couponType,
           eachPoint: coupon.eachPoint,
           dayLimit: coupon.dayLimit,
-          quantity: coupon.quantity,
+          buyQuantity: coupon.buyQuantity,
         });
       }
       roomData.push({
@@ -558,7 +560,7 @@ export const useCoupon = () => {
     handleBatchEditCheckbox,
     purchaseData,
     handleChangeBatchValue,
-    handleChangeNumberOfCoupons,
+    handleChangeBuyQuantity,
     handlePurchaseButton,
   };
 };
