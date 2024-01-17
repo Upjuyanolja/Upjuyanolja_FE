@@ -20,7 +20,7 @@ import {
 import { Form, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitRoomRegistration = () => {
@@ -37,8 +37,11 @@ export const InitRoomRegistration = () => {
 
   const setUserInputValueState = useSetRecoilState(userInputValueState);
 
-  const selectedOptions = useRecoilValue(checkedRoomOptions);
-  const selectedImages = useRecoilValue(selectedInitRoomFilesState);
+  const [selectedOptions, setSelectedOptions] =
+    useRecoilState(checkedRoomOptions);
+  const [selectedImages, setSelectedImages] = useRecoilState(
+    selectedInitRoomFilesState,
+  );
 
   const userInputLocalStorage = localStorage.getItem('userInput');
 
@@ -111,6 +114,8 @@ export const InitRoomRegistration = () => {
   useEffect(() => {
     if (recoilUpdated && sameRoomName === false) {
       setRecoilUpdated(false);
+      setSelectedImages([]);
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
       navigate(ROUTES.INIT_INFO_CONFIRMATION);
     }
   }, [recoilUpdated, sameRoomName]);
