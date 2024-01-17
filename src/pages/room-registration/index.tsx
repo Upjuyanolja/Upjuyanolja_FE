@@ -41,8 +41,8 @@ const RoomRegistration = () => {
         className: 'coupon-message',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
-      setSelectedInitRoomFiles([]);
-      setSelectedInitRoomOptions({
+      setSelectedRoomFiles([]);
+      setSelectedRoomOptions({
         airCondition: false,
         tv: false,
         internet: false,
@@ -54,10 +54,10 @@ const RoomRegistration = () => {
     },
   });
 
-  const [selectedImages, setSelectedInitRoomFiles] = useRecoilState(
+  const [selectedImages, setSelectedRoomFiles] = useRecoilState(
     selectedInitRoomFilesState,
   );
-  const [selectedOptions, setSelectedInitRoomOptions] =
+  const [selectedOptions, setSelectedRoomOptions] =
     useRecoilState(checkedRoomOptions);
 
   const onFinish = (value: any) => {
@@ -78,26 +78,15 @@ const RoomRegistration = () => {
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
 
-    const commonConditions =
-      values['accommodation-postCode'] &&
-      values['accommodation-detailAddress'] &&
-      values['accommodation-name'] &&
-      values['accommodation-desc'] &&
+    const conditions =
+      values['room-name'] &&
+      values['price'] &&
+      values['checkInTime'] &&
+      values['checkOutTime'] &&
       selectedImages.length !== 0;
 
-    const hotelResortConditions =
-      values['accommodation-category'] === 'HOTEL/RESORT' &&
-      values['accommodation-hotel-category'];
-    const guestConditions =
-      values['accommodation-category'] === 'GUEST' &&
-      values['accommodation-guest-category'];
-
     return (
-      !form.getFieldsError().some(({ errors }) => errors.length) &&
-      commonConditions &&
-      (values['accommodation-category'] ||
-        hotelResortConditions ||
-        guestConditions)
+      !form.getFieldsError().some(({ errors }) => errors.length) && conditions
     );
   };
 
