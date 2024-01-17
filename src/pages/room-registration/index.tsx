@@ -22,15 +22,19 @@ import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 
 const RoomRegistration = () => {
-  const [isValid, setIsValid] = useState(true);
+  const [validationStatus, setValidationStatus] = useState({
+    priceValid: false,
+    timeValid: false,
+  });
 
-  const handlePriceValidation = (valid: boolean) => {
-    setIsValid(valid);
+  const handleValidation = (componentName: string, isValid: boolean) => {
+    setValidationStatus((prevStatus) => ({
+      ...prevStatus,
+      [componentName]: isValid,
+    }));
+    console.log(componentName, isValid);
   };
-
-  const handleTimeValidation = (valid: boolean) => {
-    setIsValid(valid);
-  };
+  const isValid = Object.values(validationStatus).every(Boolean);
 
   const roomOptions = {
     tv: 'TV',
@@ -95,7 +99,7 @@ const RoomRegistration = () => {
           <PriceContainer
             header="객실 가격"
             form={form}
-            onValidate={handlePriceValidation}
+            onValidate={(isValid) => handleValidation('price', isValid)}
           />
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />

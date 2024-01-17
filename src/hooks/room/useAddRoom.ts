@@ -4,3 +4,7 @@
 //     console.log('postRoomData, hooks, success');
 //   },
 // };
+
+export const haha = () => {
+  1;
+};

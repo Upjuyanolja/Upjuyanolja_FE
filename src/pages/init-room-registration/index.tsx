@@ -125,7 +125,7 @@ export const InitRoomRegistration = () => {
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
           isSameRoomName={sameRoomName}
         />
-        <PriceContainer header="객실 가격" form={form} />
+        {/* <PriceContainer header="객실 가격" form={form} /> */}
         <ImageUploadContainer header="객실 사진" />
         <CountContainer header="객실 수" form={form} />
         <TimeContainer header="시간" form={form} />
