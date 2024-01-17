@@ -1,18 +1,17 @@
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import {
   ACCOMMODATION_DESC_MAX_LENGTH,
   ACCOMMODATION_DESC_MIN_LENGTH,
 } from '@/constants/init/init-accommodation-registration';
 import { TextBox } from '@components/text-box';
+import { FormInstance } from 'antd/es/form/Form';
 
-export const AccommodationDesc = () => {
-  const [, setTextAreaValue] = useState('');
-
+export const AccommodationDesc = ({ form }: { form: FormInstance }) => {
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = event.target.value.slice(0, ACCOMMODATION_DESC_MAX_LENGTH);
-    setTextAreaValue(newValue);
+    form.setFieldValue('accommodation-desc', newValue);
   };
 
   return (
