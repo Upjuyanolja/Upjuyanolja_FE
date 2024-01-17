@@ -214,9 +214,6 @@ export const DiscountType = () => {
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>
-      <StyledErrorMessage>
-        <Spacing space="4" />
-      </StyledErrorMessage>
     </Container>
   );
 };
@@ -239,6 +236,7 @@ const StyledDiscountButton = styled.button`
   height: 46px;
   border: 2px solid ${colors.black500};
   background-color: transparent;
+  cursor: pointer;
   &.price {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -269,5 +267,3 @@ const StyledInput = styled(Input)`
 const StyledTextWrap = styled.div`
   width: 47px;
 `;
-
-const StyledErrorMessage = styled.div``;
