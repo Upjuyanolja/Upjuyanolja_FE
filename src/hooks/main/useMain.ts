@@ -18,6 +18,12 @@ export const useMain = () => {
     navigate(ROUTES.USER_GUIDE);
   };
 
+  const navigateBusinessCenter = () => {
+    navigate(
+      'https://business.yanolja.com/web/kr/business/contentview?presentPage=1&pageRowSize=9&boardType=CONTENTS&boardGroup=Trends&searchDiv=&searchText=&boardNum=551',
+    );
+  };
+
   const handleRevenueDataFormat = (data: dailyRevenue[] | undefined) => {
     const revenueData = [];
     if (!data) return undefined;
@@ -67,5 +73,6 @@ export const useMain = () => {
     isRevenueError,
     couponMessage: data?.couponMessage,
     navigateUserGuide,
+    navigateBusinessCenter,
   };
 };
