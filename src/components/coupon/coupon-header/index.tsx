@@ -1,7 +1,7 @@
 import { colors } from '@/constants/colors';
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { TextBox } from '@components/text-box';
-import { Button, ConfigProvider, DatePicker, Select } from 'antd';
+import { Button, ConfigProvider, DatePicker, Select, Tooltip } from 'antd';
 import { RangePickerProps } from 'antd/lib/date-picker';
 import { ReactComponent as Logo } from '@assets/image/smallLogo.svg';
 import moment from 'moment';
@@ -54,7 +54,14 @@ export const CouponHeader = ({
             <TextBox typography="body1" fontWeight={700}>
               쿠폰 적용 기간
             </TextBox>
-            <InfoCircleOutlined width="18px" height="18px" color="blue" />
+            <Tooltip
+              title="고객은 적용기간 내의 숙박 건에만 쿠폰을 적용 할 수 있습니다."
+              overlayInnerStyle={{
+                width: '354px',
+              }}
+            >
+              <InfoCircleOutlined width="18px" height="18px" color="blue" />
+            </Tooltip>
           </StyledDateText>
           <DatePicker
             value={moment(expiry, DATE_FORMAT)}
