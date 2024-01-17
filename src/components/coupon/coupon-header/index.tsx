@@ -1,7 +1,7 @@
 import { colors } from '@/constants/colors';
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { TextBox } from '@components/text-box';
-import { Button, DatePicker, Select } from 'antd';
+import { Button, ConfigProvider, DatePicker, Select } from 'antd';
 import { RangePickerProps } from 'antd/lib/date-picker';
 import { ReactComponent as Logo } from '@assets/image/smallLogo.svg';
 import moment from 'moment';
@@ -12,7 +12,8 @@ import {
   COUPON_STATUS_DISABLE,
   COUPON_STATUS_ENABLE,
 } from '@/constants/coupon';
-
+import 'moment/locale/ko';
+import locale from 'antd/es/locale/ko_KR';
 export const CouponHeader = ({
   expiry,
   handleSelectStatus,
@@ -20,6 +21,7 @@ export const CouponHeader = ({
   isModified,
   handleChangeDate,
   handleEditButton,
+  handleModalOpen,
 }: CouponHeaderProps) => {
   const couponStatusOption = [
     { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
@@ -29,63 +31,66 @@ export const CouponHeader = ({
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     return current < moment().startOf('day');
   };
+
   return (
-    <StyledLayout>
-      <StyledContentLayout>
-        <TextBox fontWeight={700} typography="h4">
-          쿠폰 관리
-        </TextBox>
-        <StyledSaveButton
-          type="primary"
-          disabled={!isModified()}
-          onClick={handleEditButton}
-        >
+    <ConfigProvider locale={locale}>
+      <StyledLayout>
+        <StyledContentLayout>
           <TextBox fontWeight={700} typography="h4">
-            저장
+            쿠폰 관리
           </TextBox>
-        </StyledSaveButton>
-      </StyledContentLayout>
-      <StyledDateContainer>
-        <StyledDateText>
-          <TextBox typography="body1" fontWeight={700}>
-            쿠폰 적용 기간
+          <StyledSaveButton
+            type="primary"
+            disabled={!isModified()}
+            onClick={handleEditButton}
+          >
+            <TextBox fontWeight={700} typography="h4">
+              저장
+            </TextBox>
+          </StyledSaveButton>
+        </StyledContentLayout>
+        <StyledDateContainer>
+          <StyledDateText>
+            <TextBox typography="body1" fontWeight={700}>
+              쿠폰 적용 기간
+            </TextBox>
+            <InfoCircleOutlined width="18px" height="18px" color="blue" />
+          </StyledDateText>
+          <DatePicker
+            value={moment(expiry, DATE_FORMAT)}
+            disabledDate={disabledDate}
+            onChange={(_, date) => {
+              handleChangeDate(date);
+            }}
+            allowClear={false}
+          />
+          <TextBox typography="body1" fontWeight={700} color="black700">
+            까지
           </TextBox>
-          <InfoCircleOutlined width="18px" height="18px" color="blue" />
-        </StyledDateText>
-        <DatePicker
-          value={moment(expiry, DATE_FORMAT)}
-          disabledDate={disabledDate}
-          onChange={(_, date) => {
-            handleChangeDate(date);
-          }}
-          allowClear={false}
-        />
-        <TextBox typography="body1" fontWeight={700} color="black700">
-          까지
-        </TextBox>
-      </StyledDateContainer>
-      <StyledContentLayout>
-        <Select
-          defaultValue="상태 변경"
-          options={couponStatusOption}
-          onChange={handleSelectStatus}
-        />
-        <StyledButtonContainer>
-          <StyledDeleteButton onClick={handleDeleteButton}>
-            <DeleteOutlined width="20px" height="20px" />
-            <TextBox typography="body2" fontWeight={700}>
-              선택 삭제
-            </TextBox>
-          </StyledDeleteButton>
-          <StyledPurchaseButton>
-            <Logo />
-            <TextBox typography="body2" fontWeight={700} color="white">
-              추가 구매
-            </TextBox>
-          </StyledPurchaseButton>
-        </StyledButtonContainer>
-      </StyledContentLayout>
-    </StyledLayout>
+        </StyledDateContainer>
+        <StyledContentLayout>
+          <Select
+            defaultValue="상태 변경"
+            options={couponStatusOption}
+            onChange={handleSelectStatus}
+          />
+          <StyledButtonContainer>
+            <StyledDeleteButton onClick={handleDeleteButton}>
+              <DeleteOutlined width="20px" height="20px" />
+              <TextBox typography="body2" fontWeight={700}>
+                선택 삭제
+              </TextBox>
+            </StyledDeleteButton>
+            <StyledPurchaseButton onClick={handleModalOpen}>
+              <Logo />
+              <TextBox typography="body2" fontWeight={700} color="white">
+                추가 구매
+              </TextBox>
+            </StyledPurchaseButton>
+          </StyledButtonContainer>
+        </StyledContentLayout>
+      </StyledLayout>
+    </ConfigProvider>
   );
 };
 

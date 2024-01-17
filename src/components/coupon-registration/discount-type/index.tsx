@@ -18,7 +18,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   determinedPriceState,
   discountValueState,
-  pendingCouponDataListState,
+  isTermsCheckedState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
 import {
@@ -33,12 +33,10 @@ export const DiscountType = () => {
   );
   const [discountValue, setDiscountValue] = useRecoilState(discountValueState);
   const setDeterminedPrice = useSetRecoilState(determinedPriceState);
-  const [pendingCouponDataList, setPendingCouponDataList] = useRecoilState(
-    pendingCouponDataListState,
-  );
+  const setIsTermsChecked = useSetRecoilState(isTermsCheckedState);
 
   useEffect(() => {
-    initializeValue();
+    resetStateValues();
   }, [selectedDiscountType]);
 
   useEffect(() => {
@@ -49,19 +47,10 @@ export const DiscountType = () => {
     checkDiscountValidity(discountValue, selectedDiscountType);
   }, [discountValue]);
 
-  const initializeValue = () => {
+  const resetStateValues = () => {
     setDiscountValue('');
     setDeterminedPrice('');
-    if (pendingCouponDataList.length > 0) {
-      setPendingCouponDataList([
-        {
-          roomId: 0,
-          roomName: '',
-          quantity: '',
-          roomPrice: 0,
-        },
-      ]);
-    }
+    setIsTermsChecked(false);
   };
 
   const handleBlur = (
@@ -69,6 +58,7 @@ export const DiscountType = () => {
     discountType: FlatDiscountType | RateDiscountType,
   ) => {
     if (!discountValue) {
+      setDeterminedPrice('');
       return;
     }
 
@@ -165,6 +155,7 @@ export const DiscountType = () => {
           className={`price ${
             selectedDiscountType.typeName === FLAT_DISCOUNT ? 'active' : null
           }`}
+          type="button"
         >
           <TextBox
             typography="h5"
@@ -182,6 +173,7 @@ export const DiscountType = () => {
           className={`rate ${
             selectedDiscountType.typeName === RATE_DISCOUNT ? 'active' : null
           }`}
+          type="button"
         >
           <TextBox
             typography="h5"
@@ -200,6 +192,7 @@ export const DiscountType = () => {
         <StyledInput
           onChange={handleDiscountInputChange}
           value={discountValue || ''}
+          maxLength={5}
           onBlur={() => handleBlur(discountValue, selectedDiscountType)}
           onFocus={() => handleFocus(discountValue)}
           placeholder={
@@ -218,9 +211,6 @@ export const DiscountType = () => {
           </TextBox>
         </StyledTextWrap>
       </StyledInputWrap>
-      <StyledErrorMessage>
-        <Spacing space="4" />
-      </StyledErrorMessage>
     </Container>
   );
 };
@@ -243,6 +233,7 @@ const StyledDiscountButton = styled.button`
   height: 46px;
   border: 2px solid ${colors.black500};
   background-color: transparent;
+  cursor: pointer;
   &.price {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -273,5 +264,3 @@ const StyledInput = styled(Input)`
 const StyledTextWrap = styled.div`
   width: 47px;
 `;
-
-const StyledErrorMessage = styled.div``;

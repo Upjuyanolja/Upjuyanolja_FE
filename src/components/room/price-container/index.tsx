@@ -7,12 +7,7 @@ import {
   PriceHandleInputChangeProps,
   ValidateInputProps,
 } from './type';
-import {
-  MAX_PRICE,
-  MIN_PRICE,
-  MAX_PRICE_LENGTH,
-  MIN_PRICE_LENGTH,
-} from '@/constants/room/room-registration';
+import { MAX_PRICE, MIN_PRICE } from '@/constants/room/room-registration';
 import { TextBox } from '@components/text-box';
 
 export const PriceContainer = ({ header, form }: PriceContainerProps) => {
@@ -45,9 +40,6 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
         <TextBox typography="h4" fontWeight={700}>
           {header}
         </TextBox>
-        <TextBox color="black600" typography="body3">
-          10,000~1,000,000까지만 입력 가능합니다.
-        </TextBox>
       </StyledDesc>
       <StyledRow>
         <StyledTextBoxWrapper>
@@ -60,8 +52,6 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
             id="price"
             placeholder={''}
             type="text"
-            minLength={MIN_PRICE_LENGTH}
-            maxLength={MAX_PRICE_LENGTH}
             style={{
               height: 40,
               width: header === '' ? '440px' : '',

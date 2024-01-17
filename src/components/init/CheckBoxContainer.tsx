@@ -31,11 +31,10 @@ export const CheckBoxContainer = ({
         [checkedOption]: event.target.checked,
       }));
     } else if (header === '객실') {
-      if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
-        setSelectedInitRoomOptions((prev) => ({
-          ...prev,
-          [checkedOption]: event.target.checked,
-        }));
+      setSelectedInitRoomOptions((prev) => ({
+        ...prev,
+        [checkedOption]: event.target.checked,
+      }));
     }
   };
 

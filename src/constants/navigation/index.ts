@@ -15,7 +15,7 @@ export const navigationMap = {
   },
   PointDetail: {
     label: '포인트 내역',
-    link: `/1${ROUTES.POINT_DETAIL}`,
+    link: `${ROUTES.POINT_DETAIL}`,
   },
   RoomUpdate: {
     label: '객실 관리',
@@ -23,6 +23,6 @@ export const navigationMap = {
   },
   UseGuide: {
     label: '이용 가이드',
-    link: `/1${ROUTES.MAIN}`,
+    link: `${ROUTES.MAIN}`,
   },
 };

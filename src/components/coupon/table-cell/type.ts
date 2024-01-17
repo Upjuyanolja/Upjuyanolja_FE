@@ -17,8 +17,8 @@ export type dayLimitInputProps = {
   dayLimit: number;
   isSoldOut: boolean;
   record: tableData;
-  handleChangeInput: (
-    event: React.KeyboardEvent<HTMLInputElement>,
+  handleChangeDayLimit: (
+    event: React.ChangeEvent<HTMLInputElement>,
     key: number,
   ) => void;
 };

@@ -1,23 +1,37 @@
 import { TextBox } from '@components/text-box';
 import { Input } from 'antd';
 import styled from 'styled-components';
+import { PurchaseInfoProps } from './type';
 
-export const AdditionalPurchaseInfo = () => {
+export const AdditionalPurchaseInfo = ({
+  coupon,
+  disabled,
+  handleChangeNumberOfCoupons,
+  roomId,
+}: PurchaseInfoProps) => {
   return (
     <StyledCouponInfo>
       <TextBox typography="body2" fontWeight={400}>
-        10% 쿠폰 | 100P
+        {coupon.name} | {coupon.points.toLocaleString()}P
       </TextBox>
       <StyledPriceInfo>
         <div>
-          <StyledInput />
+          <StyledInput
+            value={coupon.numberOfCoupons}
+            disabled={disabled}
+            onChange={(event) =>
+              handleChangeNumberOfCoupons(event, coupon.couponId, roomId)
+            }
+          />
           <TextBox fontWeight={400} typography="body3">
             장
           </TextBox>
         </div>
-        <TextBox typography="h5" fontWeight={700}>
-          10,0000P
-        </TextBox>
+        <StyledTotalPoints>
+          <TextBox typography="h5" fontWeight={700}>
+            {coupon.totalPoints.toLocaleString()}P
+          </TextBox>
+        </StyledTotalPoints>
       </StyledPriceInfo>
     </StyledCouponInfo>
   );
@@ -33,6 +47,12 @@ const StyledPriceInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 40px;
+`;
+
+const StyledTotalPoints = styled.div`
+  width: 120px;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const StyledInput = styled(Input)`

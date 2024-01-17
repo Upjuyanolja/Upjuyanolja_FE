@@ -1,4 +1,13 @@
-import { Button, Checkbox, Form, Input, Layout, Modal, Space } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Layout,
+  Modal,
+  Space,
+  message,
+} from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
@@ -7,14 +16,19 @@ import { InfoContainer } from '../info-container';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { colors } from '@/constants/colors';
 import { PointModalProps } from './types';
-
-import { nanoid } from 'nanoid';
 import {
   PaymentWidgetInstance,
   loadPaymentWidget,
 } from '@tosspayments/payment-widget-sdk';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
+import { AgreementModal } from '../agreement-modal';
+import { orderNumber } from '@/utils/orderNumber';
+import { ROUTES } from '@/constants/routes';
+
+import { currentUrlState } from '@stores/point-charge-modal';
+import { useSetRecoilState } from 'recoil';
+import { useLocation } from 'react-router-dom';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
@@ -41,8 +55,17 @@ export const PointModal = ({
     PaymentWidgetInstance['renderPaymentMethods']
   > | null>(null);
 
+  const [isAgreementModalOpen, setIsAgreementModalOpen] = useState(false);
+
+  const agreementShowModal = () => {
+    setIsAgreementModalOpen(true);
+  };
+  const location = useLocation();
+  const setCurrentUrl = useSetRecoilState(currentUrlState);
   const { handleChangeUrl } = useCustomNavigate();
+
   useEffect(() => {
+    setCurrentUrl(location.pathname);
     (async () => {
       if (
         process.env.REACT_APP_CLIENT_KEY &&
@@ -83,6 +106,7 @@ export const PointModal = ({
     } else {
       setFormattedValue('');
       setPrice(0);
+      return;
     }
 
     priceComparator(inputValue);
@@ -137,16 +161,21 @@ export const PointModal = ({
 
     try {
       await paymentWidget?.requestPayment({
-        orderId: nanoid(),
-        orderName: '토스 티셔츠 외 2건',
-        customerName: '김토스',
-        customerEmail: 'customer123@gmail.com',
-        successUrl: `${window.location.origin}/success`,
-        failUrl: `${window.location.origin}/fail`,
+        orderId: orderNumber(),
+        orderName: '포인트 충전',
+        successUrl: `${window.location.origin}${ROUTES.TOSS_SUCCESS}`,
+        failUrl: `${window.location.origin}${ROUTES.TOSS_FAIL}`,
       });
-      //결제 성공시 파라미터 URL point-detail?paymentType=NsORMAL&orderId=zc0hRbNHRA6sL2Z2BGXbA&paymentKey=gN60L1adJYyZqmkKeP8gxYMjeX2DZp3bQRxB9lG5DnzWE7pM&amount=1000
     } catch (error) {
-      handleChangeUrl('/point-detail');
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            결제가 취소 되었습니다.
+          </TextBox>
+        ),
+        duration: 2,
+      });
+      handleChangeUrl(window.location.pathname);
     }
   };
 
@@ -162,28 +191,37 @@ export const PointModal = ({
       >
         <Layout>
           <Form form={form} layout="vertical" autoComplete="off">
-            <Form.Item name="point" label="충전할 포인트">
-              <Input
-                style={{ width: '95%' }}
-                placeholder="충전할 포인트를 입력해 주세요."
-                value={formattedValue}
-                onChange={handleChangePoint}
-              />
-
-              <TextBox
-                typography="h5"
-                color={'black900'}
-                bold={true}
-                style={{ marginLeft: '8px' }}
-              >
-                P
+            <div>
+              <TextBox typography="h5" color={'black900'} fontWeight={700}>
+                충전할 포인트
               </TextBox>
-              <ErrorContainer>
-                <TextBox typography="body4" color={'error'}>
-                  {pointErrorMessage}
-                </TextBox>
-              </ErrorContainer>
-            </Form.Item>
+            </div>
+
+            <Input
+              style={{ width: '95%' }}
+              placeholder="충전할 포인트를 입력해 주세요."
+              value={formattedValue}
+              onChange={handleChangePoint}
+            />
+
+            <TextBox
+              typography="h5"
+              color={'black900'}
+              fontWeight={700}
+              style={{
+                marginLeft: '8px',
+                top: '40px',
+                right: '0%',
+              }}
+            >
+              P
+            </TextBox>
+
+            <ErrorContainer>
+              <TextBox typography="body4" color={'error'}>
+                {pointErrorMessage}
+              </TextBox>
+            </ErrorContainer>
 
             <PointButtonWrap>
               <Button onClick={() => handleClickAddPoint(PRICE_10000)}>
@@ -210,7 +248,7 @@ export const PointModal = ({
                 <ExclamationCircleOutlined />
               </InfoButton>
 
-              <TextBox typography="h5" color={'primary'} bold={true}>
+              <TextBox typography="h5" color={'primary'} fontWeight={700}>
                 결제 금액 : {formattedValue}원
               </TextBox>
             </PriceWrap>
@@ -223,10 +261,18 @@ export const PointModal = ({
                 checked={isAgreementPoint}
               >
                 <TextBox typography="body3" color={'black900'}>
-                  주문 내용을 확인하였으며,{' '}
-                  <TextBox typography="body3" color={'primaryHover'}>
+                  주문 내용을 확인하였으며,
+                  <TextBox
+                    typography="body3"
+                    color={'primaryHover'}
+                    onClick={agreementShowModal}
+                  >
                     구매 약관
                   </TextBox>
+                  <AgreementModal
+                    isModalOpen={isAgreementModalOpen}
+                    setIsModalOpen={setIsAgreementModalOpen}
+                  />
                   등에 동의합니다
                 </TextBox>
               </Checkbox>
@@ -273,8 +319,8 @@ const CustomModal = styled(Modal)`
       line-height: 30px;
     }
   }
-  .ant-input-number-input-wrap {
-    margin-right: 8px;
+  .ant-input {
+    margin-top: 12px;
   }
 
   .point-buttonWrap {
