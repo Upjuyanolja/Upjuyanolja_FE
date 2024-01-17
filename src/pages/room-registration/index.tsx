@@ -17,11 +17,25 @@ import {
 import { RoomData } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 
 const RoomRegistration = () => {
-  const isValid = true;
+  const [validationStatus, setValidationStatus] = useState({
+    priceValid: false,
+    timeValid: false,
+  });
+
+  const handleValidation = (componentName: string, isValid: boolean) => {
+    setValidationStatus((prevStatus) => ({
+      ...prevStatus,
+      [componentName]: isValid,
+    }));
+    console.log(componentName, isValid);
+  };
+  const isValid = Object.values(validationStatus).every(Boolean);
+
   const roomOptions = {
     tv: 'TV',
     airCondition: '에어컨',
@@ -72,16 +86,6 @@ const RoomRegistration = () => {
     };
     mutate(data);
   };
-  // async (formData: RoomData) => {
-  //   try {
-  //     //postRoomData(formData);
-  //     //const res = await axios.post('', formData);
-  //     const res = useAddRoom;
-  //     console.log('Success:', res.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <StyledWrapper color={colors.white}>
@@ -92,7 +96,11 @@ const RoomRegistration = () => {
           form={form}
         />
         <StyledInputWrapper>
-          <PriceContainer header="객실 가격" form={form} />
+          <PriceContainer
+            header="객실 가격"
+            form={form}
+            onValidate={(isValid) => handleValidation('price', isValid)}
+          />
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />
         <StyledInputWrapper>
