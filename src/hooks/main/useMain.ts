@@ -43,13 +43,29 @@ export const useMain = () => {
     return revenueData;
   };
 
+  const calculateStaleTime = () => {
+    const now = new Date();
+    const targetTime = new Date();
+    const targetHour = 6;
+    targetTime.setHours(targetHour, 0, 0, 0);
+    const day = 24;
+    const minute = 60;
+    const millisecond = 1000;
+    let remainingTime = targetTime.getTime() - now.getTime();
+    if (remainingTime < 0) {
+      remainingTime += day * minute * minute * millisecond;
+    }
+    const hours = Math.floor(remainingTime / (minute * minute * millisecond));
+    return hours;
+  };
+
   const { data: staticsData, isError: isStaticsError } = useGetStatics(
     accommodationId as string,
     {
       select(data) {
         return data.data.data;
       },
-      staleTime: 60 * 60 * 1000,
+      staleTime: calculateStaleTime(),
     },
   );
 
@@ -59,7 +75,7 @@ export const useMain = () => {
       select(data) {
         return data.data.data;
       },
-      staleTime: 60 * 60 * 1000,
+      staleTime: calculateStaleTime(),
     },
   );
 
