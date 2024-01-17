@@ -27,6 +27,7 @@ const RoomRegistration = () => {
   const handlePriceValidation = (valid: boolean) => {
     setIsValid(valid);
   };
+
   const handleTimeValidation = (valid: boolean) => {
     setIsValid(valid);
   };
