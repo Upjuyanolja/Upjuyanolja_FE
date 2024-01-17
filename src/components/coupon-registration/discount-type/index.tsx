@@ -156,6 +156,7 @@ export const DiscountType = () => {
             selectedDiscountType.typeName === FLAT_DISCOUNT ? 'active' : null
           }`}
           type="button"
+          data-testid="flat-discount-type-button"
         >
           <TextBox
             typography="h5"
@@ -174,6 +175,7 @@ export const DiscountType = () => {
             selectedDiscountType.typeName === RATE_DISCOUNT ? 'active' : null
           }`}
           type="button"
+          data-testid="rate-discount-type-button"
         >
           <TextBox
             typography="h5"
@@ -202,6 +204,7 @@ export const DiscountType = () => {
           }
           status={isValidDiscountRange ? '' : 'error'}
           onKeyDown={handleEnterKeyDown}
+          data-testid="discount-input"
         />
         <StyledTextWrap>
           <TextBox typography="body2" fontWeight="bold">
