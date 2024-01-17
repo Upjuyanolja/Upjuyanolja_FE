@@ -17,24 +17,13 @@ import {
 import { RoomData } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 
 const RoomRegistration = () => {
-  const [validationStatus, setValidationStatus] = useState({
-    priceValid: false,
-    timeValid: false,
-  });
-
-  const handleValidation = (componentName: string, isValid: boolean) => {
-    setValidationStatus((prevStatus) => ({
-      ...prevStatus,
-      [componentName]: isValid,
-    }));
-    console.log(componentName, isValid);
-  };
-  const isValid = Object.values(validationStatus).every(Boolean);
+  const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(false);
 
   const roomOptions = {
     tv: 'TV',
@@ -43,7 +32,6 @@ const RoomRegistration = () => {
   };
 
   const { accommodationId } = useParams();
-  const navigate = useNavigate();
 
   const [form] = Form.useForm();
   const { mutate } = useAddRoom(accommodationId as string, {
@@ -87,20 +75,54 @@ const RoomRegistration = () => {
     mutate(data);
   };
 
+  const areFormFieldsValid = () => {
+    const values = form.getFieldsValue();
+
+    const commonConditions =
+      values['accommodation-postCode'] &&
+      values['accommodation-detailAddress'] &&
+      values['accommodation-name'] &&
+      values['accommodation-desc'] &&
+      selectedImages.length !== 0;
+
+    const hotelResortConditions =
+      values['accommodation-category'] === 'HOTEL/RESORT' &&
+      values['accommodation-hotel-category'];
+    const guestConditions =
+      values['accommodation-category'] === 'GUEST' &&
+      values['accommodation-guest-category'];
+
+    return (
+      !form.getFieldsError().some(({ errors }) => errors.length) &&
+      commonConditions &&
+      (values['accommodation-category'] ||
+        hotelResortConditions ||
+        guestConditions)
+    );
+  };
+
+  useEffect(() => {
+    setIsValid(areFormFieldsValid());
+  }, [form, selectedImages, selectedOptions]);
+
+  const handleFormValuesChange = () => {
+    setIsValid(areFormFieldsValid());
+  };
+
   return (
     <StyledWrapper color={colors.white}>
-      <Form form={form} onFinish={onFinish}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        onFieldsChange={handleFormValuesChange}
+      >
         <NameContainer
           header="객실명"
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
           form={form}
         />
         <StyledInputWrapper>
-          <PriceContainer
-            header="객실 가격"
-            form={form}
-            onValidate={(isValid) => handleValidation('price', isValid)}
-          />
+          <PriceContainer header="객실 가격" form={form} />
         </StyledInputWrapper>
         <ImageUploadContainer header="객실 사진" />
         <StyledInputWrapper>
