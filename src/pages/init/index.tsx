@@ -1,6 +1,5 @@
 import { colors } from '@/constants/colors';
 import { TextBox } from '@components/text-box';
-import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { Layout, Button } from 'antd';
 import { MdOutlineAddHome } from 'react-icons/md';
 import styled from 'styled-components';
