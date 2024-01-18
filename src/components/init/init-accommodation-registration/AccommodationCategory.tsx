@@ -173,9 +173,7 @@ const StyledInputWrapper = styled.div`
     height: 200px;
   }
 
-  .ant-radio-button-wrapper-checked:not(
-      .ant-radio-button-wrapper-disabled
-    ):focus-within {
+  .ant-radio-button-wrapper:focus-within {
     box-shadow: none;
   }
 

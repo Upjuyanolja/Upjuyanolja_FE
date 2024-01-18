@@ -1,7 +1,7 @@
 import { MainChart } from '@components/main/main-chart';
 import { MainCouponStatusContainer } from '@components/main/main-coupon-status-container';
 import { CouponRegistrationContainer } from '@components/main/coupon-navigation-container';
-import promotionImage from '@assets/image/mainPromotionImage.png';
+import promotionImage from '@assets/image/mainPromotionImage.jpg';
 import { Image, Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import { useMain } from '@hooks/main/useMain';
@@ -17,13 +17,14 @@ export const Main = () => {
     isRevenueError,
     couponMessage,
     navigateUserGuide,
+    navigateBusinessCenter,
   } = useMain();
 
   if (!staticsData || !revenueData)
     return (
-      <StyledMainLayout>
+      <StyledLoadingLayout>
         <Spin tip="Loading..." size="large" />
-      </StyledMainLayout>
+      </StyledLoadingLayout>
     );
   if (isStaticsError || isRevenueError) return <div>에러</div>;
   return (
@@ -41,13 +42,23 @@ export const Main = () => {
             navigateCouponRegistration={navigateCouponRegistration}
           />
           <UserGuidNavigationContainer navigateUserGuide={navigateUserGuide} />
-          <StyledImage src={promotionImage} preview={false} />
+          <StyledImage
+            src={promotionImage}
+            preview={false}
+            onClick={navigateBusinessCenter}
+          />
         </StyledMainInfo>
       </StyledLayout>
     </StyledMainLayout>
   );
 };
 
+const StyledLoadingLayout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`;
 const StyledMainLayout = styled(Layout)`
   height: 100%;
 
@@ -78,6 +89,10 @@ const StyledMainInfo = styled('div')`
 `;
 const StyledImage = styled(Image)`
   width: 224px;
-  height: 187px;
+  height: 185px;
   border-radius: 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

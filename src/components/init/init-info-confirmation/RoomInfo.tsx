@@ -1,17 +1,25 @@
 import { TextBox } from '@components/text-box';
 import { Button } from 'antd';
 import styled from 'styled-components';
-import { RoomData } from './type';
 import { RoomItem } from './RoomItem';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
+import { Room } from '../init-accommodation-registration/type';
 
-export const RoomInfo = ({ roomData }: { roomData: RoomData[] }) => {
+export const RoomInfo = ({ roomData }: { roomData: Room[] }) => {
+  const navigate = useNavigate();
   return (
     <StyledWrapper>
       <StyledHeadContainer>
         <TextBox typography="h4" fontWeight={700}>
           객실 정보
         </TextBox>
-        <StyledButton type="primary">+ 객실추가</StyledButton>
+        <StyledButton
+          type="primary"
+          onClick={() => navigate(ROUTES.INIT_ROOM_REGISTRATION)}
+        >
+          + 객실추가
+        </StyledButton>
       </StyledHeadContainer>
       <StyledRoomListContainer>
         <RoomItem roomData={roomData} />

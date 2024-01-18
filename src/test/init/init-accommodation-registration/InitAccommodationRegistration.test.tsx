@@ -43,11 +43,12 @@ describe('InitAccommodationRegistration', () => {
   });
 
   test(`숙소소개에 ${ACCOMMODATION_DESC_MIN_LENGTH}글자 미만 입력했을 때 에러메세지를 띄운다.`, () => {
+    const [form] = Form.useForm();
     render(
       <BrowserRouter>
         <RecoilRoot>
           <Form>
-            <AccommodationDesc />
+            <AccommodationDesc form={form} />
           </Form>
         </RecoilRoot>
       </BrowserRouter>,
@@ -68,11 +69,12 @@ describe('InitAccommodationRegistration', () => {
   });
 
   test(`숙소소개에 ${ACCOMMODATION_DESC_MAX_LENGTH}자를 초과해 입력했을 때 input을 막는다.`, () => {
+    const [form] = Form.useForm();
     render(
       <BrowserRouter>
         <RecoilRoot>
           <Form>
-            <AccommodationDesc />
+            <AccommodationDesc form={form} />
           </Form>
         </RecoilRoot>
       </BrowserRouter>,

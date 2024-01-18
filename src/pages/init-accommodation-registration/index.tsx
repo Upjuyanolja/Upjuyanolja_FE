@@ -123,7 +123,7 @@ export const InitAccommodationRegistration = () => {
         <AccommodationAddress form={form} />
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <CheckBoxContainer options={accommodationOptions} header="숙소" />
-        <AccommodationDesc />
+        <AccommodationDesc form={form} />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
     </StyledWrapper>
