@@ -18,7 +18,6 @@ export type ImageUploadFileItem = {
   uid: number;
   name: string;
   url: string;
-  originFileObj?: File;
 };
 
 export type StyledImageContainerProps = {
