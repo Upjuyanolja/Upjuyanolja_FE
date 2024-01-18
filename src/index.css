@@ -232,3 +232,8 @@
 .ant-checkbox-inner {
   border: 1px solid #0349e6;
 }
+
+/*regex error message style*/
+.ant-form-item-explain-error {
+  font-size: 12px;
+}
