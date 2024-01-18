@@ -2,29 +2,15 @@ import { useState } from 'react';
 import { InputNumber, Form } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
-import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import { ValidateInputProps, NumOfRoomsContainerProps } from './type';
-import {
-  MIN_NUM_OF_ROOMS,
-  MAX_NUM_OF_ROOMS,
-} from '@/constants/room/room-registration/';
+import { NumOfRoomsContainerProps } from './type';
 
 export const CountContainer = ({ header, form }: NumOfRoomsContainerProps) => {
   const [numOfRooms, setNumOfRooms] = useState<number>(1);
-  const [error, setError] = useState<string | null>(null);
-
-  const validateInput = ({ value }: ValidateInputProps) => {
-    setError(null);
-    if (value < MIN_NUM_OF_ROOMS || value > MAX_NUM_OF_ROOMS) {
-      setError('1~100까지만 입력 가능합니다.');
-    }
-  };
 
   const handleCapacityChange = (
     newValue: number | string | null | undefined,
   ) => {
     if (typeof newValue !== 'number') return;
-    validateInput({ value: newValue });
     setNumOfRooms(newValue);
     form.setFieldValue('count', newValue);
   };
@@ -61,11 +47,6 @@ export const CountContainer = ({ header, form }: NumOfRoomsContainerProps) => {
           </TextBox>
         </StyledTextBoxWrapper>
       </StyledRow>
-      {error && (
-        <StyledErrorMessageWrapper data-testid="error-input-rooms-count">
-          <StyledFormErrorMessage errorMessage={error} />
-        </StyledErrorMessageWrapper>
-      )}
     </StyledInputWrapper>
   );
 };
@@ -75,21 +56,6 @@ const StyledHeadTextContainer = styled.div`
   gap: 8px;
   align-items: center;
   margin-bottom: 8px;
-`;
-
-const StyledErrorMessageWrapper = styled.div`
-  height: 18px;
-  width: 100%;
-  position: absolute;
-  bottom: -24px;
-  left: 0;
-`;
-
-const StyledFormErrorMessage = styled(FormErrorMessage)`
-  float: left;
-  position: absolute;
-  bottom: 0;
-  left: 0;
 `;
 
 const StyledInputNumber = styled(InputNumber)`
