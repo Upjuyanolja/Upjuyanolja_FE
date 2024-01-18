@@ -6,8 +6,13 @@ import { EditOutlined } from '@ant-design/icons';
 import { CustomButton } from './CustomButton';
 import { ImageCarousel } from './ImageCarousel';
 import { Options } from '../init-accommodation-registration/type';
-import { useRecoilValue } from 'recoil';
-import { userInputValueState } from '@stores/init/atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  accommodationEditState,
+  userInputValueState,
+} from '@stores/init/atoms';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 export const AccommodationInfo = () => {
   const accommodationCategory = {
@@ -36,6 +41,8 @@ export const AccommodationInfo = () => {
 
   const userInputValue = useRecoilValue(userInputValueState);
   const accommodationData = userInputValue[0];
+  const setIsEdit = useSetRecoilState(accommodationEditState);
+  const navigate = useNavigate();
 
   const getAccommodationOptionsKorean = (accommodationData: {
     options: Options;
@@ -54,6 +61,11 @@ export const AccommodationInfo = () => {
     return selectedOptions;
   };
 
+  const handleEditButton = () => {
+    setIsEdit(true);
+    navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+  };
+
   return (
     <StyledWrapper>
       <TextBox typography="h4" fontWeight={700}>
@@ -67,7 +79,11 @@ export const AccommodationInfo = () => {
               <TextBox typography="h4" fontWeight={700} color="primary">
                 숙소명: {accommodationData.name}
               </TextBox>
-              <CustomButton text="수정" icon={<EditOutlined />} />
+              <CustomButton
+                text="수정"
+                icon={<EditOutlined />}
+                onClick={handleEditButton}
+              />
             </StyledTextHeadWrapper>
             <List itemLayout="vertical">
               <List.Item>
