@@ -9,6 +9,7 @@ import {
   accommodationEditState,
   checkedAccommodationOptions,
   checkedRoomOptions,
+  forEditAccommodationOptions,
 } from '@stores/init/atoms';
 import { Options, RoomOptions } from './init-accommodation-registration/type';
 
@@ -18,6 +19,8 @@ export const CheckBoxContainer = ({
 }: CheckBoxContainerProps) => {
   const [selectedAccommodationOptions, setSelectedAccommodationOptions] =
     useRecoilState(checkedAccommodationOptions);
+  const [saveAccommodationOptions, setSaveAccommodationOptions] =
+    useRecoilState(forEditAccommodationOptions);
 
   const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
     useRecoilState(checkedRoomOptions);
@@ -29,6 +32,10 @@ export const CheckBoxContainer = ({
 
     if (header === '숙소') {
       setSelectedAccommodationOptions((prev) => ({
+        ...prev,
+        [checkedOption]: event.target.checked,
+      }));
+      setSaveAccommodationOptions((prev) => ({
         ...prev,
         [checkedOption]: event.target.checked,
       }));
@@ -57,10 +64,10 @@ export const CheckBoxContainer = ({
               onChange={handleCheckboxChange}
               checked={
                 header === '숙소'
-                  ? selectedAccommodationOptions[english as keyof Options]
-                  : selectedInitRoomOptions[english as keyof RoomOptions] ||
+                  ? selectedAccommodationOptions[english as keyof Options] ||
                     (isAccommodationEditState &&
-                      selectedAccommodationOptions[english as keyof Options])
+                      saveAccommodationOptions[english as keyof Options])
+                  : selectedInitRoomOptions[english as keyof RoomOptions]
               }
             >
               {korean}
