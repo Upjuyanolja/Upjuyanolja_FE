@@ -4,13 +4,13 @@ import { Checkbox, Form } from 'antd';
 import styled from 'styled-components';
 import { CheckBoxContainerProps } from './type';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  accommodationEditState,
   checkedAccommodationOptions,
   checkedRoomOptions,
 } from '@stores/init/atoms';
 import { Options, RoomOptions } from './init-accommodation-registration/type';
-import { ROUTES } from '@/constants/routes';
 
 export const CheckBoxContainer = ({
   options,
@@ -21,6 +21,8 @@ export const CheckBoxContainer = ({
 
   const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
     useRecoilState(checkedRoomOptions);
+
+  const isAccommodationEditState = useRecoilValue(accommodationEditState);
 
   const handleCheckboxChange = (event: CheckboxChangeEvent) => {
     const checkedOption = event.target.value;
@@ -56,7 +58,9 @@ export const CheckBoxContainer = ({
               checked={
                 header === '숙소'
                   ? selectedAccommodationOptions[english as keyof Options]
-                  : selectedInitRoomOptions[english as keyof RoomOptions]
+                  : selectedInitRoomOptions[english as keyof RoomOptions] ||
+                    (isAccommodationEditState &&
+                      selectedAccommodationOptions[english as keyof Options])
               }
             >
               {korean}
