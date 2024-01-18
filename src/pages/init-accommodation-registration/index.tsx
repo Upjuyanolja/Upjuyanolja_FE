@@ -10,6 +10,7 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
+  accommodationEditState,
   checkedAccommodationOptions,
   selectedAccommodationFilesState,
   userInputValueState,
@@ -28,6 +29,8 @@ export const InitAccommodationRegistration = () => {
 
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
   const selectedImages = useRecoilValue(selectedAccommodationFilesState);
+
+  const isEdit = useRecoilValue(accommodationEditState);
 
   const accommodationOptions = {
     cooking: '객실취사',
@@ -127,7 +130,10 @@ export const InitAccommodationRegistration = () => {
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <CheckBoxContainer options={accommodationOptions} header="숙소" />
         <AccommodationDesc form={form} />
-        <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
+        <ButtonContainer
+          buttonStyle={isEdit ? 'edit' : 'navigate'}
+          isValid={isValid}
+        />
       </Form>
     </StyledWrapper>
   );
