@@ -1,12 +1,12 @@
 import { Modal, Button } from 'antd';
 import styled from 'styled-components';
-import { PointModalProps } from '../point-modal/types';
 import { TextBox } from '@components/text-box';
+import { AgreementModalProps } from '../type';
 
-export const AgreementModal = ({
+export const CouponAgreementModal = ({
   isModalOpen,
   setIsModalOpen,
-}: PointModalProps) => {
+}: AgreementModalProps) => {
   const handleOk = () => {
     setIsModalOpen(false);
   };
