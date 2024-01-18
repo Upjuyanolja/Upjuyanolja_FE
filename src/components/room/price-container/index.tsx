@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
@@ -9,9 +8,11 @@ import {
 } from './type';
 import { MAX_PRICE, MIN_PRICE } from '@/constants/room/room-registration';
 import { TextBox } from '@components/text-box';
+import { useRecoilState } from 'recoil';
+import { priceHasError } from '@stores/room/atoms';
 
 export const PriceContainer = ({ header, form }: PriceContainerProps) => {
-  const [outOfRangeError, setOutOfRangeError] = useState<string | null>(null);
+  const [outOfRangeError, setOutOfRangeError] = useRecoilState(priceHasError);
 
   const validateInput = ({ value }: ValidateInputProps) => {
     if (value < MIN_PRICE || value > MAX_PRICE) {
