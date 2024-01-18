@@ -1,3 +1,13 @@
+export type onFinishValues = {
+  'room-name': string;
+  price: string;
+  defaultCapacity: number;
+  maxCapacity: number;
+  checkInTime: moment.Moment;
+  checkOutTime: moment.Moment;
+  count: number;
+};
+
 export type RoomListData = {
   rooms: RoomData[];
 };

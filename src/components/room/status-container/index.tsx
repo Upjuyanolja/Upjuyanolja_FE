@@ -27,7 +27,7 @@ export const StatusContainer = () => {
         </Form.Item>
         <StyledTextBoxWrapper>
           <TextBox typography="body1" color="black900" fontWeight="normal">
-            판매 중
+            {!isOnSale ? '판매 중' : '판매 중지'}
           </TextBox>
         </StyledTextBoxWrapper>
       </StyledRow>
@@ -36,7 +36,7 @@ export const StatusContainer = () => {
 };
 
 const StyledInputWrapper = styled.div`
-  margin-bottom: 48px;
+  margin-bottom: 35px;
   position: relative;
 
   .ant-form-item-control {
@@ -67,7 +67,7 @@ const StyledRow = styled.div`
 const StyledDesc = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 `;
 
 const StyledSwitch = styled(Switch)`

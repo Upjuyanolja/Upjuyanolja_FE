@@ -130,7 +130,7 @@ const RoomUpdate = () => {
         <StyledInputWrapper>
           <CheckBoxContainer options={roomOptions} header="객실" />
         </StyledInputWrapper>
-        <ButtonContainer buttonStyle={'register'} isValid={isValid} />
+        <ButtonContainer buttonStyle={'update'} isValid={isValid} />
       </Form>
     </StyledWrapper>
   );

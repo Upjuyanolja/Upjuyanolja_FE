@@ -15,10 +15,13 @@ export const ROOM_API = {
         data,
       },
     ),
-  //   getRoom: (params: RoomAddParams) =>
-  //     instance.get<Response<null>>('/api/rooms/list/{accommodationId}?pageSize={pageSize}&pageNum={pageNum}', {
-  //       data: params,
-  //     }),
+  getRoomList: (data: RoomListData, accommodationId: string) =>
+    instance.get<Response<null>>(
+      `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
+      {
+        data,
+      },
+    ),
   //   editRoom: (params: RoomEditParams) =>
   //     instance.patch<Response<null>>('/api/rooms/{roomId}', params),
 };
