@@ -53,13 +53,8 @@ export const checkedRoomOptions = atom({
   },
 });
 
-const { persistAtom: accommodationOptions } = recoilPersist({
-  key: 'accommodationOptions',
-  storage: localStorage,
-});
-
 export const checkedAccommodationOptions = atom<Options>({
-  key: 'checkedRoomOptions',
+  key: 'checkedAccommodationOptions',
   default: {
     cooking: false,
     parking: false,
@@ -71,7 +66,6 @@ export const checkedAccommodationOptions = atom<Options>({
     sports: false,
     seminar: false,
   },
-  effects_UNSTABLE: [accommodationOptions],
 });
 
 export const selectedAccommodationFilesState = atom<Image[]>({
