@@ -88,6 +88,7 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
       values['accommodation-desc'] &&
+      values['accommodation-category'] &&
       selectedImages.length !== 0;
 
     const hotelResortConditions =
@@ -98,11 +99,10 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-guest-category'];
 
     return (
-      !form.getFieldsError().some(({ errors }) => errors.length) &&
-      commonConditions &&
-      (values['accommodation-category'] ||
-        hotelResortConditions ||
-        guestConditions)
+      (!form.getFieldsError().some(({ errors }) => errors.length) &&
+        commonConditions &&
+        hotelResortConditions) ||
+      guestConditions
     );
   };
 
