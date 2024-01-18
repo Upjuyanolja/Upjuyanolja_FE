@@ -8,6 +8,7 @@ import { isNumber } from '@/utils/is-number';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  determinedPriceState,
   discountValueState,
   groupQuantityValueState,
   isGroupQuantitySelectedState,
@@ -19,6 +20,11 @@ import {
   PendingRoomDataList,
 } from '@components/coupon-registration/type';
 import { removeNumberFormat } from '@/utils/Format/numberFormat';
+import { calculatedCouponPoints } from '@/utils/discountCoupon';
+import {
+  FLAT_DISCOUNT,
+  FLAT_DISCOUNT_TYPE,
+} from '@/constants/coupon-registration';
 
 export const RoomCouponApplier = ({
   roomName,
@@ -36,6 +42,8 @@ export const RoomCouponApplier = ({
   );
   const discountValue = useRecoilValue(discountValueState);
   const [inputValue, setInputValue] = useState('0');
+  const determinedPrice = useRecoilValue(determinedPriceState);
+  const formattedDeterminedPrice = Number(removeNumberFormat(determinedPrice));
 
   const handleChange = (e: InputChangeEvent) => {
     const targetValue = e.target.value;
@@ -59,6 +67,12 @@ export const RoomCouponApplier = ({
     discount: Number(removeNumberFormat(discountValue)),
     quantity: Number(itemQuantityValue),
     roomPrice: roomPrice,
+    eachPoint:
+      calculatedCouponPoints(
+        roomPrice,
+        formattedDeterminedPrice,
+        `${selectedDiscountType === FLAT_DISCOUNT_TYPE ? 'FLAT' : 'RATE'}`,
+      ) * Number(itemQuantityValue),
   };
 
   const handleCheckBox = () => {
@@ -124,7 +138,7 @@ export const RoomCouponApplier = ({
     setPendingRoomDataList((prev: PendingRoomDataList) =>
       updateRoomDataList(prev, existingItemIndex, newItem),
     );
-  }, [itemQuantityValue]);
+  }, [itemQuantityValue, selectedDiscountType, discountValue]);
 
   useEffect(() => {
     if (!isGroupQuantitySelected || !isItemQuantitySelected) {

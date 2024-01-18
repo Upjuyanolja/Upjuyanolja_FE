@@ -92,7 +92,7 @@ export const CouponPreviewItem = ({
                 formattedDeterminedPrice,
                 'FLAT',
               ) * quantity,
-            )}P`}
+            )}`}
           {isValidDiscountRateType &&
             quantity &&
             `${numberFormat(
@@ -101,7 +101,8 @@ export const CouponPreviewItem = ({
                 formattedDeterminedPrice,
                 'RATE',
               ) * quantity,
-            )}P`}
+            )}`}
+          P
         </TextBox>
       </StyledCouponPrice>
     </Container>

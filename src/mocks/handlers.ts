@@ -55,7 +55,7 @@ export const handlers = [
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
 
   http.get(
-    '/api/coupons/backoffice/buy/accommodationId',
+    `/api/coupons/backoffice/buy/${accommodationId}`,
     getCouponRoomListResolver,
   ),
   http.post('/api/coupons/backoffice/buy', buyCouponResolver),

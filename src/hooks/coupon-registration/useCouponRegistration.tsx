@@ -4,10 +4,13 @@ import {
 } from '@queries/coupon-registration';
 import { message } from 'antd';
 import { AxiosError } from 'axios';
+import { useParams } from 'react-router-dom';
 
 export const useCouponRegistration = () => {
+  const { accommodationId } = useParams();
+
   const { data: couponRoomListData, isError: isGetCouponRoomListError } =
-    useGetCouponRoomList({
+    useGetCouponRoomList(accommodationId as string, {
       select(data) {
         return data.data.data;
       },

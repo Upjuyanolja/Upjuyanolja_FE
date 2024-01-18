@@ -34,7 +34,6 @@ export const CouponPreview = () => {
   const discountValue = useRecoilValue(discountValueState);
 
   const handleClick = (e: MouseEvent) => {
-    console.log(pendingRoomDataList);
     e.preventDefault();
     setIsModalOpen(true);
   };
