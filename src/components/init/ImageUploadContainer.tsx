@@ -104,6 +104,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   useEffect(() => {
     if (isAccommodationEdit) {
       setFileList(userInputValue[0].images);
+      setSelectedAccommodationFiles(userInputValue[0].images);
     }
   }, [isAccommodationEdit]);
 
@@ -187,6 +188,8 @@ const StyledUploadButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
+
+  cursor: pointer;
 
   background-color: #fafafa;
   border: 1.5px dashed #d9d9d9;
