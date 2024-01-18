@@ -121,7 +121,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
       setSelectedAccommodationFiles(newFileList);
     } else if (
       header === '객실 사진' &&
-      window.location.pathname === '/init/room-registration'
+      window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
     ) {
       setSelectedInitRoomFiles(newFileList);
     }
