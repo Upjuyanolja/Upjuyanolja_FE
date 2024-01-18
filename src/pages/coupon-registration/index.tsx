@@ -4,13 +4,18 @@ import { CouponPreview } from '@components/coupon-registration/coupon-preview';
 import { DiscountType } from '@components/coupon-registration/discount-type';
 import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
+import { pendingRoomDataListState } from '@stores/coupon-registration/atoms';
 
 import { Modal } from 'antd';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 export const CouponRegistration = () => {
+  const pendingRoomDataList = useRecoilValue(pendingRoomDataListState);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('pendingRoomDataList', pendingRoomDataList);
     Modal.confirm({
       content: '쿠폰을 구매하시겠습니까?',
       okText: '구매',

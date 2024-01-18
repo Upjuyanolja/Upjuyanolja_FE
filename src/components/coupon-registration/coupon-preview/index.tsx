@@ -9,10 +9,12 @@ import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   determinedPriceState,
+  discountValueState,
   isTermsCheckedState,
   isValidCouponRegistrationState,
   pendingRoomDataListState,
   selectedDiscountTypeState,
+  totalPointsState,
 } from '@stores/coupon-registration/atoms';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { useEffect, useState } from 'react';
@@ -28,7 +30,11 @@ export const CouponPreview = () => {
   const [isTermsChecked, setIsTermsChecked] =
     useRecoilState(isTermsCheckedState);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [totalPoints, setTotalPoints] = useRecoilState(totalPointsState);
+  const discountValue = useRecoilValue(discountValueState);
+
   const handleClick = (e: MouseEvent) => {
+    console.log(pendingRoomDataList);
     e.preventDefault();
     setIsModalOpen(true);
   };
@@ -59,15 +65,20 @@ export const CouponPreview = () => {
     }
   };
 
-  const totalPrice = calculateTotalPrice(
-    pendingRoomDataList,
-    selectedDiscountType,
-  );
+  useEffect(() => {
+    if (!pendingRoomDataList || !determinedPrice) {
+      return;
+    }
+    setTotalPoints(
+      calculateTotalPrice(pendingRoomDataList, selectedDiscountType),
+    );
+  }, [pendingRoomDataList, determinedPrice]);
 
   useEffect(() => {
-    console.log('isValidCouponRegistration', isValidCouponRegistration);
-    setIsValidCouponRegistration(!!(isTermsChecked && totalPrice));
-  }, [isTermsChecked, totalPrice]);
+    setIsValidCouponRegistration(
+      !!(isTermsChecked && totalPoints && discountValue),
+    );
+  }, [isTermsChecked, totalPoints, discountValue]);
 
   return (
     <Container>
@@ -111,7 +122,7 @@ export const CouponPreview = () => {
         <Spacing space="16" />
         <StyledCouponTotalPrice>
           <TextBox typography="h5" fontWeight="bold" color="primary">
-            합계: {determinedPrice ? numberFormat(totalPrice) : '0'}P
+            합계: {determinedPrice ? numberFormat(totalPoints) : '0'}P
           </TextBox>
         </StyledCouponTotalPrice>
         <Spacing space="16" />

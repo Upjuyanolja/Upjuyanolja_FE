@@ -52,3 +52,8 @@ export const isTermsCheckedState = atom<boolean>({
   key: 'isTermsChecked',
   default: false,
 });
+
+export const totalPointsState = atom<number>({
+  key: 'totalPoints',
+  default: 0,
+});
