@@ -17,10 +17,11 @@ import {
   selectedInitRoomFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
+import { capacityHasError, priceHasError } from '@stores/room/atoms';
 import { Form, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitRoomRegistration = () => {
@@ -47,6 +48,8 @@ export const InitRoomRegistration = () => {
 
   const [sameRoomName, setSameRoomName] = useState(false);
   const [recoilUpdated, setRecoilUpdated] = useState(false);
+  const priceError = useRecoilValue(priceHasError);
+  const capacityError = useRecoilValue(capacityHasError);
 
   const onFinish = (values: onFinishValues) => {
     if (userInputLocalStorage !== null) {
@@ -103,13 +106,16 @@ export const InitRoomRegistration = () => {
       selectedImages.length !== 0;
 
     return (
-      !form.getFieldsError().some(({ errors }) => errors.length) && conditions
+      !form.getFieldsError().some(({ errors }) => errors.length) &&
+      conditions &&
+      !priceError &&
+      !capacityError
     );
   };
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [selectedImages, selectedOptions]);
+  }, [selectedImages, selectedOptions, priceHasError, capacityError]);
 
   useEffect(() => {
     if (recoilUpdated && sameRoomName === false) {

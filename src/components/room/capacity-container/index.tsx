@@ -8,11 +8,13 @@ import {
   MAX_CAPACITY,
   MIN_CAPACITY,
 } from '@/constants/room/room-registration/';
+import { capacityHasError } from '@stores/room/atoms';
+import { useRecoilState } from 'recoil';
 
 export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
   const [defaultCapacity, setDefaultCapacity] = useState<number>(1);
   const [maxCapacity, setMaxCapacity] = useState<number>(1);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useRecoilState(capacityHasError);
 
   useEffect(() => {
     setError(null);
