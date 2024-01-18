@@ -62,7 +62,10 @@ export const InitRoomRegistration = () => {
 
       if (hasDuplicate) {
         setSameRoomName(true);
-        message.error('동일한 객실명의 상품이 이미 존재합니다.');
+        message.error({
+          content: '동일한 객실명의 상품이 이미 존재합니다.',
+          style: { marginTop: '210px' },
+        });
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
