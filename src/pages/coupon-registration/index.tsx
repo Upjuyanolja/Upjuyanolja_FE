@@ -23,10 +23,6 @@ export const CouponRegistration = () => {
   const totalPoints = useRecoilValue(totalPointsState);
   const { buyCoupon, isModalOpen, setIsModalOpen } = useCouponRegistration();
 
-  useEffect(() => {
-    console.log('실행됨');
-  }, [isModalOpen]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
