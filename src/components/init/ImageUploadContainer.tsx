@@ -34,7 +34,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     const selectedFile = inputElement.files?.[0];
 
     inputElement.value = '';
-    console.log(selectedFile + '!!!!!!!!!!!!');
     if (!selectedFile) {
       return;
     }
@@ -50,27 +49,36 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
       });
     }
     if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
-      setFileList((prevFileList) => [
-        ...prevFileList,
-        {
-          uid: Date.now(),
-          name: selectedFile.name,
-          url: URL.createObjectURL(selectedFile),
-          originFileObj: selectedFile,
-        },
-      ]);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageUrl = reader.result as string;
 
-      if (header === '숙소 대표 이미지 설정') {
-        setSelectedAccommodationFiles((prevSelectedFiles) => [
-          ...prevSelectedFiles,
-          { url: URL.createObjectURL(selectedFile) },
+        setFileList((prevFileList) => [
+          ...prevFileList,
+          {
+            uid: Date.now(),
+            name: selectedFile.name,
+            url: imageUrl,
+          },
         ]);
-      } else if (header === '객실 사진') {
-        setSelectedInitRoomFiles((prevSelectedFiles) => [
-          ...prevSelectedFiles,
-          { url: URL.createObjectURL(selectedFile) },
-        ]);
-      }
+
+        if (header === '숙소 대표 이미지 설정') {
+          setSelectedAccommodationFiles((prevSelectedFiles) => [
+            ...prevSelectedFiles,
+            { url: imageUrl },
+          ]);
+        } else if (
+          header === '객실 사진' &&
+          window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
+        ) {
+          setSelectedInitRoomFiles((prevSelectedFiles) => [
+            ...prevSelectedFiles,
+            { url: imageUrl },
+          ]);
+        }
+      };
+
+      reader.readAsDataURL(selectedFile);
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,

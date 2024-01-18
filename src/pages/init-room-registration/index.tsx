@@ -14,10 +14,10 @@ import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
 import {
   checkedRoomOptions,
-  isSameRoomName,
   selectedInitRoomFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
+import { capacityHasError, priceHasError } from '@stores/room/atoms';
 import { Form, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -38,54 +38,60 @@ export const InitRoomRegistration = () => {
 
   const setUserInputValueState = useSetRecoilState(userInputValueState);
 
-  const selectedOptions = useRecoilValue(checkedRoomOptions);
-  const selectedImages = useRecoilValue(selectedInitRoomFilesState);
+  const [selectedOptions, setSelectedOptions] =
+    useRecoilState(checkedRoomOptions);
+  const [selectedImages, setSelectedImages] = useRecoilState(
+    selectedInitRoomFilesState,
+  );
 
-  const userInputLocalStorage = localStorage.getItem('localStorage');
+  const userInputLocalStorage = localStorage.getItem('userInput');
 
-  const [sameRoomName, setSameRoomName] = useRecoilState(isSameRoomName);
+  const [sameRoomName, setSameRoomName] = useState(false);
+  const [recoilUpdated, setRecoilUpdated] = useState(false);
+  const priceError = useRecoilValue(priceHasError);
+  const capacityError = useRecoilValue(capacityHasError);
 
   const onFinish = (values: onFinishValues) => {
-    setUserInputValueState((prevUserInputValueState) => {
-      const [userInputValue] = prevUserInputValueState;
-      const [room] = userInputValue.rooms;
-
-      const updatedRoom: Room = {
-        ...room,
-        name: values['room-name'],
-        price: parseInt(values['price'].replace(',', '')),
-        defaultCapacity: values['defaultCapacity'],
-        maxCapacity: values['maxCapacity'],
-        checkInTime: values['checkInTime'].format('HH:mm'),
-        checkOutTime: values['checkOutTime'].format('HH:mm'),
-        count: values['count'],
-        options: selectedOptions,
-        images: selectedImages,
-      };
-
-      const updatedUserInputValue = {
-        ...userInputValue,
-        rooms: [updatedRoom],
-      };
-
-      return [updatedUserInputValue];
-    });
-
     if (userInputLocalStorage !== null) {
       const parsedData = JSON.parse(userInputLocalStorage);
       const roomsArray = parsedData?.userInputValueState[0]?.rooms;
 
-      if (roomsArray.length !== 0) {
-        roomsArray.forEach((room: Room) => {
-          if (room.name === form.getFieldValue('room-name')) {
-            setSameRoomName(true);
-            message.error('동일한 객실명의 상품이 이미 존재합니다.');
-          } else {
-            setSameRoomName(false);
-            navigate(ROUTES.INIT_INFO_CONFIRMATION);
-          }
-        });
+      const hasDuplicate = roomsArray.some(
+        (room: Room) => room.name === values['room-name'],
+      );
+
+      if (hasDuplicate) {
+        setSameRoomName(true);
+        message.error('동일한 객실명의 상품이 이미 존재합니다.');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
       }
+
+      setUserInputValueState((prevUserInputValueState) => {
+        const [userInputValue] = prevUserInputValueState;
+
+        const updatedRoom: Room = {
+          name: values['room-name'],
+          price: parseInt(values['price'].replace(',', '')),
+          defaultCapacity: values['defaultCapacity'],
+          maxCapacity: values['maxCapacity'],
+          checkInTime: values['checkInTime'].format('HH:mm'),
+          checkOutTime: values['checkOutTime'].format('HH:mm'),
+          count: values['count'],
+          options: selectedOptions,
+          images: selectedImages,
+        };
+
+        const updatedUserInputValue = {
+          ...userInputValue,
+          rooms: [...userInputValue.rooms, updatedRoom],
+        };
+
+        return [updatedUserInputValue];
+      });
+
+      setRecoilUpdated(true);
+      setSameRoomName(false);
     }
   };
 
@@ -100,13 +106,25 @@ export const InitRoomRegistration = () => {
       selectedImages.length !== 0;
 
     return (
-      !form.getFieldsError().some(({ errors }) => errors.length) && conditions
+      !form.getFieldsError().some(({ errors }) => errors.length) &&
+      conditions &&
+      !priceError &&
+      !capacityError
     );
   };
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, selectedImages, selectedOptions]);
+  }, [selectedImages, selectedOptions, priceHasError, capacityError]);
+
+  useEffect(() => {
+    if (recoilUpdated && sameRoomName === false) {
+      setRecoilUpdated(false);
+      setSelectedImages([]);
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    }
+  }, [recoilUpdated, sameRoomName]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
