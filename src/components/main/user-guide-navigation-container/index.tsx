@@ -19,7 +19,7 @@ export const UserGuidNavigationContainer = ({
           이용가이드 <RightOutlined color="white" />
         </StyledButton>
       </StyledTextContainer>
-      <Image width={90} height={110} src={womanImage} preview={false} />
+      <Image width={82} height={100} src={womanImage} preview={false} />
     </StyledContainer>
   );
 };

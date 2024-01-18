@@ -73,7 +73,7 @@ export const MainChart = ({ revenueData, couponMessage }: mainChartProps) => {
 };
 const StyledLayout = styled('div')`
   width: 692px;
-  height: 386px;
+  height: 382px;
 
   border: 2px solid ${(props) => props.color};
   border-radius: 8px;
