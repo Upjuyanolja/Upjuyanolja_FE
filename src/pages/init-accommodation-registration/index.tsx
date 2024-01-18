@@ -15,7 +15,7 @@ import {
   selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { UserInputValue } from '@components/init/init-accommodation-registration/type';
@@ -53,7 +53,7 @@ export const InitAccommodationRegistration = () => {
         case 'HOTEL/RESORT':
           type = values['accommodation-hotel-category'];
           break;
-        case 'GUEST':
+        case 'GUEST_HOUSE':
           type = values['accommodation-guest-category'];
           break;
         default:
@@ -91,7 +91,7 @@ export const InitAccommodationRegistration = () => {
       values['accommodation-category'] === 'HOTEL/RESORT' &&
       values['accommodation-hotel-category'];
     const guestConditions =
-      values['accommodation-category'] === 'GUEST' &&
+      values['accommodation-category'] === 'GUEST_HOUSE' &&
       values['accommodation-guest-category'];
 
     return (
