@@ -112,7 +112,7 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
             </TextBox>
           </StyledRadioButton>
           <StyledRadioButton
-            value="GUEST"
+            value="GUEST_HOUSE"
             onClick={() => handleButtonClick('GUEST_HOUSE')}
           >
             <img

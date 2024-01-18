@@ -50,7 +50,7 @@ export const InitAccommodationRegistration = () => {
         case 'HOTEL/RESORT':
           type = values['accommodation-hotel-category'];
           break;
-        case 'GUEST':
+        case 'GUEST_HOUSE':
           type = values['accommodation-guest-category'];
           break;
         default:
@@ -73,35 +73,38 @@ export const InitAccommodationRegistration = () => {
 
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
+
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
 
     const commonConditions =
       values['accommodation-postCode'] &&
+      values['accommodation-address'] &&
       values['accommodation-detailAddress'] &&
       values['accommodation-name'] &&
+      values['accommodation-category'] &&
       values['accommodation-desc'] &&
       selectedImages.length !== 0;
 
     const hotelResortConditions =
-      values['accommodation-category'] === 'HOTEL/RESORT' &&
+      values['accommodation-category'] !== 'HOTEL/RESORT' ||
       values['accommodation-hotel-category'];
+
     const guestConditions =
-      values['accommodation-category'] === 'GUEST' &&
+      values['accommodation-category'] !== 'GUEST_HOUSE' ||
       values['accommodation-guest-category'];
 
     return (
       !form.getFieldsError().some(({ errors }) => errors.length) &&
       commonConditions &&
-      (values['accommodation-category'] ||
-        hotelResortConditions ||
-        guestConditions)
+      hotelResortConditions &&
+      guestConditions
     );
   };
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, selectedImages, selectedOptions]);
+  }, [selectedImages]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
