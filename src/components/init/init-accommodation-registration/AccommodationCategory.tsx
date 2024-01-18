@@ -15,10 +15,18 @@ import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
 import { Form, Radio } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
+import { useRecoilValue } from 'recoil';
+import {
+  accommodationEditState,
+  userInputValueState,
+} from '@stores/init/atoms';
 
 export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
   const [clickedCategory, setClickedCategory] =
     useState<AccommodationCategoryType>(null);
+
+  const isEditState = useRecoilValue(accommodationEditState);
+  const userInputValue = useRecoilValue(userInputValueState);
 
   const handleButtonClick = (category: AccommodationCategoryType) => {
     if (clickedCategory !== category) {
@@ -42,6 +50,33 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
   useEffect(() => {
     form.setFieldValue('accommodation-category', clickedCategory);
   }, [clickedCategory, form]);
+
+  useEffect(() => {
+    const checkedType = userInputValue[0].type;
+    if (isEditState) {
+      switch (checkedType) {
+        case 'HOTEL':
+        case 'RESORT':
+        case 'TOURIST_HOTEL':
+        case 'CONDO':
+        case 'RESIDENCE':
+          setClickedCategory('HOTEL/RESORT');
+          break;
+        case 'MOTEL':
+          setClickedCategory('MOTEL');
+          break;
+        case 'PENSION_POOL_VILLA':
+          setClickedCategory('PENSION_POOL_VILLA');
+          break;
+        case 'GUEST_HOUSE':
+        case 'HANOK':
+          setClickedCategory('GUEST_HOUSE');
+          break;
+        default:
+          setClickedCategory(null);
+      }
+    }
+  }, [isEditState]);
 
   return (
     <StyledInputWrapper>

@@ -4,6 +4,11 @@ import styled from 'styled-components';
 import { Form, Radio, RadioChangeEvent } from 'antd';
 import { useEffect, useState } from 'react';
 import { colors } from '@/constants/colors';
+import { useRecoilValue } from 'recoil';
+import {
+  accommodationEditState,
+  userInputValueState,
+} from '@stores/init/atoms';
 
 export const RadioButtonCustomContainer = ({
   label,
@@ -17,12 +22,35 @@ export const RadioButtonCustomContainer = ({
     setValue(event.target.value);
   };
 
+  const isEditState = useRecoilValue(accommodationEditState);
+  const userInputValue = useRecoilValue(userInputValueState);
+
   useEffect(() => {
     setValue('');
     '호텔' in options
       ? form.setFieldValue('accommodation-hotel-category', '')
       : form.setFieldValue('accommodation-guest-category', '');
   }, []);
+
+  useEffect(() => {
+    if (isEditState) {
+      const typeToSet = userInputValue[0].type;
+      const englishCategory = Object.keys(options).find(
+        (key) => options[key] === typeToSet,
+      );
+
+      if (englishCategory) {
+        form.setFieldValue(
+          '호텔' in options
+            ? 'accommodation-hotel-category'
+            : 'accommodation-guest-category',
+          typeToSet,
+        );
+
+        setValue(typeToSet);
+      }
+    }
+  }, [isEditState]);
 
   return (
     <StyledWrapper>
