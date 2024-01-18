@@ -7,14 +7,15 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { BsPeopleFill } from 'react-icons/bs';
 import { ImageCarousel } from './ImageCarousel';
 import { Room } from '../init-accommodation-registration/type';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userInputValueState } from '@stores/init/atoms';
 
-export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
-  const setUserInputValueState = useSetRecoilState(userInputValueState);
+export const RoomItem = () => {
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
 
   const removeRoom = (room: Room) => {
-    if (roomData.length === 1) {
+    if (userInputValue[0].rooms.length === 1) {
       message.error({
         content: '최소 1개의 객실이 등록되어야 합니다.',
         style: { marginTop: '210px' },
@@ -22,9 +23,11 @@ export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
       return;
     }
 
-    const newRooms = roomData.filter((item) => item.name !== room.name);
+    const newRooms = userInputValue[0].rooms.filter(
+      (item) => item.name !== room.name,
+    );
 
-    setUserInputValueState((prevUserInputValue) => {
+    setUserInputValue((prevUserInputValue) => {
       const [userInputValueState] = prevUserInputValue;
 
       const updatedUserInputValue = {
@@ -56,7 +59,7 @@ export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
 
   return (
     <>
-      {roomData.map((room: Room) => (
+      {userInputValue[0].rooms.map((room: Room) => (
         <StyledRoomItemContainer key={room.name}>
           <ImageCarousel images={room.images} />
           <StyledRoomInfoContainer>
