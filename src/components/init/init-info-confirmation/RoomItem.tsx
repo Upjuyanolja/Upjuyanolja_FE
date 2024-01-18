@@ -15,7 +15,10 @@ export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
 
   const removeRoom = (room: Room) => {
     if (roomData.length === 1) {
-      message.error('최소 1개의 객실이 등록되어야 합니다.');
+      message.error({
+        content: '최소 1개의 객실이 등록되어야 합니다.',
+        style: { marginTop: '210px' },
+      });
       return;
     }
 
@@ -32,7 +35,10 @@ export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
       return [updatedUserInputValue];
     });
 
-    message.success('삭제되었습니다.');
+    message.success({
+      content: '삭제되었습니다.',
+      style: { marginTop: '210px' },
+    });
   };
 
   const confirm = (room: Room) => {

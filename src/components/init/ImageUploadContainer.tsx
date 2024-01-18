@@ -46,6 +46,14 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     ) {
       return message.error({
         content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
+        style: {
+          marginTop:
+            window.location.pathname ===
+              ROUTES.INIT_ACCOMMODATION_REGISTRATION ||
+            ROUTES.INIT_ROOM_REGISTRATION
+              ? '210px'
+              : '0',
+        },
       });
     }
     if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
@@ -82,6 +90,14 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+        style: {
+          marginTop:
+            window.location.pathname ===
+              ROUTES.INIT_ACCOMMODATION_REGISTRATION ||
+            ROUTES.INIT_ROOM_REGISTRATION
+              ? '210px'
+              : '0',
+        },
       });
     }
   };
