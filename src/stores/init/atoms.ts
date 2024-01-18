@@ -72,3 +72,8 @@ export const selectedInitRoomFilesState = atom<Image[]>({
   key: 'selectedInitRoomFilesState',
   default: [],
 });
+
+export const accommodationEditState = atom({
+  key: 'accommodationEditState',
+  default: false,
+});
