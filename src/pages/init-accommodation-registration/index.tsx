@@ -44,39 +44,42 @@ export const InitAccommodationRegistration = () => {
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
   const selectedImages = useRecoilValue(selectedAccommodationFilesState);
 
-  const [isEditState, setIsEditState] = useRecoilState(accommodationEditState);
+  const isEditState = useRecoilValue(accommodationEditState);
 
-  const onFinish = (values: { [key: string]: string }) => {
+  const changeValues = () => {
     setUserInputValue(() => {
       let type;
-      switch (values['accommodation-category']) {
+      switch (form.getFieldValue('accommodation-category')) {
         case 'HOTEL/RESORT':
-          type = values['accommodation-hotel-category'];
+          type = form.getFieldValue('accommodation-hotel-category');
           break;
         case 'GUEST_HOUSE':
-          type = values['accommodation-guest-category'];
+          type = form.getFieldValue('accommodation-guest-category');
           break;
         default:
-          type = values['accommodation-category'];
+          type = form.getFieldValue('accommodation-category');
       }
 
       const updatedUserInputValue: UserInputValue = {
         type,
-        name: values['accommodation-name'],
-        address: values['accommodation-address'],
-        detailAddress: values['accommodation-detailAddress'],
-        zipCode: values['accommodation-postCode'],
-        description: values['accommodation-desc'],
+        name: form.getFieldValue('accommodation-name'),
+        address: form.getFieldValue('accommodation-address'),
+        detailAddress: form.getFieldValue('accommodation-detailAddress'),
+        zipCode: form.getFieldValue('accommodation-postCode'),
+        description: form.getFieldValue('accommodation-desc'),
         options: selectedOptions,
         images: selectedImages,
         rooms: [],
       };
       return [updatedUserInputValue];
     });
+  };
 
-    setIsEditState(false);
+  const onFinish = () => {
+    changeValues();
     if (!isEditState) navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
+
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
 
