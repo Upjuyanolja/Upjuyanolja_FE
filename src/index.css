@@ -236,4 +236,5 @@
 /*regex error message style*/
 .ant-form-item-explain-error {
   font-size: 12px;
+  margin-top: 8px;
 }
