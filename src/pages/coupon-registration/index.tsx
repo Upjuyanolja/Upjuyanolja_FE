@@ -3,6 +3,7 @@ import { CouponApplier } from '@components/coupon-registration/coupon-applier';
 import { CouponCard } from '@components/coupon-registration/coupon-card';
 import { CouponPreview } from '@components/coupon-registration/coupon-preview';
 import { DiscountType } from '@components/coupon-registration/discount-type';
+import { PointModal } from '@components/point-charge-modal/point-modal';
 import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
 import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
@@ -11,6 +12,7 @@ import {
   totalPointsState,
 } from '@stores/coupon-registration/atoms';
 import { Modal } from 'antd';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -19,7 +21,11 @@ export const CouponRegistration = () => {
   const pendingRoomDataList = useRecoilValue(pendingRoomDataListState);
   const { accommodationId } = useParams();
   const totalPoints = useRecoilValue(totalPointsState);
-  const { buyCoupon } = useCouponRegistration();
+  const { buyCoupon, isModalOpen, setIsModalOpen } = useCouponRegistration();
+
+  useEffect(() => {
+    console.log('실행됨');
+  }, [isModalOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,6 +74,9 @@ export const CouponRegistration = () => {
           <CouponPreview />
         </div>
       </StyledForm>
+      {isModalOpen && (
+        <PointModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      )}
     </Container>
   );
 };
