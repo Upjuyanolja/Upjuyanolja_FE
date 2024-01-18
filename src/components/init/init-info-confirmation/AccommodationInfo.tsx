@@ -5,16 +5,11 @@ import styled from 'styled-components';
 import { EditOutlined } from '@ant-design/icons';
 import { CustomButton } from './CustomButton';
 import { ImageCarousel } from './ImageCarousel';
-import {
-  Options,
-  UserInputValue,
-} from '../init-accommodation-registration/type';
+import { Options } from '../init-accommodation-registration/type';
+import { useRecoilValue } from 'recoil';
+import { userInputValueState } from '@stores/init/atoms';
 
-export const AccommodationInfo = ({
-  accommodationData,
-}: {
-  accommodationData: UserInputValue;
-}) => {
+export const AccommodationInfo = () => {
   const accommodationCategory = {
     HOTEL: '호텔',
     RESORT: '리조트',
@@ -38,6 +33,9 @@ export const AccommodationInfo = ({
     sauna: '사우나실',
     seminar: '세미나실',
   };
+
+  const userInputValue = useRecoilValue(userInputValueState);
+  const accommodationData = userInputValue[0];
 
   const getAccommodationOptionsKorean = (accommodationData: {
     options: Options;

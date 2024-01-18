@@ -1,22 +1,12 @@
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { AccommodationInfo } from '@components/init/init-info-confirmation/AccommodationInfo';
 import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
-import { useState } from 'react';
 import styled from 'styled-components';
 
 export const InitInfoConfirmation = () => {
-  const userInputLocalStorage = localStorage.getItem('userInput');
-  const [userInput] = useState(() => {
-    return userInputLocalStorage !== null
-      ? JSON.parse(userInputLocalStorage)
-      : null;
-  });
-
   return (
     <StyledWrapper>
-      <AccommodationInfo
-        accommodationData={userInput?.userInputValueState[0]}
-      />
+      <AccommodationInfo />
       <RoomInfo />
       <ButtonContainer buttonStyle="request" />
     </StyledWrapper>
