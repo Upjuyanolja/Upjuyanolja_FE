@@ -107,6 +107,7 @@ export const CouponPreview = () => {
                 roomName={item.roomName}
                 roomPrice={item.roomPrice}
                 quantity={item.quantity}
+                eachPoint={item.eachPoint}
                 key={index}
               />
             ))

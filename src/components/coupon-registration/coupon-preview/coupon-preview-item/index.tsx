@@ -20,6 +20,7 @@ export const CouponPreviewItem = ({
   roomName,
   roomPrice,
   quantity,
+  eachPoint,
 }: CouponPreviewItemProps) => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const determinedPrice = useRecoilValue(determinedPriceState);
@@ -84,25 +85,7 @@ export const CouponPreviewItem = ({
       <StyledDivider />
       <StyledCouponPrice>
         <TextBox typography="h5" fontWeight="bold" color="black900">
-          {isValidDiscountFlatType &&
-            quantity &&
-            `${numberFormat(
-              calculatedCouponPoints(
-                roomPrice,
-                formattedDeterminedPrice,
-                'FLAT',
-              ) * quantity,
-            )}`}
-          {isValidDiscountRateType &&
-            quantity &&
-            `${numberFormat(
-              calculatedCouponPoints(
-                roomPrice,
-                formattedDeterminedPrice,
-                'RATE',
-              ) * quantity,
-            )}`}
-          P
+          {eachPoint && `${numberFormat(eachPoint)}`}P
         </TextBox>
       </StyledCouponPrice>
     </Container>
