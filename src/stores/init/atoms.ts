@@ -11,6 +11,11 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
+const { persistAtom: editAccommodationAtom } = recoilPersist({
+  key: 'editAccommodation',
+  storage: localStorage,
+});
+
 export const userInputValueState = atom<UserInputValue[]>({
   key: 'userInputValueState',
   default: [
@@ -76,4 +81,5 @@ export const selectedInitRoomFilesState = atom<Image[]>({
 export const accommodationEditState = atom({
   key: 'accommodationEditState',
   default: false,
+  effects_UNSTABLE: [editAccommodationAtom],
 });
