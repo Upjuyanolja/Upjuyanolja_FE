@@ -1,21 +1,21 @@
 import { TextBox } from '@components/text-box';
-import { Modal, message } from 'antd';
+import { message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import { ImageUploadFileItem, StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
+  accommodationEditState,
   selectedAccommodationFilesState,
   selectedInitRoomFilesState,
+  userInputValueState,
 } from '@stores/init/atoms';
 import { ROUTES } from '@/constants/routes';
 
 export const ImageUploadContainer = ({ header }: { header: string }) => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -27,7 +27,8 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     selectedInitRoomFilesState,
   );
 
-  const handleCancel = () => setPreviewOpen(false);
+  const isAccommodationEdit = useRecoilValue(accommodationEditState);
+  const userInputValue = useRecoilValue(userInputValueState);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
@@ -56,8 +57,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
         setFileList((prevFileList) => [
           ...prevFileList,
           {
-            uid: Date.now(),
-            name: selectedFile.name,
             url: imageUrl,
           },
         ]);
@@ -86,19 +85,20 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     }
   };
 
+  useEffect(() => {
+    if (isAccommodationEdit) {
+      setFileList(userInputValue[0].images);
+    }
+  }, [isAccommodationEdit]);
+
   const openFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
-  const handleImageClick = (file: ImageUploadFileItem) => {
-    setPreviewOpen(true);
-    setPreviewTitle(file.name);
-  };
-
   const handleRemove = (file: ImageUploadFileItem) => {
-    const newFileList = fileList.filter((item) => item.uid !== file.uid);
+    const newFileList = fileList.filter((item) => item.url !== file.url);
     setFileList(newFileList);
 
     if (header === '숙소 대표 이미지 설정') {
@@ -123,16 +123,12 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
       </StyledHeadTextContainer>
       <StyledImageContainer $fileList={fileList} header={header}>
         {fileList.map((file) => (
-          <div key={file.uid}>
+          <div key={file.url}>
             <StyledCloseButton
               onClick={() => handleRemove(file)}
               twoToneColor={colors.black600}
             />
-            <img
-              src={file.url}
-              alt={file.name}
-              onClick={() => handleImageClick(file)}
-            />
+            <img src={file.url} />
           </div>
         ))}
         {fileList.length < IMAGE_MAX_COUNT && (
@@ -153,18 +149,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           </StyledUploadButtonWrapper>
         )}
       </StyledImageContainer>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img
-          alt={previewTitle}
-          style={{ width: '100%' }}
-          src={fileList.find((file) => file.name === previewTitle)?.url}
-        />
-      </Modal>
     </StyledInputWrapper>
   );
 };
@@ -187,7 +171,6 @@ const StyledUploadButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
-  cursor: pointer;
 
   background-color: #fafafa;
   border: 1.5px dashed #d9d9d9;

@@ -15,8 +15,6 @@ export type CheckBoxContainerProps = {
 };
 
 export type ImageUploadFileItem = {
-  uid: number;
-  name: string;
   url: string;
 };
 
