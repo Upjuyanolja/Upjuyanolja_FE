@@ -8,7 +8,12 @@ export type onFinishValues = {
   count: number;
 };
 
-export type RoomListData = {
+export type RoomListResponseData = {
+  pageNum: number;
+  pageSize: number;
+  totalPages: number;
+  totalElements: number;
+  isLast: boolean;
   rooms: RoomData[];
 };
 

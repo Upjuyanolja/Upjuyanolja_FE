@@ -1,7 +1,7 @@
 import { Response } from '@/types/api';
 import { instance } from '..';
 import {
-  RoomListData,
+  RoomListResponseData,
   RoomData,
   RoomPostResponseData,
   AccommodationData,
@@ -15,12 +15,9 @@ export const ROOM_API = {
         data,
       },
     ),
-  getRoomList: (data: RoomListData, accommodationId: string) =>
-    instance.get<Response<null>>(
+  getRoomList: (accommodationId: string) =>
+    instance.get<Response<RoomListResponseData>>(
       `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
-      {
-        data,
-      },
     ),
   //   editRoom: (params: RoomEditParams) =>
   //     instance.patch<Response<null>>('/api/rooms/{roomId}', params),

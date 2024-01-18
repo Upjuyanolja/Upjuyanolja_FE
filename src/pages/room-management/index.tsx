@@ -3,11 +3,32 @@ import { Card, Button, Row } from 'antd';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useGetRoomList } from '@queries/room';
 import { ROUTES } from '@/constants/routes';
 
 const RoomManagement = () => {
   const navigate = useNavigate();
-  const { accommodationId } = useParams();
+  const { accommodationId: tempAccommodationId } = useParams();
+  const accommodationId = tempAccommodationId || '';
+  const { data, isLoading, error } = useGetRoomList(accommodationId);
+
+  console.log(data);
+  // const { getList } = useGetRoomList(accommodationId as string, {
+  //   onSuccess() {
+  //     console.log(data)
+  //     // message.success({
+  //     //   content: '등록되었습니다',
+  //     //   className: 'coupon-message',
+  //     // });
+  //     // navigate(`/${accommodationId}${ROUTES.ROOM}`);
+  //     // setSelectedImages([]);
+  //     // setSelectedOptions({
+  //     //   airCondition: false,
+  //     //   tv: false,
+  //     //   internet: false,
+  //     // });
+  //   }
+  // });
 
   return (
     <StyledPageContainer bodyStyle={{ padding: 0 }}>
