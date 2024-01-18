@@ -9,6 +9,10 @@ import {
   Options,
   UserInputValue,
 } from '../init-accommodation-registration/type';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
+import { useSetRecoilState } from 'recoil';
+import { accommodationEditState } from '@stores/init/atoms';
 
 export const AccommodationInfo = ({
   accommodationData,
@@ -39,6 +43,9 @@ export const AccommodationInfo = ({
     seminar: '세미나실',
   };
 
+  const navigate = useNavigate();
+  const setIsEditState = useSetRecoilState(accommodationEditState);
+
   const getAccommodationOptionsKorean = (accommodationData: {
     options: Options;
   }): string[] => {
@@ -56,6 +63,11 @@ export const AccommodationInfo = ({
     return selectedOptions;
   };
 
+  const handleEditClick = () => {
+    setIsEditState(true);
+    navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+  };
+
   return (
     <StyledWrapper>
       <TextBox typography="h4" fontWeight={700}>
@@ -69,7 +81,11 @@ export const AccommodationInfo = ({
               <TextBox typography="h4" fontWeight={700} color="primary">
                 숙소명: {accommodationData.name}
               </TextBox>
-              <CustomButton text="수정" icon={<EditOutlined />} />
+              <CustomButton
+                text="수정"
+                icon={<EditOutlined />}
+                onClick={handleEditClick}
+              />
             </StyledTextHeadWrapper>
             <List itemLayout="vertical">
               <List.Item>

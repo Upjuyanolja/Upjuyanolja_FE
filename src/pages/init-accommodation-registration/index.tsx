@@ -10,13 +10,15 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
+  accommodationEditState,
   checkedAccommodationOptions,
   selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
+import { UserInputValue } from '@components/init/init-accommodation-registration/type';
 
 export const InitAccommodationRegistration = () => {
   const navigate = useNavigate();
@@ -36,15 +38,16 @@ export const InitAccommodationRegistration = () => {
     seminar: '세미나실',
   };
 
-  const setUserInputValueState = useSetRecoilState(userInputValueState);
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
 
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
   const selectedImages = useRecoilValue(selectedAccommodationFilesState);
 
-  const onFinish = (values: { [key: string]: string }) => {
-    setUserInputValueState((prevUserInputValueState) => {
-      const [userInputValue] = prevUserInputValueState;
+  const [isEditState, setIsEditState] = useRecoilState(accommodationEditState);
 
+  const onFinish = (values: { [key: string]: string }) => {
+    setUserInputValue(() => {
       let type;
       switch (values['accommodation-category']) {
         case 'HOTEL/RESORT':
@@ -57,8 +60,7 @@ export const InitAccommodationRegistration = () => {
           type = values['accommodation-category'];
       }
 
-      const updatedUserInputValue = {
-        ...userInputValue,
+      const updatedUserInputValue: UserInputValue = {
         type,
         name: values['accommodation-name'],
         address: values['accommodation-address'],
@@ -67,11 +69,13 @@ export const InitAccommodationRegistration = () => {
         description: values['accommodation-desc'],
         options: selectedOptions,
         images: selectedImages,
+        rooms: [],
       };
       return [updatedUserInputValue];
     });
 
-    navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    setIsEditState(false);
+    if (!isEditState) navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
   const areFormFieldsValid = () => {
     const values = form.getFieldsValue();
@@ -107,6 +111,19 @@ export const InitAccommodationRegistration = () => {
     setIsValid(areFormFieldsValid());
   };
 
+  useEffect(() => {
+    if (isEditState) {
+      form.setFieldValue('accommodation-name', userInputValue[0].name);
+      form.setFieldValue('accommodation-postCode', userInputValue[0].zipCode);
+      form.setFieldValue('accommodation-address', userInputValue[0].address);
+      form.setFieldValue(
+        'accommodation-detailAddress',
+        userInputValue[0].detailAddress,
+      );
+      form.setFieldValue('accommodation-desc', userInputValue[0].description);
+    }
+  }, [isEditState]);
+
   return (
     <StyledWrapper>
       <Form
@@ -124,7 +141,10 @@ export const InitAccommodationRegistration = () => {
         <ImageUploadContainer header="숙소 대표 이미지 설정" />
         <CheckBoxContainer options={accommodationOptions} header="숙소" />
         <AccommodationDesc form={form} />
-        <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
+        <ButtonContainer
+          buttonStyle={isEditState ? 'edit' : 'navigate'}
+          isValid={isValid}
+        />
       </Form>
     </StyledWrapper>
   );
