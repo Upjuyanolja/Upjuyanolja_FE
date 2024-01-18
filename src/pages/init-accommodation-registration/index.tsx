@@ -24,6 +24,11 @@ export const InitAccommodationRegistration = () => {
 
   const [form] = Form.useForm();
 
+  const setUserInputValueState = useSetRecoilState(userInputValueState);
+
+  const selectedOptions = useRecoilValue(checkedAccommodationOptions);
+  const selectedImages = useRecoilValue(selectedAccommodationFilesState);
+
   const accommodationOptions = {
     cooking: '객실취사',
     parking: '주차시설',
@@ -35,11 +40,6 @@ export const InitAccommodationRegistration = () => {
     sauna: '사우나실',
     seminar: '세미나실',
   };
-
-  const setUserInputValueState = useSetRecoilState(userInputValueState);
-
-  const selectedOptions = useRecoilValue(checkedAccommodationOptions);
-  const selectedImages = useRecoilValue(selectedAccommodationFilesState);
 
   const onFinish = (values: { [key: string]: string }) => {
     setUserInputValueState((prevUserInputValueState) => {
