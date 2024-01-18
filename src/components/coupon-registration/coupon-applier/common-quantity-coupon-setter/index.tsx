@@ -8,12 +8,10 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   groupQuantityValueState,
   isGroupQuantitySelectedState,
-  selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
 import { isNumber } from '@/utils/isNumber';
 
 export const CommonQuantityCouponSetter = () => {
-  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const setGroupQuantityValue = useSetRecoilState(groupQuantityValueState);
   const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useRecoilState(
     isGroupQuantitySelectedState,

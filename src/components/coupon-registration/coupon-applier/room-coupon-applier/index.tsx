@@ -21,10 +21,7 @@ import {
 } from '@components/coupon-registration/type';
 import { removeNumberFormat } from '@/utils/Format/numberFormat';
 import { calculatedCouponPoints } from '@/utils/discountCoupon';
-import {
-  FLAT_DISCOUNT,
-  FLAT_DISCOUNT_TYPE,
-} from '@/constants/coupon-registration';
+import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 
 export const RoomCouponApplier = ({
   roomName,
@@ -130,6 +127,10 @@ export const RoomCouponApplier = ({
       return [...prev, newItem];
     }
   };
+
+  useEffect(() => {
+    setPendingRoomDataList([]);
+  }, []);
 
   useEffect(() => {
     if (itemQuantityValue === '' || !isItemQuantitySelected) {
