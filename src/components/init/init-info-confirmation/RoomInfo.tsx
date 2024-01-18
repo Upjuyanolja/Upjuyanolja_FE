@@ -1,12 +1,12 @@
 import { TextBox } from '@components/text-box';
 import { Button } from 'antd';
 import styled from 'styled-components';
-import { RoomData } from './type';
 import { RoomItem } from './RoomItem';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import { Room } from '../init-accommodation-registration/type';
 
-export const RoomInfo = ({ roomData }: { roomData: RoomData[] }) => {
+export const RoomInfo = ({ roomData }: { roomData: Room[] }) => {
   const navigate = useNavigate();
   return (
     <StyledWrapper>

@@ -1,15 +1,41 @@
 import { TextBox } from '@components/text-box';
-import { Modal, Tag } from 'antd';
+import { Modal, Tag, message } from 'antd';
 import styled from 'styled-components';
-import { RoomData } from './type';
 import { colors } from '@/constants/colors';
 import { CustomButton } from './CustomButton';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { BsPeopleFill } from 'react-icons/bs';
 import { ImageCarousel } from './ImageCarousel';
+import { Room } from '../init-accommodation-registration/type';
+import { useSetRecoilState } from 'recoil';
+import { userInputValueState } from '@stores/init/atoms';
 
-export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
-  const confirm = () => {
+export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
+  const setUserInputValueState = useSetRecoilState(userInputValueState);
+
+  const removeRoom = (room: Room) => {
+    if (roomData.length === 1) {
+      message.error('최소 1개의 객실이 등록되어야 합니다.');
+      return;
+    }
+
+    const newRooms = roomData.filter((item) => item.name !== room.name);
+
+    setUserInputValueState((prevUserInputValue) => {
+      const [userInputValueState] = prevUserInputValue;
+
+      const updatedUserInputValue = {
+        ...userInputValueState,
+        rooms: newRooms,
+      };
+
+      return [updatedUserInputValue];
+    });
+
+    message.success('삭제되었습니다.');
+  };
+
+  const confirm = (room: Room) => {
     Modal.confirm({
       title: '해당 객실을 삭제하시겠습니까?',
       okText: '삭제',
@@ -18,12 +44,13 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
       width: '494px',
       bodyStyle: { height: '216px' },
       centered: true,
+      onOk: () => removeRoom(room),
     });
   };
 
   return (
     <>
-      {roomData.map((room) => (
+      {roomData.map((room: Room) => (
         <StyledRoomItemContainer key={room.name}>
           <ImageCarousel images={room.images} />
           <StyledRoomInfoContainer>
@@ -36,7 +63,7 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
                 <CustomButton
                   text="삭제"
                   icon={<DeleteOutlined />}
-                  onClick={confirm}
+                  onClick={() => confirm(room)}
                 />
               </StyledButtonContainer>
             </StyledRoomInfoHeadContainer>
@@ -69,7 +96,7 @@ export const RoomItem = ({ roomData }: { roomData: RoomData[] }) => {
               <StyledRoomInfoMainRight>
                 <TextBox typography="body3">객실 수: {room.count}개</TextBox>
                 <TextBox typography="h5" fontWeight={700}>
-                  {room.price.toLocaleString()}원
+                  {room.price?.toLocaleString()}원
                 </TextBox>
               </StyledRoomInfoMainRight>
             </StyledRoomInfoMainContainer>

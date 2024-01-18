@@ -1,23 +1,30 @@
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { AccommodationInfo } from '@components/init/init-info-confirmation/AccommodationInfo';
 import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 export const InitInfoConfirmation = () => {
-  const userInputLocalStorage = localStorage.getItem('userInput');
-  let accommodationData;
-  let roomData;
+  const [userInput, setUserInput] = useState(() => {
+    const userInputLocalStorage = localStorage.getItem('userInput');
+    return userInputLocalStorage !== null
+      ? JSON.parse(userInputLocalStorage)
+      : null;
+  });
 
-  if (userInputLocalStorage !== null) {
-    const parsedData = JSON.parse(userInputLocalStorage);
-    accommodationData = parsedData.userInputValueState[0];
-    roomData = parsedData.userInputValueState[0].rooms;
-  }
+  useEffect(() => {
+    const userInputLocalStorage = localStorage.getItem('userInput');
+    if (userInputLocalStorage !== null) {
+      setUserInput(JSON.parse(userInputLocalStorage));
+    }
+  }, [userInput]);
 
   return (
     <StyledWrapper>
-      <AccommodationInfo accommodationData={accommodationData} />
-      <RoomInfo roomData={roomData} />
+      <AccommodationInfo
+        accommodationData={userInput?.userInputValueState[0]}
+      />
+      <RoomInfo roomData={userInput?.userInputValueState[0]?.rooms} />
       <ButtonContainer buttonStyle="request" />
     </StyledWrapper>
   );
