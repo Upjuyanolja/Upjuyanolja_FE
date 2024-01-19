@@ -6,6 +6,8 @@ import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase
 import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
 import { useCoupon } from '@hooks/coupon/useCoupon';
 import { CouponTable } from '@components/coupon/table';
+import { PointModal } from '@components/point-charge-modal/point-modal';
+import { NotFoundCoupon } from '@components/coupon/not-found-coupon';
 
 export const Coupon = () => {
   const {
@@ -28,10 +30,29 @@ export const Coupon = () => {
     handleChangeBatchValue,
     handleChangeBuyQuantity,
     handlePurchaseButton,
+    isPointModalOpen,
+    setIsPointModalOpen,
+    isGetCouponLoading,
   } = useCoupon();
 
-  if (!data) return <div>로딩</div>;
+  if (isGetCouponLoading) return <div>로딩</div>;
+  if (!data)
+    return (
+      <>
+        <CouponHeader
+          expiry={''}
+          handleSelectStatus={handleSelectStatus}
+          handleDeleteButton={handleDeleteButton}
+          isModified={() => false}
+          handleChangeDate={handleChangeDate}
+          handleEditButton={handleEditButton}
+          handleModalOpen={handleModalOpen}
+        />
+        <NotFoundCoupon />
+      </>
+    );
   if (isGetCouponError) return <div>에러</div>;
+
   return (
     <>
       <CouponHeader
@@ -68,6 +89,12 @@ export const Coupon = () => {
           handleChangeBuyQuantity={handleChangeBuyQuantity}
         />
       </StyledModal>
+      {isPointModalOpen && (
+        <PointModal
+          isModalOpen={isPointModalOpen}
+          setIsModalOpen={setIsPointModalOpen}
+        />
+      )}
     </>
   );
 };

@@ -1,12 +1,11 @@
 import { Response } from '@/types/api';
 import { instance } from '..';
 import {
-  RoomListData,
+  RoomListResponseData,
   RoomData,
   RoomPostResponseData,
   AccommodationData,
 } from './type';
-import { useParams } from 'react-router-dom';
 
 export const ROOM_API = {
   addRoom: (data: RoomData, accommodationId: string) =>
@@ -16,10 +15,10 @@ export const ROOM_API = {
         data,
       },
     ),
-  //   getRoom: (params: RoomAddParams) =>
-  //     instance.get<Response<null>>('/api/rooms/list/{accommodationId}?pageSize={pageSize}&pageNum={pageNum}', {
-  //       data: params,
-  //     }),
+  getRoomList: (accommodationId: string) =>
+    instance.get<Response<RoomListResponseData>>(
+      `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
+    ),
   //   editRoom: (params: RoomEditParams) =>
   //     instance.patch<Response<null>>('/api/rooms/{roomId}', params),
 };

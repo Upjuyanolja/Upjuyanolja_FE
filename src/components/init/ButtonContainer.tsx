@@ -14,6 +14,7 @@ export const ButtonContainer = ({
   isValid,
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
+
   const handlePreviousClick = () => {
     if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
       navigate(ROUTES.INIT);

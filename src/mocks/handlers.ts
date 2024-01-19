@@ -25,7 +25,7 @@ import {
   buyCouponResolver,
   getCouponRoomListResolver,
 } from './coupon-registration';
-import { postRoomResolver } from './room';
+import { postRoomResolver, getRoomListResolver } from './room';
 import { postAccommodationInfoResolver, postImageFileResolver } from './init';
 
 const email = 'ivegaeul@naver.com';
@@ -74,4 +74,8 @@ export const handlers = [
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
   http.post('/api/accommodations/images', postImageFileResolver),
+  http.get(
+    `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
+    getRoomListResolver,
+  ),
 ];

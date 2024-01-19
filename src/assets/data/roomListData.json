@@ -1,0 +1,121 @@
+{
+  "message": "성공적으로 객실 목록을 조회 했습니다.",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 5,
+    "totalPages": 2,
+    "totalElements": 8,
+    "isLast": false,
+    "rooms": [
+      {
+        "id": 286,
+        "name": "봄",
+        "basePrice": 100000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "status": "SELLING",
+        "count": 5,
+        "images": [
+          {
+            "url": "pension_room2_2.webp"
+          },
+          {
+            "url": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [
+          {
+            "id": 56,
+            "name": "10% 할인",
+            "price": 90000
+          },
+          {
+            "id": 57,
+            "name": "2000원 할인",
+            "price": 80000
+          }
+        ],
+        "options": {
+          "airCondition": true,
+          "tv": true,
+          "internet": true
+        }
+      },
+      {
+        "id": 286,
+        "name": "봄",
+        "basePrice": 100000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "count": 5,
+        "images": [
+          {
+            "fileName": "pension_room2_2.webp"
+          },
+          {
+            "fileName": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [
+          {
+            "id": 56,
+            "name": "10% 할인",
+            "price": 90000
+          },
+          {
+            "id": 57,
+            "name": "2000원 할인",
+            "price": 80000
+          }
+        ],
+        "options": {
+          "airCondition": true,
+          "tv": true,
+          "internet": true
+        }
+      },
+      {
+        "id": 286,
+        "name": "봄",
+        "basePrice": 100000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "count": 5,
+        "images": [
+          {
+            "fileName": "pension_room2_2.webp"
+          },
+          {
+            "fileName": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [
+          {
+            "id": 56,
+            "name": "10% 할인",
+            "price": 90000
+          },
+          {
+            "id": 57,
+            "name": "2000원 할인",
+            "price": 80000
+          }
+        ],
+        "options": {
+          "airCondition": true,
+          "tv": true,
+          "internet": true
+        }
+      }
+    ]
+  }
+}
