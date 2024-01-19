@@ -8,6 +8,7 @@ import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
 import {
+  imageFileState,
   selectedAccommodationFilesState,
   selectedInitRoomFilesState,
 } from '@stores/init/atoms';
@@ -28,6 +29,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   );
 
   const handleCancel = () => setPreviewOpen(false);
+  const setImageFile = useSetRecoilState(imageFileState);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
@@ -57,6 +59,8 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
       });
     }
     if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+      setImageFile((prev) => [...prev, selectedFile]);
+
       const reader = new FileReader();
       reader.onload = () => {
         const imageUrl = reader.result as string;
@@ -70,7 +74,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           },
         ]);
 
-        if (header === '숙소 대표 이미지 설정') {
+        /* if (header === '숙소 대표 이미지 설정') {
           setSelectedAccommodationFiles((prevSelectedFiles) => [
             ...prevSelectedFiles,
             { url: imageUrl },
@@ -83,7 +87,7 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
             ...prevSelectedFiles,
             { url: imageUrl },
           ]);
-        }
+        }*/
       };
 
       reader.readAsDataURL(selectedFile);
