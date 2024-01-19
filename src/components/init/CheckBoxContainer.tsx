@@ -10,7 +10,6 @@ import {
   checkedRoomOptions,
 } from '@stores/init/atoms';
 import { Options, RoomOptions } from './init-accommodation-registration/type';
-import { ROUTES } from '@/constants/routes';
 
 export const CheckBoxContainer = ({
   options,

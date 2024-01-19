@@ -26,10 +26,6 @@ export type StyledImageContainerProps = {
   header: string;
 };
 
-export type ImageUploadContainerProps = {
-  header: string;
-};
-
 export type NameContainerProps = {
   header: string;
   placeholder: string;

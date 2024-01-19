@@ -7,10 +7,7 @@ import { ImageUploadFileItem, StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
-import {
-  selectedAccommodationFilesState,
-  selectedInitRoomFilesState,
-} from '@stores/init/atoms';
+import { imageFileState } from '@stores/init/atoms';
 import { ROUTES } from '@/constants/routes';
 
 export const ImageUploadContainer = ({ header }: { header: string }) => {
@@ -19,15 +16,8 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const setSelectedAccommodationFiles = useSetRecoilState(
-    selectedAccommodationFilesState,
-  );
-
-  const setSelectedInitRoomFiles = useSetRecoilState(
-    selectedInitRoomFilesState,
-  );
-
   const handleCancel = () => setPreviewOpen(false);
+  const setImageFile = useSetRecoilState(imageFileState);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
@@ -46,9 +36,19 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     ) {
       return message.error({
         content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
+        style: {
+          marginTop:
+            window.location.pathname ===
+              ROUTES.INIT_ACCOMMODATION_REGISTRATION ||
+            ROUTES.INIT_ROOM_REGISTRATION
+              ? '210px'
+              : '0',
+        },
       });
     }
     if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
+      setImageFile((prev) => [...prev, selectedFile]);
+
       const reader = new FileReader();
       reader.onload = () => {
         const imageUrl = reader.result as string;
@@ -61,27 +61,20 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
             url: imageUrl,
           },
         ]);
-
-        if (header === '숙소 대표 이미지 설정') {
-          setSelectedAccommodationFiles((prevSelectedFiles) => [
-            ...prevSelectedFiles,
-            { url: imageUrl },
-          ]);
-        } else if (
-          header === '객실 사진' &&
-          window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
-        ) {
-          setSelectedInitRoomFiles((prevSelectedFiles) => [
-            ...prevSelectedFiles,
-            { url: imageUrl },
-          ]);
-        }
       };
 
       reader.readAsDataURL(selectedFile);
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+        style: {
+          marginTop:
+            window.location.pathname ===
+              ROUTES.INIT_ACCOMMODATION_REGISTRATION ||
+            ROUTES.INIT_ROOM_REGISTRATION
+              ? '210px'
+              : '0',
+        },
       });
     }
   };
@@ -100,15 +93,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   const handleRemove = (file: ImageUploadFileItem) => {
     const newFileList = fileList.filter((item) => item.uid !== file.uid);
     setFileList(newFileList);
-
-    if (header === '숙소 대표 이미지 설정') {
-      setSelectedAccommodationFiles(newFileList);
-    } else if (
-      header === '객실 사진' &&
-      window.location.pathname === '/init/room-registration'
-    ) {
-      setSelectedInitRoomFiles(newFileList);
-    }
   };
 
   return (
