@@ -9,19 +9,23 @@ import { PriceContainer } from '@components/room/price-container';
 import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   checkedRoomOptions,
   selectedInitRoomFilesState,
 } from '@stores/init/atoms';
-import { RoomData } from '@api/room/type';
+import { RoomData, onFinishValues } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
+import { capacityHasError, priceHasError } from '@stores/room/atoms';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 
 const RoomRegistration = () => {
-  const isValid = true;
+  const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(false);
+
   const roomOptions = {
     tv: 'TV',
     airCondition: '에어컨',
@@ -29,18 +33,16 @@ const RoomRegistration = () => {
   };
 
   const { accommodationId } = useParams();
-  const navigate = useNavigate();
 
   const [form] = Form.useForm();
   const { mutate } = useAddRoom(accommodationId as string, {
     onSuccess() {
       message.success({
         content: '등록되었습니다',
-        className: 'coupon-message',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
-      setSelectedInitRoomFiles([]);
-      setSelectedInitRoomOptions({
+      setSelectedImages([]);
+      setSelectedOptions({
         airCondition: false,
         tv: false,
         internet: false,
@@ -52,13 +54,18 @@ const RoomRegistration = () => {
     },
   });
 
-  const [selectedImages, setSelectedInitRoomFiles] = useRecoilState(
+  const [selectedImages, setSelectedImages] = useRecoilState(
     selectedInitRoomFilesState,
   );
-  const [selectedOptions, setSelectedInitRoomOptions] =
+  const [selectedOptions, setSelectedOptions] =
     useRecoilState(checkedRoomOptions);
 
-  const onFinish = (value: any) => {
+  const [sameRoomName, setSameRoomName] = useState(false);
+  const [recoilUpdated, setRecoilUpdated] = useState(false);
+  const priceError = useRecoilValue(priceHasError);
+  const capacityError = useRecoilValue(capacityHasError);
+
+  const onFinish = (value: onFinishValues) => {
     const data: RoomData = {
       name: value['room-name'],
       price: parseInt(value['price'].replace(',', '')),
@@ -70,26 +77,63 @@ const RoomRegistration = () => {
       options: selectedOptions,
       images: selectedImages,
     };
+    setRecoilUpdated(true);
     mutate(data);
   };
-  // async (formData: RoomData) => {
-  //   try {
-  //     //postRoomData(formData);
-  //     //const res = await axios.post('', formData);
-  //     const res = useAddRoom;
-  //     console.log('Success:', res.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+
+  const areFormFieldsValid = () => {
+    const values = form.getFieldsValue();
+
+    const conditions =
+      values['room-name'] &&
+      values['price'] &&
+      values['checkInTime'] &&
+      values['checkOutTime'] &&
+      selectedImages.length !== 0;
+
+    console.log(
+      values['room-name'],
+      values['price'],
+      values['checkInTime'],
+      values['checkOutTime'],
+      selectedImages.length,
+    );
+
+    return (
+      !form.getFieldsError().some(({ errors }) => errors.length) &&
+      conditions &&
+      !priceError &&
+      !capacityError
+    );
+  };
+
+  useEffect(() => {
+    setIsValid(areFormFieldsValid());
+  }, [
+    form,
+    selectedImages,
+    selectedOptions,
+    priceError,
+    capacityError,
+    recoilUpdated,
+  ]);
+
+  const handleFormValuesChange = () => {
+    setIsValid(areFormFieldsValid());
+  };
 
   return (
     <StyledWrapper color={colors.white}>
-      <Form form={form} onFinish={onFinish}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        onFieldsChange={handleFormValuesChange}
+      >
         <NameContainer
           header="객실명"
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
           form={form}
+          //isSameRoomName={sameRoomName}
         />
         <StyledInputWrapper>
           <PriceContainer header="객실 가격" form={form} />

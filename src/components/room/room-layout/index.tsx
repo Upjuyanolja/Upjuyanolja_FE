@@ -20,12 +20,16 @@ export const RoomLayout = () => {
     },
   };
 
-  const currentRoute = Object.keys(routeConfig).find(
-    (route) => location.pathname === route,
+  const currentRouteKey = Object.keys(routeConfig).find((routeKey) =>
+    location.pathname.includes(routeKey),
   );
 
-  const { pageTitle = '객실 추가 등록' } =
-    routeConfig[currentRoute as keyof typeof routeConfig] || {};
+  const currentRouteConfig =
+    routeConfig[currentRouteKey as keyof typeof routeConfig];
+
+  const pageTitle = currentRouteConfig
+    ? currentRouteConfig.pageTitle
+    : '객실 추가 등록';
 
   return (
     <StyledFullContainer
