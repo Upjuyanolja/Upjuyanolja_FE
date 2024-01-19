@@ -26,17 +26,13 @@ export const useCouponRegistration = () => {
       });
     },
     onError(error) {
-      const errorMessage = error.response?.data.message;
       const errorCode = error.response?.data.code;
 
-      handleErrorResponse(errorCode, errorMessage);
+      handleErrorResponse(errorCode);
     },
   });
 
-  const handleErrorResponse = (
-    errorCode: number | undefined,
-    errorMessage: string | undefined,
-  ) => {
+  const handleErrorResponse = (errorCode: number | undefined) => {
     switch (errorCode) {
       case RESPONSE_CODE.NOT_ENOUGH_POINT:
         return Modal.confirm({
@@ -47,10 +43,6 @@ export const useCouponRegistration = () => {
           className: 'confirm-modal',
           onOk: () => setIsModalOpen(true),
         });
-      case RESPONSE_CODE.NOT_FOUND_ACCOMMODATION_ID:
-      case RESPONSE_CODE.NOT_FOUND_POINT:
-      case RESPONSE_CODE.NOT_FOUND_ROOM_DATA:
-        return message.error(errorMessage);
       default:
         return message.error('요청에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
