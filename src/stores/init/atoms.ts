@@ -1,6 +1,5 @@
 import {
   Options,
-  Image,
   UserInputValue,
 } from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
@@ -61,16 +60,6 @@ export const checkedAccommodationOptions = atom<Options>({
     sports: false,
     seminar: false,
   },
-});
-
-export const selectedAccommodationFilesState = atom<Image[]>({
-  key: 'selectedAccommodationFilesState',
-  default: [],
-});
-
-export const selectedInitRoomFilesState = atom<Image[]>({
-  key: 'selectedInitRoomFilesState',
-  default: [],
 });
 
 export const accommodationEditState = atom({
