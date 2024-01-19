@@ -1,7 +1,5 @@
 export type PostImageFile = {
-  message: string;
-  code?: number | undefined;
-  data: { urls: string[] };
+  urls: string[];
 };
 
 export type PostAccommodationParams = {
