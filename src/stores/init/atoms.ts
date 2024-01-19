@@ -77,3 +77,8 @@ export const accommodationEditState = atom({
   key: 'accommodationEditState',
   default: false,
 });
+
+export const imageFileState = atom<File[]>({
+  key: 'imageFileState',
+  default: [],
+});
