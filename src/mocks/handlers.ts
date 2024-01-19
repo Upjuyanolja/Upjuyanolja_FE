@@ -73,5 +73,5 @@ export const handlers = [
   http.post(`/api/rooms/${accommodationId}`, postRoomResolver),
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
-  http.post('/api/accommodation/images', postImageFileResolver),
+  http.post('/api/accommodations/images', postImageFileResolver),
 ];
