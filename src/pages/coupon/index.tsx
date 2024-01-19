@@ -26,12 +26,12 @@ export const Coupon = () => {
     handleBatchEditCheckbox,
     purchaseData,
     handleChangeBatchValue,
-    handleChangeNumberOfCoupons,
+    handleChangeBuyQuantity,
+    handlePurchaseButton,
   } = useCoupon();
 
   if (!data) return <div>로딩</div>;
   if (isGetCouponError) return <div>에러</div>;
-
   return (
     <>
       <CouponHeader
@@ -55,14 +55,17 @@ export const Coupon = () => {
         title="추가 구매"
         onCancel={handleModalClose}
         footer={
-          <AdditionalPurchaseFooter totalPoints={purchaseData?.totalPoints} />
+          <AdditionalPurchaseFooter
+            totalPoints={purchaseData?.totalPoints}
+            handlePurchaseButton={handlePurchaseButton}
+          />
         }
       >
         <AdditionalPurchaseContent
           purchaseData={purchaseData}
           handleBatchEditCheckbox={handleBatchEditCheckbox}
           handleChangeBatchValue={handleChangeBatchValue}
-          handleChangeNumberOfCoupons={handleChangeNumberOfCoupons}
+          handleChangeBuyQuantity={handleChangeBuyQuantity}
         />
       </StyledModal>
     </>

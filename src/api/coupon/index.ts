@@ -6,6 +6,7 @@ import {
   CouponDeleteParams,
   CouponEditParams,
   CouponRoomList,
+  PurchaseCouponParams,
   coupons,
   revenueData,
   staticsData,
@@ -20,10 +21,12 @@ export const COUPON_API = {
     instance.get<Response<revenueData>>(
       `/api/coupons/backoffice/revenue/${accommodationId}`,
     ),
-  getCoupon: () =>
-    instance.get<Response<coupons>>('/api/coupons/backoffice/manage'),
+  getCoupon: (accommodationId: string) =>
+    instance.get<Response<coupons>>(
+      `/api/coupons/backoffice/manage/${accommodationId}`,
+    ),
   deleteCoupon: (params: CouponDeleteParams) =>
-    instance.get<Response<null>>('/api/coupons/backoffice/manage', {
+    instance.delete<Response<null>>('/api/coupons/backoffice/manage', {
       data: params,
     }),
   editCoupon: (params: CouponEditParams) =>
@@ -36,4 +39,9 @@ export const COUPON_API = {
     instance.post<Response<BuyCouponData>>('/api/coupons/backoffice/buy', {
       params,
     }),
+  purchaseAdditionalCoupon: (params: PurchaseCouponParams) =>
+    instance.patch<Response<null>>(
+      '/api/coupons/backoffice/manage/buy',
+      params,
+    ),
 };

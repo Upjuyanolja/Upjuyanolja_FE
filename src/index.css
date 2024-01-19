@@ -167,6 +167,7 @@
 
 .confirm-modal {
   top: 30vh;
+  text-align: center;
   .ant-modal-content {
     width: 494px;
     height: 216px;
@@ -230,4 +231,10 @@
 
 .ant-checkbox-inner {
   border: 1px solid #0349e6;
+}
+
+/*regex error message style*/
+.ant-form-item-explain-error {
+  font-size: 12px;
+  margin-top: 8px;
 }
