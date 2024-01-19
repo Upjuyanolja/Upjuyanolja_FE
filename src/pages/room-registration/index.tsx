@@ -36,7 +36,6 @@ const RoomRegistration = () => {
     onSuccess() {
       message.success({
         content: '등록되었습니다',
-        className: 'coupon-message',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
       setSelectedInitRoomFiles([]);

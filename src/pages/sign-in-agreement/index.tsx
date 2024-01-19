@@ -157,14 +157,23 @@ export const SignInAgreement = () => {
             </CheckBoxContainer>
             <ButtonContainer>
               <StyledPrevButton onClick={() => handleChangeUrl('/signin')}>
-                이전
+                <TextBox
+                  typography="h5"
+                  fontWeight={'700'}
+                  textAlign="center"
+                  color="primary"
+                >
+                  이전
+                </TextBox>
               </StyledPrevButton>
               <StyledNextButton
                 onClick={() => handleChangeUrl('/signup')}
                 type="primary"
                 disabled={isDisabled}
               >
-                다음
+                <TextBox typography="h5" fontWeight={'700'} textAlign="center">
+                  다음
+                </TextBox>
               </StyledNextButton>
             </ButtonContainer>
           </MainContainer>

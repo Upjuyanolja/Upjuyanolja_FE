@@ -115,7 +115,7 @@ export const SignUp = () => {
       } catch (error) {
         if (error instanceof AxiosError && error.response) {
           if (
-            error.response.data.code === RESPONSE_CODE.INVALID_REFRESH_TOKEN ||
+            error.response.data.code === RESPONSE_CODE.INCORRECT_EMAIL_CODE ||
             error.response.data.code === RESPONSE_CODE.REQUEST_BODY_ERROR
           ) {
             setCheckTwo(false);

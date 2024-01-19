@@ -18,8 +18,8 @@ import {
 } from '@stores/coupon-registration/atoms';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { useEffect, useState } from 'react';
-import { AgreementModal } from '@components/point-charge-modal/agreement-modal';
 import { MouseEvent } from '@/types/event';
+import { CouponAgreementModal } from '@components/agreement-modal/coupon-agreement-modal';
 
 export const CouponPreview = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
@@ -158,7 +158,7 @@ export const CouponPreview = () => {
         <Spacing space="16" />
       </StyledCouponWrap>
       {isModalOpen && (
-        <AgreementModal
+        <CouponAgreementModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
         />
