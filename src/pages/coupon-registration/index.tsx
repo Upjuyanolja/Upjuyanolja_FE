@@ -12,7 +12,6 @@ import {
   totalPointsState,
 } from '@stores/coupon-registration/atoms';
 import { Modal } from 'antd';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
