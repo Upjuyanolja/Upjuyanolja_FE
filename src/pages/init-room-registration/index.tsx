@@ -19,13 +19,14 @@ import {
   userInputValueState,
 } from '@stores/init/atoms';
 import { capacityHasError, priceHasError } from '@stores/room/atoms';
-import { Form, message } from 'antd';
+import { Button, Form, Modal, message } from 'antd';
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { Image } from '@api/room/type';
+import { TextBox } from '@components/text-box';
 
 export const InitRoomRegistration = () => {
   const [form] = Form.useForm();
@@ -50,6 +51,8 @@ export const InitRoomRegistration = () => {
   const [sameRoomName, setSameRoomName] = useState(false);
   const priceError = useRecoilValue(priceHasError);
   const capacityError = useRecoilValue(capacityHasError);
+
+  const userInput = window.localStorage.getItem('userInput');
 
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
@@ -172,6 +175,30 @@ export const InitRoomRegistration = () => {
         <CheckBoxContainer options={roomOptions} header="객실" />
         <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
       </Form>
+      <Modal
+        open={userInput === null}
+        footer={[]}
+        closable={false}
+        centered={true}
+        width={430}
+      >
+        <StyledModalWrapper>
+          <TextBoxWrapper>
+            <TextBox typography="h4" fontWeight={700}>
+              숙소를 먼저 등록해주세요!
+            </TextBox>
+            <StyledTextBox typography="h5">
+              버튼을 누르면 숙소 등록 페이지로 이동합니다.
+            </StyledTextBox>
+          </TextBoxWrapper>
+          <StyledButton
+            type="primary"
+            onClick={() => navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION)}
+          >
+            확인
+          </StyledButton>
+        </StyledModalWrapper>
+      </Modal>
     </StyledWrapper>
   );
 };
@@ -184,4 +211,33 @@ const StyledWrapper = styled.div`
   border-radius: 8px;
 
   margin-top: 204px;
+`;
+
+const StyledModalWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
+  flex-direction: column;
+
+  padding: 20px 0 0;
+`;
+
+const TextBoxWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+`;
+
+const StyledTextBox = styled(TextBox)`
+  text-align: center;
+`;
+
+const StyledButton = styled(Button)`
+  height: 40px;
+  width: 360px;
+
+  font-size: 20px;
+  font-weight: 700;
 `;
