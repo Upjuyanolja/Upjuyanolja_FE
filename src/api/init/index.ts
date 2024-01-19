@@ -11,6 +11,11 @@ export const ACCOMMODATION_REGISTRATION_API = {
     instance.post<Response<PostImageFile>>(
       '/api/accommodations/images',
       formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     ),
 
   postAccommodationInfo: (params: PostAccommodationParams) =>
