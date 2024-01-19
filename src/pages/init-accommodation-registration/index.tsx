@@ -15,7 +15,7 @@ import {
   selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,9 @@ export const InitAccommodationRegistration = () => {
 
   const [form] = Form.useForm();
 
-  const setUserInputValueState = useSetRecoilState(userInputValueState);
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
+  const accommodationData = userInputValue[0];
 
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
   const selectedImages = useRecoilValue(selectedAccommodationFilesState);
@@ -45,7 +47,7 @@ export const InitAccommodationRegistration = () => {
   };
 
   const onFinish = (values: { [key: string]: string }) => {
-    setUserInputValueState((prevUserInputValueState) => {
+    setUserInputValue((prevUserInputValueState) => {
       const [userInputValue] = prevUserInputValueState;
 
       let type;
@@ -112,6 +114,19 @@ export const InitAccommodationRegistration = () => {
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      form.setFieldValue('accommodation-name', accommodationData.name);
+      form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
+      form.setFieldValue('accommodation-address', accommodationData.address);
+      form.setFieldValue(
+        'accommodation-detailAddress',
+        accommodationData.detailAddress,
+      );
+      form.setFieldValue('accommodation-desc', accommodationData.description);
+    }
+  }, []);
 
   return (
     <StyledWrapper>
