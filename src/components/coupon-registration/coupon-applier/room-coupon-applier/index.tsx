@@ -42,20 +42,6 @@ export const RoomCouponApplier = ({
   const determinedPrice = useRecoilValue(determinedPriceState);
   const formattedDeterminedPrice = Number(removeNumberFormat(determinedPrice));
 
-  const handleChange = (e: InputChangeEvent) => {
-    const targetValue = e.target.value;
-    if (isNumber(targetValue)) {
-      return setInputValue(targetValue);
-    }
-    if (!isNumber(targetValue) && targetValue.length < 1) {
-      return setInputValue('');
-    }
-  };
-
-  const existingItemIndex = pendingRoomDataList.findIndex(
-    (item) => item.roomId === roomId,
-  );
-
   const newItem: PendingRoomData = {
     isChecked: isItemQuantitySelected,
     roomId,
@@ -72,6 +58,16 @@ export const RoomCouponApplier = ({
       ) * Number(itemQuantityValue),
   };
 
+  const handleChange = (e: InputChangeEvent) => {
+    const targetValue = e.target.value;
+    if (isNumber(targetValue)) {
+      return setInputValue(targetValue);
+    }
+    if (!isNumber(targetValue) && targetValue.length < 1) {
+      return setInputValue('');
+    }
+  };
+
   const handleCheckBox = () => {
     setIsItemQuantitySelected(!isItemQuantitySelected);
     setItemQuantityValue('0');
@@ -79,11 +75,11 @@ export const RoomCouponApplier = ({
 
     if (!isItemQuantitySelected) {
       setPendingRoomDataList((prev: PendingRoomDataList) =>
-        updateRoomDataList(prev, existingItemIndex, newItem),
+        updateRoomDataList(prev, newItem),
       );
     } else {
       setPendingRoomDataList((prev: PendingRoomDataList) =>
-        removeRoomDataList(prev, existingItemIndex),
+        removeRoomDataList(prev),
       );
     }
   };
@@ -102,26 +98,26 @@ export const RoomCouponApplier = ({
 
   const updateRoomDataList = (
     prev: PendingRoomDataList,
-    existingItemIndex: number,
     newItem: PendingRoomData,
   ) => {
-    if (existingItemIndex !== -1) {
-      const newValues = [...prev];
-      newValues[existingItemIndex] = newItem;
-      newValues.sort((a, b) => a.roomId - b.roomId);
-      return newValues;
+    const newValues = [...prev];
+    const index = newValues.findIndex((item) => item.roomId === newItem.roomId);
+
+    if (index !== -1) {
+      newValues[index] = newItem;
     } else {
-      const newValues = [...prev, newItem];
-      newValues.sort((a, b) => a.roomId - b.roomId);
-      return newValues;
+      newValues.push(newItem);
     }
+
+    newValues.sort((a, b) => a.roomId - b.roomId);
+    return newValues;
   };
 
-  const removeRoomDataList = (
-    prev: PendingRoomDataList,
-    existingItemIndex: number,
-  ) => {
-    if (existingItemIndex !== -1) {
+  const removeRoomDataList = (prev: PendingRoomDataList) => {
+    const index = pendingRoomDataList.findIndex(
+      (item) => item.roomId === roomId,
+    );
+    if (index !== -1) {
       return prev.filter((item) => item.roomId !== roomId);
     } else {
       return [...prev, newItem];
@@ -137,7 +133,7 @@ export const RoomCouponApplier = ({
       return;
     }
     setPendingRoomDataList((prev: PendingRoomDataList) =>
-      updateRoomDataList(prev, existingItemIndex, newItem),
+      updateRoomDataList(prev, newItem),
     );
   }, [itemQuantityValue, selectedDiscountType, discountValue]);
 
