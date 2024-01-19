@@ -7,11 +7,7 @@ import { ImageUploadFileItem, StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
-import {
-  imageFileState,
-  selectedAccommodationFilesState,
-  selectedInitRoomFilesState,
-} from '@stores/init/atoms';
+import { imageFileState } from '@stores/init/atoms';
 import { ROUTES } from '@/constants/routes';
 
 export const ImageUploadContainer = ({ header }: { header: string }) => {
@@ -19,14 +15,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const setSelectedAccommodationFiles = useSetRecoilState(
-    selectedAccommodationFilesState,
-  );
-
-  const setSelectedInitRoomFiles = useSetRecoilState(
-    selectedInitRoomFilesState,
-  );
 
   const handleCancel = () => setPreviewOpen(false);
   const setImageFile = useSetRecoilState(imageFileState);
@@ -73,21 +61,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
             url: imageUrl,
           },
         ]);
-
-        /* if (header === '숙소 대표 이미지 설정') {
-          setSelectedAccommodationFiles((prevSelectedFiles) => [
-            ...prevSelectedFiles,
-            { url: imageUrl },
-          ]);
-        } else if (
-          header === '객실 사진' &&
-          window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
-        ) {
-          setSelectedInitRoomFiles((prevSelectedFiles) => [
-            ...prevSelectedFiles,
-            { url: imageUrl },
-          ]);
-        }*/
       };
 
       reader.readAsDataURL(selectedFile);
@@ -120,15 +93,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
   const handleRemove = (file: ImageUploadFileItem) => {
     const newFileList = fileList.filter((item) => item.uid !== file.uid);
     setFileList(newFileList);
-
-    if (header === '숙소 대표 이미지 설정') {
-      setSelectedAccommodationFiles(newFileList);
-    } else if (
-      header === '객실 사진' &&
-      window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
-    ) {
-      setSelectedInitRoomFiles(newFileList);
-    }
   };
 
   return (
