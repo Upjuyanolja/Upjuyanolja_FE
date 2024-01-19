@@ -60,6 +60,10 @@ export type Room = {
   options: RoomOptions;
 };
 
+export type defaultRoom = {
+  images: Image[] | undefined;
+  options: RoomOptions | undefined;
+};
 export type onFinishValues = {
   'room-name': string;
   price: string;
@@ -80,4 +84,5 @@ export type UserInputValue = {
   images: Image[];
   options: Options;
   rooms: Room[];
+  editRoomIndex?: number | undefined;
 };

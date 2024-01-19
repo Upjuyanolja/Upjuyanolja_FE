@@ -22,7 +22,6 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
       setError('최대 인원은 기준 인원보다 작을 수 없습니다.');
     }
   }, [defaultCapacity, maxCapacity]);
-
   const validateInput = ({ value }: ValidateInputProps) => {
     setError(null);
     if (value < MIN_CAPACITY || value > MAX_CAPACITY) {
@@ -62,7 +61,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
               기준 인원
             </TextBox>
           </StyledTextBoxWrapper>
-          <Form.Item name={'defaultCapacity'} initialValue={1}>
+          <Form.Item name={'defaultCapacity'}>
             <StyledInputNumber
               min={1}
               max={15}
@@ -82,7 +81,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
               최대 인원
             </TextBox>
           </StyledTextBoxWrapper>
-          <Form.Item name={'maxCapacity'} initialValue={1}>
+          <Form.Item name={'maxCapacity'}>
             <StyledInputNumber
               min={1}
               max={15}

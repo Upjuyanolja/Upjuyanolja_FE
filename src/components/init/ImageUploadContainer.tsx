@@ -2,19 +2,35 @@ import { TextBox } from '@components/text-box';
 import { Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import { ImageUploadFileItem, StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
 import { imageFileState } from '@stores/init/atoms';
 import { ROUTES } from '@/constants/routes';
+import { Image } from '@api/room/type';
 
-export const ImageUploadContainer = ({ header }: { header: string }) => {
+export const ImageUploadContainer = ({
+  header,
+  images,
+}: {
+  header: string;
+  images?: Image[];
+}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (images) {
+      const data = images.map((image, index) => {
+        return { uid: index, name: '', url: image.url, originFileObj: null };
+      });
+      setFileList(data);
+    }
+  }, [images]);
 
   const handleCancel = () => setPreviewOpen(false);
   const setImageFile = useSetRecoilState(imageFileState);

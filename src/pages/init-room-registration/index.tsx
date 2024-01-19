@@ -6,6 +6,7 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import {
   Room,
+  defaultRoom,
   onFinishValues,
 } from '@components/init/init-accommodation-registration/type';
 import { CapacityContainer } from '@components/room/capacity-container';
@@ -27,6 +28,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { Image } from '@api/room/type';
 import { TextBox } from '@components/text-box';
+import moment from 'moment';
 
 export const InitRoomRegistration = () => {
   const [form] = Form.useForm();
@@ -38,17 +40,63 @@ export const InitRoomRegistration = () => {
   };
 
   const navigate = useNavigate();
-  const [isValid, setIsValid] = useState(false);
 
   const [userInputValue, setUserInputValue] =
     useRecoilState(userInputValueState);
 
+  /*버튼 비활성화 문제
+    버튼 활성화 비활성화를 다루는 isValid의 초깃값을
+    editRoomIndex가 없을 때 (-1일때) 는 false ,
+    editRoomIndex 가 있을 땐 true
+    */
+
+  useEffect(() => {
+    if (
+      userInputValue[0].editRoomIndex !== undefined &&
+      userInputValue[0].editRoomIndex !== -1
+    ) {
+      const index = userInputValue[0].editRoomIndex;
+      form.setFieldValue('room-name', userInputValue[0].rooms[index].name);
+      form.setFieldValue('price', userInputValue[0].rooms[index].price);
+      form.setFieldValue(
+        'defaultCapacity',
+        userInputValue[0].rooms[index].defaultCapacity,
+      );
+      form.setFieldValue(
+        'maxCapacity',
+        userInputValue[0].rooms[index].maxCapacity,
+      );
+      form.setFieldValue('count', userInputValue[0].rooms[index].count);
+      form.setFieldValue(
+        'checkInTime',
+        moment(userInputValue[0].rooms[index].checkInTime, 'HH:mm'),
+      );
+      form.setFieldValue(
+        'checkOutTime',
+        moment(userInputValue[0].rooms[index].checkOutTime, 'HH:mm'),
+      );
+      setDefaultValue({
+        images: userInputValue[0].rooms[index].images,
+        options: userInputValue[0].rooms[index].options,
+      });
+    }
+  }, []);
+
+  const [isValid, setIsValid] = useState(
+    userInputValue[0].editRoomIndex !== -1,
+  );
   const [selectedOptions, setSelectedOptions] =
     useRecoilState(checkedRoomOptions);
 
   const [imageFiles, setImageFiles] = useRecoilState(imageFileState);
 
   const [sameRoomName, setSameRoomName] = useState(false);
+
+  const [defaultValue, setDefaultValue] = useState<defaultRoom>({
+    images: undefined,
+    options: undefined,
+  });
+
   const priceError = useRecoilValue(priceHasError);
   const capacityError = useRecoilValue(capacityHasError);
 
@@ -154,6 +202,11 @@ export const InitRoomRegistration = () => {
     setIsValid(areFormFieldsValid());
   };
 
+  const handleEdit = () => {
+    setUserInputValue([{ ...userInputValue[0], editRoomIndex: -1 }]);
+    navigate('/init/info-confirmation');
+  };
+
   return (
     <StyledWrapper>
       <Form
@@ -168,12 +221,22 @@ export const InitRoomRegistration = () => {
           isSameRoomName={sameRoomName}
         />
         <PriceContainer header="객실 가격" form={form} />
-        <ImageUploadContainer header="객실 사진" />
+        <ImageUploadContainer header="객실 사진" images={defaultValue.images} />
         <CountContainer header="객실 수" form={form} />
         <TimeContainer header="시간" form={form} />
         <CapacityContainer header="인원" form={form} />
-        <CheckBoxContainer options={roomOptions} header="객실" />
-        <ButtonContainer buttonStyle={'navigate'} isValid={isValid} />
+        <CheckBoxContainer
+          options={roomOptions}
+          header="객실"
+          defaultValue={defaultValue.options}
+        />
+        <ButtonContainer
+          buttonStyle={
+            userInputValue[0].editRoomIndex !== -1 ? 'edit' : 'navigate'
+          }
+          isValid={isValid}
+          handleEdit={handleEdit}
+        />
       </Form>
       <Modal
         open={userInput === null}

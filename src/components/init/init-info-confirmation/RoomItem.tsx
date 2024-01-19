@@ -9,10 +9,13 @@ import { ImageCarousel } from './ImageCarousel';
 import { Room } from '../init-accommodation-registration/type';
 import { useRecoilState } from 'recoil';
 import { userInputValueState } from '@stores/init/atoms';
+import { useNavigate } from 'react-router-dom';
 
 export const RoomItem = () => {
   const [userInputValue, setUserInputValue] =
     useRecoilState(userInputValueState);
+
+  const navigate = useNavigate();
 
   const removeRoom = (room: Room) => {
     if (userInputValue[0].rooms.length === 1) {
@@ -57,9 +60,14 @@ export const RoomItem = () => {
     });
   };
 
+  const roomEdit = (index: number) => {
+    setUserInputValue([{ ...userInputValue[0], editRoomIndex: index }]);
+    navigate('/init/room-registration');
+  };
+
   return (
     <>
-      {userInputValue[0].rooms.map((room: Room) => (
+      {userInputValue[0].rooms.map((room: Room, index) => (
         <StyledRoomItemContainer key={room.name}>
           <ImageCarousel images={room.images} />
           <StyledRoomInfoContainer>
@@ -68,7 +76,11 @@ export const RoomItem = () => {
                 {room.name}
               </TextBox>
               <StyledButtonContainer>
-                <CustomButton text="수정" icon={<EditOutlined />} />
+                <CustomButton
+                  text="수정"
+                  icon={<EditOutlined />}
+                  onClick={() => roomEdit(index)}
+                />
                 <CustomButton
                   text="삭제"
                   icon={<DeleteOutlined />}

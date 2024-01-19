@@ -1,8 +1,10 @@
 import { FormInstance } from 'antd';
+import { RoomOptions } from './init-accommodation-registration/type';
 
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
   isValid?: boolean;
+  handleEdit?: VoidFunction;
 };
 
 export type ButtonContainerStyledWrapperProps = {
@@ -12,13 +14,14 @@ export type ButtonContainerStyledWrapperProps = {
 export type CheckBoxContainerProps = {
   options: { [key: string]: string };
   header: string;
+  defaultValue?: RoomOptions;
 };
 
 export type ImageUploadFileItem = {
   uid: number;
   name: string;
   url: string;
-  originFileObj?: File;
+  originFileObj?: File | null;
 };
 
 export type StyledImageContainerProps = {
