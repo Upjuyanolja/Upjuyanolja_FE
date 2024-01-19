@@ -32,7 +32,9 @@ export const InitAccommodationRegistration = () => {
     useRecoilState(userInputValueState);
   const accommodationData = userInputValue[0];
 
-  const selectedOptions = useRecoilValue(checkedAccommodationOptions);
+  const [selectedOptions, setSelectedOptions] = useRecoilState(
+    checkedAccommodationOptions,
+  );
 
   const isEdit = useRecoilValue(accommodationEditState);
 
@@ -80,7 +82,17 @@ export const InitAccommodationRegistration = () => {
         };
         return [updatedUserInputValue];
       });
-
+      setSelectedOptions({
+        cooking: false,
+        parking: false,
+        pickup: false,
+        barbecue: false,
+        fitness: false,
+        karaoke: false,
+        sauna: false,
+        sports: false,
+        seminar: false,
+      });
       setImageFiles([]);
     },
     onError(error) {
