@@ -13,7 +13,6 @@ import {
   accommodationEditState,
   checkedAccommodationOptions,
   imageFileState,
-  selectedAccommodationFilesState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -34,7 +33,6 @@ export const InitAccommodationRegistration = () => {
   const accommodationData = userInputValue[0];
 
   const selectedOptions = useRecoilValue(checkedAccommodationOptions);
-  //const selectedImages = useRecoilValue(selectedAccommodationFilesState);
 
   const isEdit = useRecoilValue(accommodationEditState);
 
@@ -54,7 +52,6 @@ export const InitAccommodationRegistration = () => {
 
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
-      //console.log(data.data.data);
       setUserInputValue((prevUserInputValueState) => {
         const [userInputValue] = prevUserInputValueState;
 
@@ -79,14 +76,20 @@ export const InitAccommodationRegistration = () => {
           zipCode: form.getFieldValue('accommodation-postCode'),
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
-          images: data.data.data.data.urls as unknown as Image[],
+          images: data.data.data.urls as unknown as Image[],
         };
         return [updatedUserInputValue];
       });
-      console.log(userInputValue);
+
+      setImageFiles([]);
     },
-    onError() {
-      console.log('api 요청 에러');
+    onError(error) {
+      if (error instanceof AxiosError) {
+        message.error({
+          content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
     },
   });
 
@@ -99,7 +102,7 @@ export const InitAccommodationRegistration = () => {
 
     imageFile(formData);
 
-    // navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
 
   const areFormFieldsValid = () => {
