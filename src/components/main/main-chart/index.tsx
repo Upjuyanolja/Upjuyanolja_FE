@@ -21,7 +21,7 @@ export const MainChart = ({ revenueData, couponMessage }: mainChartProps) => {
       },
     ],
     colorField: 'type',
-    color: [colors.primary, colors.black500],
+    color: [colors.primary, colors.paleGray],
     connectedArea: {
       style: (oldStyle: ShapeAttrs) => {
         return {

@@ -1,7 +1,6 @@
 import { colors } from '@/constants/colors';
 import { Button, Image } from 'antd';
 import coinImage from '@assets/image/mainCoinImage.png';
-import React from 'react';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { RightOutlined } from '@ant-design/icons';
