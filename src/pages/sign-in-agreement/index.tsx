@@ -254,6 +254,7 @@ const ButtonContainer = styled.div`
 const StyledPrevButton = styled(Button)`
   width: 126px;
   height: 54px;
+  border: 1px solid ${colors.primary};
 `;
 
 const StyledNextButton = styled(StyledPrevButton)`
