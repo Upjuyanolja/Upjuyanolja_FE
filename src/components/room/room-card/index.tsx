@@ -4,41 +4,63 @@ import { TextBox } from '@components/text-box';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
+import { RoomCardProps, KoreanOptionNamesType } from './type';
+import { RoomData, RoomCardData } from '@api/room/type';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
+import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
 
-const RoomCard = () => {
+const RoomCard = (data: RoomCardData) => {
+  const isOnSale = data.coupons.length !== 0;
+  const navigate = useNavigate();
+  const { accommodationId } = useParams();
+
+  const handleEditClick = () => {
+    navigate(`/${accommodationId}${ROUTES.ROOM_UPDATE}`);
+  };
+  const handleDeleteClick = () => {
+    navigate('/your-desired-path');
+  };
+
+  const renderOptionTags = () => {
+    return Object.entries(data.options)
+      .filter(([key, value]) => value)
+      .map(([key]) => (
+        <StyledOptionTag key={key}>
+          <TextBox typography="body4" color="black900" fontWeight="normal">
+            {getKoreanOptionNames(key)}
+          </TextBox>
+        </StyledOptionTag>
+      ));
+  };
+
+  const koreanOptionsNames: KoreanOptionNamesType = {
+    tv: 'TV',
+    airCondition: '에어컨',
+    internet: '인터넷',
+  };
+
+  const getKoreanOptionNames = (key: string): string => {
+    return koreanOptionsNames[key] || key;
+  };
+
+  console.log(data);
   return (
-    <StyledCardContainer hoverable>
+    <StyledCardContainer isOnSale={isOnSale}>
       <StyledContentContainer wrap={false}>
         <StyledImageContainer>
           <StyledCouponImage src={COUPON} alt="Coupon" />
           <StyledRoomImage src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b" />
-          <StyledSaleBanner>판매중</StyledSaleBanner>
+          <StyledSaleBanner isOnSale={isOnSale}>
+            {isOnSale ? '판매중' : '판매중지'}
+          </StyledSaleBanner>
         </StyledImageContainer>
         <StyledDetailsCol>
           <TextBox typography="h4" color="black900" fontWeight="bold">
-            스탠다드 트윈룸
+            {data.name}
           </TextBox>
           <StyledDetailsSpace direction="vertical">
-            <StyledTags>
-              <StyledOptionTag>
-                <TextBox
-                  typography="body4"
-                  color="black900"
-                  fontWeight="normal"
-                >
-                  TV
-                </TextBox>
-              </StyledOptionTag>
-              <StyledOptionTag>
-                <TextBox
-                  typography="body4"
-                  color="black900"
-                  fontWeight="normal"
-                >
-                  에어컨
-                </TextBox>
-              </StyledOptionTag>
-            </StyledTags>
+            <StyledTags>{renderOptionTags()}</StyledTags>
             <StyledCenterVertically>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,17 +75,18 @@ const RoomCard = () => {
                 />
               </svg>
               <TextBox typography="body3" color="black900" fontWeight="normal">
-                기준 2일 / 최대 4인
+                기준 {data.defaultCapacity}일 / 최대 {data.maxCapacity}인
               </TextBox>
             </StyledCenterVertically>
             <TextBox typography="body3" color="black900" fontWeight="normal">
-              체크인 15:00 / 체크아웃 11:00
+              체크인 {data.checkInTime} / 체크아웃 {data.checkOutTime}
             </TextBox>
           </StyledDetailsSpace>
         </StyledDetailsCol>
         <StyledRightContent>
           <StyledEditDeleteContainer>
             <StyledEditDeleteButtons
+              onClick={handleEditClick}
               style={{
                 marginRight: '8px',
               }}
@@ -75,7 +98,7 @@ const RoomCard = () => {
                 수정
               </TextBox>
             </StyledEditDeleteButtons>
-            <StyledEditDeleteButtons>
+            <StyledEditDeleteButtons onClick={handleDeleteClick}>
               <DeleteOutlined
                 style={{
                   fontSize: '20px',
@@ -90,10 +113,10 @@ const RoomCard = () => {
           </StyledEditDeleteContainer>
           <StyledNumRoomPriceContainer>
             <TextBox typography="body3" color="black900" fontWeight="normal">
-              객실 수 : 10개
+              객실 수 : {data.count}개
             </TextBox>
             <TextBox typography="h5" color="black900" fontWeight="bold">
-              65,000원
+              {data.basePrice}원
             </TextBox>
           </StyledNumRoomPriceContainer>
         </StyledRightContent>
@@ -104,13 +127,17 @@ const RoomCard = () => {
 
 export default RoomCard;
 
-const StyledCardContainer = styled(Card)`
+const StyledCardContainer = styled(Card)<{ isOnSale: boolean }>`
   border-radius: 8px;
-  border: 2px solid ${colors.primary};
+  border: 2px solid
+    ${({ isOnSale }) => (isOnSale ? colors.primary : colors.black600)};
   background: ${colors.white};
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
   margin: 0px;
   max-width: 100%;
+  &:hover {
+    transform: scale(1);
+  }
 `;
 
 const StyledContentContainer = styled(Row)`
@@ -138,13 +165,13 @@ const StyledRoomImage = styled(Image)`
   z-index: 1;
 `;
 
-const StyledSaleBanner = styled.div`
+const StyledSaleBanner = styled.div<{ isOnSale: boolean }>`
   position: absolute;
   height: 24px;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: blue;
+  background-color: ${({ isOnSale }) => (isOnSale ? 'blue' : colors.black600)};
   color: white;
   text-align: center;
   z-index: 3;

@@ -40,19 +40,19 @@
         ],
         "options": {
           "airCondition": true,
-          "tv": true,
+          "tv": false,
           "internet": true
         }
       },
       {
         "id": 286,
-        "name": "봄",
-        "basePrice": 100000,
+        "name": "여름",
+        "basePrice": 90000,
         "discountPrice": 80000,
         "defaultCapacity": 2,
         "maxCapacity": 6,
-        "checkInTime": "15:00",
-        "checkOutTime": "12:00",
+        "checkInTime": "14:00",
+        "checkOutTime": "16:00",
         "count": 5,
         "images": [
           {
@@ -62,27 +62,16 @@
             "fileName": "pension_room2_1.webp"
           }
         ],
-        "coupons": [
-          {
-            "id": 56,
-            "name": "10% 할인",
-            "price": 90000
-          },
-          {
-            "id": 57,
-            "name": "2000원 할인",
-            "price": 80000
-          }
-        ],
+        "coupons": [],
         "options": {
           "airCondition": true,
-          "tv": true,
-          "internet": true
+          "tv": false,
+          "internet": false
         }
       },
       {
         "id": 286,
-        "name": "봄",
+        "name": "가을",
         "basePrice": 100000,
         "discountPrice": 80000,
         "defaultCapacity": 2,

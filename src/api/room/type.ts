@@ -14,7 +14,7 @@ export type RoomListResponseData = {
   totalPages: number;
   totalElements: number;
   isLast: boolean;
-  rooms: RoomData[];
+  rooms: RoomCardData[];
 };
 
 export type Options = {
@@ -26,6 +26,27 @@ export type Options = {
 export type Image = {
   id?: number;
   url: string;
+};
+
+export type Coupons = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+export type RoomCardData = {
+  id: number;
+  name: string;
+  basePrice: number | null;
+  discountPrice: number | null;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  count: number | null;
+  images: Image[];
+  options: Options;
+  coupons: Coupons[];
 };
 
 export type RoomData = {

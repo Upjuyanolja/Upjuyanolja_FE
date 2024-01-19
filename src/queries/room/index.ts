@@ -32,17 +32,14 @@ export const useAddRoom = (
 
 export const useGetRoomList = (
   accommodationId: string,
-  options?: UseQueryOptions<
-    AxiosResponse<Response<RoomListResponseData>>,
-    AxiosError,
-    RoomListResponseData
-  >,
+  options?: UseQueryOptions<RoomListResponseData, AxiosError>,
 ) => {
-  return useQuery<
-    AxiosResponse<Response<RoomListResponseData>>,
-    AxiosError,
-    RoomListResponseData
-  >(['getRoomList'], () => ROOM_API.getRoomList(accommodationId), {
-    ...options,
-  });
+  return useQuery<RoomListResponseData, AxiosError>(
+    ['getRoomList', accommodationId],
+    async () => {
+      const response = await ROOM_API.getRoomList(accommodationId);
+      return response.data.data;
+    },
+    options,
+  );
 };

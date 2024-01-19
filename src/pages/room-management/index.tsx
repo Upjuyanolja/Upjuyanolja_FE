@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetRoomList } from '@queries/room';
 import { ROUTES } from '@/constants/routes';
+//import { useInfiniteQuery } from 'react-query';
 
 const RoomManagement = () => {
   const navigate = useNavigate();
@@ -12,7 +13,11 @@ const RoomManagement = () => {
   const accommodationId = tempAccommodationId || '';
   const { data, isLoading, error } = useGetRoomList(accommodationId);
 
-  console.log(data);
+  // console.log(data && data.rooms);
+  // {
+  //   data?.rooms?.map((room) => console.log(room));
+  // }
+  //console.log(data && data?.data?.data?.rooms?.length);
   // const { getList } = useGetRoomList(accommodationId as string, {
   //   onSuccess() {
   //     console.log(data)
@@ -45,7 +50,11 @@ const RoomManagement = () => {
           </StyledButton>
         </StyledTitleButton>
       </StyledFixedTitle>
-      <RoomCard />
+      {data?.rooms?.map((room, index) => (
+        <StyledRoomCardWrapper key={room.name}>
+          <RoomCard {...room} />
+        </StyledRoomCardWrapper>
+      ))}
     </StyledPageContainer>
   );
 };
@@ -75,4 +84,10 @@ const StyledButton = styled(Button)`
 
 const StyledFixedTitle = styled.div`
   // position: fixed;
+`;
+
+const StyledRoomCardWrapper = styled.div`
+  &:not(:last-child) {
+    margin-bottom: 32px;
+  }
 `;
