@@ -16,6 +16,7 @@ export const useCouponRegistration = () => {
 
   const {
     data: couponRoomListData,
+    isLoading: isGetCouponRoomListLoading,
     isError: isGetCouponRoomListError,
     refetch: isGetCouponRoomListRefetch,
   } = useGetCouponRoomList(accommodationId as string, {
@@ -65,6 +66,7 @@ export const useCouponRegistration = () => {
     couponRoomListData,
     isGetCouponRoomListError,
     buyCoupon,
+    isGetCouponRoomListLoading,
     isModalOpen,
     setIsModalOpen,
     isGetCouponRoomListRefetch,

@@ -1,4 +1,3 @@
-import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { BuyCouponParams } from '@api/coupon/type';
 import { CouponApplier } from '@components/coupon-registration/coupon-applier';
 import { CouponCard } from '@components/coupon-registration/coupon-card';
@@ -22,11 +21,18 @@ export const CouponRegistration = () => {
   const pendingRoomDataList = useRecoilValue(pendingRoomDataListState);
   const { accommodationId } = useParams();
   const totalPoints = useRecoilValue(totalPointsState);
-  const { buyCoupon, isModalOpen, setIsModalOpen } = useCouponRegistration();
-  const { isGetCouponRoomListRefetch } = useCouponRegistration();
+  const {
+    buyCoupon,
+    isModalOpen,
+    setIsModalOpen,
+    isGetCouponRoomListRefetch,
+    isGetCouponRoomListLoading,
+  } = useCouponRegistration();
 
   useEffect(() => {
+    if (!accommodationId) return;
     isGetCouponRoomListRefetch();
+    console.log(isGetCouponRoomListLoading);
   }, [accommodationId]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,7 +74,9 @@ export const CouponRegistration = () => {
             </CouponCard>
             <Spacing space="32" />
             <CouponCard title="2. 적용 객실 선택">
-              <CouponApplier />
+              <CouponApplier
+                isGetCouponRoomListLoading={isGetCouponRoomListLoading}
+              />
             </CouponCard>
           </StyledCouponCardWrap>
         </StyledLeftWrap>
@@ -100,4 +108,16 @@ const StyledForm = styled.form`
   display: flex;
   justify-content: space-between;
   gap: 24px;
+`;
+
+const SpinWrap = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.01);
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
 `;

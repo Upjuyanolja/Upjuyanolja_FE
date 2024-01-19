@@ -8,7 +8,6 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Accommodation } from '@api/accommodation/type';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 
 export const AccommodationList = ({
   accommodationListData,
@@ -25,9 +24,9 @@ export const AccommodationList = ({
   };
 
   const handleNavigate = (item: Accommodation, idx: number) => {
-    const roomId = item.id;
+    const accommodationId = item.id;
     const currentPath = location.pathname;
-    const replacedPath = currentPath.replace(/\/.*\//, '/');
+    const replacedPath = currentPath.split('/').slice(2, 100).join('/');
 
     if (currentPath === ROUTES.POINT_DETAIL) {
       const newPath = ROUTES.POINT_DETAIL;
@@ -39,8 +38,7 @@ export const AccommodationList = ({
       return navigate(newPath);
     }
 
-    const newPath = `/${roomId}${replacedPath}`;
-    setCookie('accommodationId', item.id.toString());
+    const newPath = `/${accommodationId}/${replacedPath}`;
     navigate(newPath);
     setAccommodationIdx(idx);
   };
