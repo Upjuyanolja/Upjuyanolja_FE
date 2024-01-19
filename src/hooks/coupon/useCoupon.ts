@@ -56,6 +56,7 @@ export const useCoupon = () => {
 
   const {
     data,
+    isLoading: isGetCouponLoading,
     isError: isGetCouponError,
     remove: getCouponRemove,
   } = useGetCoupon(accommodationId as string, {
@@ -116,6 +117,7 @@ export const useCoupon = () => {
       processCouponTableData(data);
       setSelectedStatus('');
       setSelectedRowKeys([]);
+      return;
     }
   }, [data]);
 
@@ -554,5 +556,6 @@ export const useCoupon = () => {
     handlePurchaseButton,
     isPointModalOpen,
     setIsPointModalOpen,
+    isGetCouponLoading,
   };
 };
