@@ -36,7 +36,7 @@ export const Coupon = () => {
   } = useCoupon();
 
   if (isGetCouponLoading) return <div>로딩</div>;
-  if (!data)
+  if (data === null)
     return (
       <>
         <CouponHeader

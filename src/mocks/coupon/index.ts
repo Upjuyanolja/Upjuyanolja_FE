@@ -2,7 +2,6 @@ import { HttpResponse } from 'msw';
 import staticsData from '@assets/data/staticsData.json';
 import revenueData from '@assets/data/revenueData.json';
 import couponData from '@assets/data/couponData.json';
-import failBuyCoupon from '@assets/data/failBuyCouponData.json';
 
 export const getStaticsResolver = () => {
   return HttpResponse.json(staticsData, { status: 200 });
@@ -37,5 +36,11 @@ export const editCouponResolver = () => {
 };
 
 export const successCouponResolver = () => {
-  return HttpResponse.json(failBuyCoupon, { status: 400 });
+  return HttpResponse.json(
+    {
+      message: '성공적으로 쿠폰을 구매했습니다.',
+      data: null,
+    },
+    { status: 400 },
+  );
 };
