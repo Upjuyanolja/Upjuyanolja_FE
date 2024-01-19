@@ -45,10 +45,13 @@ instance.interceptors.response.use(
           setCookie('accessToken', newAccessToken);
           return axios(error.config);
         } catch (refreshError) {
+          removeCookie('accessToken');
+          removeCookie('refreshToken');
+          removeCookie('accommodationId');
           message.error({
             content: (
               <TextBox typography="body3" fontWeight={'400'}>
-                인증 만료 입니다.
+                refreshToken이 올바르지 않습니다.
               </TextBox>
             ),
             duration: 2,
@@ -59,6 +62,9 @@ instance.interceptors.response.use(
           return Promise.reject(refreshError);
         }
       } else {
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
+        removeCookie('accommodationId');
         message.error({
           content: (
             <TextBox typography="body3" fontWeight={'400'}>
