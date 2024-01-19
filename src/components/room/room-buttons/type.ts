@@ -1,8 +1,8 @@
 export type ButtonContainerProps = {
-  buttonStyle: 'register' | 'edit';
+  buttonStyle: 'register' | 'update';
   isValid: boolean;
 };
 
 export type ButtonContainerStyledWrapperProps = {
-  $buttonStyle: 'register' | 'edit';
+  $buttonStyle: 'register' | 'update';
 };

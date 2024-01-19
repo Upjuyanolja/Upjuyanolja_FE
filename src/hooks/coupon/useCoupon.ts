@@ -52,9 +52,11 @@ export const useCoupon = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { accommodationId } = useParams();
+  const [isPointModalOpen, setIsPointModalOpen] = useState(false);
 
   const {
     data,
+    isLoading: isGetCouponLoading,
     isError: isGetCouponError,
     remove: getCouponRemove,
   } = useGetCoupon(accommodationId as string, {
@@ -65,10 +67,7 @@ export const useCoupon = () => {
 
   const { mutate: deleteCoupon } = useDeleteCoupon({
     onSuccess() {
-      message.success({
-        content: '삭제되었습니다',
-        className: 'coupon-message',
-      });
+      message.success('삭제되었습니다');
       getCouponRemove();
     },
     onError(error) {
@@ -79,10 +78,7 @@ export const useCoupon = () => {
 
   const { mutate: editCoupon } = useEditCoupon({
     onSuccess() {
-      message.success({
-        content: '저장되었습니다',
-        className: 'coupon-message',
-      });
+      message.success('저장되었습니다');
       getCouponRemove();
     },
     onError(error) {
@@ -93,10 +89,7 @@ export const useCoupon = () => {
 
   const { mutate: purchaseAdditionalCoupon } = usePurchaseAdditionalCoupon({
     onSuccess() {
-      message.success({
-        content: '쿠폰이 발급되었습니다',
-        className: 'coupon-message',
-      });
+      message.success('쿠폰이 발급되었습니다');
       getCouponRemove();
       setIsModalOpen(false);
     },
@@ -111,12 +104,10 @@ export const useCoupon = () => {
           cancelText: '취소',
           okText: '충전',
           className: 'confirm-modal',
+          onOk: () => setIsPointModalOpen(true),
         });
       } else {
-        message.error({
-          content: '요청에 실패했습니다. 잠시 후 다시 시도해 주세요.',
-          className: 'coupon-message',
-        });
+        message.error('요청에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       }
     },
   });
@@ -126,6 +117,7 @@ export const useCoupon = () => {
       processCouponTableData(data);
       setSelectedStatus('');
       setSelectedRowKeys([]);
+      return;
     }
   }, [data]);
 
@@ -562,5 +554,8 @@ export const useCoupon = () => {
     handleChangeBatchValue,
     handleChangeBuyQuantity,
     handlePurchaseButton,
+    isPointModalOpen,
+    setIsPointModalOpen,
+    isGetCouponLoading,
   };
 };

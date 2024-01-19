@@ -6,7 +6,11 @@ import {
   UseMutationOptions,
 } from '@tanstack/react-query';
 import { Response } from '@/types/api';
-import { RoomData, RoomPostResponseData } from '@api/room/type';
+import {
+  RoomData,
+  RoomPostResponseData,
+  RoomListResponseData,
+} from '@api/room/type';
 import { ROOM_API } from '@api/room';
 
 export const useAddRoom = (
@@ -22,6 +26,23 @@ export const useAddRoom = (
     AxiosError,
     RoomData
   >((data: RoomData) => ROOM_API.addRoom(data, accommodationId), {
+    ...options,
+  });
+};
+
+export const useGetRoomList = (
+  accommodationId: string,
+  options?: UseQueryOptions<
+    AxiosResponse<Response<RoomListResponseData>>,
+    AxiosError,
+    RoomListResponseData
+  >,
+) => {
+  return useQuery<
+    AxiosResponse<Response<RoomListResponseData>>,
+    AxiosError,
+    RoomListResponseData
+  >(['getRoomList'], () => ROOM_API.getRoomList(accommodationId), {
     ...options,
   });
 };

@@ -23,6 +23,6 @@ export const navigationMap = {
   },
   UseGuide: {
     label: '이용 가이드',
-    link: `${ROUTES.MAIN}`,
+    link: `${ROUTES.USER_GUIDE}`,
   },
 };
