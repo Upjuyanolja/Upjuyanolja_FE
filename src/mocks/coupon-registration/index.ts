@@ -1,4 +1,3 @@
-import buyCouponData from '@assets/data/buyCouponData.json';
 import failBuyCouponData from '@assets/data/failBuyCouponData.json';
 import couponRoomListData from '@assets/data/couponRoomListData.json';
 

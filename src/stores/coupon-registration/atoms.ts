@@ -10,6 +10,7 @@ import {
 } from '@components/coupon-registration/type';
 import { atom } from 'recoil';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
+import { CouponRoomList } from '@api/coupon/type';
 
 export const selectedDiscountTypeState = atom<
   FlatDiscountType | RateDiscountType
@@ -56,4 +57,14 @@ export const isTermsCheckedState = atom<boolean>({
 export const totalPointsState = atom<number>({
   key: 'totalPoints',
   default: 0,
+});
+
+export const accommodationIdState = atom<string>({
+  key: 'accommodationId',
+  default: '1',
+});
+
+export const getCouponRoomDataListState = atom<CouponRoomList | undefined>({
+  key: 'getCouponRoomDataList',
+  default: undefined,
 });

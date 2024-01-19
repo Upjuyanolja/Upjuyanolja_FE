@@ -3,25 +3,33 @@ import {
   useBuyCoupon,
   useGetCouponRoomList,
 } from '@queries/coupon-registration';
+import { getCouponRoomDataListState } from '@stores/coupon-registration/atoms';
 import { message, Modal } from 'antd';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 export const useCouponRegistration = () => {
   const { accommodationId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const setGetCouponRoomList = useSetRecoilState(getCouponRoomDataListState);
 
-  const { data: couponRoomListData, isError: isGetCouponRoomListError } =
-    useGetCouponRoomList(accommodationId as string, {
-      select(data) {
-        return data.data.data;
-      },
-    });
+  const {
+    data: couponRoomListData,
+    isError: isGetCouponRoomListError,
+    refetch: isGetCouponRoomListRefetch,
+  } = useGetCouponRoomList(accommodationId as string, {
+    select(data) {
+      setGetCouponRoomList(data.data.data);
+      return data.data.data;
+    },
+  });
 
   const { mutate: buyCoupon } = useBuyCoupon({
     onSuccess() {
       message.success({
         content: '쿠폰을 구매하였습니다.',
+        className: 'coupon-message',
       });
     },
     onError(error) {
@@ -42,6 +50,12 @@ export const useCouponRegistration = () => {
           className: 'confirm-modal',
           onOk: () => setIsModalOpen(true),
         });
+      case RESPONSE_CODE.NOT_FOUND_ACCOMMODATION_ID:
+      case RESPONSE_CODE.NOT_FOUND_POINT:
+      case RESPONSE_CODE.NOT_FOUND_ROOM_DATA:
+        return message.error(
+          '알 수 없는 에러가 발생하였습니다. 관리자에게 문의 바랍니다.',
+        );
       default:
         return message.error('요청에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
@@ -53,5 +67,6 @@ export const useCouponRegistration = () => {
     buyCoupon,
     isModalOpen,
     setIsModalOpen,
+    isGetCouponRoomListRefetch,
   };
 };

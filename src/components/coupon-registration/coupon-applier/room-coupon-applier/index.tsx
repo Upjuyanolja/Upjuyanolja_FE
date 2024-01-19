@@ -6,12 +6,13 @@ import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { isNumber } from '@/utils/is-number';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   determinedPriceState,
   discountValueState,
   groupQuantityValueState,
   isGroupQuantitySelectedState,
+  isTermsCheckedState,
   pendingRoomDataListState,
   selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
@@ -22,6 +23,7 @@ import {
 import { removeNumberFormat } from '@/utils/Format/numberFormat';
 import { calculatedCouponPoints } from '@/utils/discountCoupon';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
+import { useParams } from 'react-router-dom';
 
 export const RoomCouponApplier = ({
   roomName,
@@ -32,15 +34,25 @@ export const RoomCouponApplier = ({
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const [isItemQuantitySelected, setIsItemQuantitySelected] = useState(false);
   const [itemQuantityValue, setItemQuantityValue] = useState('');
-  const groupQuantityValue = useRecoilValue(groupQuantityValueState);
+  const [groupQuantityValue, setGroupQuantityValue] = useRecoilState(
+    groupQuantityValueState,
+  );
+  const setDiscountValue = useSetRecoilState(discountValueState);
+  const setIsGroupQuantitySelected = useSetRecoilState(
+    isGroupQuantitySelectedState,
+  );
   const isGroupQuantitySelected = useRecoilValue(isGroupQuantitySelectedState);
   const [pendingRoomDataList, setPendingRoomDataList] = useRecoilState(
     pendingRoomDataListState,
   );
+  const setSelectedDiscountType = useSetRecoilState(selectedDiscountTypeState);
   const discountValue = useRecoilValue(discountValueState);
   const [inputValue, setInputValue] = useState('0');
   const determinedPrice = useRecoilValue(determinedPriceState);
   const formattedDeterminedPrice = Number(removeNumberFormat(determinedPrice));
+  const setIsTermsCheckedState = useSetRecoilState(isTermsCheckedState);
+  const setDeterminedPrice = useSetRecoilState(determinedPriceState);
+  const { accommodationId } = useParams();
 
   const newItem: PendingRoomData = {
     isChecked: isItemQuantitySelected,
@@ -127,6 +139,22 @@ export const RoomCouponApplier = ({
   useEffect(() => {
     setPendingRoomDataList([]);
   }, []);
+
+  useEffect(() => {
+    if (!accommodationId) {
+      return;
+    }
+
+    setInputValue('0');
+    setPendingRoomDataList([]);
+    setDeterminedPrice('');
+    setGroupQuantityValue('0');
+    setIsGroupQuantitySelected(false);
+    setIsItemQuantitySelected(false);
+    setDiscountValue('');
+    setSelectedDiscountType(FLAT_DISCOUNT_TYPE);
+    setIsTermsCheckedState(false);
+  }, [accommodationId]);
 
   useEffect(() => {
     if (itemQuantityValue === '' || !isItemQuantitySelected) {

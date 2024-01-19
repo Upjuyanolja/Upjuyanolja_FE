@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 import { CommonQuantityCouponSetter } from './common-quantity-coupon-setter';
 import { RoomCouponApplier } from './room-coupon-applier';
-import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
+import { useRecoilValue } from 'recoil';
+import { getCouponRoomDataListState } from '@stores/coupon-registration/atoms';
 
 export const CouponApplier = () => {
-  const { couponRoomListData } = useCouponRegistration();
+  const getCouponRoomDataList = useRecoilValue(getCouponRoomDataListState);
 
   return (
     <Container>
       <CommonQuantityCouponSetter />
       <StyledRoomCouponApplierWrap>
-        {couponRoomListData?.rooms.map((item, index) => (
+        {getCouponRoomDataList?.rooms.map((item, index) => (
           <RoomCouponApplier
             key={item.roomId}
             roomName={item.roomName}

@@ -33,7 +33,7 @@ export const COUPON_API = {
     instance.patch<Response<null>>('/api/coupons/backoffice/manage', params),
   getCouponRoomList: (accommodationId: string) =>
     instance.get<Response<CouponRoomList>>(
-      `/api/coupons/backoffice/buy/${accommodationId}`,
+      `/api/coupons/backoffice/buy/${accommodationId && 1}`,
     ),
   buyCoupon: (params: BuyCouponParams) =>
     instance.post<Response<BuyCouponData>>('/api/coupons/backoffice/buy', {

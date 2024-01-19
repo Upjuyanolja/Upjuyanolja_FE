@@ -1,3 +1,4 @@
+import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { BuyCouponParams } from '@api/coupon/type';
 import { CouponApplier } from '@components/coupon-registration/coupon-applier';
 import { CouponCard } from '@components/coupon-registration/coupon-card';
@@ -12,6 +13,7 @@ import {
   totalPointsState,
 } from '@stores/coupon-registration/atoms';
 import { Modal } from 'antd';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -21,6 +23,11 @@ export const CouponRegistration = () => {
   const { accommodationId } = useParams();
   const totalPoints = useRecoilValue(totalPointsState);
   const { buyCoupon, isModalOpen, setIsModalOpen } = useCouponRegistration();
+  const { isGetCouponRoomListRefetch } = useCouponRegistration();
+
+  useEffect(() => {
+    isGetCouponRoomListRefetch();
+  }, [accommodationId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
