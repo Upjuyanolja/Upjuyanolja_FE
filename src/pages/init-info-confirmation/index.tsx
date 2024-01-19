@@ -11,7 +11,7 @@ import styled from 'styled-components';
 export const InitInfoConfirmation = () => {
   const userInput = window.localStorage.getItem('userInput');
   const navigate = useNavigate();
-  if (userInput === null) {
+  if (!userInput) {
     return (
       <StyledWrapper>
         <StyledNoInputWrapper>
