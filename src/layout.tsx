@@ -7,16 +7,20 @@ import { colors } from '@/constants/colors';
 export const RootLayout = () => {
   const location = useLocation();
   const currentRoute = location.pathname;
+  const isRoomRegistrationRoute = currentRoute.includes(
+    ROUTES.ROOM_REGISTRATION,
+  );
+  const isRoomUpdateRoute = currentRoute.includes(ROUTES.ROOM_UPDATE);
+
+  const shouldApplyGrayBackground =
+    isRoomRegistrationRoute || isRoomUpdateRoute;
 
   return (
     <Layout>
       <Layout.Header style={{ height: '56px' }}>Header</Layout.Header>
       <Layout
         style={{
-          backgroundColor:
-            currentRoute === ROUTES.ROOM_REGISTRATION
-              ? colors.midGray
-              : 'white',
+          backgroundColor: shouldApplyGrayBackground ? colors.midGray : 'white',
         }}
       >
         <Layout.Sider width="256" theme={'light'}>
