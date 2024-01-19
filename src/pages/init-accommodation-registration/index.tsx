@@ -141,6 +141,7 @@ export const InitAccommodationRegistration = () => {
     setIsValid(areFormFieldsValid());
   };
 
+  /** isEdit일 때 input에 value set해주기 */
   useEffect(() => {
     if (isEdit) {
       form.setFieldValue('accommodation-name', accommodationData.name);
