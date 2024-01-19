@@ -143,16 +143,15 @@ export const InitAccommodationRegistration = () => {
 
   /** isEdit일 때 input에 value set해주기 */
   useEffect(() => {
-    if (isEdit) {
-      form.setFieldValue('accommodation-name', accommodationData.name);
-      form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
-      form.setFieldValue('accommodation-address', accommodationData.address);
-      form.setFieldValue(
-        'accommodation-detailAddress',
-        accommodationData.detailAddress,
-      );
-      form.setFieldValue('accommodation-desc', accommodationData.description);
-    }
+    if (!isEdit) return;
+    form.setFieldValue('accommodation-name', accommodationData.name);
+    form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
+    form.setFieldValue('accommodation-address', accommodationData.address);
+    form.setFieldValue(
+      'accommodation-detailAddress',
+      accommodationData.detailAddress,
+    );
+    form.setFieldValue('accommodation-desc', accommodationData.description);
   }, []);
 
   return (
