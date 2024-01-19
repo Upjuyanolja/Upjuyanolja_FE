@@ -4,18 +4,24 @@ import { Button, Checkbox } from 'antd';
 import styled from 'styled-components';
 import { PurchaseFooterProps } from './type';
 import { useState } from 'react';
+import { CouponAgreementModal } from '@components/agreement-modal/coupon-agreement-modal';
 
 export const AdditionalPurchaseFooter = ({
   totalPoints,
   handlePurchaseButton,
 }: PurchaseFooterProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
+  const [isAgreementModalOpen, setIsAgreementModalOpen] = useState(false);
+
+  const handleAgreementModalOpen = () => {
+    setIsAgreementModalOpen(true);
+  };
+
   return (
     <>
       <StyledTotalPriceContainer>
         <TextBox typography="h5" fontWeight={700} color="primary">
-          합계 : {totalPoints?.toLocaleString()}P 합계 :{' '}
-          {totalPoints?.toLocaleString()}P
+          합계 : {totalPoints?.toLocaleString()}P
         </TextBox>
       </StyledTotalPriceContainer>
       <StyledCheckBoxContainer>
@@ -24,15 +30,16 @@ export const AdditionalPurchaseFooter = ({
             setIsAgreed((prev) => !prev);
           }}
         />
-        <Checkbox
-          onChange={() => {
-            setIsAgreed((prev) => !prev);
-          }}
-        />
         <TextBox typography="body3" fontWeight={400}>
           주문 내용을 확인하였으며,
         </TextBox>
-        <TextBox typography="body3" fontWeight={400} color="primary">
+        <TextBox
+          typography="body3"
+          fontWeight={400}
+          color="primary"
+          cursor={'pointer'}
+          onClick={handleAgreementModalOpen}
+        >
           구매 약관
         </TextBox>
         <TextBox typography="body3" fontWeight={400}>
@@ -50,6 +57,10 @@ export const AdditionalPurchaseFooter = ({
           구매하기
         </TextBox>
       </StyledButton>
+      <CouponAgreementModal
+        isModalOpen={isAgreementModalOpen}
+        setIsModalOpen={setIsAgreementModalOpen}
+      />
     </>
   );
 };

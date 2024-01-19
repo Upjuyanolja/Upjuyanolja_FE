@@ -64,12 +64,13 @@ export const CouponHeader = ({
             </Tooltip>
           </StyledDateText>
           <DatePicker
-            value={moment(expiry, DATE_FORMAT)}
+            value={expiry === '' ? moment() : moment(expiry, DATE_FORMAT)}
             disabledDate={disabledDate}
             onChange={(_, date) => {
               handleChangeDate(date);
             }}
             allowClear={false}
+            disabled={expiry === ''}
           />
           <TextBox typography="body1" fontWeight={700} color="black700">
             까지
@@ -80,15 +81,23 @@ export const CouponHeader = ({
             defaultValue="상태 변경"
             options={couponStatusOption}
             onChange={handleSelectStatus}
+            disabled={expiry === ''}
           />
           <StyledButtonContainer>
-            <StyledDeleteButton onClick={handleDeleteButton}>
+            <StyledDeleteButton
+              onClick={handleDeleteButton}
+              disabled={expiry === ''}
+            >
               <DeleteOutlined width="20px" height="20px" />
               <TextBox typography="body2" fontWeight={700}>
                 선택 삭제
               </TextBox>
             </StyledDeleteButton>
-            <StyledPurchaseButton onClick={handleModalOpen}>
+            <StyledPurchaseButton
+              onClick={handleModalOpen}
+              disabled={expiry === ''}
+              type="primary"
+            >
               <Logo />
               <TextBox typography="body2" fontWeight={700} color="white">
                 추가 구매

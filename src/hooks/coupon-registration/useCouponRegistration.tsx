@@ -17,7 +17,6 @@ export const useCouponRegistration = () => {
     onSuccess() {
       message.success({
         content: '쿠폰을 구매하였습니다.',
-        className: 'coupon-message',
       });
     },
     onError(error) {

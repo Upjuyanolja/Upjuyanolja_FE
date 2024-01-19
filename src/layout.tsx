@@ -17,7 +17,7 @@ export const RootLayout = () => {
 
   return (
     <Layout>
-      <Layout.Header>Header</Layout.Header>
+      <Layout.Header style={{ height: '56px' }}>Header</Layout.Header>
       <Layout
         style={{
           backgroundColor: shouldApplyGrayBackground ? colors.midGray : 'white',
