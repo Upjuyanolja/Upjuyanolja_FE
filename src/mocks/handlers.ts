@@ -26,6 +26,7 @@ import {
   getCouponRoomListResolver,
 } from './coupon-registration';
 import { postRoomResolver } from './room';
+import { postAccommodationInfoResolver, postImageFileResolver } from './init';
 
 const email = 'ivegaeul@naver.com';
 const verificationCode = '020924';
@@ -70,4 +71,7 @@ export const handlers = [
   http.delete('/api/points/charges/1', deleteOrderCancelResolver),
 
   http.post(`/api/rooms/${accommodationId}`, postRoomResolver),
+
+  http.post('/api/accommodations', postAccommodationInfoResolver),
+  http.post('/api/accommodation/images', postImageFileResolver),
 ];
