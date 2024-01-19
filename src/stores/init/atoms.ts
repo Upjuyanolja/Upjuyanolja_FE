@@ -7,7 +7,7 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist({
-  key: 'localStorage',
+  key: 'userInput',
   storage: localStorage,
 });
 
@@ -33,23 +33,7 @@ export const userInputValueState = atom<UserInputValue[]>({
         sports: false,
         seminar: false,
       },
-      rooms: [
-        {
-          name: '',
-          price: null,
-          defaultCapacity: null,
-          maxCapacity: null,
-          checkInTime: '',
-          checkOutTime: '',
-          count: null,
-          images: [{ url: '' }],
-          options: {
-            airCondition: false,
-            tv: false,
-            internet: false,
-          },
-        },
-      ],
+      rooms: [],
     },
   ],
   effects_UNSTABLE: [persistAtom],
@@ -87,9 +71,4 @@ export const selectedAccommodationFilesState = atom<Image[]>({
 export const selectedInitRoomFilesState = atom<Image[]>({
   key: 'selectedInitRoomFilesState',
   default: [],
-});
-
-export const isSameRoomName = atom({
-  key: 'isSameRoomName',
-  default: false,
 });

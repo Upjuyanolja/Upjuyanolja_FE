@@ -1,4 +1,15 @@
+import {
+  AccommodationId,
+  BuyCouponDiscount,
+  BuyCouponEachPoint,
+  BuyCouponQuantity,
+  BuyCouponTotalPoints,
+  RoomId,
+  SelectedDiscountType,
+} from '@components/coupon-registration/type';
+
 export type staticsData = {
+  accommodationId: number;
   total: number;
   used: number;
   stock: number;
@@ -10,7 +21,9 @@ export type dailyRevenue = {
   normalRevenue: number;
 };
 export type revenueData = {
+  accommodationId: number;
   revenue: dailyRevenue[];
+  couponMessage: string;
 };
 
 export type coupon = {
@@ -22,7 +35,7 @@ export type coupon = {
   dayLimit: number;
   quantity: number;
   discount: number;
-  couponType: 'WEEKDAYS' | 'WEEKENDS' | 'ALL_DAYS';
+  couponType: string;
 };
 
 export type EditCoupon = {
@@ -61,4 +74,39 @@ export type CouponRoomList = {
   accommodationId: number;
   accommodationName: string;
   rooms: Pick<room<coupon>, 'roomId' | 'roomName' | 'roomPrice'>[];
+};
+
+export type BuyCouponParams = {
+  accommodationId: AccommodationId;
+  totalPoints: BuyCouponTotalPoints;
+  rooms: BuyCouponRoomData[];
+};
+
+export type BuyCouponData = {
+  message: string;
+  data: null;
+  code?: number;
+};
+
+export type BuyCouponRoomData = {
+  roomId: RoomId;
+  discountType: SelectedDiscountType;
+  discount: BuyCouponDiscount;
+  quantity: BuyCouponQuantity;
+  eachPoint: BuyCouponEachPoint;
+};
+
+export type PurchaseCouponParams = {
+  accommodationId: number;
+  expiry: string;
+  totalPoints: number;
+  rooms: Omit<
+    room<
+      Omit<coupon, 'couponName' | 'appliedPrice' | 'quantity'> & {
+        eachPoint: number;
+        buyQuantity: number;
+      }
+    >,
+    'roomName' | 'roomPrice'
+  >[];
 };

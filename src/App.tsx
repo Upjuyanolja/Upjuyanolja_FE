@@ -28,6 +28,7 @@ import { InitLayout } from '@components/layout/init-layout/InitLayout';
 import { MainRedirect } from '@pages/main-redirect';
 import { TossSuccess } from '@pages/toss-success';
 import { TossFail } from '@pages/toss-fail';
+import { UserGuide } from '@pages/user-guide';
 
 function App() {
   const accessToken = getCookie('accessToken');
@@ -93,6 +94,7 @@ function App() {
             path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
             element={<RoomUpdate />}
           />
+          <Route path={ROUTES.USER_GUIDE} element={<UserGuide />} />
         </Route>
       </Routes>
     </Router>

@@ -7,16 +7,23 @@ import { useState } from 'react';
 
 export const AdditionalPurchaseFooter = ({
   totalPoints,
+  handlePurchaseButton,
 }: PurchaseFooterProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
   return (
     <>
       <StyledTotalPriceContainer>
         <TextBox typography="h5" fontWeight={700} color="primary">
-          합계 : {totalPoints?.toLocaleString()}P
+          합계 : {totalPoints?.toLocaleString()}P 합계 :{' '}
+          {totalPoints?.toLocaleString()}P
         </TextBox>
       </StyledTotalPriceContainer>
       <StyledCheckBoxContainer>
+        <Checkbox
+          onChange={() => {
+            setIsAgreed((prev) => !prev);
+          }}
+        />
         <Checkbox
           onChange={() => {
             setIsAgreed((prev) => !prev);
@@ -33,7 +40,12 @@ export const AdditionalPurchaseFooter = ({
         </TextBox>
       </StyledCheckBoxContainer>
 
-      <StyledButton type="primary" size="large" disabled={!isAgreed}>
+      <StyledButton
+        type="primary"
+        size="large"
+        disabled={!isAgreed}
+        onClick={handlePurchaseButton}
+      >
         <TextBox fontWeight={700} typography="h5">
           구매하기
         </TextBox>

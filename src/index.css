@@ -167,6 +167,7 @@
 
 .confirm-modal {
   top: 30vh;
+  text-align: center;
   .ant-modal-content {
     width: 494px;
     height: 216px;
@@ -216,4 +217,24 @@
     display: flex;
     align-items: center;
   }
+}
+
+/*loading style*/
+.ant-spin-text {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+.ant-spin-nested-loading > div > .ant-spin-lg .ant-spin-dot {
+  margin: 0 0 0 16px;
+}
+
+.ant-checkbox-inner {
+  border: 1px solid #0349e6;
+}
+
+/*regex error message style*/
+.ant-form-item-explain-error {
+  font-size: 12px;
+  margin-top: 8px;
 }

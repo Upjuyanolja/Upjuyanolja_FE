@@ -6,7 +6,7 @@ import { Space } from 'antd';
 import { TextBox } from '@components/text-box';
 import { mainChartProps } from './type';
 
-export const MainChart = ({ revenueData }: mainChartProps) => {
+export const MainChart = ({ revenueData, couponMessage }: mainChartProps) => {
   const config = {
     data: revenueData,
     isStack: true,
@@ -40,7 +40,7 @@ export const MainChart = ({ revenueData }: mainChartProps) => {
             최근 일주일 일자별 매출
           </TextBox>
           <TextBox typography="body4" fontWeight={400}>
-            단위:원
+            단위: 만원
           </TextBox>
         </StyledTitle>
         <div>
@@ -62,19 +62,18 @@ export const MainChart = ({ revenueData }: mainChartProps) => {
         <Column {...config} legend={false} />
       </StyledChart>
       <StyledResult color="blue">
-        <TextBox typography="body2" fontWeight={400} color="primary">
-          김업주님, 쿠폰 발급 후
-        </TextBox>
-        <TextBox typography="body2" fontWeight={700} color="primary">
-          매출이 100% 늘어났어요!
-        </TextBox>
+        {couponMessage && (
+          <TextBox typography="body2" fontWeight={700} color="primary">
+            {couponMessage}
+          </TextBox>
+        )}
       </StyledResult>
     </StyledLayout>
   );
 };
 const StyledLayout = styled('div')`
   width: 692px;
-  height: 386px;
+  height: 382px;
 
   border: 2px solid ${(props) => props.color};
   border-radius: 8px;

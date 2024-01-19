@@ -6,32 +6,32 @@ import { PurchaseInfoProps } from './type';
 export const AdditionalPurchaseInfo = ({
   coupon,
   disabled,
-  handleChangeNumberOfCoupons,
+  handleChangeBuyQuantity,
   roomId,
 }: PurchaseInfoProps) => {
   return (
     <StyledCouponInfo>
       <TextBox typography="body2" fontWeight={400}>
-        {coupon.name} | {coupon.points.toLocaleString()}P
+        {coupon.couponName} | {coupon.points.toLocaleString()}P
       </TextBox>
       <StyledPriceInfo>
         <div>
           <StyledInput
-            value={coupon.numberOfCoupons}
+            value={coupon.buyQuantity}
             disabled={disabled}
             onChange={(event) =>
-              handleChangeNumberOfCoupons(event, coupon.couponId, roomId)
+              handleChangeBuyQuantity(event, coupon.couponId, roomId)
             }
           />
           <TextBox fontWeight={400} typography="body3">
             장
           </TextBox>
         </div>
-        <StyledTotalPoints>
+        <StyledEachPoint>
           <TextBox typography="h5" fontWeight={700}>
-            {coupon.totalPoints.toLocaleString()}P
+            {coupon.eachPoint.toLocaleString()}P
           </TextBox>
-        </StyledTotalPoints>
+        </StyledEachPoint>
       </StyledPriceInfo>
     </StyledCouponInfo>
   );
@@ -49,7 +49,7 @@ const StyledPriceInfo = styled.div`
   gap: 40px;
 `;
 
-const StyledTotalPoints = styled.div`
+const StyledEachPoint = styled.div`
   width: 120px;
   display: flex;
   justify-content: flex-end;

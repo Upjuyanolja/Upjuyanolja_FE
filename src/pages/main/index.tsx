@@ -1,11 +1,11 @@
 import { MainChart } from '@components/main/main-chart';
 import { MainCouponStatusContainer } from '@components/main/main-coupon-status-container';
-import { MainNavigationContainer } from '@components/main/main-navigation-container';
-import promotionImage from '@assets/image/mainPromotionImage.png';
-import promotionImage2 from '@assets/image/mainPromotionImage2.png';
-import { Image, Layout } from 'antd';
+import { CouponRegistrationContainer } from '@components/main/coupon-navigation-container';
+import promotionImage from '@assets/image/mainPromotionImage.jpg';
+import { Image, Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import { useMain } from '@hooks/main/useMain';
+import { UserGuidNavigationContainer } from '@components/main/user-guide-navigation-container';
 
 export const Main = () => {
   const {
@@ -15,9 +15,17 @@ export const Main = () => {
     isStaticsError,
     revenueData,
     isRevenueError,
+    couponMessage,
+    navigateUserGuide,
+    navigateBusinessCenter,
   } = useMain();
 
-  if (!staticsData || !revenueData) return <></>;
+  if (!staticsData || !revenueData)
+    return (
+      <StyledLoadingLayout>
+        <Spin tip="Loading..." size="large" />
+      </StyledLoadingLayout>
+    );
   if (isStaticsError || isRevenueError) return <div>에러</div>;
   return (
     <StyledMainLayout>
@@ -27,20 +35,30 @@ export const Main = () => {
             staticsData={staticsData}
             navigateCoupon={navigateCoupon}
           />
-          <MainChart revenueData={revenueData} />
+          <MainChart revenueData={revenueData} couponMessage={couponMessage} />
         </StyledMainContainer>
         <StyledMainInfo>
-          <MainNavigationContainer
+          <CouponRegistrationContainer
             navigateCouponRegistration={navigateCouponRegistration}
           />
-          <StyledImage src={promotionImage} preview={false} />
-          <StyledImage src={promotionImage2} preview={false} />
+          <UserGuidNavigationContainer navigateUserGuide={navigateUserGuide} />
+          <StyledImage
+            src={promotionImage}
+            preview={false}
+            onClick={navigateBusinessCenter}
+          />
         </StyledMainInfo>
       </StyledLayout>
     </StyledMainLayout>
   );
 };
 
+const StyledLoadingLayout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`;
 const StyledMainLayout = styled(Layout)`
   height: 100%;
 
@@ -71,6 +89,10 @@ const StyledMainInfo = styled('div')`
 `;
 const StyledImage = styled(Image)`
   width: 224px;
-  height: 187px;
+  height: 185px;
   border-radius: 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

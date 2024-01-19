@@ -1,6 +1,7 @@
 {
   "message": "쿠폰 통계 조회에 성공했습니다.",
   "data": {
+    "accommodationId": 1,
     "total": 501,
     "used": 300,
     "stock": 201
