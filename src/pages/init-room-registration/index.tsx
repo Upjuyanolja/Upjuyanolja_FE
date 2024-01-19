@@ -12,17 +12,20 @@ import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
+import { useImageFile } from '@queries/init';
 import {
   checkedRoomOptions,
-  selectedInitRoomFilesState,
+  imageFileState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { capacityHasError, priceHasError } from '@stores/room/atoms';
 import { Form, message } from 'antd';
+import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { Image } from '@api/room/type';
 
 export const InitRoomRegistration = () => {
   const [form] = Form.useForm();
@@ -36,53 +39,41 @@ export const InitRoomRegistration = () => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
 
-  const setUserInputValueState = useSetRecoilState(userInputValueState);
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
 
   const [selectedOptions, setSelectedOptions] =
     useRecoilState(checkedRoomOptions);
-  const [selectedImages, setSelectedImages] = useRecoilState(
-    selectedInitRoomFilesState,
-  );
 
-  const userInputLocalStorage = localStorage.getItem('userInput');
+  const [imageFiles, setImageFiles] = useRecoilState(imageFileState);
 
   const [sameRoomName, setSameRoomName] = useState(false);
-  const [recoilUpdated, setRecoilUpdated] = useState(false);
   const priceError = useRecoilValue(priceHasError);
   const capacityError = useRecoilValue(capacityHasError);
 
-  const onFinish = (values: onFinishValues) => {
-    if (userInputLocalStorage !== null) {
-      const parsedData = JSON.parse(userInputLocalStorage);
-      const roomsArray = parsedData?.userInputValueState[0]?.rooms;
-
-      const hasDuplicate = roomsArray.some(
-        (room: Room) => room.name === values['room-name'],
-      );
-
-      if (hasDuplicate) {
-        setSameRoomName(true);
-        message.error({
-          content: '동일한 객실명의 상품이 이미 존재합니다.',
-          style: { marginTop: '210px' },
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-
-      setUserInputValueState((prevUserInputValueState) => {
+  const { mutate: imageFile } = useImageFile({
+    onSuccess(data) {
+      setUserInputValue((prevUserInputValueState) => {
         const [userInputValue] = prevUserInputValueState;
 
+        const roomName = form.getFieldValue('room-name');
+        const price = parseInt(form.getFieldValue('price').replace(',', ''));
+        const defaultCapacity = form.getFieldValue('defaultCapacity');
+        const maxCapacity = form.getFieldValue('maxCapacity');
+        const checkInTime = form.getFieldValue('checkInTime').format('HH:mm');
+        const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
+        const count = form.getFieldValue('count');
+
         const updatedRoom: Room = {
-          name: values['room-name'],
-          price: parseInt(values['price'].replace(',', '')),
-          defaultCapacity: values['defaultCapacity'],
-          maxCapacity: values['maxCapacity'],
-          checkInTime: values['checkInTime'].format('HH:mm'),
-          checkOutTime: values['checkOutTime'].format('HH:mm'),
-          count: values['count'],
+          name: roomName,
+          price: price,
+          defaultCapacity: defaultCapacity,
+          maxCapacity: maxCapacity,
+          checkInTime: checkInTime,
+          checkOutTime: checkOutTime,
+          count: count,
           options: selectedOptions,
-          images: selectedImages,
+          images: data.data.data.urls as unknown as Image[],
         };
 
         const updatedUserInputValue = {
@@ -92,10 +83,46 @@ export const InitRoomRegistration = () => {
 
         return [updatedUserInputValue];
       });
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
+      setImageFiles([]);
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    },
+    onError(error) {
+      if (error instanceof AxiosError) {
+        message.error({
+          content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+    },
+  });
 
-      setRecoilUpdated(true);
-      setSameRoomName(false);
+  const onFinish = (values: onFinishValues) => {
+    const roomsArray = userInputValue[0].rooms;
+
+    const hasDuplicate = roomsArray.some(
+      (room: Room) => room.name === values['room-name'],
+    );
+
+    if (hasDuplicate) {
+      setSameRoomName(true);
+      message.error({
+        content: '동일한 객실명의 상품이 이미 존재합니다.',
+        style: { marginTop: '210px' },
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
+
+    const formData = new FormData();
+
+    imageFiles.forEach((image) => {
+      formData.append('image1', image);
+    });
+
+    imageFile(formData);
+
+    setSameRoomName(false);
   };
 
   const areFormFieldsValid = () => {
@@ -106,7 +133,7 @@ export const InitRoomRegistration = () => {
       values['price'] &&
       values['checkInTime'] &&
       values['checkOutTime'] &&
-      selectedImages.length !== 0;
+      imageFiles.length !== 0;
 
     return (
       !form.getFieldsError().some(({ errors }) => errors.length) &&
@@ -118,16 +145,7 @@ export const InitRoomRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [selectedImages, selectedOptions, priceHasError, capacityError]);
-
-  useEffect(() => {
-    if (recoilUpdated && sameRoomName === false) {
-      setRecoilUpdated(false);
-      setSelectedImages([]);
-      setSelectedOptions({ airCondition: false, tv: false, internet: false });
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
-    }
-  }, [recoilUpdated, sameRoomName]);
+  }, [selectedOptions, priceHasError, capacityError]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
