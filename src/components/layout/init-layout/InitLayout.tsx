@@ -103,8 +103,9 @@ const StyledMainContent = styled(Layout.Content)`
   max-width: 1024px;
   width: 1024px;
   height: 100%;
+  min-height: 100vh;
 
-  margin: 204px auto 0;
+  margin: 0 auto;
 
   padding: 32px 48px;
 `;

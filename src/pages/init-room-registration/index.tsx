@@ -182,4 +182,6 @@ const StyledWrapper = styled.div`
   padding: 40px;
 
   border-radius: 8px;
+
+  margin-top: 204px;
 `;
