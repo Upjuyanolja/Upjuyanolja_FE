@@ -19,7 +19,7 @@ import { CouponRegistration } from './pages/coupon-registration';
 import { Main } from './pages/main';
 import Room from './pages/room-management';
 import RoomRegistration from './pages/room-registration';
-import { RoomUpdate } from './pages/room-update';
+import RoomUpdate from './pages/room-update';
 import { RootLayout } from './layout';
 import './App.less';
 import { RoomLayout } from '@components/room/room-layout';
@@ -90,10 +90,12 @@ function App() {
               element={<RoomRegistration />}
             />
           </Route>
-          <Route
-            path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
-            element={<RoomUpdate />}
-          />
+          <Route element={<RoomLayout />}>
+            <Route
+              path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
+              element={<RoomUpdate />}
+            />
+          </Route>
           <Route path={ROUTES.USER_GUIDE} element={<UserGuide />} />
         </Route>
       </Routes>

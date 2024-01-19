@@ -17,21 +17,16 @@ export const ButtonContainer = ({
 
   return (
     <StyledWrapper $buttonStyle={buttonStyle}>
-      {buttonStyle === 'register' && (
+      {
         <>
           <StyledButton type="primary" ghost onClick={handlePreviousClick}>
             이전
           </StyledButton>
-          <StyledButton
-            type="primary"
-            disabled={!isValid}
-            data-testid="room-next-button"
-            htmlType="submit"
-          >
-            {buttonStyle === 'register' ? '등록 요청' : '수정 요청'}
+          <StyledButton type="primary" disabled={!isValid} htmlType="submit">
+            {buttonStyle === 'register' ? '등록 요청' : '수정 완료'}
           </StyledButton>
         </>
-      )}
+      }
     </StyledWrapper>
   );
 };
@@ -39,17 +34,9 @@ export const ButtonContainer = ({
 export const StyledWrapper = styled.div<ButtonContainerStyledWrapperProps>`
   width: 100%;
 
-  display: ${(props) =>
-    props.$buttonStyle === 'register' || props.$buttonStyle === 'edit'
-      ? 'grid'
-      : 'block'};
-  grid-template-columns: ${(props) =>
-    props.$buttonStyle === 'register'
-      ? '1fr 2.5fr'
-      : props.$buttonStyle === 'edit'
-        ? 'auto'
-        : 'none'};
-  gap: ${(props) => (props.$buttonStyle === 'register' ? '10px' : '0')};
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: 10px;
 `;
 
 export const StyledButton = styled(Button)`

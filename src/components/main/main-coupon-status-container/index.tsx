@@ -64,7 +64,7 @@ const StyledLayout = styled('div')`
 
 const StyledTitle = styled('div')`
   width: 100%;
-  height: 24px;
+  height: 36px;
   padding: 0 16px;
 
   display: flex;
