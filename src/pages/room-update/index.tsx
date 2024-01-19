@@ -13,7 +13,7 @@ import { StatusContainer } from '@components/room/status-container';
 import { useRecoilState } from 'recoil';
 import {
   checkedRoomOptions,
-  selectedInitRoomFilesState,
+  //selectedInitRoomFilesState,
 } from '@stores/init/atoms';
 import { RoomData } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
@@ -42,7 +42,7 @@ const RoomUpdate = () => {
         className: 'coupon-message',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
-      setSelectedRoomFiles([]);
+      //setSelectedRoomFiles([]);
       setSelectedRoomOptions({
         airCondition: false,
         tv: false,
@@ -55,9 +55,9 @@ const RoomUpdate = () => {
     },
   });
 
-  const [selectedImages, setSelectedRoomFiles] = useRecoilState(
+  /*const [selectedImages, setSelectedRoomFiles] = useRecoilState(
     selectedInitRoomFilesState,
-  );
+  );*/
   const [selectedOptions, setSelectedRoomOptions] =
     useRecoilState(checkedRoomOptions);
 
@@ -71,7 +71,8 @@ const RoomUpdate = () => {
       checkOutTime: value['checkOutTime'].format('HH:mm'),
       amount: value.count,
       options: selectedOptions,
-      images: selectedImages,
+      //images:selectedImages,
+      images: [],
     };
     mutate(data);
   };
@@ -83,8 +84,8 @@ const RoomUpdate = () => {
       values['room-name'] &&
       values['price'] &&
       values['checkInTime'] &&
-      values['checkOutTime'] &&
-      selectedImages.length !== 0;
+      values['checkOutTime'];
+    //selectedImages.length !== 0;
 
     return (
       !form.getFieldsError().some(({ errors }) => errors.length) && conditions
@@ -93,7 +94,7 @@ const RoomUpdate = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, selectedImages, selectedOptions]);
+  }, [form, /*selectedImages, */ selectedOptions]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());

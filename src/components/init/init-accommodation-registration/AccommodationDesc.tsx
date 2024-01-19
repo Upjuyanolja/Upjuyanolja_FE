@@ -57,4 +57,8 @@ const StyledInputWrapper = styled.div`
   .ant-form-item {
     margin-bottom: 0;
   }
+
+  .ant-form-item-control {
+    height: 190px;
+  }
 `;

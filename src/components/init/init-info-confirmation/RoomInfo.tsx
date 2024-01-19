@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import { RoomItem } from './RoomItem';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { Room } from '../init-accommodation-registration/type';
 
-export const RoomInfo = ({ roomData }: { roomData: Room[] }) => {
+export const RoomInfo = () => {
   const navigate = useNavigate();
   return (
     <StyledWrapper>
@@ -22,7 +21,7 @@ export const RoomInfo = ({ roomData }: { roomData: Room[] }) => {
         </StyledButton>
       </StyledHeadContainer>
       <StyledRoomListContainer>
-        <RoomItem roomData={roomData} />
+        <RoomItem />
       </StyledRoomListContainer>
     </StyledWrapper>
   );

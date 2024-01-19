@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
+import { ROUTES } from '@/constants/routes';
 import { TextBox } from '@components/text-box';
-import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { Layout, Button } from 'antd';
 import { MdOutlineAddHome } from 'react-icons/md';
 import styled from 'styled-components';
@@ -20,7 +20,7 @@ export const Init = () => {
           <StyledButton
             ghost
             type="primary"
-            href="/init/accommodation-registration"
+            href={ROUTES.INIT_ACCOMMODATION_REGISTRATION}
           >
             <MdOutlineAddHome />
             숙소 등록 시작하기
