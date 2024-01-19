@@ -27,7 +27,7 @@ export const SignIn = () => {
       localStorage.setItem('member', memberData);
       if (accommodationListData?.accommodations[0]?.id) {
         setCookie(
-          'accomodationId',
+          'accommodationId',
           accommodationListData?.accommodations[0]?.id.toString(),
         );
       }
