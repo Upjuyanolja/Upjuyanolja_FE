@@ -37,7 +37,6 @@ export const StatusContainer = () => {
 
 const StyledInputWrapper = styled.div`
   margin-bottom: 35px;
-  position: relative;
 
   .ant-form-item-control {
     width: 100%;
