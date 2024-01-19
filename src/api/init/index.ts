@@ -6,7 +6,7 @@ import {
 } from './type';
 import { Response } from '@/types/api';
 
-export const ACCOMMODATION_API = {
+export const ACCOMMODATION_REGISTRATION_API = {
   postImageFile: (formData: FormData) =>
     instance.post<Response<PostImageFile>>(
       '/api/accommodations/images',
