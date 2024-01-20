@@ -10,17 +10,15 @@ import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  checkedRoomOptions,
-  //selectedInitRoomFilesState,
-} from '@stores/init/atoms';
-import { RoomData, onFinishValues } from '@api/room/type';
+import { checkedRoomOptions, imageFileState } from '@stores/init/atoms';
+import { Image, RoomData } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
 import { capacityHasError, priceHasError } from '@stores/room/atoms';
 import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
+import { useImageFile } from '@queries/init';
 
 const RoomRegistration = () => {
   const navigate = useNavigate();
@@ -31,23 +29,20 @@ const RoomRegistration = () => {
     airCondition: '에어컨',
     internet: '인터넷',
   };
-
   const { accommodationId } = useParams();
-
-  const [form] = Form.useForm();
-  const { mutate } = useAddRoom(accommodationId as string, {
+  const { mutate: addRoom } = useAddRoom(accommodationId as string, {
     onSuccess() {
       message.success({
         content:
           '객실 등록 요청 완료! 승인 결과는 24시간 이내에 확인 가능합니다.',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
-      //setSelectedImages([]);
       setSelectedOptions({
         airCondition: false,
         tv: false,
         internet: false,
       });
+      setSelectedImageFile([]);
     },
     onError(error) {
       if (error instanceof AxiosError)
@@ -55,32 +50,49 @@ const RoomRegistration = () => {
     },
   });
 
-  /* const [selectedImages, setSelectedImages] = useRecoilState(
-    selectedInitRoomFilesState,
-  );*/
+  const { mutate: getImageUrl } = useImageFile({
+    onSuccess(data) {
+      const roomName = form.getFieldValue('room-name');
+      const price = parseInt(form.getFieldValue('price').replace(',', ''));
+      const defaultCapacity = form.getFieldValue('defaultCapacity');
+      const maxCapacity = form.getFieldValue('maxCapacity');
+      const checkInTime = form.getFieldValue('checkInTime').format('HH:mm');
+      const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
+      const count = form.getFieldValue('count');
+
+      const roomData: RoomData = {
+        name: roomName,
+        price: price,
+        defaultCapacity: defaultCapacity,
+        maxCapacity: maxCapacity,
+        checkInTime: checkInTime,
+        checkOutTime: checkOutTime,
+        amount: count,
+        options: selectedOptions,
+        images: data.data.data.urls as unknown as Image[],
+      };
+
+      addRoom(roomData);
+    },
+  });
+
+  const [form] = Form.useForm();
+
+  const [imageFile, setSelectedImageFile] = useRecoilState(imageFileState);
   const [selectedOptions, setSelectedOptions] =
     useRecoilState(checkedRoomOptions);
 
-  const [sameRoomName, setSameRoomName] = useState(false);
-  const [recoilUpdated, setRecoilUpdated] = useState(false);
   const priceError = useRecoilValue(priceHasError);
   const capacityError = useRecoilValue(capacityHasError);
 
-  const onFinish = (value: onFinishValues) => {
-    const data: RoomData = {
-      name: value['room-name'],
-      price: parseInt(value['price'].replace(',', '')),
-      defaultCapacity: value.defaultCapacity,
-      maxCapacity: value.maxCapacity,
-      checkInTime: value['checkInTime'].format('HH:mm'),
-      checkOutTime: value['checkOutTime'].format('HH:mm'),
-      amount: value.count,
-      options: selectedOptions,
-      //images: selectedImages,
-      images: [],
-    };
-    setRecoilUpdated(true);
-    mutate(data);
+  const onFinish = () => {
+    const formData = new FormData();
+
+    for (let index = 0; index < imageFile.length; index++) {
+      const image = imageFile[index];
+      if (image.file !== null) formData.append('image1', image.file);
+    }
+    getImageUrl(formData);
   };
 
   const areFormFieldsValid = () => {
@@ -91,15 +103,7 @@ const RoomRegistration = () => {
       values['price'] &&
       values['checkInTime'] &&
       values['checkOutTime'] &&
-      //selectedImages.length !== 0;
-
-      console.log(
-        values['room-name'],
-        values['price'],
-        values['checkInTime'],
-        values['checkOutTime'],
-        //selectedImages.length,
-      );
+      imageFile.length !== 0;
 
     return (
       !form.getFieldsError().some(({ errors }) => errors.length) &&
@@ -111,14 +115,7 @@ const RoomRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [
-    form,
-    //selectedImages,
-    selectedOptions,
-    priceError,
-    capacityError,
-    recoilUpdated,
-  ]);
+  }, [form, imageFile, selectedOptions, priceError, capacityError]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
