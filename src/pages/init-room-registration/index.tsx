@@ -57,7 +57,10 @@ export const InitRoomRegistration = () => {
     ) {
       const index = userInputValue[0].editRoomIndex;
       form.setFieldValue('room-name', userInputValue[0].rooms[index].name);
-      form.setFieldValue('price', userInputValue[0].rooms[index].price);
+      form.setFieldValue(
+        'price',
+        userInputValue[0].rooms[index].price?.toLocaleString(),
+      );
       form.setFieldValue(
         'defaultCapacity',
         userInputValue[0].rooms[index].defaultCapacity,
@@ -166,15 +169,20 @@ export const InitRoomRegistration = () => {
     }
 
     const formData = new FormData();
-    //foreach가 잘 안 먹어서 for문 사용
+
+    let shouldExecuteImageFile = false;
+
     for (let index = 0; index < imageFiles.length; index++) {
       const image = imageFiles[index];
       if (image.file !== null) {
         formData.append('image1', image.file);
+        shouldExecuteImageFile = true;
       }
     }
-    // 이떄 여기서 formData가 아무 것도 없을 때 ( 사용자가 직접 올린 이미지가 없을 때 )는 imageFile 함수 실행하면 안됨
-    imageFile(formData);
+
+    if (shouldExecuteImageFile) {
+      imageFile(formData);
+    }
 
     setSameRoomName(false);
   };
