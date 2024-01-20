@@ -102,7 +102,7 @@ export const InitRoomRegistration = () => {
   const getPrevImageFiles = () => {
     const prevImageFile: Image[] = [];
     for (let i = 0; i < imageFiles.length; i++) {
-      prevImageFile.push({ url: imageFiles[i].url });
+      if (imageFiles[i].url) prevImageFile.push({ url: imageFiles[i].url });
     }
     return prevImageFile;
   };
