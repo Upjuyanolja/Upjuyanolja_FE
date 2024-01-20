@@ -74,7 +74,24 @@ export const imageFileState = atom<ImageFile[]>({
   default: [],
 });
 
+const { persistAtom: updateAccommodationPersist } = recoilPersist({
+  key: 'isUpdatedAccommodationState',
+  storage: localStorage,
+});
+
 export const isUpdatedAccommodationState = atom({
   key: 'isUpdatedAccommodation',
   default: false,
+  effects_UNSTABLE: [updateAccommodationPersist],
+});
+
+const { persistAtom: addRoomPersist } = recoilPersist({
+  key: 'addRoomState',
+  storage: localStorage,
+});
+
+export const addRoomState = atom({
+  key: 'addRoomState',
+  default: false,
+  effects_UNSTABLE: [addRoomPersist],
 });

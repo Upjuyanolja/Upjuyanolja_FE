@@ -14,6 +14,7 @@ import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
 import { useImageFile } from '@queries/init';
 import {
+  addRoomState,
   checkedRoomOptions,
   imageFileState,
   isUpdatedAccommodationState,
@@ -63,6 +64,8 @@ export const InitRoomRegistration = () => {
   const capacityError = useRecoilValue(capacityHasError);
 
   const isUpdatedAccommodation = useRecoilValue(isUpdatedAccommodationState);
+
+  const [isAddRoom, setIsAddRoom] = useRecoilState(addRoomState);
 
   useEffect(() => {
     if (
@@ -243,6 +246,7 @@ export const InitRoomRegistration = () => {
     setSelectedOptions({ airCondition: false, tv: false, internet: false });
     setImageFiles([]);
     setSameRoomName(false);
+    setIsAddRoom(false);
     navigate(ROUTES.INIT_INFO_CONFIRMATION);
   };
 
@@ -297,7 +301,11 @@ export const InitRoomRegistration = () => {
         />
         <ButtonContainer
           buttonStyle={
-            userInputValue[0].editRoomIndex !== -1 ? 'edit' : 'navigate'
+            userInputValue[0].editRoomIndex !== -1
+              ? 'edit'
+              : isAddRoom
+                ? 'addRoom'
+                : 'navigate'
           }
           isValid={isValid}
         />

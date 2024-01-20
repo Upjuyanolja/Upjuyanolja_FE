@@ -105,6 +105,16 @@ export const ButtonContainer = ({
           수정하기
         </StyledButton>
       )}
+      {buttonStyle === 'addRoom' && (
+        <StyledButton
+          type="primary"
+          size="large"
+          disabled={!isValid}
+          htmlType="submit"
+        >
+          추가하기
+        </StyledButton>
+      )}
       <Modal
         open={isModalOpen}
         onOk={handleModalOk}

@@ -3,12 +3,12 @@ import { RoomOptions } from './init-accommodation-registration/type';
 import { ImageFile } from '@stores/init/type';
 
 export type ButtonContainerProps = {
-  buttonStyle: 'navigate' | 'request' | 'edit';
+  buttonStyle: 'navigate' | 'request' | 'edit' | 'addRoom';
   isValid?: boolean;
 };
 
 export type ButtonContainerStyledWrapperProps = {
-  $buttonStyle: 'navigate' | 'request' | 'edit';
+  $buttonStyle: 'navigate' | 'request' | 'edit' | 'addRoom';
 };
 
 export type CheckBoxContainerProps = {
