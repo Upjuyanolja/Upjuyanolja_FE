@@ -1,5 +1,6 @@
 import { FormInstance } from 'antd';
 import { RoomOptions } from './init-accommodation-registration/type';
+import { ImageFile } from '@stores/init/type';
 
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
@@ -25,7 +26,7 @@ export type ImageUploadFileItem = {
 };
 
 export type StyledImageContainerProps = {
-  $fileList: ImageUploadFileItem[];
+  $fileList: ImageFile[];
   header: string;
 };
 

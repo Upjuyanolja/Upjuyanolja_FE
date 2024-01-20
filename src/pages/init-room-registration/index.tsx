@@ -166,11 +166,14 @@ export const InitRoomRegistration = () => {
     }
 
     const formData = new FormData();
-
-    imageFiles.forEach((image) => {
-      formData.append('image1', image);
-    });
-
+    //foreach가 잘 안 먹어서 for문 사용
+    for (let index = 0; index < imageFiles.length; index++) {
+      const image = imageFiles[index];
+      if (image.file !== null) {
+        formData.append('image1', image.file);
+      }
+    }
+    // 이떄 여기서 formData가 아무 것도 없을 때 ( 사용자가 직접 올린 이미지가 없을 때 )는 imageFile 함수 실행하면 안됨
     imageFile(formData);
 
     setSameRoomName(false);

@@ -109,7 +109,7 @@ export const InitAccommodationRegistration = () => {
     const formData = new FormData();
 
     imageFiles.forEach((image) => {
-      formData.append('image1', image);
+      if (image.file !== null) formData.append('image1', image.file);
     });
 
     imageFile(formData);

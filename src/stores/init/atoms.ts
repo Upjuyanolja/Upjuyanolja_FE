@@ -4,6 +4,7 @@ import {
 } from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { ImageFile } from './type';
 
 const { persistAtom } = recoilPersist({
   key: 'userInput',
@@ -68,7 +69,7 @@ export const accommodationEditState = atom({
   default: false,
 });
 
-export const imageFileState = atom<File[]>({
+export const imageFileState = atom<ImageFile[]>({
   key: 'imageFileState',
   default: [],
 });
