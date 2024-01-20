@@ -16,7 +16,7 @@ import {
   //selectedInitRoomFilesState,
 } from '@stores/init/atoms';
 import { RoomData } from '@api/room/type';
-import { useAddRoom } from '@queries/room';
+import { useAddRoom, useGetRoomDetail } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
@@ -32,28 +32,36 @@ const RoomUpdate = () => {
     internet: '인터넷',
   };
 
-  const { accommodationId } = useParams();
+  const { roomId } = useParams<{ roomId: string }>();
+
+  const roomDetailQuery = roomId
+    ? useGetRoomDetail(roomId)
+    : { data: null, isLoading: false, error: null };
+
+  const { data, isLoading, error } = roomDetailQuery;
+
+  console.log(roomId, data);
 
   const [form] = Form.useForm();
-  const { mutate } = useAddRoom(accommodationId as string, {
-    onSuccess() {
-      message.success({
-        content: '등록되었습니다',
-        className: 'coupon-message',
-      });
-      navigate(`/${accommodationId}${ROUTES.ROOM}`);
-      //setSelectedRoomFiles([]);
-      setSelectedRoomOptions({
-        airCondition: false,
-        tv: false,
-        internet: false,
-      });
-    },
-    onError(error) {
-      if (error instanceof AxiosError)
-        message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
-    },
-  });
+  // const { mutate } = useAddRoom(accommodationId as string, {
+  //   onSuccess() {
+  //     message.success({
+  //       content: '등록되었습니다',
+  //       className: 'coupon-message',
+  //     });
+  //     navigate(`/${accommodationId}${ROUTES.ROOM}`);
+  //     //setSelectedRoomFiles([]);
+  //     setSelectedRoomOptions({
+  //       airCondition: false,
+  //       tv: false,
+  //       internet: false,
+  //     });
+  //   },
+  //   onError(error) {
+  //     if (error instanceof AxiosError)
+  //       message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+  //   },
+  // });
 
   /*const [selectedImages, setSelectedRoomFiles] = useRecoilState(
     selectedInitRoomFilesState,
@@ -74,7 +82,7 @@ const RoomUpdate = () => {
       //images:selectedImages,
       images: [],
     };
-    mutate(data);
+    //mutate(data);
   };
 
   const areFormFieldsValid = () => {

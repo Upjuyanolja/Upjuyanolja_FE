@@ -38,7 +38,8 @@ const RoomRegistration = () => {
   const { mutate } = useAddRoom(accommodationId as string, {
     onSuccess() {
       message.success({
-        content: '등록되었습니다',
+        content:
+          '객실 등록 요청 완료! 승인 결과는 24시간 이내에 확인 가능합니다.',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
       //setSelectedImages([]);

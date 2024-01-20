@@ -1,0 +1,29 @@
+{
+  "message": "성공적으로 객실을 조회했습니다.",
+  "data": {
+    "id": 1,
+    "name": "봄",
+    "price": 100000,
+    "defaultCapacity": 2,
+    "maxCapacity": 6,
+    "checkInTime": "15:00",
+    "checkOutTime": "12:00",
+    "soldOut": false,
+    "count": 5,
+    "images": [
+      {
+        "roomImageId": 1,
+        "url": "https://images/pension_room2_1.webp"
+      },
+      {
+        "roomImageId": 2,
+        "url": "https://images/pension_room2_2.webp"
+      }
+    ],
+    "options": {
+      "airCondition": true,
+      "tv": true,
+      "internet": true
+    }
+  }
+}

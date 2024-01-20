@@ -13,28 +13,6 @@ const RoomManagement = () => {
   const accommodationId = tempAccommodationId || '';
   const { data, isLoading, error } = useGetRoomList(accommodationId);
 
-  // console.log(data && data.rooms);
-  // {
-  //   data?.rooms?.map((room) => console.log(room));
-  // }
-  //console.log(data && data?.data?.data?.rooms?.length);
-  // const { getList } = useGetRoomList(accommodationId as string, {
-  //   onSuccess() {
-  //     console.log(data)
-  //     // message.success({
-  //     //   content: '등록되었습니다',
-  //     //   className: 'coupon-message',
-  //     // });
-  //     // navigate(`/${accommodationId}${ROUTES.ROOM}`);
-  //     // setSelectedImages([]);
-  //     // setSelectedOptions({
-  //     //   airCondition: false,
-  //     //   tv: false,
-  //     //   internet: false,
-  //     // });
-  //   }
-  // });
-
   return (
     <StyledPageContainer bodyStyle={{ padding: 0 }}>
       <StyledFixedTitle>

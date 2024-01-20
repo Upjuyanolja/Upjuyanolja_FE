@@ -28,6 +28,10 @@ export type Image = {
   url: string;
 };
 
+export type ImageUrls = {
+  urls: string[];
+};
+
 export type Coupons = {
   id: number;
   name: string;
@@ -75,6 +79,16 @@ export type RoomPostResponseData = {
   options: Options;
 };
 
-export type AccommodationData = {
-  accommodationId: number;
+export type RoomDeleteResponseData = {
+  id: number;
+  name: string;
+  price: number;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  soldOut: boolean;
+  count: number;
+  images: Image[];
+  options: Options;
 };

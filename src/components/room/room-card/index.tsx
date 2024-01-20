@@ -1,4 +1,14 @@
-import { Card, Col, Row, Button, Space, Tag, Image } from 'antd';
+import {
+  Card,
+  Col,
+  Row,
+  Button,
+  Space,
+  Tag,
+  Image,
+  message,
+  Modal,
+} from 'antd';
 import COUPON from '@assets/image/coupon.svg';
 import { TextBox } from '@components/text-box';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -8,7 +18,10 @@ import { RoomCardProps, KoreanOptionNamesType } from './type';
 import { RoomData, RoomCardData } from '@api/room/type';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
+import { useDeleteRoom } from '@queries/room';
+import { AxiosError } from 'axios';
+import { useState } from 'react';
+//import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
 
 const RoomCard = (data: RoomCardData) => {
   const isOnSale = data.coupons.length !== 0;
@@ -18,8 +31,49 @@ const RoomCard = (data: RoomCardData) => {
   const handleEditClick = () => {
     navigate(`/${accommodationId}${ROUTES.ROOM_UPDATE}`);
   };
-  const handleDeleteClick = () => {
-    navigate('/your-desired-path');
+
+  const [selectedRoomId, setSelectedRoomId] = useState<number>(-1);
+
+  const { mutate: deleteRoom } = useDeleteRoom(selectedRoomId);
+
+  const handleDeleteRoom = (roomId: number) => {
+    Modal.confirm({
+      content: (
+        <div>
+          <TextBox style={{ fontWeight: 'normal' }}>
+            더이상 해당 객실의 예약을 받을 수 없으며
+          </TextBox>
+          <br />
+          <TextBox style={{ fontWeight: 'bold' }}>
+            삭제된 정보는 되돌릴 수 없습니다.
+          </TextBox>
+          <br />
+          <TextBox style={{ fontWeight: 'normal' }}>삭제하시겠습니까?</TextBox>
+        </div>
+      ),
+      cancelText: '취소',
+      okText: '삭제',
+      className: 'confirm-modal',
+      onOk: () => {
+        console.log(roomId);
+        deleteRoom(roomId, {
+          onSuccess: () => {
+            message.success('삭제되었습니다');
+            navigate(`/${accommodationId}${ROUTES.ROOM}`);
+          },
+          onError: (error: AxiosError) => {
+            console.error('Error response:', error.response);
+            console.error('Error message:', error.message);
+            message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+          },
+        });
+      },
+    });
+  };
+
+  const handleDeleteClick = (roomId: number) => {
+    //setSelectedRoomId(roomId);
+    handleDeleteRoom(roomId);
   };
 
   const renderOptionTags = () => {
@@ -50,7 +104,7 @@ const RoomCard = (data: RoomCardData) => {
       <StyledContentContainer wrap={false}>
         <StyledImageContainer>
           <StyledCouponImage src={COUPON} alt="Coupon" />
-          <StyledRoomImage src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/57075876/f478c693-df9b-47a4-b4c2-e3724c22f79b" />
+          {/* <StyledRoomImageCarousel images={data.images} /> */}
           <StyledSaleBanner isOnSale={isOnSale}>
             {isOnSale ? '판매중' : '판매중지'}
           </StyledSaleBanner>
@@ -98,7 +152,7 @@ const RoomCard = (data: RoomCardData) => {
                 수정
               </TextBox>
             </StyledEditDeleteButtons>
-            <StyledEditDeleteButtons onClick={handleDeleteClick}>
+            <StyledEditDeleteButtons onClick={() => handleDeleteClick(data.id)}>
               <DeleteOutlined
                 style={{
                   fontSize: '20px',
@@ -147,6 +201,7 @@ const StyledContentContainer = styled(Row)`
 const StyledImageContainer = styled(Col)`
   position: relative;
   height: 144px;
+  overflow: hidden;
 `;
 
 const StyledCouponImage = styled(Image)`
@@ -158,18 +213,20 @@ const StyledCouponImage = styled(Image)`
   z-index: 2;
 `;
 
-const StyledRoomImage = styled(Image)`
-  width: 224px;
-  height: 144px;
-  border-radius: 8px;
-  z-index: 1;
-`;
+// const StyledRoomImageCarousel = styled(ImageCarousel)`
+//   width: 224px;
+//   height: 144px;
+//   border-radius: 8px;
+//   object-fit: cover;
+//   z-index: 1;
+// `;
 
 const StyledSaleBanner = styled.div<{ isOnSale: boolean }>`
   position: absolute;
   height: 24px;
   bottom: 0;
   left: 0;
+  right: 0;
   width: 100%;
   background-color: ${({ isOnSale }) => (isOnSale ? 'blue' : colors.black600)};
   color: white;
