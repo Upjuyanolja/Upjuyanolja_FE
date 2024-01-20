@@ -67,10 +67,6 @@ export const ButtonContainer = ({
     });
   };
 
-  /*
-  StyledButton에 disabled를 임의로 true로 변경했습니다
-  추후 {!isValid} 로 바꿔주세요!
-   */
   return (
     <StyledWrapper $buttonStyle={buttonStyle}>
       {buttonStyle === 'navigate' && (
