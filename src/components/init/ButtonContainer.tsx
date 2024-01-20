@@ -12,7 +12,6 @@ import { ROUTES } from '@/constants/routes';
 export const ButtonContainer = ({
   buttonStyle,
   isValid,
-  handleEdit,
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
 
@@ -105,7 +104,7 @@ export const ButtonContainer = ({
           type="primary"
           size="large"
           disabled={!isValid}
-          onClick={handleEdit}
+          htmlType="submit"
         >
           수정하기
         </StyledButton>

@@ -5,7 +5,6 @@ import { ImageFile } from '@stores/init/type';
 export type ButtonContainerProps = {
   buttonStyle: 'navigate' | 'request' | 'edit';
   isValid?: boolean;
-  handleEdit?: VoidFunction;
 };
 
 export type ButtonContainerStyledWrapperProps = {
