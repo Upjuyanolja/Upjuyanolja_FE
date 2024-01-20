@@ -95,6 +95,7 @@ export const ButtonContainer = ({
           size="large"
           onClick={confirm}
           data-testid="request-button"
+          disabled={!isValid}
         >
           등록 요청
         </StyledButton>

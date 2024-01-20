@@ -4,14 +4,17 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { AccommodationInfo } from '@components/init/init-info-confirmation/AccommodationInfo';
 import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
 import { TextBox } from '@components/text-box';
+import { userInputValueState } from '@stores/init/atoms';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 export const InitInfoConfirmation = () => {
-  const userInput = window.localStorage.getItem('userInput');
+  const userInputValue = useRecoilValue(userInputValueState);
   const navigate = useNavigate();
-  if (!userInput) {
+
+  if (userInputValue[0].name === '') {
     return (
       <StyledWrapper>
         <StyledNoInputWrapper>
@@ -33,7 +36,10 @@ export const InitInfoConfirmation = () => {
     <StyledWrapper>
       <AccommodationInfo />
       <RoomInfo />
-      <ButtonContainer buttonStyle="request" />
+      <ButtonContainer
+        buttonStyle="request"
+        isValid={userInputValue[0].rooms.length !== 0}
+      />
     </StyledWrapper>
   );
 };
