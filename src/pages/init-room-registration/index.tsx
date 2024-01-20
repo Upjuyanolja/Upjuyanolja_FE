@@ -7,7 +7,6 @@ import { NameContainer } from '@components/init/NameContainer';
 import {
   Room,
   defaultRoom,
-  onFinishValues,
 } from '@components/init/init-accommodation-registration/type';
 import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
@@ -100,6 +99,14 @@ export const InitRoomRegistration = () => {
     }
   }, []);
 
+  const getPrevImageFiles = () => {
+    const prevImageFile: Image[] = [];
+    for (let i = 0; i < imageFiles.length; i++) {
+      prevImageFile.push({ url: imageFiles[i].url });
+    }
+    return prevImageFile;
+  };
+
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
       setUserInputValue((prevUserInputValueState) => {
@@ -113,6 +120,7 @@ export const InitRoomRegistration = () => {
         const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
         const count = form.getFieldValue('count');
 
+        const prevImg = getPrevImageFiles();
         const updatedRoom: Room = {
           name: roomName,
           price: price,
@@ -122,7 +130,7 @@ export const InitRoomRegistration = () => {
           checkOutTime: checkOutTime,
           count: count,
           options: selectedOptions,
-          images: data.data.data.urls as unknown as Image[],
+          images: [...prevImg, ...(data.data.data.urls as unknown as Image[])],
         };
 
         const updatedRooms = [...prevUserInputValue.rooms];
@@ -186,7 +194,50 @@ export const InitRoomRegistration = () => {
     }
 
     if (shouldExecuteImageFile) {
-      imageFile(formData); //그 파일에 대한 url을 가져옴
+      imageFile(formData); //그 파일에 대한 url을 가져와서, setUserInputValue까지 한번에 해줌.
+    } else {
+      setUserInputValue((prevUserInputValueState) => {
+        const [prevUserInputValue] = prevUserInputValueState;
+
+        const roomName = form.getFieldValue('room-name');
+        const price = parseInt(form.getFieldValue('price').replace(',', ''));
+        const defaultCapacity = form.getFieldValue('defaultCapacity');
+        const maxCapacity = form.getFieldValue('maxCapacity');
+        const checkInTime = form.getFieldValue('checkInTime').format('HH:mm');
+        const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
+        const count = form.getFieldValue('count');
+
+        const updatedRoom: Room = {
+          name: roomName,
+          price: price,
+          defaultCapacity: defaultCapacity,
+          maxCapacity: maxCapacity,
+          checkInTime: checkInTime,
+          checkOutTime: checkOutTime,
+          count: count,
+          options: selectedOptions,
+          images: userInputValue[0].images,
+        };
+
+        const updatedRooms = [...prevUserInputValue.rooms];
+
+        if (
+          userInputValue[0].editRoomIndex !== undefined &&
+          userInputValue[0].editRoomIndex !== -1
+        ) {
+          updatedRooms[userInputValue[0].editRoomIndex] = updatedRoom;
+        } else {
+          updatedRooms.push(updatedRoom);
+        }
+
+        const updatedUserInputValue = {
+          ...prevUserInputValue,
+          rooms: updatedRooms,
+          editRoomIndex: -1,
+        };
+
+        return [updatedUserInputValue];
+      });
     }
 
     setSelectedOptions({ airCondition: false, tv: false, internet: false });
