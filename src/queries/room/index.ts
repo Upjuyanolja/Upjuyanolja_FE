@@ -4,6 +4,8 @@ import {
   UseQueryOptions,
   useMutation,
   UseMutationOptions,
+  UseInfiniteQueryOptions,
+  useInfiniteQuery,
 } from '@tanstack/react-query';
 import { Response } from '@/types/api';
 import {
@@ -31,19 +33,33 @@ export const useAddRoom = (
   });
 };
 
-export const useGetRoomList = (
+export const useGetInfiniteRoomList = (
   accommodationId: string,
-  options?: UseQueryOptions<
+  options?: UseInfiniteQueryOptions<
     AxiosResponse<Response<RoomListResponseData>>,
     AxiosError,
-    RoomListResponseData
+    Response<RoomListResponseData>
   >,
 ) => {
-  return useQuery<
+  return useInfiniteQuery<
     AxiosResponse<Response<RoomListResponseData>>,
     AxiosError,
-    RoomListResponseData
-  >(['getRoomList'], () => ROOM_API.getRoomList(accommodationId), options);
+    Response<RoomListResponseData>
+  >(
+    ['room-list'],
+    ({ pageParam = 1 }) => ROOM_API.getRoomList(accommodationId, 8, pageParam),
+    {
+      getNextPageParam: ({
+        data: {
+          data: { pageNum, totalPages },
+        },
+      }) => {
+        const nextPage = pageNum + 1;
+        return totalPages > pageNum ? nextPage : undefined;
+      },
+      ...options,
+    },
+  );
 };
 
 export const useDeleteRoom = (

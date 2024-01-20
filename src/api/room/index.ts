@@ -15,9 +15,9 @@ export const ROOM_API = {
         data,
       },
     ),
-  getRoomList: (accommodationId: string) =>
+  getRoomList: (accommodationId: string, pageSize: number, pageNum: number) =>
     instance.get<Response<RoomListResponseData>>(
-      `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
+      `/api/rooms/list/${accommodationId}?pageSize=${pageSize}&pageNum=${pageNum}`,
     ),
   deleteRoom: (roomId: number) =>
     instance.delete<Response<RoomDeleteResponseData>>(`/api/rooms/${roomId}`),

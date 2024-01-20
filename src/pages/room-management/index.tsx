@@ -1,22 +1,29 @@
 import RoomCard from '../../components/room/room-card';
-import { Card, Button, Row, Modal, message } from 'antd';
+import { Card, Button, Row, Modal, message, Spin } from 'antd';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDeleteRoom, useGetRoomList } from '@queries/room';
+import { useDeleteRoom, useGetInfiniteRoomList } from '@queries/room';
 import { AxiosError } from 'axios';
-//import { useInfiniteQuery } from 'react-query';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useMemo } from 'react';
 
 const RoomManagement = () => {
   const navigate = useNavigate();
   const { accommodationId: tempAccommodationId } = useParams();
   const accommodationId = tempAccommodationId || '';
-  const { data, refetch } = useGetRoomList(accommodationId, {
-    select(data) {
-      return data.data.data;
+  const { data, refetch, hasNextPage, fetchNextPage } = useGetInfiniteRoomList(
+    accommodationId,
+    {
+      select: (data) => ({
+        pages: data.pages.flatMap((page) => page.data),
+        pageParams: data.pageParams,
+      }),
     },
-  });
-
+  );
+  const roomItems = useMemo(() => {
+    return data?.pages.flatMap((page) => page.data.rooms);
+  }, [data]);
   const { mutate: deleteRoom } = useDeleteRoom();
 
   const handleDeleteRoom = (roomId: number) => {
@@ -67,11 +74,20 @@ const RoomManagement = () => {
           </StyledButton>
         </StyledTitleButton>
       </StyledFixedTitle>
-      {data?.rooms?.map((room) => (
-        <StyledRoomCardWrapper key={room.name}>
-          <RoomCard data={room} handleDeleteRoom={handleDeleteRoom} />
-        </StyledRoomCardWrapper>
-      ))}
+
+      <InfiniteScroll
+        dataLength={roomItems?.length ?? 0}
+        scrollThreshold={0.95}
+        next={fetchNextPage}
+        hasMore={hasNextPage ?? false}
+        loader={<Spin tip="Loading" size="small" />}
+      >
+        {roomItems?.map((room) => (
+          <StyledRoomCardWrapper key={room.name}>
+            <RoomCard data={room} handleDeleteRoom={handleDeleteRoom} />
+          </StyledRoomCardWrapper>
+        ))}
+      </InfiniteScroll>
     </StyledPageContainer>
   );
 };
