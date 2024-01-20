@@ -52,7 +52,12 @@ export const TimeContainer = ({
             체크인
           </TextBox>
         </StyledTextBoxWrapper>
-        <Form.Item name={'checkInTime'}>
+        <Form.Item
+          name={'checkInTime'}
+          initialValue={
+            defaultCheckInTime ? moment(defaultCheckInTime, 'HH:mm') : ''
+          }
+        >
           <StyledTimePicker
             placeholder="00:00"
             format={format}
@@ -69,11 +74,6 @@ export const TimeContainer = ({
                 ok: '확인',
               },
             }}
-            defaultValue={
-              defaultCheckInTime
-                ? moment(defaultCheckInTime, 'HH:mm')
-                : moment('00:00', 'HH:mm')
-            }
           />
         </Form.Item>
       </StyledRow>
@@ -83,7 +83,12 @@ export const TimeContainer = ({
             체크아웃
           </TextBox>
         </StyledTextBoxWrapper>
-        <Form.Item name={'checkOutTime'}>
+        <Form.Item
+          name={'checkOutTime'}
+          initialValue={
+            defaultCheckOutTime ? moment(defaultCheckOutTime, 'HH:mm') : ''
+          }
+        >
           <StyledTimePicker
             placeholder="00:00"
             format={format}
@@ -100,11 +105,6 @@ export const TimeContainer = ({
                 ok: '확인',
               },
             }}
-            defaultValue={
-              defaultCheckOutTime
-                ? moment(defaultCheckOutTime, 'HH:mm')
-                : moment('00:00', 'HH:mm')
-            }
           />
         </Form.Item>
       </StyledRow>
