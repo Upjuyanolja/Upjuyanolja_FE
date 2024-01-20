@@ -73,3 +73,8 @@ export const imageFileState = atom<ImageFile[]>({
   key: 'imageFileState',
   default: [],
 });
+
+export const isUpdatedAccommodationState = atom({
+  key: 'isUpdatedAccommodation',
+  default: false,
+});
