@@ -61,7 +61,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
               기준 인원
             </TextBox>
           </StyledTextBoxWrapper>
-          <Form.Item name={'defaultCapacity'}>
+          <Form.Item name={'defaultCapacity'} initialValue={1}>
             <StyledInputNumber
               min={1}
               max={15}
@@ -81,7 +81,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
               최대 인원
             </TextBox>
           </StyledTextBoxWrapper>
-          <Form.Item name={'maxCapacity'}>
+          <Form.Item name={'maxCapacity'} initialValue={1}>
             <StyledInputNumber
               min={1}
               max={15}
