@@ -4,15 +4,26 @@ import { ButtonContainer } from '@components/init/ButtonContainer';
 import { AccommodationInfo } from '@components/init/init-info-confirmation/AccommodationInfo';
 import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
 import { TextBox } from '@components/text-box';
-import { userInputValueState } from '@stores/init/atoms';
+import {
+  isUpdatedAccommodationState,
+  userInputValueState,
+} from '@stores/init/atoms';
 import { Button } from 'antd';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitInfoConfirmation = () => {
   const userInputValue = useRecoilValue(userInputValueState);
   const navigate = useNavigate();
+  const setUpdatedAccommodationInfo = useSetRecoilState(
+    isUpdatedAccommodationState,
+  );
+
+  useEffect(() => {
+    setUpdatedAccommodationInfo(true);
+  }, []);
 
   if (userInputValue[0].name === '') {
     return (
