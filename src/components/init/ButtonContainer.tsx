@@ -17,7 +17,7 @@ export const ButtonContainer = ({
 
   const handlePreviousClick = () => {
     if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
-      navigate(ROUTES.INIT);
+      navigate(-1);
     else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
       navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
   };
