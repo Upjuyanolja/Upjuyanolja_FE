@@ -1,17 +1,56 @@
 import RoomCard from '../../components/room/room-card';
-import { Card, Button, Row } from 'antd';
+import { Card, Button, Row, Modal, message } from 'antd';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetRoomList } from '@queries/room';
-import { ROUTES } from '@/constants/routes';
+import { useDeleteRoom, useGetRoomList } from '@queries/room';
+import { AxiosError } from 'axios';
 //import { useInfiniteQuery } from 'react-query';
 
 const RoomManagement = () => {
   const navigate = useNavigate();
   const { accommodationId: tempAccommodationId } = useParams();
   const accommodationId = tempAccommodationId || '';
-  const { data, isLoading, error } = useGetRoomList(accommodationId);
+  const { data, refetch } = useGetRoomList(accommodationId, {
+    select(data) {
+      return data.data.data;
+    },
+  });
+
+  const { mutate: deleteRoom } = useDeleteRoom();
+
+  const handleDeleteRoom = (roomId: number) => {
+    Modal.confirm({
+      content: (
+        <div>
+          <TextBox style={{ fontWeight: 'normal' }}>
+            더이상 해당 객실의 예약을 받을 수 없으며
+          </TextBox>
+          <br />
+          <TextBox style={{ fontWeight: 'bold' }}>
+            삭제된 정보는 되돌릴 수 없습니다.
+          </TextBox>
+          <br />
+          <TextBox style={{ fontWeight: 'normal' }}>삭제하시겠습니까?</TextBox>
+        </div>
+      ),
+      cancelText: '취소',
+      okText: '삭제',
+      className: 'confirm-modal',
+      onOk: () => {
+        deleteRoom(roomId, {
+          onSuccess: () => {
+            message.success('삭제되었습니다');
+            refetch();
+          },
+          onError: (error: unknown) => {
+            if (error instanceof AxiosError)
+              message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+          },
+        });
+      },
+    });
+  };
 
   return (
     <StyledPageContainer bodyStyle={{ padding: 0 }}>
@@ -28,9 +67,9 @@ const RoomManagement = () => {
           </StyledButton>
         </StyledTitleButton>
       </StyledFixedTitle>
-      {data?.rooms?.map((room, index) => (
+      {data?.rooms?.map((room) => (
         <StyledRoomCardWrapper key={room.name}>
-          <RoomCard {...room} />
+          <RoomCard data={room} handleDeleteRoom={handleDeleteRoom} />
         </StyledRoomCardWrapper>
       ))}
     </StyledPageContainer>

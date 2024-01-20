@@ -31,24 +31,22 @@ export const useAddRoom = (
   });
 };
 
-// export const useAddImageFile =
-
 export const useGetRoomList = (
   accommodationId: string,
-  options?: UseQueryOptions<RoomListResponseData, AxiosError>,
+  options?: UseQueryOptions<
+    AxiosResponse<Response<RoomListResponseData>>,
+    AxiosError,
+    RoomListResponseData
+  >,
 ) => {
-  return useQuery<RoomListResponseData, AxiosError>(
-    ['getRoomList', accommodationId],
-    async () => {
-      const response = await ROOM_API.getRoomList(accommodationId);
-      return response.data.data;
-    },
-    options,
-  );
+  return useQuery<
+    AxiosResponse<Response<RoomListResponseData>>,
+    AxiosError,
+    RoomListResponseData
+  >(['getRoomList'], () => ROOM_API.getRoomList(accommodationId), options);
 };
 
 export const useDeleteRoom = (
-  roomId: number,
   options?: UseMutationOptions<
     AxiosResponse<Response<RoomDeleteResponseData>>,
     AxiosError,

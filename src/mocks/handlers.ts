@@ -35,7 +35,6 @@ import { postAccommodationInfoResolver, postImageFileResolver } from './init';
 const email = 'ivegaeul@naver.com';
 const verificationCode = '020924';
 const accommodationId = 1;
-const roomId = 288;
 
 export const handlers = [
   http.post('/api/auth/owner/signin', postSignInResolver),
@@ -77,7 +76,7 @@ export const handlers = [
   http.delete('/api/points/charges/1', deleteOrderCancelResolver),
 
   http.post(`/api/rooms/${accommodationId}`, postRoomResolver),
-  http.delete(`/api/rooms/${roomId}`, deleteRoomResolver),
+  http.delete('/api/rooms/*', deleteRoomResolver),
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
   http.post('/api/accommodations/images', postImageFileResolver),

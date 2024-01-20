@@ -1,29 +1,15 @@
-import {
-  Card,
-  Col,
-  Row,
-  Button,
-  Space,
-  Tag,
-  Image,
-  message,
-  Modal,
-} from 'antd';
+import { Card, Col, Row, Button, Space, Tag, Image } from 'antd';
 import COUPON from '@assets/image/coupon.svg';
 import { TextBox } from '@components/text-box';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
-import { RoomCardProps, KoreanOptionNamesType } from './type';
-import { RoomData, RoomCardData } from '@api/room/type';
+import { KoreanOptionNamesType, RoomCardProps } from './type';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { useDeleteRoom } from '@queries/room';
-import { AxiosError } from 'axios';
-import { useState } from 'react';
 //import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
 
-const RoomCard = (data: RoomCardData) => {
+const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
   const isOnSale = data.coupons.length !== 0;
   const navigate = useNavigate();
   const { accommodationId } = useParams();
@@ -32,53 +18,13 @@ const RoomCard = (data: RoomCardData) => {
     navigate(`/${accommodationId}${ROUTES.ROOM_UPDATE}`);
   };
 
-  const [selectedRoomId, setSelectedRoomId] = useState<number>(-1);
-
-  const { mutate: deleteRoom } = useDeleteRoom(selectedRoomId);
-
-  const handleDeleteRoom = (roomId: number) => {
-    Modal.confirm({
-      content: (
-        <div>
-          <TextBox style={{ fontWeight: 'normal' }}>
-            더이상 해당 객실의 예약을 받을 수 없으며
-          </TextBox>
-          <br />
-          <TextBox style={{ fontWeight: 'bold' }}>
-            삭제된 정보는 되돌릴 수 없습니다.
-          </TextBox>
-          <br />
-          <TextBox style={{ fontWeight: 'normal' }}>삭제하시겠습니까?</TextBox>
-        </div>
-      ),
-      cancelText: '취소',
-      okText: '삭제',
-      className: 'confirm-modal',
-      onOk: () => {
-        console.log(roomId);
-        deleteRoom(roomId, {
-          onSuccess: () => {
-            message.success('삭제되었습니다');
-            navigate(`/${accommodationId}${ROUTES.ROOM}`);
-          },
-          onError: (error: AxiosError) => {
-            console.error('Error response:', error.response);
-            console.error('Error message:', error.message);
-            message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
-          },
-        });
-      },
-    });
-  };
-
   const handleDeleteClick = (roomId: number) => {
-    //setSelectedRoomId(roomId);
     handleDeleteRoom(roomId);
   };
 
   const renderOptionTags = () => {
     return Object.entries(data.options)
-      .filter(([key, value]) => value)
+      .filter(([, value]) => value)
       .map(([key]) => (
         <StyledOptionTag key={key}>
           <TextBox typography="body4" color="black900" fontWeight="normal">
@@ -98,7 +44,6 @@ const RoomCard = (data: RoomCardData) => {
     return koreanOptionsNames[key] || key;
   };
 
-  console.log(data);
   return (
     <StyledCardContainer isOnSale={isOnSale}>
       <StyledContentContainer wrap={false}>
@@ -170,7 +115,7 @@ const RoomCard = (data: RoomCardData) => {
               객실 수 : {data.count}개
             </TextBox>
             <TextBox typography="h5" color="black900" fontWeight="bold">
-              {data.basePrice}원
+              {data.basePrice?.toLocaleString()}원
             </TextBox>
           </StyledNumRoomPriceContainer>
         </StyledRightContent>
