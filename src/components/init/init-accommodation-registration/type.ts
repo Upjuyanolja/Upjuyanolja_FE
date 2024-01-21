@@ -64,6 +64,12 @@ export type defaultRoom = {
   images: Image[] | undefined;
   options: RoomOptions | undefined;
 };
+
+export type defaultAccommodation = {
+  images: Image[] | undefined;
+  options: Options | undefined;
+};
+
 export type onFinishValues = {
   'room-name': string;
   price: string;
