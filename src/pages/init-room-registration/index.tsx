@@ -272,7 +272,7 @@ export const InitRoomRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [imageFiles, priceHasError, capacityError]);
+  }, [imageFiles, priceError, capacityError]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
