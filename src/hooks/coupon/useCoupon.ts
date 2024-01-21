@@ -125,6 +125,28 @@ export const useCoupon = () => {
     processPurchaseData();
   }, [isModalOpen]);
 
+  useEffect(() => {
+    setSelectedStatus('');
+    setCouponData({
+      expiry: '',
+      coupons: [],
+    });
+    setSelectedRowKeys([]);
+    setIsPointModalOpen(false);
+    setIsModalOpen(false);
+    setPurchaseData({
+      batchValue: 0,
+      isAppliedBatchEdit: false,
+      totalPoints: 0,
+      rooms: [],
+    });
+    originCouponTableData.current = {
+      expiry: '',
+      coupons: [],
+    };
+    getCouponRemove();
+  }, [accommodationId]);
+
   const processCouponTableData = (data: coupons) => {
     const couponTableData = [];
     const originData = [];
