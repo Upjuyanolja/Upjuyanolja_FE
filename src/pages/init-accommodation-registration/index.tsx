@@ -21,7 +21,10 @@ import { useNavigate } from 'react-router-dom';
 import { useImageFile } from '@queries/init';
 import { AxiosError } from 'axios';
 import { Image } from '@api/room/type';
-import { defaultAccommodation } from '@components/init/init-accommodation-registration/type';
+import {
+  UserInputValue,
+  defaultAccommodation,
+} from '@components/init/init-accommodation-registration/type';
 import { AccommodationCategoryProps } from '@components/init/type';
 
 export const InitAccommodationRegistration = () => {
@@ -91,18 +94,6 @@ export const InitAccommodationRegistration = () => {
         };
         return [updatedUserInputValue];
       });
-      setSelectedOptions({
-        cooking: false,
-        parking: false,
-        pickup: false,
-        barbecue: false,
-        fitness: false,
-        karaoke: false,
-        sauna: false,
-        sports: false,
-        seminar: false,
-      });
-      setImageFiles([]);
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -117,14 +108,66 @@ export const InitAccommodationRegistration = () => {
   const onFinish = () => {
     const formData = new FormData();
 
-    imageFiles.forEach((image) => {
-      if (image.file !== null) formData.append('image1', image.file);
-    });
+    let shouldExecuteImageFile = false;
 
-    imageFile(formData);
+    for (let index = 0; index < imageFiles.length; index++) {
+      const image = imageFiles[index];
+      if (image.file !== null) {
+        formData.append('image1', image.file);
+        shouldExecuteImageFile = true;
+      }
+    }
+
+    if (shouldExecuteImageFile) {
+      imageFile(formData);
+    } else {
+      setUserInputValue(() => {
+        let type;
+        switch (form.getFieldValue('accommodation-category')) {
+          case 'HOTEL/RESORT':
+            type = form.getFieldValue('accommodation-hotel-category');
+            break;
+          case 'GUEST_HOUSE':
+            type = form.getFieldValue('accommodation-guest-category');
+            break;
+          default:
+            type = form.getFieldValue('accommodation-category');
+        }
+
+        const updatedUserInputValue: UserInputValue = {
+          type,
+          name: form.getFieldValue('accommodation-name'),
+          address: form.getFieldValue('accommodation-address'),
+          detailAddress: form.getFieldValue('accommodation-detailAddress'),
+          zipCode: form.getFieldValue('accommodation-postCode'),
+          description: form.getFieldValue('accommodation-desc'),
+          options: selectedOptions,
+          images: userInputValue[0].images,
+          rooms: userInputValue[0].rooms,
+        };
+        return [updatedUserInputValue];
+      });
+    }
+
     setUpdatedAccommodationInfo(true);
+    setSelectedOptions({
+      cooking: false,
+      parking: false,
+      pickup: false,
+      barbecue: false,
+      fitness: false,
+      karaoke: false,
+      sauna: false,
+      sports: false,
+      seminar: false,
+    });
+    setImageFiles([]);
 
-    navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    if (userInputValue[0].isAccommodationEdit) {
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    } else {
+      navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    }
   };
 
   const areFormFieldsValid = () => {
