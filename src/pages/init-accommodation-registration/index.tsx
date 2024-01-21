@@ -22,6 +22,7 @@ import { useImageFile } from '@queries/init';
 import { AxiosError } from 'axios';
 import { Image } from '@api/room/type';
 import { defaultAccommodation } from '@components/init/init-accommodation-registration/type';
+import { AccommodationCategoryProps } from '@components/init/type';
 
 export const InitAccommodationRegistration = () => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export const InitAccommodationRegistration = () => {
   const [defaultValue, setDefaultValue] = useState<defaultAccommodation>({
     images: undefined,
     options: undefined,
+    type: undefined,
   });
 
   const accommodationOptions = {
@@ -161,7 +163,6 @@ export const InitAccommodationRegistration = () => {
     setIsValid(areFormFieldsValid());
   };
 
-  /** isEdit일 때 input에 value set해주기 */
   useEffect(() => {
     if (!accommodationData.isAccommodationEdit) return;
     form.setFieldValue('accommodation-name', accommodationData.name);
@@ -175,6 +176,7 @@ export const InitAccommodationRegistration = () => {
     setDefaultValue({
       images: userInputValue[0].images,
       options: userInputValue[0].options,
+      type: userInputValue[0].type as defaultAccommodation['type'],
     });
   }, []);
 
@@ -185,7 +187,12 @@ export const InitAccommodationRegistration = () => {
         form={form}
         onFieldsChange={handleFormValuesChange}
       >
-        <AccommodationCategory form={form} />
+        <AccommodationCategory
+          form={form}
+          defaultValue={
+            defaultValue.type as AccommodationCategoryProps['defaultValue']
+          }
+        />
         <NameContainer
           header="숙소명"
           placeholder="숙소명을 입력해 주세요."

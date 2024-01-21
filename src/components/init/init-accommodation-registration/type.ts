@@ -14,6 +14,17 @@ export type AccommodationDetailCategoryProps = {
   label: string;
   icon?: ReactElement<IconBaseProps>;
   form: FormInstance;
+  defaultValue:
+    | 'HOTEL'
+    | 'RESORT'
+    | 'TOURIST_HOTEL'
+    | 'CONDO'
+    | 'RESIDENCE'
+    | 'MOTEL'
+    | 'PENSION_POOL_VILLA'
+    | 'GUEST_HOUSE'
+    | 'HANOK'
+    | undefined;
 };
 
 export type AddressFormat = {
@@ -68,6 +79,17 @@ export type defaultRoom = {
 export type defaultAccommodation = {
   images: Image[] | undefined;
   options: AccommodationOptions | undefined;
+  type:
+    | 'HOTEL'
+    | 'RESORT'
+    | 'TOURIST_HOTEL'
+    | 'CONDO'
+    | 'RESIDENCE'
+    | 'MOTEL'
+    | 'PENSION_POOL_VILLA'
+    | 'GUEST_HOUSE'
+    | 'HANOK'
+    | undefined;
 };
 
 export type onFinishValues = {

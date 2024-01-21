@@ -20,6 +20,21 @@ export type CheckBoxContainerProps = {
   defaultValue?: RoomOptions | AccommodationOptions;
 };
 
+export type AccommodationCategoryProps = {
+  form: FormInstance;
+  defaultValue:
+    | 'HOTEL'
+    | 'RESORT'
+    | 'TOURIST_HOTEL'
+    | 'CONDO'
+    | 'RESIDENCE'
+    | 'MOTEL'
+    | 'PENSION_POOL_VILLA'
+    | 'GUEST_HOUSE'
+    | 'HANOK'
+    | undefined;
+};
+
 export type ImageUploadFileItem = {
   uid: number;
   name: string;
