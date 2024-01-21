@@ -79,11 +79,12 @@ export const useDeleteRoom = (
 };
 
 export const useGetRoomDetail = (
+  accommodationId: string,
   roomId: string,
   options?: UseQueryOptions<RoomDeleteResponseData, AxiosError>,
 ) => {
   return useQuery<RoomDeleteResponseData, AxiosError>(
-    ['getRoomDetail', roomId],
+    ['getRoomDetail'],
     async () => {
       const response = await ROOM_API.getRoomDetail(roomId);
       return response.data.data;

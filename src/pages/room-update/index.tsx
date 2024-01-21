@@ -14,13 +14,16 @@ import { useRecoilState } from 'recoil';
 import {
   checkedRoomOptions,
   //selectedInitRoomFilesState,
-} from '@stores/init/atoms';
+} from '@stores/room/atoms';
 import { RoomData } from '@api/room/type';
-import { useAddRoom, useGetRoomDetail } from '@queries/room';
+import { useGetRoomDetail } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import moment from 'moment';
+import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
+import { getRoomDetailResolver } from 'src/mocks/room';
 
 const RoomUpdate = () => {
   const navigate = useNavigate();
@@ -32,36 +35,59 @@ const RoomUpdate = () => {
     internet: '인터넷',
   };
 
-  const { roomId } = useParams<{ roomId: string }>();
+  const { accommodationId = '', roomId = '' } = useParams<{
+    accommodationId: string;
+    roomId: string;
+  }>();
 
-  const roomDetailQuery = roomId
-    ? useGetRoomDetail(roomId)
-    : { data: null, isLoading: false, error: null };
+  const shouldFetch = !!accommodationId && !!roomId;
+  const roomDetailQuery = useGetRoomDetail(accommodationId, roomId, {
+    enabled: shouldFetch,
+  });
 
   const { data, isLoading, error } = roomDetailQuery;
-
-  console.log(roomId, data);
-
   const [form] = Form.useForm();
-  // const { mutate } = useAddRoom(accommodationId as string, {
-  //   onSuccess() {
-  //     message.success({
-  //       content: '등록되었습니다',
-  //       className: 'coupon-message',
-  //     });
-  //     navigate(`/${accommodationId}${ROUTES.ROOM}`);
-  //     //setSelectedRoomFiles([]);
-  //     setSelectedRoomOptions({
-  //       airCondition: false,
-  //       tv: false,
-  //       internet: false,
-  //     });
+
+  console.log(accommodationId, roomId, data);
+
+  useEffect(() => {
+    if (data && !isLoading && !error) {
+      form.setFieldsValue({
+        'room-name': data.name,
+        price: data.price.toString(),
+        defaultCapacity: data.defaultCapacity,
+        maxCapacity: data.maxCapacity,
+        checkInTime: moment(data.checkInTime, 'HH:mm'),
+        checkOutTime: moment(data.checkOutTime, 'HH:mm'),
+        count: data.count,
+        selectedOptions: data.options,
+      });
+    }
+  }, [data, isLoading, error, form]);
+
+  // const { mutate: updateRoomDetail } = useUpdateRoomDetail(
+  //   accommodationId as string,
+  //   roomId as string,
+  //   {
+  //     onSuccess() {
+  //       message.success({
+  //         content: '수정되었습니다',
+  //         className: 'coupon-message',
+  //       });
+  //       navigate(`/${accommodationId}${ROUTES.ROOM}`);
+  //       //setSelectedRoomFiles([]);
+  //       setSelectedRoomOptions({
+  //         airCondition: false,
+  //         tv: false,
+  //         internet: false,
+  //       });
+  //     },
+  //     onError(error) {
+  //       if (error instanceof AxiosError)
+  //         message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+  //     },
   //   },
-  //   onError(error) {
-  //     if (error instanceof AxiosError)
-  //       message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
-  //   },
-  // });
+  // );
 
   /*const [selectedImages, setSelectedRoomFiles] = useRecoilState(
     selectedInitRoomFilesState,
@@ -79,7 +105,6 @@ const RoomUpdate = () => {
       checkOutTime: value['checkOutTime'].format('HH:mm'),
       amount: value.count,
       options: selectedOptions,
-      //images:selectedImages,
       images: [],
     };
     //mutate(data);
@@ -137,7 +162,7 @@ const RoomUpdate = () => {
           <CapacityContainer header="인원" form={form} />
         </StyledInputWrapper>
         <StyledInputWrapper>
-          <CheckBoxContainer options={roomOptions} header="객실" />
+          <CheckBoxContainer options={selectedOptions} header="객실" />
         </StyledInputWrapper>
         <ButtonContainer buttonStyle={'update'} isValid={isValid} />
       </Form>
