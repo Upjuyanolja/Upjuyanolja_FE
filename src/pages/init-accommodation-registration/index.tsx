@@ -212,24 +212,24 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     if (
-      !accommodationData.isAccommodationEdit &&
-      !isClickedPrevButton &&
-      !isUpdatedAccommodationState
-    )
-      return;
-    form.setFieldValue('accommodation-name', accommodationData.name);
-    form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
-    form.setFieldValue('accommodation-address', accommodationData.address);
-    form.setFieldValue(
-      'accommodation-detailAddress',
-      accommodationData.detailAddress,
-    );
-    form.setFieldValue('accommodation-desc', accommodationData.description);
-    setDefaultValue({
-      images: userInputValue[0].images,
-      options: userInputValue[0].options,
-      type: userInputValue[0].type as defaultAccommodation['type'],
-    });
+      accommodationData.isAccommodationEdit &&
+      isClickedPrevButton &&
+      isUpdatedAccommodationState
+    ) {
+      form.setFieldValue('accommodation-name', accommodationData.name);
+      form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
+      form.setFieldValue('accommodation-address', accommodationData.address);
+      form.setFieldValue(
+        'accommodation-detailAddress',
+        accommodationData.detailAddress,
+      );
+      form.setFieldValue('accommodation-desc', accommodationData.description);
+      setDefaultValue({
+        images: userInputValue[0].images,
+        options: userInputValue[0].options,
+        type: userInputValue[0].type as defaultAccommodation['type'],
+      });
+    }
   }, []);
 
   return (
