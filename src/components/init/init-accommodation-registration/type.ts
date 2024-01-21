@@ -25,6 +25,8 @@ export type AccommodationDetailCategoryProps = {
     | 'GUEST_HOUSE'
     | 'HANOK'
     | undefined;
+  isClickedPrevButton: boolean;
+  updatedAccommodationInfo: boolean;
 };
 
 export type AddressFormat = {

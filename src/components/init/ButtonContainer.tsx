@@ -8,18 +8,23 @@ import {
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
+import { useSetRecoilState } from 'recoil';
+import { roomPrevButtonState } from '@stores/init/atoms';
 
 export const ButtonContainer = ({
   buttonStyle,
   isValid,
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
+  const setIsClickPrev = useSetRecoilState(roomPrevButtonState);
 
   const handlePreviousClick = () => {
     if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
       navigate(-1);
-    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
+    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION) {
+      setIsClickPrev(true);
       navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+    }
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -33,6 +33,8 @@ export type AccommodationCategoryProps = {
     | 'GUEST_HOUSE'
     | 'HANOK'
     | undefined;
+  isClickedPrevButton: boolean;
+  updatedAccommodationInfo: boolean;
 };
 
 export type ImageUploadFileItem = {

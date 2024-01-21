@@ -94,3 +94,15 @@ export const addRoomState = atom({
   default: false,
   effects_UNSTABLE: [addRoomPersist],
 });
+
+/** 객실 페이지에서 이전 버튼을 눌렀을 때 */
+const { persistAtom: clickPrevButtonInRoomRegistration } = recoilPersist({
+  key: 'clickPrevButtonInRoomRegistration',
+  storage: localStorage,
+});
+
+export const roomPrevButtonState = atom({
+  key: 'roomPrevButtonState',
+  default: false,
+  effects_UNSTABLE: [clickPrevButtonInRoomRegistration],
+});

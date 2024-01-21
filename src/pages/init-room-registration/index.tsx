@@ -303,7 +303,8 @@ export const InitRoomRegistration = () => {
         />
         <ButtonContainer
           buttonStyle={
-            userInputValue[0].editRoomIndex !== -1
+            userInputValue[0].editRoomIndex !== -1 &&
+            userInputValue[0].editRoomIndex !== undefined
               ? 'edit'
               : isAddRoom
                 ? 'addRoom'

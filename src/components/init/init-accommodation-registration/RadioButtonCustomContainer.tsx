@@ -11,6 +11,8 @@ export const RadioButtonCustomContainer = ({
   icon,
   form,
   defaultValue,
+  isClickedPrevButton,
+  updatedAccommodationInfo,
 }: AccommodationDetailCategoryProps) => {
   const [value, setValue] = useState('');
 
@@ -24,7 +26,7 @@ export const RadioButtonCustomContainer = ({
       ? form.setFieldValue('accommodation-hotel-category', '')
       : form.setFieldValue('accommodation-guest-category', '');
 
-    if (defaultValue) {
+    if (defaultValue || isClickedPrevButton || updatedAccommodationInfo) {
       '호텔' in options
         ? form.setFieldValue('accommodation-hotel-category', defaultValue)
         : form.setFieldValue('accommodation-guest-category', defaultValue);

@@ -21,6 +21,8 @@ import { AccommodationCategoryProps } from '../type';
 export const AccommodationCategory = ({
   form,
   defaultValue,
+  isClickedPrevButton,
+  updatedAccommodationInfo,
 }: AccommodationCategoryProps) => {
   const [clickedCategory, setClickedCategory] =
     useState<AccommodationCategoryType>(null);
@@ -51,7 +53,11 @@ export const AccommodationCategory = ({
 
   useEffect(() => {
     const checkedType = userInputValue[0].type;
-    if (userInputValue[0].isAccommodationEdit) {
+    if (
+      userInputValue[0].isAccommodationEdit ||
+      isClickedPrevButton ||
+      updatedAccommodationInfo
+    ) {
       switch (checkedType) {
         case 'HOTEL':
         case 'RESORT':
@@ -172,6 +178,8 @@ export const AccommodationCategory = ({
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
           defaultValue={defaultValue}
+          isClickedPrevButton={isClickedPrevButton}
+          updatedAccommodationInfo={updatedAccommodationInfo}
         />
       )}
       {clickedCategory === 'GUEST_HOUSE' && (
@@ -181,6 +189,8 @@ export const AccommodationCategory = ({
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
           defaultValue={defaultValue}
+          isClickedPrevButton={isClickedPrevButton}
+          updatedAccommodationInfo={updatedAccommodationInfo}
         />
       )}
     </StyledInputWrapper>

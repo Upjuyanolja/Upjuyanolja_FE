@@ -13,9 +13,10 @@ import {
   checkedAccommodationOptions,
   imageFileState,
   isUpdatedAccommodationState,
+  roomPrevButtonState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { useImageFile } from '@queries/init';
@@ -42,15 +43,17 @@ export const InitAccommodationRegistration = () => {
   );
 
   const [imageFiles, setImageFiles] = useRecoilState(imageFileState);
-  const setUpdatedAccommodationInfo = useSetRecoilState(
-    isUpdatedAccommodationState,
-  );
+  const [updatedAccommodationInfo, setUpdatedAccommodationInfo] =
+    useRecoilState(isUpdatedAccommodationState);
 
   const [defaultValue, setDefaultValue] = useState<defaultAccommodation>({
     images: undefined,
     options: undefined,
     type: undefined,
   });
+
+  const [isClickedPrevButton, setClickedPrevButton] =
+    useRecoilState(roomPrevButtonState);
 
   const accommodationOptions = {
     cooking: '객실취사',
@@ -162,6 +165,7 @@ export const InitAccommodationRegistration = () => {
       seminar: false,
     });
     setImageFiles([]);
+    setClickedPrevButton(false);
 
     if (userInputValue[0].isAccommodationEdit) {
       navigate(ROUTES.INIT_INFO_CONFIRMATION);
@@ -207,7 +211,12 @@ export const InitAccommodationRegistration = () => {
   };
 
   useEffect(() => {
-    if (!accommodationData.isAccommodationEdit) return;
+    if (
+      !accommodationData.isAccommodationEdit &&
+      !isClickedPrevButton &&
+      !isUpdatedAccommodationState
+    )
+      return;
     form.setFieldValue('accommodation-name', accommodationData.name);
     form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
     form.setFieldValue('accommodation-address', accommodationData.address);
@@ -235,6 +244,8 @@ export const InitAccommodationRegistration = () => {
           defaultValue={
             defaultValue.type as AccommodationCategoryProps['defaultValue']
           }
+          isClickedPrevButton={isClickedPrevButton}
+          updatedAccommodationInfo={updatedAccommodationInfo}
         />
         <NameContainer
           header="숙소명"
