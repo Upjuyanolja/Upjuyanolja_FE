@@ -1,4 +1,4 @@
-export const HTTP_BASE_URL = '';
+export const HTTP_BASE_URL = 'https://api.couponcenter.net';
 
 export const HTTP_STATUS_CODE = {
   SUCCESS: 200,
