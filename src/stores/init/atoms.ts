@@ -65,11 +65,6 @@ export const checkedAccommodationOptions = atom<Options>({
   },
 });
 
-export const accommodationEditState = atom({
-  key: 'accommodationEditState',
-  default: false,
-});
-
 export const imageFileState = atom<ImageFile[]>({
   key: 'imageFileState',
   default: [],
