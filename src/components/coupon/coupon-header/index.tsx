@@ -79,6 +79,7 @@ export const CouponHeader = ({
         </StyledDateContainer>
         <StyledContentLayout>
           <Select
+            id="select-status"
             defaultValue="상태 변경"
             options={couponStatusOption}
             onChange={handleSelectStatus}
@@ -88,6 +89,7 @@ export const CouponHeader = ({
             <StyledDeleteButton
               onClick={handleDeleteButton}
               disabled={expiry === ''}
+              data-testid="delete-button"
             >
               <DeleteOutlined width="20px" height="20px" />
               <TextBox typography="body2" fontWeight={700}>
@@ -99,7 +101,12 @@ export const CouponHeader = ({
               disabled={expiry === ''}
               type="primary"
             >
-              <img width={15} height={11} src={AdditionalBuyLogo} />
+              <img
+                width={15}
+                height={11}
+                src={AdditionalBuyLogo}
+                alt="로고이미지"
+              />
               <TextBox typography="body2" fontWeight={700} color="white">
                 추가 구매
               </TextBox>

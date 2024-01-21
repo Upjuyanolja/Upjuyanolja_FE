@@ -31,7 +31,7 @@ export const CouponStatusTag = ({ status }: CouponTagProps) => {
       borderColor={borderColor}
       color={color}
     >
-      <TextBox typography="body2" fontWeight={700}>
+      <TextBox typography="body2" fontWeight={700} data-testid="coupon-status">
         {text}
       </TextBox>
     </StyledLayout>
