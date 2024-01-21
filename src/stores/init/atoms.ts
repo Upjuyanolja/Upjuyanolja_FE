@@ -1,5 +1,6 @@
 import {
   AccommodationOptions,
+  RoomOptions,
   UserInputValue,
 } from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
@@ -41,7 +42,7 @@ export const userInputValueState = atom<UserInputValue[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const checkedRoomOptions = atom({
+export const checkedRoomOptions = atom<RoomOptions>({
   key: 'checkedAccommodationOptions',
   default: {
     airCondition: false,

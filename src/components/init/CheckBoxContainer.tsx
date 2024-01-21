@@ -14,6 +14,7 @@ import {
   RoomOptions,
 } from './init-accommodation-registration/type';
 import { useEffect } from 'react';
+import { ROUTES } from '@/constants/routes';
 
 export const CheckBoxContainer = ({
   options,
@@ -28,9 +29,19 @@ export const CheckBoxContainer = ({
 
   useEffect(() => {
     if (defaultValue) {
-      setSelectedInitRoomOptions(defaultValue);
+      if (
+        window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION ||
+        window.location.pathname === ROUTES.ROOM_UPDATE
+      ) {
+        setSelectedInitRoomOptions(defaultValue as RoomOptions);
+      } else if (
+        window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION
+      ) {
+        setSelectedAccommodationOptions(defaultValue as AccommodationOptions);
+      }
     }
   }, [defaultValue]);
+
   const handleCheckboxChange = (event: CheckboxChangeEvent) => {
     const checkedOption = event.target.value;
 

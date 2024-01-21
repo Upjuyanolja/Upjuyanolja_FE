@@ -10,18 +10,18 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
-  accommodationEditState,
   checkedAccommodationOptions,
   imageFileState,
   isUpdatedAccommodationState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { useImageFile } from '@queries/init';
 import { AxiosError } from 'axios';
 import { Image } from '@api/room/type';
+import { defaultAccommodation } from '@components/init/init-accommodation-registration/type';
 
 export const InitAccommodationRegistration = () => {
   const navigate = useNavigate();
@@ -37,12 +37,15 @@ export const InitAccommodationRegistration = () => {
     checkedAccommodationOptions,
   );
 
-  const isEdit = useRecoilValue(accommodationEditState);
-
   const [imageFiles, setImageFiles] = useRecoilState(imageFileState);
   const setUpdatedAccommodationInfo = useSetRecoilState(
     isUpdatedAccommodationState,
   );
+
+  const [defaultValue, setDefaultValue] = useState<defaultAccommodation>({
+    images: undefined,
+    options: undefined,
+  });
 
   const accommodationOptions = {
     cooking: '객실취사',
@@ -160,7 +163,7 @@ export const InitAccommodationRegistration = () => {
 
   /** isEdit일 때 input에 value set해주기 */
   useEffect(() => {
-    if (!isEdit) return;
+    if (!accommodationData.isAccommodationEdit) return;
     form.setFieldValue('accommodation-name', accommodationData.name);
     form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
     form.setFieldValue('accommodation-address', accommodationData.address);
@@ -169,6 +172,10 @@ export const InitAccommodationRegistration = () => {
       accommodationData.detailAddress,
     );
     form.setFieldValue('accommodation-desc', accommodationData.description);
+    setDefaultValue({
+      images: userInputValue[0].images,
+      options: userInputValue[0].options,
+    });
   }, []);
 
   return (
@@ -185,11 +192,20 @@ export const InitAccommodationRegistration = () => {
           form={form}
         />
         <AccommodationAddress form={form} />
-        <ImageUploadContainer header="숙소 대표 이미지 설정" />
-        <CheckBoxContainer options={accommodationOptions} header="숙소" />
+        <ImageUploadContainer
+          header="숙소 대표 이미지 설정"
+          images={defaultValue.images}
+        />
+        <CheckBoxContainer
+          options={accommodationOptions}
+          header="숙소"
+          defaultValue={defaultValue.options}
+        />
         <AccommodationDesc form={form} />
         <ButtonContainer
-          buttonStyle={isEdit ? 'edit' : 'navigate'}
+          buttonStyle={
+            accommodationData.isAccommodationEdit ? 'edit' : 'navigate'
+          }
           isValid={isValid}
         />
       </Form>
