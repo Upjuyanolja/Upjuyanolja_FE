@@ -32,6 +32,8 @@ export const CouponHeader = ({
     return current < moment().startOf('day');
   };
 
+  const hasNotData = expiry === '';
+
   return (
     <ConfigProvider locale={locale}>
       <StyledLayout data-testid="coupon-header">
@@ -65,13 +67,13 @@ export const CouponHeader = ({
             </Tooltip>
           </StyledDateText>
           <DatePicker
-            value={expiry === '' ? moment() : moment(expiry, DATE_FORMAT)}
+            value={hasNotData ? moment() : moment(expiry, DATE_FORMAT)}
             disabledDate={disabledDate}
             onChange={(_, date) => {
               handleChangeDate(date);
             }}
             allowClear={false}
-            disabled={expiry === ''}
+            disabled={hasNotData}
           />
           <TextBox typography="body1" fontWeight={700} color="black700">
             까지
@@ -83,12 +85,12 @@ export const CouponHeader = ({
             defaultValue="상태 변경"
             options={couponStatusOption}
             onChange={handleSelectStatus}
-            disabled={expiry === ''}
+            disabled={hasNotData}
           />
           <StyledButtonContainer>
             <StyledDeleteButton
               onClick={handleDeleteButton}
-              disabled={expiry === ''}
+              disabled={hasNotData}
               data-testid="delete-button"
             >
               <DeleteOutlined width="20px" height="20px" />
@@ -98,8 +100,9 @@ export const CouponHeader = ({
             </StyledDeleteButton>
             <StyledPurchaseButton
               onClick={handleModalOpen}
-              disabled={expiry === ''}
+              disabled={hasNotData}
               type="primary"
+              data-testid="additional-buy-button"
             >
               <img
                 width={15}
