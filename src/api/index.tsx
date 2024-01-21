@@ -36,7 +36,11 @@ instance.interceptors.response.use(
   },
   async (error) => {
     const accessToken = getCookie('accessToken');
-    if (window.location.pathname !== ROUTES.SIGNIN && !accessToken) {
+    if (
+      window.location.pathname !== ROUTES.SIGNIN &&
+      window.location.pathname !== ROUTES.SIGNUP &&
+      !accessToken
+    ) {
       message.error({
         content: (
           <TextBox typography="body3" fontWeight={'400'}>
@@ -54,6 +58,7 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     } else if (
       window.location.pathname !== ROUTES.SIGNIN &&
+      window.location.pathname !== ROUTES.SIGNUP &&
       error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED
     ) {
       try {
@@ -79,6 +84,7 @@ instance.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
+    return Promise.reject(error);
   },
 );
 
