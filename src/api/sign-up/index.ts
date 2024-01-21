@@ -23,7 +23,7 @@ export const SIGN_UP_API = {
     instance.get<Response<GetVerificationData>>('/api/auth/owners/verify', {
       params: {
         email: data.email,
-        verificationCode: data.verificationCode,
+        'verification-code': data.verificationCode,
       },
     }),
 };
