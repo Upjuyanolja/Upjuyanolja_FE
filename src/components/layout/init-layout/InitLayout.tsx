@@ -91,6 +91,7 @@ const StyledHeader = styled(Layout.Header)`
   width: 100%;
 
   background-color: ${colors.black100};
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
 
   padding: 16px 0;
 `;
