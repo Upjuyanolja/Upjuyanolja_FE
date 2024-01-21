@@ -35,6 +35,7 @@ export const userInputValueState = atom<UserInputValue[]>({
       },
       rooms: [],
       editRoomIndex: -1,
+      isAccommodationEdit: false,
     },
   ],
   effects_UNSTABLE: [persistAtom],

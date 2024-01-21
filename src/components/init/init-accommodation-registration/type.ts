@@ -85,4 +85,5 @@ export type UserInputValue = {
   options: Options;
   rooms: Room[];
   editRoomIndex?: number | undefined;
+  isAccommodationEdit?: boolean;
 };
