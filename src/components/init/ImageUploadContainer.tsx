@@ -1,23 +1,35 @@
 import { TextBox } from '@components/text-box';
-import { Modal, message } from 'antd';
+import { message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef, ChangeEvent } from 'react';
-import { ImageUploadFileItem, StyledImageContainerProps } from './type';
+import { useRef, ChangeEvent, useEffect } from 'react';
+import { StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { imageFileState } from '@stores/init/atoms';
 import { ROUTES } from '@/constants/routes';
+import { Image } from '@api/room/type';
 
-export const ImageUploadContainer = ({ header }: { header: string }) => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
+export const ImageUploadContainer = ({
+  header,
+  images,
+}: {
+  header: string;
+  images?: Image[];
+}) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleCancel = () => setPreviewOpen(false);
-  const setImageFile = useSetRecoilState(imageFileState);
+  useEffect(() => {
+    if (images) {
+      const data = images.map((image, index) => {
+        return { key: index, url: image.url, file: null };
+      });
+      setImageFile(data);
+    }
+  }, [images]);
+
+  const [imageFile, setImageFile] = useRecoilState(imageFileState);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
@@ -47,23 +59,10 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
       });
     }
     if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
-      setImageFile((prev) => [...prev, selectedFile]);
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        const imageUrl = reader.result as string;
-
-        setFileList((prevFileList) => [
-          ...prevFileList,
-          {
-            uid: Date.now(),
-            name: selectedFile.name,
-            url: imageUrl,
-          },
-        ]);
-      };
-
-      reader.readAsDataURL(selectedFile);
+      setImageFile((prev) => [
+        ...prev,
+        { key: imageFile.length, url: '', file: selectedFile },
+      ]);
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
@@ -85,14 +84,9 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     }
   };
 
-  const handleImageClick = (file: ImageUploadFileItem) => {
-    setPreviewOpen(true);
-    setPreviewTitle(file.name);
-  };
-
-  const handleRemove = (file: ImageUploadFileItem) => {
-    const newFileList = fileList.filter((item) => item.uid !== file.uid);
-    setFileList(newFileList);
+  const handleRemove = (key: number) => {
+    const newFileList = imageFile.filter((item) => item.key !== key);
+    setImageFile(newFileList);
   };
 
   return (
@@ -105,21 +99,20 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
         </TextBox>
       </StyledHeadTextContainer>
-      <StyledImageContainer $fileList={fileList} header={header}>
-        {fileList.map((file) => (
-          <div key={file.uid}>
+      <StyledImageContainer $fileList={imageFile} header={header}>
+        {imageFile.map((obj) => (
+          <div key={obj.key}>
             <StyledCloseButton
-              onClick={() => handleRemove(file)}
+              onClick={() => handleRemove(obj.key)}
               twoToneColor={colors.black600}
             />
             <img
-              src={file.url}
-              alt={file.name}
-              onClick={() => handleImageClick(file)}
+              src={obj.file !== null ? URL.createObjectURL(obj.file) : obj.url}
+              alt={'이미지'}
             />
           </div>
         ))}
-        {fileList.length < IMAGE_MAX_COUNT && (
+        {imageFile.length < IMAGE_MAX_COUNT && (
           <StyledUploadButtonWrapper onClick={openFileInput}>
             <PlusOutlined />
             <TextBox typography="body3" color="black600">
@@ -137,18 +130,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           </StyledUploadButtonWrapper>
         )}
       </StyledImageContainer>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img
-          alt={previewTitle}
-          style={{ width: '100%' }}
-          src={fileList.find((file) => file.name === previewTitle)?.url}
-        />
-      </Modal>
     </StyledInputWrapper>
   );
 };

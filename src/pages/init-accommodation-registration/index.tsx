@@ -13,9 +13,10 @@ import {
   accommodationEditState,
   checkedAccommodationOptions,
   imageFileState,
+  isUpdatedAccommodationState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { useImageFile } from '@queries/init';
@@ -39,6 +40,9 @@ export const InitAccommodationRegistration = () => {
   const isEdit = useRecoilValue(accommodationEditState);
 
   const [imageFiles, setImageFiles] = useRecoilState(imageFileState);
+  const setUpdatedAccommodationInfo = useSetRecoilState(
+    isUpdatedAccommodationState,
+  );
 
   const accommodationOptions = {
     cooking: '객실취사',
@@ -109,10 +113,11 @@ export const InitAccommodationRegistration = () => {
     const formData = new FormData();
 
     imageFiles.forEach((image) => {
-      formData.append('image1', image);
+      if (image.file !== null) formData.append('image1', image.file);
     });
 
     imageFile(formData);
+    setUpdatedAccommodationInfo(true);
 
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
