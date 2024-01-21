@@ -38,7 +38,7 @@ const verificationCode = '020924';
 const accommodationId = 1;
 
 export const handlers = [
-  http.post('/api/auth/owner/signin', postSignInResolver),
+  http.post('/api/auth/owners/signin', postSignInResolver),
   http.post('/api/auth/owners/signup', postSignUpResolver),
   http.post('/api/auth/owners/request-email', postAuthenticationResolver),
   http.get(
