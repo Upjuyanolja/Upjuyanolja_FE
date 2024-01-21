@@ -75,6 +75,7 @@ export const imageFileState = atom<ImageFile[]>({
   default: [],
 });
 
+/** 숙소 정보를 입력했는지 여부 */
 const { persistAtom: updateAccommodationPersist } = recoilPersist({
   key: 'isUpdatedAccommodationState',
   storage: localStorage,
@@ -86,6 +87,7 @@ export const isUpdatedAccommodationState = atom({
   effects_UNSTABLE: [updateAccommodationPersist],
 });
 
+/** 객실 정보를 입력했는지 여부 */
 const { persistAtom: addRoomPersist } = recoilPersist({
   key: 'addRoomState',
   storage: localStorage,
