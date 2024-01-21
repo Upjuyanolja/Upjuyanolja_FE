@@ -212,9 +212,9 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     if (
-      accommodationData.isAccommodationEdit &&
-      isClickedPrevButton &&
-      isUpdatedAccommodationState
+      accommodationData.isAccommodationEdit ||
+      isClickedPrevButton ||
+      updatedAccommodationInfo
     ) {
       form.setFieldValue('accommodation-name', accommodationData.name);
       form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
