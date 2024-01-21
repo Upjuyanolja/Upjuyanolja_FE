@@ -9,7 +9,10 @@ import {
   checkedAccommodationOptions,
   checkedRoomOptions,
 } from '@stores/init/atoms';
-import { Options, RoomOptions } from './init-accommodation-registration/type';
+import {
+  AccommodationOptions,
+  RoomOptions,
+} from './init-accommodation-registration/type';
 import { useEffect } from 'react';
 
 export const CheckBoxContainer = ({
@@ -61,7 +64,9 @@ export const CheckBoxContainer = ({
               onChange={handleCheckboxChange}
               checked={
                 header === '숙소'
-                  ? selectedAccommodationOptions[english as keyof Options]
+                  ? selectedAccommodationOptions[
+                      english as keyof AccommodationOptions
+                    ]
                   : selectedInitRoomOptions[english as keyof RoomOptions]
               }
             >

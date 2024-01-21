@@ -1,5 +1,5 @@
 import {
-  Options,
+  AccommodationOptions,
   UserInputValue,
 } from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
@@ -50,7 +50,7 @@ export const checkedRoomOptions = atom({
   },
 });
 
-export const checkedAccommodationOptions = atom<Options>({
+export const checkedAccommodationOptions = atom<AccommodationOptions>({
   key: 'checkedRoomOptions',
   default: {
     cooking: false,

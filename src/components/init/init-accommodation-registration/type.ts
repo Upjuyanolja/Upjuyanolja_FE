@@ -29,7 +29,7 @@ export type Image = {
   url: string;
 };
 
-export type Options = {
+export type AccommodationOptions = {
   cooking: boolean;
   parking: boolean;
   pickup: boolean;
@@ -67,7 +67,7 @@ export type defaultRoom = {
 
 export type defaultAccommodation = {
   images: Image[] | undefined;
-  options: Options | undefined;
+  options: AccommodationOptions | undefined;
 };
 
 export type onFinishValues = {
@@ -88,7 +88,7 @@ export type UserInputValue = {
   description: string;
   type: string;
   images: Image[];
-  options: Options;
+  options: AccommodationOptions;
   rooms: Room[];
   editRoomIndex?: number | undefined;
   isAccommodationEdit?: boolean;
