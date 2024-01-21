@@ -19,7 +19,6 @@ export const Coupon = () => {
     handleSelectCouponType,
     handleChangeDayLimit,
     handleDeleteButton,
-    isModified,
     handleChangeDate,
     handleEditButton,
     handleModalOpen,
@@ -43,7 +42,6 @@ export const Coupon = () => {
           expiry={''}
           handleSelectStatus={handleSelectStatus}
           handleDeleteButton={handleDeleteButton}
-          isModified={() => false}
           handleChangeDate={handleChangeDate}
           handleEditButton={handleEditButton}
           handleModalOpen={handleModalOpen}
@@ -59,7 +57,6 @@ export const Coupon = () => {
         expiry={couponData.expiry}
         handleSelectStatus={handleSelectStatus}
         handleDeleteButton={handleDeleteButton}
-        isModified={isModified}
         handleChangeDate={handleChangeDate}
         handleEditButton={handleEditButton}
         handleModalOpen={handleModalOpen}
