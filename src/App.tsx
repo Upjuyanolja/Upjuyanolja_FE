@@ -92,7 +92,7 @@ function App() {
           </Route>
           <Route element={<RoomLayout />}>
             <Route
-              path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
+              path={`/:accommodationId/:roomId${ROUTES.ROOM_UPDATE}`}
               element={<RoomUpdate />}
             />
           </Route>

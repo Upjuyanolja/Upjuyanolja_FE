@@ -14,8 +14,8 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
   const navigate = useNavigate();
   const { accommodationId } = useParams();
 
-  const handleEditClick = () => {
-    navigate(`/${accommodationId}${ROUTES.ROOM_UPDATE}`);
+  const handleEditClick = (roomId: number) => {
+    navigate(`/${accommodationId}/${roomId}${ROUTES.ROOM_UPDATE}`);
   };
 
   const handleDeleteClick = (roomId: number) => {
@@ -85,7 +85,7 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
         <StyledRightContent>
           <StyledEditDeleteContainer>
             <StyledEditDeleteButtons
-              onClick={handleEditClick}
+              onClick={() => handleEditClick(data.id)}
               style={{
                 marginRight: '8px',
               }}
