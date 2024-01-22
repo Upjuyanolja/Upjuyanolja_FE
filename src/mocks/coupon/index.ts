@@ -41,6 +41,6 @@ export const successCouponResolver = () => {
       message: '성공적으로 쿠폰을 구매했습니다.',
       data: null,
     },
-    { status: 400 },
+    { status: 200 },
   );
 };

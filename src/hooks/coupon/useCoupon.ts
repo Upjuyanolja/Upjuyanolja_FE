@@ -132,13 +132,11 @@ export const useCoupon = () => {
 
   useEffect(() => {
     setSelectedStatus('');
+    setSelectedRowKeys([]);
     setCouponData({
       expiry: '',
       coupons: [],
     });
-    setSelectedRowKeys([]);
-    setIsPointModalOpen(false);
-    setIsModalOpen(false);
     setPurchaseData({
       batchValue: 0,
       isAppliedBatchEdit: false,
@@ -158,6 +156,12 @@ export const useCoupon = () => {
         JSON.stringify(couponData),
     );
   }, [couponData]);
+
+  useEffect(() => {
+    return () => {
+      setIsCouponModified(false);
+    };
+  }, []);
 
   const processCouponTableData = (data: coupons) => {
     const couponTableData = [];
