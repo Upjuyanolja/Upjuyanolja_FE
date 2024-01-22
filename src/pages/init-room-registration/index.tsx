@@ -30,6 +30,7 @@ import styled from 'styled-components';
 import { Image } from '@api/room/type';
 import { TextBox } from '@components/text-box';
 import moment from 'moment';
+import { RESPONSE_CODE } from '@/constants/api';
 
 export const InitRoomRegistration = () => {
   const [form] = Form.useForm();
@@ -160,6 +161,12 @@ export const InitRoomRegistration = () => {
       if (error instanceof AxiosError) {
         message.error({
           content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+      if (error.response?.data.code === RESPONSE_CODE.IMAGE_SAVE_FAIL) {
+        message.error({
+          content: '요청을 실패했습니다. 관리자에게 문의해주세요',
           style: { marginTop: '210px' },
         });
       }
