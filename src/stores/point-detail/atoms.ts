@@ -42,24 +42,42 @@ export const pointSummaryDataState = atom<pointSummaryData>({
 export const pointDetailDataState = atom<PointDetailDataType>({
   key: 'pointDetailDataState',
   default: {
-    pageNum: 1,
-    pageSize: 4,
-    totalPages: 10,
-    totalElements: 40,
+    pageNum: -1,
+    pageSize: -1,
+    totalPages: -1,
+    totalElements: -1,
     isLast: true,
     histories: [
       {
-        id: 1,
-        category: '충전',
-        type: '포인트',
+        id: -1,
+        category: '',
+        type: '',
         status: '구매 확정',
-        name: '포인트 충전',
+        name: '',
         description: '',
-        trade: '5000원',
+        trade: -1,
+        amount: -1,
         receipt: {
-          orderId: 'O-1644460169123',
-          tradeAt: '2023.12.20 18:06',
-          amount: '5000',
+          orderId: '',
+          tradeAt: '',
+          amount: '',
+          orders: [
+            {
+              room: '',
+              coupons: [
+                {
+                  name: '',
+                  count: -1,
+                  totalPrice: -1,
+                },
+                {
+                  name: '',
+                  count: -1,
+                  totalPrice: -1,
+                },
+              ],
+            },
+          ],
         },
       },
     ],

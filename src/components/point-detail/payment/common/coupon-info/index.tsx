@@ -13,24 +13,61 @@ export const CouponInfo = ({ index }: { index: number }) => {
       <TextBox typography="body2" color={'black900'} fontWeight={'700'}>
         결제 쿠폰
       </TextBox>
-      <CouponDetailBox>
-        <TextBox
-          typography="body2"
-          color={'black900'}
-          fontWeight={'700'}
-          className="couponDetail-title"
-        >
-          {pointDetailData.histories[index].name}
-        </TextBox>
-        <TextBox typography="body2" color={'black900'} fontWeight={'400'}>
-          {pointDetailData.histories[index].description}
-        </TextBox>
-        <TextBox typography="body2" color={'black900'} fontWeight={'400'}>
-          {`주문수량: ${numberFormat(
-            pointDetailData.histories[index].trade,
-          )}매`}
-        </TextBox>
-      </CouponDetailBox>
+      {pointDetailData.histories[index].receipt.orders?.map(
+        (order, orderIndex) => (
+          <CouponDetailBox key={orderIndex}>
+            <TextBox
+              typography="body2"
+              color={'black900'}
+              fontWeight={'700'}
+              className="couponDetail-title"
+            >
+              {order.room}
+            </TextBox>
+
+            {order.coupons?.map((coupon, couponIndex) => (
+              <FlexBox key={couponIndex}>
+                <div>
+                  <TextBox
+                    typography="body2"
+                    color={'primary'}
+                    fontWeight={'700'}
+                  >
+                    {coupon.name.split(' | ')[0]}
+                  </TextBox>
+                  <TextBox
+                    typography="body2"
+                    color={'black900'}
+                    fontWeight={'400'}
+                  >
+                    {' | ' + numberFormat(coupon.name.split('|')[1])}P
+                  </TextBox>
+                </div>
+                <FlexBox>
+                  <div>
+                    <TextBox
+                      typography="body2"
+                      color={'black900'}
+                      fontWeight={'400'}
+                    >
+                      {numberFormat(coupon.count)}장
+                    </TextBox>
+                  </div>
+                  <div className="margin-left">
+                    <TextBox
+                      typography="h5"
+                      color={'black900'}
+                      fontWeight={'700'}
+                    >
+                      {numberFormat(coupon.totalPrice)}P
+                    </TextBox>
+                  </div>
+                </FlexBox>
+              </FlexBox>
+            ))}
+          </CouponDetailBox>
+        ),
+      )}
     </CouponInfoWrap>
   );
 };
@@ -49,5 +86,13 @@ const CouponDetailBox = styled('div')`
   padding: 8px;
   .couponDetail-title {
     margin-bottom: 8px;
+  }
+`;
+const FlexBox = styled('div')`
+  display: flex;
+  justify-content: space-between;
+
+  .margin-left {
+    margin-left: 60px;
   }
 `;

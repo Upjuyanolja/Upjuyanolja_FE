@@ -32,7 +32,10 @@ export const handlers = [
   http.post('/api/auth/owners/signin', postSignInResolver),
   http.post('/api/auth/owners/signup', postSignUpResolver),
   http.post('/api/auth/owners/request-email', postAuthenticationResolver),
-  http.get('/api/auth/owners/verify/*', getVerifyResolver),
+  http.get(
+    '/api/auth/owners/verify?email=*&verificationCode=*',
+    getVerifyResolver,
+  ),
   http.get('/api/accommodations/backoffice', getAccommodationsResolver),
   http.get('/api/coupons/backoffice/statistics/*', getStaticsResolver),
   http.get('/api/coupons/backoffice/revenue/*', getRevenueResolver),
@@ -40,24 +43,24 @@ export const handlers = [
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
 
-  http.get(
-    `/api/coupons/backoffice/buy/${accommodationId}`,
-    getCouponRoomListResolver,
-  ),
+  http.get('/api/coupons/backoffice/buy/*', getCouponRoomListResolver),
   http.post('/api/coupons/backoffice/buy', buyCouponResolver),
   http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
 
   http.get('/api/points/summary', getPointSummaryResolver),
 
   http.post('/api/points/charges', postPointChargeResolver),
-  http.get('/api/points/total/*', getPointDetailTotalResolver),
-  http.get('/api/points/usage/*', getPointDetailUsageResolver),
-  http.get('/api/points/charges/*', getPointDetailChargesResolver),
+  http.get('/api/points/total?*', getPointDetailTotalResolver),
+  http.get('/api/points/usage?*', getPointDetailUsageResolver),
+  http.get('/api/points/charges?*', getPointDetailChargesResolver),
   http.delete('/api/points/charges/*', deleteOrderCancelResolver),
 
   http.post('/api/rooms/*', postRoomResolver),
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
   http.post('/api/accommodations/images', postImageFileResolver),
-  http.get('/api/rooms/list/*', getRoomListResolver),
+  http.get(
+    '/api/rooms/list/*?pageSize={pageSize}&pageNum={pageNum}',
+    getRoomListResolver,
+  ),
 ];
