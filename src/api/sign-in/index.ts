@@ -5,7 +5,7 @@ import { Response } from '@/types/api';
 
 export const SIGN_IN_API = {
   postLogin: (data: SignInData) =>
-    instance.post<Response<MemberData>>('/api/auth/owner/signin', {
+    instance.post<Response<MemberData>>('/api/auth/owners/signin', {
       data,
     }),
 };

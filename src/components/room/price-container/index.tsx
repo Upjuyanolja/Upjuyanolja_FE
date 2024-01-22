@@ -51,7 +51,6 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
         <Form.Item name="price">
           <StyledInput
             id="price"
-            placeholder={''}
             type="text"
             style={{
               height: 40,

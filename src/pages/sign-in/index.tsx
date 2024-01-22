@@ -13,6 +13,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
+import { colors } from '@/constants/colors';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -26,7 +27,7 @@ export const SignIn = () => {
       localStorage.setItem('member', memberData);
       if (accommodationListData?.accommodations[0]?.id) {
         setCookie(
-          'accomodationId',
+          'accommodationId',
           accommodationListData?.accommodations[0]?.id.toString(),
         );
       }
@@ -276,6 +277,7 @@ const StyledButton = styled(Button)`
   height: 54px;
   border-radius: 2px;
   padding: 12px 32px 12px 32px;
+  border: 1px solid ${colors.primary};
 `;
 
 const SignUpContainer = styled.div`

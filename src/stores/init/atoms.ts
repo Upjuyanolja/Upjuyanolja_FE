@@ -1,10 +1,10 @@
 import {
   Options,
-  Image,
   UserInputValue,
 } from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { ImageFile } from './type';
 
 const { persistAtom } = recoilPersist({
   key: 'userInput',
@@ -34,6 +34,7 @@ export const userInputValueState = atom<UserInputValue[]>({
         seminar: false,
       },
       rooms: [],
+      editRoomIndex: -1,
     },
   ],
   effects_UNSTABLE: [persistAtom],
@@ -63,12 +64,17 @@ export const checkedAccommodationOptions = atom<Options>({
   },
 });
 
-export const selectedAccommodationFilesState = atom<Image[]>({
-  key: 'selectedAccommodationFilesState',
+export const accommodationEditState = atom({
+  key: 'accommodationEditState',
+  default: false,
+});
+
+export const imageFileState = atom<ImageFile[]>({
+  key: 'imageFileState',
   default: [],
 });
 
-export const selectedInitRoomFilesState = atom<Image[]>({
-  key: 'selectedInitRoomFilesState',
-  default: [],
+export const isUpdatedAccommodationState = atom({
+  key: 'isUpdatedAccommodation',
+  default: false,
 });

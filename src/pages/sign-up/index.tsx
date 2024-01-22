@@ -21,6 +21,7 @@ export const SignUp = () => {
   const [checkOne, setCheckOne] = useState(false);
   const [checkOne_1, setCheckOne_1] = useState(false);
   const [checkOne_2, setCheckOne_2] = useState(false);
+  const [checkOne_3, setCheckOne_3] = useState(false);
   const [checkTwo, setCheckTwo] = useState(false);
   const [checkTwo_1, setCheckTwo_1] = useState(false);
   const [checkThree, setCheckThree] = useState(false);
@@ -55,20 +56,28 @@ export const SignUp = () => {
       setCheckOne(true);
       setCheckOne_1(false);
       setCheckOne_2(false);
+      setCheckOne_3(false);
       setEmailDisabled(true);
     },
     onError: (error: unknown) => {
       if (error instanceof AxiosError && error.response) {
         const errorData = error.response.data;
         if (errorData) {
-          if (errorData.code == RESPONSE_CODE.INCORRECT_EMAIL_CODE) {
+          if (errorData.code === RESPONSE_CODE.INCORRECT_EMAIL_CODE) {
             setCheckOne(false);
             setCheckOne_1(true);
             setCheckOne_2(false);
-          } else {
+            setCheckOne_3(false);
+          } else if (errorData.code === RESPONSE_CODE.REQUEST_BODY_ERROR) {
             setCheckOne(false);
             setCheckOne_1(false);
             setCheckOne_2(true);
+            setCheckOne_3(false);
+          } else {
+            setCheckOne(false);
+            setCheckOne_1(false);
+            setCheckOne_2(false);
+            setCheckOne_3(true);
           }
         }
       }
@@ -134,6 +143,7 @@ export const SignUp = () => {
       setVerifyError(true);
     }
   };
+
   useEffect(() => {
     if (touched.password && errors.password) {
       setCheckThree(false);
@@ -251,6 +261,16 @@ export const SignUp = () => {
                   </TextBox>
                 )}
                 {checkOne_2 && (
+                  <TextBox
+                    typography="body4"
+                    fontWeight={'400'}
+                    color="error"
+                    cursor="default"
+                  >
+                    이메일 형식이 올바르지 않습니다.
+                  </TextBox>
+                )}
+                {checkOne_3 && (
                   <TextBox
                     typography="body4"
                     fontWeight={'400'}

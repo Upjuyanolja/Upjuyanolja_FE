@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import { EditOutlined } from '@ant-design/icons';
 import { CustomButton } from './CustomButton';
 import { ImageCarousel } from './ImageCarousel';
+import { Options } from '../init-accommodation-registration/type';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  Options,
-  UserInputValue,
-} from '../init-accommodation-registration/type';
+  accommodationEditState,
+  userInputValueState,
+} from '@stores/init/atoms';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
-export const AccommodationInfo = ({
-  accommodationData,
-}: {
-  accommodationData: UserInputValue;
-}) => {
+export const AccommodationInfo = () => {
   const accommodationCategory = {
     HOTEL: '호텔',
     RESORT: '리조트',
@@ -39,6 +39,11 @@ export const AccommodationInfo = ({
     seminar: '세미나실',
   };
 
+  const userInputValue = useRecoilValue(userInputValueState);
+  const accommodationData = userInputValue[0];
+  const setIsEdit = useSetRecoilState(accommodationEditState);
+  const navigate = useNavigate();
+
   const getAccommodationOptionsKorean = (accommodationData: {
     options: Options;
   }): string[] => {
@@ -56,6 +61,11 @@ export const AccommodationInfo = ({
     return selectedOptions;
   };
 
+  const handleEditButton = () => {
+    setIsEdit(true);
+    navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+  };
+
   return (
     <StyledWrapper>
       <TextBox typography="h4" fontWeight={700}>
@@ -69,7 +79,11 @@ export const AccommodationInfo = ({
               <TextBox typography="h4" fontWeight={700} color="primary">
                 숙소명: {accommodationData.name}
               </TextBox>
-              <CustomButton text="수정" icon={<EditOutlined />} />
+              <CustomButton
+                text="수정"
+                icon={<EditOutlined />}
+                onClick={handleEditButton}
+              />
             </StyledTextHeadWrapper>
             <List itemLayout="vertical">
               <List.Item>

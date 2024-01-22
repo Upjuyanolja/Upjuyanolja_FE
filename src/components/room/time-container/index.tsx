@@ -6,7 +6,12 @@ import { TimeContainerProps } from './type';
 import locale from 'antd/es/date-picker/locale/de_DE';
 import moment, { Moment } from 'moment';
 
-export const TimeContainer = ({ header, form }: TimeContainerProps) => {
+export const TimeContainer = ({
+  header,
+  form,
+  defaultCheckInTime,
+  defaultCheckOutTime,
+}: TimeContainerProps) => {
   const format = 'HH:mm';
   const specificTime = moment().hours(9).minutes(0);
   const [checkInTime, setCheckInTime] = useState<Moment>(specificTime);
@@ -47,7 +52,12 @@ export const TimeContainer = ({ header, form }: TimeContainerProps) => {
             체크인
           </TextBox>
         </StyledTextBoxWrapper>
-        <Form.Item name={'checkInTime'}>
+        <Form.Item
+          name={'checkInTime'}
+          initialValue={
+            defaultCheckInTime ? moment(defaultCheckInTime, 'HH:mm') : ''
+          }
+        >
           <StyledTimePicker
             placeholder="00:00"
             format={format}
@@ -73,7 +83,12 @@ export const TimeContainer = ({ header, form }: TimeContainerProps) => {
             체크아웃
           </TextBox>
         </StyledTextBoxWrapper>
-        <Form.Item name={'checkOutTime'}>
+        <Form.Item
+          name={'checkOutTime'}
+          initialValue={
+            defaultCheckOutTime ? moment(defaultCheckOutTime, 'HH:mm') : ''
+          }
+        >
           <StyledTimePicker
             placeholder="00:00"
             format={format}

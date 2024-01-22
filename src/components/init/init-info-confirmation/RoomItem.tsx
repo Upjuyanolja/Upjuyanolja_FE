@@ -7,21 +7,46 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { BsPeopleFill } from 'react-icons/bs';
 import { ImageCarousel } from './ImageCarousel';
 import { Room } from '../init-accommodation-registration/type';
-import { useSetRecoilState } from 'recoil';
-import { userInputValueState } from '@stores/init/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  checkedRoomOptions,
+  imageFileState,
+  userInputValueState,
+} from '@stores/init/atoms';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
-  const setUserInputValueState = useSetRecoilState(userInputValueState);
+export const RoomItem = () => {
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
+  const setImageFile = useSetRecoilState(imageFileState);
+  const setSelectedOptions = useSetRecoilState(checkedRoomOptions);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setUserInputValue([{ ...userInputValue[0], editRoomIndex: -1 }]);
+    setImageFile([]);
+    setSelectedOptions({
+      airCondition: false,
+      internet: false,
+      tv: false,
+    });
+  }, []);
 
   const removeRoom = (room: Room) => {
-    if (roomData.length === 1) {
-      message.error('최소 1개의 객실이 등록되어야 합니다.');
+    if (userInputValue[0].rooms.length === 1) {
+      message.error({
+        content: '최소 1개의 객실이 등록되어야 합니다.',
+        style: { marginTop: '210px' },
+      });
       return;
     }
 
-    const newRooms = roomData.filter((item) => item.name !== room.name);
+    const newRooms = userInputValue[0].rooms.filter(
+      (item) => item.name !== room.name,
+    );
 
-    setUserInputValueState((prevUserInputValue) => {
+    setUserInputValue((prevUserInputValue) => {
       const [userInputValueState] = prevUserInputValue;
 
       const updatedUserInputValue = {
@@ -32,7 +57,10 @@ export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
       return [updatedUserInputValue];
     });
 
-    message.success('삭제되었습니다.');
+    message.success({
+      content: '삭제되었습니다.',
+      style: { marginTop: '210px' },
+    });
   };
 
   const confirm = (room: Room) => {
@@ -48,9 +76,14 @@ export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
     });
   };
 
+  const roomEdit = (index: number) => {
+    setUserInputValue([{ ...userInputValue[0], editRoomIndex: index }]);
+    navigate('/init/room-registration');
+  };
+
   return (
     <>
-      {roomData.map((room: Room) => (
+      {userInputValue[0].rooms.map((room: Room, index) => (
         <StyledRoomItemContainer key={room.name}>
           <ImageCarousel images={room.images} />
           <StyledRoomInfoContainer>
@@ -59,7 +92,11 @@ export const RoomItem = ({ roomData }: { roomData: Room[] }) => {
                 {room.name}
               </TextBox>
               <StyledButtonContainer>
-                <CustomButton text="수정" icon={<EditOutlined />} />
+                <CustomButton
+                  text="수정"
+                  icon={<EditOutlined />}
+                  onClick={() => roomEdit(index)}
+                />
                 <CustomButton
                   text="삭제"
                   icon={<DeleteOutlined />}

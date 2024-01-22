@@ -25,7 +25,9 @@ export const SignUpSuccess = () => {
           type="primary"
           size="large"
         >
-          로그인 하러가기
+          <TextBox typography="h5" fontWeight={'700'} textAlign="center">
+            로그인 하러가기
+          </TextBox>
         </StyledButton>
       </StyledContent>
       <Footer />

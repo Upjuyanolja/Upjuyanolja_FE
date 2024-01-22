@@ -12,7 +12,7 @@ import { TimeContainer } from '@components/room/time-container';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   checkedRoomOptions,
-  selectedInitRoomFilesState,
+  //selectedInitRoomFilesState,
 } from '@stores/init/atoms';
 import { RoomData, onFinishValues } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
@@ -41,7 +41,7 @@ const RoomRegistration = () => {
         content: '등록되었습니다',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
-      setSelectedImages([]);
+      //setSelectedImages([]);
       setSelectedOptions({
         airCondition: false,
         tv: false,
@@ -54,9 +54,9 @@ const RoomRegistration = () => {
     },
   });
 
-  const [selectedImages, setSelectedImages] = useRecoilState(
+  /* const [selectedImages, setSelectedImages] = useRecoilState(
     selectedInitRoomFilesState,
-  );
+  );*/
   const [selectedOptions, setSelectedOptions] =
     useRecoilState(checkedRoomOptions);
 
@@ -75,7 +75,8 @@ const RoomRegistration = () => {
       checkOutTime: value['checkOutTime'].format('HH:mm'),
       amount: value.count,
       options: selectedOptions,
-      images: selectedImages,
+      //images: selectedImages,
+      images: [],
     };
     setRecoilUpdated(true);
     mutate(data);
@@ -89,15 +90,15 @@ const RoomRegistration = () => {
       values['price'] &&
       values['checkInTime'] &&
       values['checkOutTime'] &&
-      selectedImages.length !== 0;
+      //selectedImages.length !== 0;
 
-    console.log(
-      values['room-name'],
-      values['price'],
-      values['checkInTime'],
-      values['checkOutTime'],
-      selectedImages.length,
-    );
+      console.log(
+        values['room-name'],
+        values['price'],
+        values['checkInTime'],
+        values['checkOutTime'],
+        //selectedImages.length,
+      );
 
     return (
       !form.getFieldsError().some(({ errors }) => errors.length) &&
@@ -111,7 +112,7 @@ const RoomRegistration = () => {
     setIsValid(areFormFieldsValid());
   }, [
     form,
-    selectedImages,
+    //selectedImages,
     selectedOptions,
     priceError,
     capacityError,

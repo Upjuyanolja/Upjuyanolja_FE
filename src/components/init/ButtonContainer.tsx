@@ -67,6 +67,10 @@ export const ButtonContainer = ({
     });
   };
 
+  /*
+  StyledButton에 disabled를 임의로 true로 변경했습니다
+  추후 {!isValid} 로 바꿔주세요!
+   */
   return (
     <StyledWrapper $buttonStyle={buttonStyle}>
       {buttonStyle === 'navigate' && (
@@ -90,12 +94,18 @@ export const ButtonContainer = ({
           size="large"
           onClick={confirm}
           data-testid="request-button"
+          disabled={!isValid}
         >
           등록 요청
         </StyledButton>
       )}
       {buttonStyle === 'edit' && (
-        <StyledButton type="primary" size="large" disabled={!isValid}>
+        <StyledButton
+          type="primary"
+          size="large"
+          disabled={!isValid}
+          htmlType="submit"
+        >
           수정하기
         </StyledButton>
       )}

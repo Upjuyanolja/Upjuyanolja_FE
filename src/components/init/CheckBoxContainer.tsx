@@ -10,11 +10,12 @@ import {
   checkedRoomOptions,
 } from '@stores/init/atoms';
 import { Options, RoomOptions } from './init-accommodation-registration/type';
-import { ROUTES } from '@/constants/routes';
+import { useEffect } from 'react';
 
 export const CheckBoxContainer = ({
   options,
   header,
+  defaultValue,
 }: CheckBoxContainerProps) => {
   const [selectedAccommodationOptions, setSelectedAccommodationOptions] =
     useRecoilState(checkedAccommodationOptions);
@@ -22,6 +23,11 @@ export const CheckBoxContainer = ({
   const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
     useRecoilState(checkedRoomOptions);
 
+  useEffect(() => {
+    if (defaultValue) {
+      setSelectedInitRoomOptions(defaultValue);
+    }
+  }, [defaultValue]);
   const handleCheckboxChange = (event: CheckboxChangeEvent) => {
     const checkedOption = event.target.value;
 
