@@ -19,9 +19,14 @@ export const RoomInfo = () => {
   return (
     <StyledWrapper>
       <StyledHeadContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          객실 정보
-        </TextBox>
+        <StyledHeadTextContainer>
+          <TextBox typography="h4" fontWeight={700}>
+            객실 정보
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            최대 15개 까지 등록 가능합니다.
+          </TextBox>
+        </StyledHeadTextContainer>
         <StyledButton type="primary" onClick={handleAddButton}>
           + 객실추가
         </StyledButton>
@@ -56,6 +61,12 @@ const StyledWrapper = styled.div`
 const StyledHeadContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const StyledHeadTextContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
 `;
 
 const StyledButton = styled(Button)`
