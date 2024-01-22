@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { CouponHeader } from '@components/coupon/coupon-header';
-import { Modal } from 'antd';
+import { Modal, Spin } from 'antd';
 import styled from 'styled-components';
 import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase-footer';
 import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
@@ -34,7 +34,12 @@ export const Coupon = () => {
     isGetCouponLoading,
   } = useCoupon();
 
-  if (isGetCouponLoading) return <div>로딩</div>;
+  if (isGetCouponLoading)
+    return (
+      <StyledLoadingLayout>
+        <Spin tip="Loading..." size="large" />
+      </StyledLoadingLayout>
+    );
   if (data === null)
     return (
       <>
@@ -95,6 +100,13 @@ export const Coupon = () => {
     </>
   );
 };
+
+const StyledLoadingLayout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`;
 
 const StyledModal = styled(Modal)`
   .ant-modal-content {
