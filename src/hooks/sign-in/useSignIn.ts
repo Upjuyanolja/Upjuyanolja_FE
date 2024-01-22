@@ -1,7 +1,7 @@
 export const setCookie = (name: string, value: string | number) => {
   try {
     if (name === 'accessToken') {
-      document.cookie = `${name}=${value};max-age:7200;path=/;`;
+      document.cookie = `${name}=${value};max-age=7200;path=/;`;
     } else if (name === 'refreshToken') {
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 7);
