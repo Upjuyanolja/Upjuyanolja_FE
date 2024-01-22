@@ -38,6 +38,7 @@ const Container = styled.div`
   justify-content: space-between;
 
   height: calc(100vh - 56px);
+  overflow-y: auto;
   transition: transform 0.3s ease-in;
 `;
 

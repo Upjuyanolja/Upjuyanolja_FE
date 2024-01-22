@@ -18,6 +18,7 @@ const Container = styled.div`
   justify-content: flex-end;
   gap: 4px;
   margin: 0 8px 14px 0;
+  padding: 14px 0 0 0;
   cursor: pointer;
 `;
 

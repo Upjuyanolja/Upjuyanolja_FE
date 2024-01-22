@@ -56,7 +56,6 @@ export const AccommodationList = ({
           <TextBox typography="body2" fontWeight="bold">
             {accommodations[accommodationIdx]?.name}
           </TextBox>
-          <p>{accommodations[accommodationIdx]?.id}</p>
         </StyledFlex>
         {accommodations.length > 1 &&
           (clickedSelectBox ? <UpOutlined /> : <DownOutlined />)}
@@ -74,11 +73,6 @@ export const AccommodationList = ({
               <TextBox typography="body3" fontWeight="bold">
                 {item.name}
               </TextBox>
-              {accommodationIdx === idx && (
-                <p>
-                  {accommodationIdx}, {idx}
-                </p>
-              )}
             </StyledFlex>
           </StyledAccommodationItem>
         ))}
