@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import { PointBox } from '@components/point-detail/point-box';
 import { PointDetailComp } from '@components/point-detail';
@@ -30,19 +30,19 @@ export const PointDetail = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const location = useLocation();
 
-  const { refetch: pointDetailDataRefetch } = useGetPointDetail(
-    menuStatus,
-    pageNum,
-    {
+  const { isLoading: pointDetailDataLoading, refetch: pointDetailDataRefetch } =
+    useGetPointDetail(menuStatus, pageNum, {
       select(data) {
         return data.data.data;
       },
 
       onSuccess: (data) => setPointDetailData(data),
-    },
-  );
+    });
 
-  const { refetch: pointSummaryDataRefetch } = useGetPointSummary({
+  const {
+    isLoading: pointSummaryDataLoading,
+    refetch: pointSummaryDataRefetch,
+  } = useGetPointSummary({
     select(data) {
       return data.data.data;
     },
@@ -63,7 +63,13 @@ export const PointDetail = () => {
     );
     pointSummaryDataRefetch();
   }, [currentMonth]);
-
+  if (pointDetailDataLoading || pointSummaryDataLoading) {
+    return (
+      <StyledLoadingLayout>
+        <Spin></Spin>
+      </StyledLoadingLayout>
+    );
+  }
   return (
     <StyledLayout>
       <PointBox />
@@ -73,4 +79,14 @@ export const PointDetail = () => {
 };
 const StyledLayout = styled(Layout)`
   padding: 32px 48px;
+  .ant-spin {
+  }
+`;
+const StyledLoadingLayout = styled('div')`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
