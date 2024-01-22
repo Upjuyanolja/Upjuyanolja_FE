@@ -1,4 +1,8 @@
-import { PostImageFile } from '@api/init/type';
+import {
+  PostAccommodation,
+  PostAccommodationParams,
+  PostImageFile,
+} from '@api/init/type';
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Response } from '@/types/api';
@@ -24,4 +28,22 @@ export const useImageFile = (
   );
 };
 
-//숙소 등록 요청은 나중에 추가할 예정
+export const useAccommodationInfo = (
+  options?: UseMutationOptions<
+    AxiosResponse<Response<PostAccommodation>>,
+    AxiosError,
+    PostAccommodationParams
+  >,
+) => {
+  return useMutation<
+    AxiosResponse<Response<PostAccommodation>>,
+    AxiosError,
+    PostAccommodationParams
+  >(
+    (params: PostAccommodationParams) =>
+      ACCOMMODATION_REGISTRATION_API.postAccommodationInfo(params),
+    {
+      ...options,
+    },
+  );
+};
