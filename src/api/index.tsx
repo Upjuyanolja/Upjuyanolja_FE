@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '../constants/api';
 import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { ROUTES } from '@/constants/routes';
+import { usePostRefresh } from '@queries/refresh';
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
@@ -55,12 +56,27 @@ instance.interceptors.response.use(
       window.location.pathname !== ROUTES.SIGNUP &&
       window.location.pathname !== ROUTES.SIGNIN_AGREEMENT &&
       window.location.pathname !== ROUTES.SIGNUP_SUCCESS &&
-      error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED
+      error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED &&
+      accessToken
     ) {
       try {
-        // 여기에 재발급 api 선언, 아래는 예시
-        const newAccessToken = 'ivegaeul';
-        setCookie('accessToken', newAccessToken);
+        const postRefreshMutation = usePostRefresh({
+          onSuccess(response) {
+            removeCookie('accessToken');
+            removeCookie('refreshToken');
+            const newAccessToken = response.data.data.accessToken;
+            const newRefreshToken = response.data.data.refreshToken;
+            setCookie('accessToken', newAccessToken);
+            setCookie('refreshToken', newRefreshToken);
+          },
+          onError(error) {
+            if (error instanceof AxiosError)
+              message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+          },
+        });
+        postRefreshMutation.mutate({
+          accessToken: accessToken,
+        });
         return axios(error.config);
       } catch (refreshError) {
         removeCookie('accessToken');
