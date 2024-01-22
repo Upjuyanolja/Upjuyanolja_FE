@@ -90,7 +90,7 @@ export const ButtonContainer = ({
         zipCode: '',
         description: '',
         type: '',
-        images: [{ url: '' }],
+        images: [],
         options: {
           cooking: false,
           parking: false,
