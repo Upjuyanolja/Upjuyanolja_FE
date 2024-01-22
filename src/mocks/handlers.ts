@@ -40,19 +40,16 @@ export const handlers = [
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
 
-  http.get(
-    `/api/coupons/backoffice/buy/${accommodationId}`,
-    getCouponRoomListResolver,
-  ),
+  http.get('/api/coupons/backoffice/buy/*', getCouponRoomListResolver),
   http.post('/api/coupons/backoffice/buy', buyCouponResolver),
   http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
 
   http.get('/api/points/summary', getPointSummaryResolver),
 
   http.post('/api/points/charges', postPointChargeResolver),
-  http.get('/api/points/total/*', getPointDetailTotalResolver),
-  http.get('/api/points/usage/*', getPointDetailUsageResolver),
-  http.get('/api/points/charges/*', getPointDetailChargesResolver),
+  http.get('/api/points/total?*', getPointDetailTotalResolver),
+  http.get('/api/points/usage?*', getPointDetailUsageResolver),
+  http.get('/api/points/charges?*', getPointDetailChargesResolver),
   http.delete('/api/points/charges/*', deleteOrderCancelResolver),
 
   http.post('/api/rooms/*', postRoomResolver),
