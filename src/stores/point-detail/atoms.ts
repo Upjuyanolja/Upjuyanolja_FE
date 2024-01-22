@@ -55,11 +55,29 @@ export const pointDetailDataState = atom<PointDetailDataType>({
         status: '구매 확정',
         name: '포인트 충전',
         description: '',
-        trade: '5000원',
+        trade: 5000,
+        amount: 5000,
         receipt: {
           orderId: 'O-1644460169123',
           tradeAt: '2023.12.20 18:06',
           amount: '5000',
+          orders: [
+            {
+              room: '스탠다드 트윈 룸',
+              coupons: [
+                {
+                  name: '1,000원 쿠폰 | 100P',
+                  count: 2,
+                  totalPrice: 100,
+                },
+                {
+                  name: '1,000원 쿠폰 | 100P',
+                  count: 1,
+                  totalPrice: 50,
+                },
+              ],
+            },
+          ],
         },
       },
     ],

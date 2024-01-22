@@ -83,9 +83,6 @@ export const ReceiptModal = ({
 };
 
 const StyledModal = styled(Modal)`
-  .ant-modal-content {
-    height: 620px;
-  }
   .ant-layout {
     background-color: #ffffff;
     display: flex;
@@ -106,6 +103,10 @@ const StyledModal = styled(Modal)`
     font-size: 32px;
     font-weight: 700;
     line-height: 48px;
+  }
+  .ant-modal-body {
+    height: 540px;
+    overflow-y: auto;
   }
   .ant-form-item-label {
     label {
