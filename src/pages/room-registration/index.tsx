@@ -10,11 +10,15 @@ import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { checkedRoomOptions, imageFileState } from '@stores/init/atoms';
 import { Image, RoomData } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
-import { capacityHasError, priceHasError } from '@stores/room/atoms';
+import {
+  capacityHasError,
+  priceHasError,
+  checkedRoomOptions,
+  imageFileState,
+} from '@stores/room/atoms';
 import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
