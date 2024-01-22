@@ -32,7 +32,7 @@ export const handlers = [
   http.post('/api/auth/owners/signin', postSignInResolver),
   http.post('/api/auth/owners/signup', postSignUpResolver),
   http.post('/api/auth/owners/request-email', postAuthenticationResolver),
-  http.get('/api/auth/owners/verify/*', getVerifyResolver),
+  http.get('/api/auth/owners/verify', getVerifyResolver),
   http.get('/api/accommodations/backoffice', getAccommodationsResolver),
   http.get('/api/coupons/backoffice/statistics/*', getStaticsResolver),
   http.get('/api/coupons/backoffice/revenue/*', getRevenueResolver),
@@ -40,10 +40,7 @@ export const handlers = [
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
 
-  http.get(
-    `/api/coupons/backoffice/buy/${accommodationId}`,
-    getCouponRoomListResolver,
-  ),
+  http.get('/api/coupons/backoffice/buy/*', getCouponRoomListResolver),
   http.post('/api/coupons/backoffice/buy', buyCouponResolver),
   http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
 
