@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { RoomItem } from './RoomItem';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { useSetRecoilState } from 'recoil';
-import { addRoomState } from '@stores/init/atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { addRoomState, userInputValueState } from '@stores/init/atoms';
 
 export const RoomInfo = () => {
   const navigate = useNavigate();
@@ -15,6 +15,8 @@ export const RoomInfo = () => {
     setIsAddRoom(true);
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
+
+  const userInputValue = useRecoilValue(userInputValueState);
 
   return (
     <StyledWrapper>
@@ -27,9 +29,11 @@ export const RoomInfo = () => {
             최대 15개 까지 등록 가능합니다.
           </TextBox>
         </StyledHeadTextContainer>
-        <StyledButton type="primary" onClick={handleAddButton}>
-          + 객실추가
-        </StyledButton>
+        {userInputValue[0].rooms.length < 15 && (
+          <StyledButton type="primary" onClick={handleAddButton}>
+            + 객실추가
+          </StyledButton>
+        )}
       </StyledHeadContainer>
       <StyledRoomListContainer>
         <RoomItem />
