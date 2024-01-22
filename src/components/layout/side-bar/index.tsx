@@ -4,12 +4,17 @@ import { Navigation } from './navigation';
 import { SignOutBtn } from './signout-btn';
 import styled from 'styled-components';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
+import { IoCloseOutline } from 'react-icons/io5';
+import { colors } from '@/constants/colors';
 
 export const SideBar = () => {
   const { pointSummaryData, accommodationListData } = useSideBar();
 
   return (
     <Container>
+      <StyledClosedButton>
+        <StyledIcon />
+      </StyledClosedButton>
       <div>
         <UserProfile pointSummaryData={pointSummaryData} />
         <AccommodationList accommodationListData={accommodationListData} />
@@ -24,6 +29,26 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
   height: calc(100vh - 64px);
+  transition: transform 0.3s ease-in;
+`;
+
+const StyledClosedButton = styled.button`
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+`;
+
+const StyledIcon = styled(IoCloseOutline)`
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  color: ${colors.black900};
 `;

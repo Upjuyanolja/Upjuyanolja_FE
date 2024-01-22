@@ -32,7 +32,6 @@ export const CouponRegistration = () => {
   useEffect(() => {
     if (!accommodationId) return;
     isGetCouponRoomListRefetch();
-    console.log(isGetCouponRoomListLoading);
   }, [accommodationId]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -92,7 +91,7 @@ export const CouponRegistration = () => {
 };
 
 const Container = styled.section`
-  padding: 32px 48px;
+  padding: 0px 48px;
 `;
 
 const StyledLeftWrap = styled.div`
@@ -108,16 +107,4 @@ const StyledForm = styled.form`
   display: flex;
   justify-content: space-between;
   gap: 24px;
-`;
-
-const SpinWrap = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  background-color: rgba(0, 0, 0, 0.01);
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
 `;
