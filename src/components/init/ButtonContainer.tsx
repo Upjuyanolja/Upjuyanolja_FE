@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -8,8 +8,11 @@ import {
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
-import { useSetRecoilState } from 'recoil';
-import { roomPrevButtonState } from '@stores/init/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { roomPrevButtonState, userInputValueState } from '@stores/init/atoms';
+import { useAccommodationInfo } from '@queries/init';
+import { AxiosError } from 'axios';
+import { PostAccommodationParams } from '@api/init/type';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -29,8 +32,83 @@ export const ButtonContainer = ({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
+  const [accommodationId, setAccommodationId] = useState(-1);
+
+  const imageUrls: { url: string }[] = userInputValue[0].images.map(
+    (image) => ({ url: image.url }),
+  );
+
+  const postAccommodationParams: PostAccommodationParams = {
+    name: userInputValue[0].name,
+    address: userInputValue[0].address,
+    detailAddress: userInputValue[0].detailAddress,
+    zipCode: userInputValue[0].zipCode,
+    description: userInputValue[0].description,
+    type: userInputValue[0].type,
+    images: imageUrls,
+    options: userInputValue[0].options,
+    rooms: userInputValue[0].rooms.map((room) => ({
+      name: room.name,
+      price: room.price as number,
+      defaultCapacity: room.defaultCapacity as number,
+      maxCapacity: room.maxCapacity as number,
+      checkInTime: room.checkInTime,
+      checkOutTime: room.checkOutTime,
+      count: room.count as number,
+      images: room.images.map((image) => ({ url: image.url })),
+      options: room.options,
+    })),
+  };
+
+  const { mutate: accommodationInfo } = useAccommodationInfo({
+    onSuccess(data) {
+      setAccommodationId(data.data.data.accommodationId);
+      setIsModalOpen(true);
+    },
+    onError(error) {
+      if (error instanceof AxiosError) {
+        message.error({
+          content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+    },
+  });
+
+  const handleConfirmModalOk = () => {
+    accommodationInfo(postAccommodationParams);
+  };
+
   const handleModalOk = () => {
+    setUserInputValue([
+      {
+        name: '',
+        address: '',
+        detailAddress: '',
+        zipCode: '',
+        description: '',
+        type: '',
+        images: [{ url: '' }],
+        options: {
+          cooking: false,
+          parking: false,
+          pickup: false,
+          barbecue: false,
+          fitness: false,
+          karaoke: false,
+          sauna: false,
+          sports: false,
+          seminar: false,
+        },
+        rooms: [],
+        editRoomIndex: -1,
+        isAccommodationEdit: false,
+      },
+    ]);
     setIsModalOpen(false);
+    navigate(`/${accommodationId}${ROUTES.MAIN}`);
   };
 
   const confirm = () => {
@@ -68,7 +146,7 @@ export const ButtonContainer = ({
       width: '576px',
       bodyStyle: { height: '621px' },
       centered: true,
-      onOk: () => setIsModalOpen(true),
+      onOk: handleConfirmModalOk,
     });
   };
 
@@ -122,7 +200,6 @@ export const ButtonContainer = ({
       )}
       <Modal
         open={isModalOpen}
-        onOk={handleModalOk}
         footer={[]}
         closable={false}
         width={576}
@@ -137,15 +214,12 @@ export const ButtonContainer = ({
             fontWeight={400}
             style={{ textAlign: 'center' }}
           >
-            레스케이프 호텔 숙소
+            {userInputValue[0].name}
             <br />
             등록이 완료되었습니다.
           </TextBox>
         </StyledTextContainer>
-        <StyledToMainButton
-          type="primary"
-          onClick={() => navigate(ROUTES.MAIN)}
-        >
+        <StyledToMainButton type="primary" onClick={handleModalOk}>
           홈으로 이동
         </StyledToMainButton>
       </Modal>
