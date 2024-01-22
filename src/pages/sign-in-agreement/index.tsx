@@ -9,6 +9,7 @@ import { colors } from '@/constants/colors';
 
 export const SignInAgreement = () => {
   const { handleChangeUrl } = useCustomNavigate();
+  const [allChecked, setAllChecked] = useState(false);
   const [isChecked, setIsChecked] = useState<number[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
   const data = [
@@ -33,11 +34,15 @@ export const SignInAgreement = () => {
   const handleSingleCheck = (checked: boolean, id: number) => {
     if (checked) {
       setIsChecked((prev) => [...prev, id]);
+      if (isChecked.length + 1 === 4) {
+        setAllChecked(true);
+      }
       if (id === 0) {
         setIsDisabled(false);
       }
     } else {
       setIsChecked(isChecked.filter((el) => el !== id));
+      setAllChecked(false);
       if (id === 0) {
         setIsDisabled(true);
       }
@@ -50,11 +55,14 @@ export const SignInAgreement = () => {
       data.forEach((el) => idArray.push(el.id));
       setIsChecked(idArray);
       setIsDisabled(false);
+      setAllChecked(true);
     } else {
       setIsChecked([]);
       setIsDisabled(true);
+      setAllChecked(false);
     }
   };
+
   return (
     <StyledLayout>
       <StyledContent>
@@ -82,7 +90,11 @@ export const SignInAgreement = () => {
           <MainContainer>
             <CheckBoxContainer>
               <CheckBoxInner>
-                <Checkbox onChange={handleAllCheck} id="all" />
+                <Checkbox
+                  onChange={handleAllCheck}
+                  id="all"
+                  checked={allChecked}
+                />
                 <TextInner>
                   <label htmlFor="all">
                     <TextBox
@@ -254,6 +266,7 @@ const ButtonContainer = styled.div`
 const StyledPrevButton = styled(Button)`
   width: 126px;
   height: 54px;
+  border: 1px solid ${colors.primary};
 `;
 
 const StyledNextButton = styled(StyledPrevButton)`
