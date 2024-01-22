@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
 import { ValidateSchema } from '@/utils/sign-in/ValidateSchema';
-import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
+import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostLogin } from '@queries/sign-in';
 import { useFormik } from 'formik';
@@ -29,7 +29,7 @@ export const SignIn = () => {
       if (accommodationListData?.accommodations[0]?.id) {
         setCookie(
           'accommodationId',
-          accommodationListData?.accommodations[0]?.id.toString(),
+          accommodationListData?.accommodations[0]?.id,
         );
       }
     },
@@ -81,8 +81,8 @@ export const SignIn = () => {
         await mutate(signInData);
         try {
           const res = isAccomodationList();
-          const accomodationId = getCookie('accomodationId');
           if (res === true) {
+            const accomodationId = getCookie('accomodationId');
             setTimeout(() => {
               handleChangeUrl(`/${accomodationId}/main`);
             }, 1000);
