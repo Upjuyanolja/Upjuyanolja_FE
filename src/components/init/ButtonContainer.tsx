@@ -9,7 +9,11 @@ import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { roomPrevButtonState, userInputValueState } from '@stores/init/atoms';
+import {
+  isUpdatedAccommodationState,
+  roomPrevButtonState,
+  userInputValueState,
+} from '@stores/init/atoms';
 import { useAccommodationInfo } from '@queries/init';
 import { AxiosError } from 'axios';
 import { PostAccommodationParams } from '@api/init/type';
@@ -36,6 +40,9 @@ export const ButtonContainer = ({
   const [userInputValue, setUserInputValue] =
     useRecoilState(userInputValueState);
   const [accommodationId, setAccommodationId] = useState(-1);
+  const setIsUpdatedAccommodation = useSetRecoilState(
+    isUpdatedAccommodationState,
+  );
 
   const imageUrls: { url: string }[] = userInputValue[0].images.map(
     (image) => ({ url: image.url }),
@@ -124,6 +131,7 @@ export const ButtonContainer = ({
         isAccommodationEdit: false,
       },
     ]);
+    setIsUpdatedAccommodation(false);
     setIsModalOpen(false);
     navigate(`/${accommodationId}${ROUTES.MAIN}`);
   };
@@ -233,7 +241,7 @@ export const ButtonContainer = ({
           >
             {userInputValue[0].name}
             <br />
-            등록이 완료되었습니다.
+            숙소 등록이 완료되었습니다.
           </TextBox>
         </StyledTextContainer>
         <StyledToMainButton type="primary" onClick={handleModalOk}>
