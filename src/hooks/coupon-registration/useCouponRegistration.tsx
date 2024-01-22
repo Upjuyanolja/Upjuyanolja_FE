@@ -6,13 +6,14 @@ import {
 import { getCouponRoomDataListState } from '@stores/coupon-registration/atoms';
 import { message, Modal } from 'antd';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 export const useCouponRegistration = () => {
   const { accommodationId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const setGetCouponRoomList = useSetRecoilState(getCouponRoomDataListState);
+  const navigate = useNavigate();
 
   const {
     data: couponRoomListData,
@@ -52,11 +53,7 @@ export const useCouponRegistration = () => {
           onOk: () => setIsModalOpen(true),
         });
       case RESPONSE_CODE.NOT_FOUND_ACCOMMODATION_ID:
-      case RESPONSE_CODE.NOT_FOUND_POINT:
-      case RESPONSE_CODE.NOT_FOUND_ROOM_DATA:
-        return message.error(
-          '알 수 없는 에러가 발생하였습니다. 관리자에게 문의 바랍니다.',
-        );
+        return navigate('/404');
       default:
         return message.error('요청에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }

@@ -8,5 +8,5 @@ export const getCouponRoomListResolver = () => {
 };
 
 export const buyCouponResolver = () => {
-  return HttpResponse.json(failBuyCouponData, { status: 400 });
+  return HttpResponse.json(failBuyCouponData, { status: 401 });
 };
