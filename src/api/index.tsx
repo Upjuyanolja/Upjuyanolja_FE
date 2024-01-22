@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { HTTP_BASE_URL, HTTP_STATUS_CODE } from '../constants/api';
+import { HTTP_STATUS_CODE } from '../constants/api';
 import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { ROUTES } from '@/constants/routes';
-
 export const instance = axios.create({
-  baseURL: HTTP_BASE_URL,
+  baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
     timeout: 5000,
