@@ -14,11 +14,12 @@
         "status": "구매 확정",
         "name": "포인트 충전",
         "description": "",
-        "trade": "5000원",
+        "trade": 5000,
+        "amount": 5000,
         "receipt": {
           "orderId": "O-1644460169123",
           "tradeAt": "2023.12.20 18:06",
-          "amount": "5000"
+          "amount": 5000
         }
       },
       {
@@ -28,11 +29,12 @@
         "status": "취소 완료",
         "name": "포인트 충전",
         "description": "",
-        "trade": "5000원",
+        "trade": 5000,
+        "amount": 5000,
         "receipt": {
           "orderId": "O-1644460169123",
           "tradeAt": "2023.12.20 18:06",
-          "amount": "5000"
+          "amount": 5000
         }
       },
       {
@@ -41,12 +43,46 @@
         "type": "쿠폰",
         "status": "구매 확정",
         "name": "5% 할인 쿠폰",
-        "description": "패캠스테이 삼성점 | 스탠다드, 스탠다드 더블, 프리미엄",
-        "trade": "5000원",
+        "description": "스탠다드 더블룸 외 2건 | 패캠스테이 삼성점",
+        "trade": 100,
+        "amount": 5000,
         "receipt": {
           "orderId": "O-1644460169123",
           "tradeAt": "2023.12.20 18:06",
-          "amount": "5000"
+          "accommodationName": "패캠스테이 삼성점",
+          "orders": [
+            {
+              "room": "스탠다드 트윈 룸",
+              "coupons": [
+                {
+                  "name": "1,000원 쿠폰 | 100P",
+                  "count": 20,
+                  "totalPrice": 20000
+                },
+                {
+                  "name": "1,000원 쿠폰 | 100P",
+                  "count": 20,
+                  "totalPrice": 20000
+                }
+              ]
+            },
+            {
+              "room": "스탠다드 트윈 룸",
+              "coupons": [
+                {
+                  "name": "1,000원 쿠폰 | 100P",
+                  "count": 20,
+                  "totalPrice": 20000
+                },
+                {
+                  "name": "1,000원 쿠폰 | 100P",
+                  "count": 20,
+                  "totalPrice": 20000
+                }
+              ]
+            }
+          ],
+          "amount": 80000
         }
       },
       {
@@ -56,11 +92,12 @@
         "status": "결제 완료",
         "name": "포인트 충전",
         "description": "",
-        "trade": "5000원",
+        "trade": 5000,
+        "amount": 5000,
         "receipt": {
           "orderId": "O-1644460169123",
           "tradeAt": "2023.12.20 18:06",
-          "amount": "5000"
+          "amount": 5000
         }
       }
     ]

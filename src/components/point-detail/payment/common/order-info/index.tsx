@@ -16,6 +16,11 @@ export const OrderInfo = ({ index }: { index: number }) => {
       <TextBox typography="body2" color={'black900'} fontWeight={'700'}>
         거래일시: {pointDetailData.histories[index].receipt.tradeAt}
       </TextBox>
+      {pointDetailData.histories[index].receipt.accommodationName && (
+        <TextBox typography="body2" color={'black900'} fontWeight={'700'}>
+          숙소명: {pointDetailData.histories[index].receipt.accommodationName}
+        </TextBox>
+      )}
     </OrderInfoWrap>
   );
 };
