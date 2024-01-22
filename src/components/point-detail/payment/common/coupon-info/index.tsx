@@ -53,7 +53,7 @@ export const CouponInfo = ({ index }: { index: number }) => {
                       {numberFormat(coupon.count)}장
                     </TextBox>
                   </div>
-                  <div style={{ marginLeft: '60px' }}>
+                  <div className="margin-left">
                     <TextBox
                       typography="h5"
                       color={'black900'}
@@ -91,4 +91,8 @@ const CouponDetailBox = styled('div')`
 const FlexBox = styled('div')`
   display: flex;
   justify-content: space-between;
+
+  .margin-left {
+    margin-left: 60px;
+  }
 `;
