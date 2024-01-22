@@ -6,7 +6,6 @@ import {
   ButtonContainerStyledWrapperProps,
 } from './type';
 import { TextBox } from '@components/text-box';
-import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
@@ -18,6 +17,7 @@ import { useAccommodationInfo } from '@queries/init';
 import { AxiosError } from 'axios';
 import { PostAccommodationParams } from '@api/init/type';
 import { RESPONSE_CODE } from '@/constants/api';
+import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -35,11 +35,9 @@ export const ButtonContainer = ({
     }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [userInputValue, setUserInputValue] =
     useRecoilState(userInputValueState);
-  const [accommodationId, setAccommodationId] = useState(-1);
+  let accommodationId = -1;
   const setIsUpdatedAccommodation = useSetRecoilState(
     isUpdatedAccommodationState,
   );
@@ -72,8 +70,40 @@ export const ButtonContainer = ({
 
   const { mutate: accommodationInfo } = useAccommodationInfo({
     onSuccess(data) {
-      setAccommodationId(data.data.data.accommodationId);
-      setIsModalOpen(true);
+      accommodationId = data.data.data.accommodationId;
+      setIsUpdatedAccommodation(false);
+
+      const cookieAccommodationId = getCookie('accommodationId');
+      if (!cookieAccommodationId) setCookie('accommodationId', accommodationId);
+
+      message.success(`${data.data.data.name} 숙소가 등록되었습니다.`);
+      navigate(`/${accommodationId}${ROUTES.MAIN}`);
+
+      setUserInputValue([
+        {
+          name: '',
+          address: '',
+          detailAddress: '',
+          zipCode: '',
+          description: '',
+          type: '',
+          images: [],
+          options: {
+            cooking: false,
+            parking: false,
+            pickup: false,
+            barbecue: false,
+            fitness: false,
+            karaoke: false,
+            sauna: false,
+            sports: false,
+            seminar: false,
+          },
+          rooms: [],
+          editRoomIndex: -1,
+          isAccommodationEdit: false,
+        },
+      ]);
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -103,37 +133,6 @@ export const ButtonContainer = ({
 
   const handleConfirmModalOk = () => {
     accommodationInfo(postAccommodationParams);
-  };
-
-  const handleModalOk = () => {
-    setUserInputValue([
-      {
-        name: '',
-        address: '',
-        detailAddress: '',
-        zipCode: '',
-        description: '',
-        type: '',
-        images: [],
-        options: {
-          cooking: false,
-          parking: false,
-          pickup: false,
-          barbecue: false,
-          fitness: false,
-          karaoke: false,
-          sauna: false,
-          sports: false,
-          seminar: false,
-        },
-        rooms: [],
-        editRoomIndex: -1,
-        isAccommodationEdit: false,
-      },
-    ]);
-    setIsUpdatedAccommodation(false);
-    setIsModalOpen(false);
-    navigate(`/${accommodationId}${ROUTES.MAIN}`);
   };
 
   const confirm = () => {
@@ -223,31 +222,6 @@ export const ButtonContainer = ({
           추가하기
         </StyledButton>
       )}
-      <Modal
-        open={isModalOpen}
-        footer={[]}
-        closable={false}
-        width={576}
-        centered={true}
-      >
-        <StyledTextContainer>
-          <TextBox typography="h1" fontWeight={700} color="primary">
-            환영합니다!
-          </TextBox>
-          <TextBox
-            typography="h4"
-            fontWeight={400}
-            style={{ textAlign: 'center' }}
-          >
-            {userInputValue[0].name}
-            <br />
-            숙소 등록이 완료되었습니다.
-          </TextBox>
-        </StyledTextContainer>
-        <StyledToMainButton type="primary" onClick={handleModalOk}>
-          홈으로 이동
-        </StyledToMainButton>
-      </Modal>
     </StyledWrapper>
   );
 };
@@ -286,24 +260,6 @@ const StyledNextText = styled.div`
   margin: 130px 0 3px;
 `;
 
-const StyledTextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  height: 507px;
-`;
-
 const StyledMiddleTextContainer = styled.div`
   text-align: center;
-`;
-
-const StyledToMainButton = styled(Button)`
-  width: 100%;
-  height: 46px;
-
-  font-size: 20px;
-  font-weight: 700;
 `;
