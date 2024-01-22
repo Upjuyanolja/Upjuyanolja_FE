@@ -1,35 +1,33 @@
 import { styled } from 'styled-components';
 import { Input, Form } from 'antd';
 import { FormErrorMessage } from '@components/init/FormErrorMessage';
-import {
-  PriceContainerProps,
-  PriceHandleInputChangeProps,
-  ValidateInputProps,
-} from './type';
+import { PriceContainerProps, PriceHandleInputChangeProps } from './type';
 import { MAX_PRICE, MIN_PRICE } from '@/constants/room/room-registration';
 import { TextBox } from '@components/text-box';
 import { useRecoilState } from 'recoil';
 import { priceHasError } from '@stores/room/atoms';
+import { useEffect, useState } from 'react';
 
 export const PriceContainer = ({ header, form }: PriceContainerProps) => {
   const [outOfRangeError, setOutOfRangeError] = useRecoilState(priceHasError);
+  const [numericValue, setNumericValue] = useState<number | null>(null);
 
-  const validateInput = ({ value }: ValidateInputProps) => {
-    if (value < MIN_PRICE || value > MAX_PRICE) {
+  useEffect(() => {
+    setOutOfRangeError(null);
+    form.setFieldValue('price', numericValue?.toLocaleString());
+
+    if (!numericValue) return;
+    if (numericValue < MIN_PRICE || numericValue > MAX_PRICE) {
       setOutOfRangeError('10,000~1,000,000까지만 입력 가능합니다.');
-    } else {
-      setOutOfRangeError(null);
     }
-  };
+  }, [numericValue]);
 
   const handleInputChange = ({ event }: PriceHandleInputChangeProps) => {
     const stringValue = event.target.value;
     const cleanedStringValue = stringValue.replace(/[^0-9]/g, '');
 
     if (cleanedStringValue.length !== 0) {
-      const numericValue = Number(cleanedStringValue);
-      validateInput({ value: numericValue });
-      form.setFieldValue('price', numericValue.toLocaleString());
+      setNumericValue(Number(cleanedStringValue));
     } else {
       form.setFieldValue('price', '');
     }

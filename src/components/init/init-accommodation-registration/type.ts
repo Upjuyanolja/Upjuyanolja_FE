@@ -14,6 +14,19 @@ export type AccommodationDetailCategoryProps = {
   label: string;
   icon?: ReactElement<IconBaseProps>;
   form: FormInstance;
+  defaultValue:
+    | 'HOTEL'
+    | 'RESORT'
+    | 'TOURIST_HOTEL'
+    | 'CONDO'
+    | 'RESIDENCE'
+    | 'MOTEL'
+    | 'PENSION_POOL_VILLA'
+    | 'GUEST_HOUSE'
+    | 'HANOK'
+    | undefined;
+  isClickedPrevButton: boolean;
+  updatedAccommodationInfo: boolean;
 };
 
 export type AddressFormat = {
@@ -29,7 +42,7 @@ export type Image = {
   url: string;
 };
 
-export type Options = {
+export type AccommodationOptions = {
   cooking: boolean;
   parking: boolean;
   pickup: boolean;
@@ -64,6 +77,23 @@ export type defaultRoom = {
   images: Image[] | undefined;
   options: RoomOptions | undefined;
 };
+
+export type defaultAccommodation = {
+  images: Image[] | undefined;
+  options: AccommodationOptions | undefined;
+  type:
+    | 'HOTEL'
+    | 'RESORT'
+    | 'TOURIST_HOTEL'
+    | 'CONDO'
+    | 'RESIDENCE'
+    | 'MOTEL'
+    | 'PENSION_POOL_VILLA'
+    | 'GUEST_HOUSE'
+    | 'HANOK'
+    | undefined;
+};
+
 export type onFinishValues = {
   'room-name': string;
   price: string;
@@ -82,7 +112,8 @@ export type UserInputValue = {
   description: string;
   type: string;
   images: Image[];
-  options: Options;
+  options: AccommodationOptions;
   rooms: Room[];
   editRoomIndex?: number | undefined;
+  isAccommodationEdit?: boolean;
 };
