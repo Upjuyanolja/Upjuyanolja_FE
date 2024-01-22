@@ -44,6 +44,7 @@ export const AccommodationList = ({
     navigate(newPath);
     setAccommodationIdx(idx);
     setCookie('accommodationId', accommodationId.toString());
+    alert('변경됨1');
   };
 
   const navigateToAccommodationAddPage = () => {
@@ -51,8 +52,10 @@ export const AccommodationList = ({
   };
 
   useEffect(() => {
+    alert('변경됨2');
     return () => {
       if (accommodationId !== getCookie('accommodationId')) {
+        alert('변경됨3');
         const currentAccommodationId = getCookie('accommodationId');
         const currentPath = location.pathname;
         const replacedPath = currentPath.split('/').slice(2, 100).join('/');
