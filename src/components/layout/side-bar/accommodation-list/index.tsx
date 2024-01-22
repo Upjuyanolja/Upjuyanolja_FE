@@ -2,13 +2,13 @@ import { TextBox } from '@components/text-box';
 import { Button } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AccommodationListProps, StyledAccommodationWrapProps } from './type';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Accommodation } from '@api/accommodation/type';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { setCookie } from '@hooks/sign-in/useSignIn';
+import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 
 export const AccommodationList = ({
   accommodationListData,
@@ -18,6 +18,7 @@ export const AccommodationList = ({
   const { accommodations } = accommodationListData || { accommodations: [] };
   const navigate = useNavigate();
   const location = useLocation();
+  const { accommodationId } = useParams();
 
   const handleSelectBox = () => {
     if (accommodations.length <= 1) return;
@@ -48,6 +49,18 @@ export const AccommodationList = ({
   const navigateToAccommodationAddPage = () => {
     navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
   };
+
+  useEffect(() => {
+    return () => {
+      if (accommodationId !== getCookie('accommodationId')) {
+        const currentAccommodationId = getCookie('accommodationId');
+        const currentPath = location.pathname;
+        const replacedPath = currentPath.split('/').slice(2, 100).join('/');
+        const newPath = `/${currentAccommodationId}/${replacedPath}`;
+        navigate(newPath);
+      }
+    };
+  }, [accommodationId]);
 
   return (
     <Container>
