@@ -52,14 +52,36 @@ export const PointDetailList = () => {
             <StyledListItem flexSize={4}>
               <div>
                 <TextBox typography="body3" color="black900" fontWeight="700">
-                  {histories.name}
+                  {histories.type === '쿠폰' ? '할인 쿠폰 구매' : '포인트 충전'}
                 </TextBox>
               </div>
-              <div>
-                <TextBox typography="body3" color="black900" fontWeight="400">
-                  {histories.description}
-                </TextBox>
-              </div>
+              {histories.type === '쿠폰' && (
+                <div>
+                  <span>
+                    <TextBox
+                      typography="body3"
+                      color="black900"
+                      fontWeight="700"
+                      className="circle-marker"
+                    >
+                      {pointDetailData.histories[index].description.split(
+                        ' | ',
+                      )[0] + ' | '}
+                    </TextBox>
+                    <TextBox
+                      typography="body3"
+                      color="black900"
+                      fontWeight="400"
+                    >
+                      {
+                        pointDetailData.histories[index].description.split(
+                          ' | ',
+                        )[1]
+                      }
+                    </TextBox>
+                  </span>
+                </div>
+              )}
             </StyledListItem>
             <StyledListItem>
               <TextBox typography="body2" color="black900" fontWeight="400">
@@ -135,7 +157,12 @@ const StyledListItem = styled('div')<{ flexSize?: number }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  .circle-marker::before {
+    content: '●';
+    font-size: 8px;
+    vertical-align: middle;
+    margin: 0px 8px;
+  }
   &:nth-of-type(2) {
     width: 480px;
     padding-left: 8px;
