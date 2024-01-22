@@ -19,7 +19,9 @@ export const AdditionalPurchaseContent = ({
         <Checkbox
           onChange={handleBatchEditCheckbox}
           checked={purchaseData.isAppliedBatchEdit}
+          data-testid="batch-checkbox"
         />
+
         <TextBox color="primary" typography="h5" fontWeight={700}>
           수량 일괄 적용
         </TextBox>
@@ -27,6 +29,7 @@ export const AdditionalPurchaseContent = ({
           value={purchaseData.batchValue}
           disabled={!purchaseData.isAppliedBatchEdit}
           onChange={handleChangeBatchValue}
+          data-testid="batch-input"
         />
         <TextBox typography="body1" fontWeight={400}>
           장

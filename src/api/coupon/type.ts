@@ -5,7 +5,6 @@ import {
   BuyCouponQuantity,
   BuyCouponTotalPoints,
   RoomId,
-  SelectedDiscountType,
 } from '@components/coupon-registration/type';
 
 export type staticsData = {
@@ -90,7 +89,7 @@ export type BuyCouponData = {
 
 export type BuyCouponRoomData = {
   roomId: RoomId;
-  discountType: SelectedDiscountType;
+  discountType: string;
   discount: BuyCouponDiscount;
   quantity: BuyCouponQuantity;
   eachPoint: BuyCouponEachPoint;

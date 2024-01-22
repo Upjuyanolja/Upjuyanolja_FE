@@ -4,25 +4,30 @@ import styled from 'styled-components';
 import { RoomItem } from './RoomItem';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { Room } from '../init-accommodation-registration/type';
+import { useSetRecoilState } from 'recoil';
+import { addRoomState } from '@stores/init/atoms';
 
-export const RoomInfo = ({ roomData }: { roomData: Room[] }) => {
+export const RoomInfo = () => {
   const navigate = useNavigate();
+  const setIsAddRoom = useSetRecoilState(addRoomState);
+
+  const handleAddButton = () => {
+    setIsAddRoom(true);
+    navigate(ROUTES.INIT_ROOM_REGISTRATION);
+  };
+
   return (
     <StyledWrapper>
       <StyledHeadContainer>
         <TextBox typography="h4" fontWeight={700}>
           객실 정보
         </TextBox>
-        <StyledButton
-          type="primary"
-          onClick={() => navigate(ROUTES.INIT_ROOM_REGISTRATION)}
-        >
+        <StyledButton type="primary" onClick={handleAddButton}>
           + 객실추가
         </StyledButton>
       </StyledHeadContainer>
       <StyledRoomListContainer>
-        <RoomItem roomData={roomData} />
+        <RoomItem />
       </StyledRoomListContainer>
     </StyledWrapper>
   );

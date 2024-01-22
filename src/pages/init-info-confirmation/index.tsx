@@ -1,31 +1,56 @@
+import { ROUTES } from '@/constants/routes';
+import { PlusOutlined } from '@ant-design/icons';
 import { ButtonContainer } from '@components/init/ButtonContainer';
 import { AccommodationInfo } from '@components/init/init-info-confirmation/AccommodationInfo';
 import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
-import { useEffect, useState } from 'react';
+import { TextBox } from '@components/text-box';
+import {
+  isUpdatedAccommodationState,
+  userInputValueState,
+} from '@stores/init/atoms';
+import { Button } from 'antd';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export const InitInfoConfirmation = () => {
-  const [userInput, setUserInput] = useState(() => {
-    const userInputLocalStorage = localStorage.getItem('userInput');
-    return userInputLocalStorage !== null
-      ? JSON.parse(userInputLocalStorage)
-      : null;
-  });
+  const userInputValue = useRecoilValue(userInputValueState);
+  const navigate = useNavigate();
+  const setUpdatedAccommodationInfo = useSetRecoilState(
+    isUpdatedAccommodationState,
+  );
 
   useEffect(() => {
-    const userInputLocalStorage = localStorage.getItem('userInput');
-    if (userInputLocalStorage !== null) {
-      setUserInput(JSON.parse(userInputLocalStorage));
-    }
-  }, [userInput]);
+    setUpdatedAccommodationInfo(true);
+  }, []);
 
+  if (userInputValue[0].name === '') {
+    return (
+      <StyledWrapper>
+        <StyledNoInputWrapper>
+          <TextBox typography="h4" fontWeight={700}>
+            등록 정보가 없습니다. 숙소 등록부터 진행해주세요!
+          </TextBox>
+          <StyledButton
+            icon={<PlusOutlined />}
+            type="primary"
+            onClick={() => navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION)}
+          >
+            숙소 등록하러 가기
+          </StyledButton>
+        </StyledNoInputWrapper>
+      </StyledWrapper>
+    );
+  }
   return (
     <StyledWrapper>
-      <AccommodationInfo
-        accommodationData={userInput?.userInputValueState[0]}
+      <AccommodationInfo />
+      <RoomInfo />
+      <ButtonContainer
+        buttonStyle="request"
+        isValid={userInputValue[0].rooms.length !== 0}
       />
-      <RoomInfo roomData={userInput?.userInputValueState[0]?.rooms} />
-      <ButtonContainer buttonStyle="request" />
     </StyledWrapper>
   );
 };
@@ -36,4 +61,21 @@ const StyledWrapper = styled.div`
   gap: 48px;
 
   padding: 0 48px;
+
+  margin-top: 204px;
+`;
+
+const StyledNoInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 100px 0;
+  gap: 32px;
+`;
+
+const StyledButton = styled(Button)`
+  width: 300px;
+  height: 50px;
+
+  font-size: 20px;
 `;

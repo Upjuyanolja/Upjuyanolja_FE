@@ -8,18 +8,23 @@ import {
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
+import { useSetRecoilState } from 'recoil';
+import { roomPrevButtonState } from '@stores/init/atoms';
 
 export const ButtonContainer = ({
   buttonStyle,
   isValid,
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
+  const setIsClickPrev = useSetRecoilState(roomPrevButtonState);
 
   const handlePreviousClick = () => {
     if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
-      navigate(ROUTES.INIT);
-    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
+      navigate(-1);
+    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION) {
+      setIsClickPrev(true);
       navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+    }
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -90,13 +95,29 @@ export const ButtonContainer = ({
           size="large"
           onClick={confirm}
           data-testid="request-button"
+          disabled={!isValid}
         >
           등록 요청
         </StyledButton>
       )}
       {buttonStyle === 'edit' && (
-        <StyledButton type="primary" size="large" disabled={!isValid}>
+        <StyledButton
+          type="primary"
+          size="large"
+          disabled={!isValid}
+          htmlType="submit"
+        >
           수정하기
+        </StyledButton>
+      )}
+      {buttonStyle === 'addRoom' && (
+        <StyledButton
+          type="primary"
+          size="large"
+          disabled={!isValid}
+          htmlType="submit"
+        >
+          추가하기
         </StyledButton>
       )}
       <Modal

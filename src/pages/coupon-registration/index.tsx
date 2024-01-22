@@ -1,21 +1,62 @@
+import { BuyCouponParams } from '@api/coupon/type';
 import { CouponApplier } from '@components/coupon-registration/coupon-applier';
 import { CouponCard } from '@components/coupon-registration/coupon-card';
 import { CouponPreview } from '@components/coupon-registration/coupon-preview';
 import { DiscountType } from '@components/coupon-registration/discount-type';
+import { PointModal } from '@components/point-charge-modal/point-modal';
 import { Spacing } from '@components/spacing';
 import { TextBox } from '@components/text-box';
-
+import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
+import {
+  pendingRoomDataListState,
+  totalPointsState,
+} from '@stores/coupon-registration/atoms';
 import { Modal } from 'antd';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 export const CouponRegistration = () => {
+  const pendingRoomDataList = useRecoilValue(pendingRoomDataListState);
+  const { accommodationId } = useParams();
+  const totalPoints = useRecoilValue(totalPointsState);
+  const {
+    buyCoupon,
+    isModalOpen,
+    setIsModalOpen,
+    isGetCouponRoomListRefetch,
+    isGetCouponRoomListLoading,
+  } = useCouponRegistration();
+
+  useEffect(() => {
+    if (!accommodationId) return;
+    isGetCouponRoomListRefetch();
+    console.log(isGetCouponRoomListLoading);
+  }, [accommodationId]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const formattedPendingRoomDataList = pendingRoomDataList.map((item) => {
+      const { roomId, discountType, discount, quantity, eachPoint } = item;
+      return { roomId, discountType, discount, quantity, eachPoint };
+    });
+
+    const buyCouponParams: BuyCouponParams = {
+      accommodationId: Number(accommodationId),
+      totalPoints: Number(totalPoints),
+      rooms: formattedPendingRoomDataList,
+    };
+
     Modal.confirm({
       content: '쿠폰을 구매하시겠습니까?',
       okText: '구매',
       cancelText: '취소',
       className: 'confirm-modal',
+      onOk: () => {
+        buyCoupon(buyCouponParams);
+      },
     });
   };
 
@@ -33,7 +74,9 @@ export const CouponRegistration = () => {
             </CouponCard>
             <Spacing space="32" />
             <CouponCard title="2. 적용 객실 선택">
-              <CouponApplier />
+              <CouponApplier
+                isGetCouponRoomListLoading={isGetCouponRoomListLoading}
+              />
             </CouponCard>
           </StyledCouponCardWrap>
         </StyledLeftWrap>
@@ -41,6 +84,9 @@ export const CouponRegistration = () => {
           <CouponPreview />
         </div>
       </StyledForm>
+      {isModalOpen && (
+        <PointModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      )}
     </Container>
   );
 };
@@ -62,4 +108,16 @@ const StyledForm = styled.form`
   display: flex;
   justify-content: space-between;
   gap: 24px;
+`;
+
+const SpinWrap = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.01);
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
 `;

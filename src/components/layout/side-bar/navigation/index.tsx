@@ -1,5 +1,5 @@
 import { colors } from '@/constants/colors';
-import { navigationMap } from '@/constants/navigation';
+import { getNavigationMap } from '@/constants/navigation';
 import { TextBox } from '@components/text-box';
 import { isCouponModifiedState } from '@stores/coupon/atom';
 import { Modal } from 'antd';
@@ -29,7 +29,7 @@ export const Navigation = () => {
   return (
     <nav>
       <StyledNavWrap>
-        {Object.entries(navigationMap).map(([key, { label, link }]) => (
+        {Object.entries(getNavigationMap()).map(([key, { label, link }]) => (
           <StyledNavItem key={key}>
             <div
               onClick={() => {

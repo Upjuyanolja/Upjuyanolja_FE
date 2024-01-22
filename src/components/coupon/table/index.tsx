@@ -112,6 +112,7 @@ export const CouponTable = ({
 
   return (
     <StyledTable
+      data-testid="table-container"
       rowSelection={rowSelection}
       columns={columns}
       dataSource={couponTableData}
