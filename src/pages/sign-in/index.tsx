@@ -14,11 +14,12 @@ import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
+import { SignInData } from '@api/sign-in/type';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const { accommodationListData } = useSideBar();
-  const postLoginMutation = usePostLogin({
+  const { mutate } = usePostLogin({
     onSuccess: (response) => {
       setCookie('accessToken', response.data.data.accessToken);
       setCookie('refreshToken', response.data.data.accessToken);
@@ -73,10 +74,11 @@ export const SignIn = () => {
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
       try {
-        removeCookie('accessToken');
-        removeCookie('refreshToken');
-        removeCookie('accomodationId');
-        await postLoginMutation.mutateAsync(values);
+        const signInData: SignInData = {
+          email: values.email,
+          password: values.password,
+        };
+        await mutate(signInData);
         try {
           const res = isAccomodationList();
           const accomodationId = getCookie('accomodationId');
