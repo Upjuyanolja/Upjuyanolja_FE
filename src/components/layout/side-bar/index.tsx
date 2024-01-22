@@ -6,15 +6,7 @@ import styled from 'styled-components';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
 
 export const SideBar = () => {
-  const {
-    pointSummaryData,
-    isPointSummaryError,
-    accommodationListData,
-    isAccommodationListError,
-  } = useSideBar();
-
-  if (!pointSummaryData || !accommodationListData) return <div>로딩</div>;
-  if (isPointSummaryError || isAccommodationListError) return <div>에러</div>;
+  const { pointSummaryData, accommodationListData } = useSideBar();
 
   return (
     <Container>

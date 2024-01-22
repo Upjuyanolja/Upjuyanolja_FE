@@ -8,18 +8,23 @@ import {
 import { TextBox } from '@components/text-box';
 import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
+import { useSetRecoilState } from 'recoil';
+import { roomPrevButtonState } from '@stores/init/atoms';
 
 export const ButtonContainer = ({
   buttonStyle,
   isValid,
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
+  const setIsClickPrev = useSetRecoilState(roomPrevButtonState);
 
   const handlePreviousClick = () => {
     if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
-      navigate(ROUTES.INIT);
-    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION)
+      navigate(-1);
+    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION) {
+      setIsClickPrev(true);
       navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+    }
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,10 +72,6 @@ export const ButtonContainer = ({
     });
   };
 
-  /*
-  StyledButton에 disabled를 임의로 true로 변경했습니다
-  추후 {!isValid} 로 바꿔주세요!
-   */
   return (
     <StyledWrapper $buttonStyle={buttonStyle}>
       {buttonStyle === 'navigate' && (
@@ -107,6 +108,16 @@ export const ButtonContainer = ({
           htmlType="submit"
         >
           수정하기
+        </StyledButton>
+      )}
+      {buttonStyle === 'addRoom' && (
+        <StyledButton
+          type="primary"
+          size="large"
+          disabled={!isValid}
+          htmlType="submit"
+        >
+          추가하기
         </StyledButton>
       )}
       <Modal

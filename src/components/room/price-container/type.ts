@@ -9,7 +9,3 @@ export type PriceContainerProps = {
 export type PriceHandleInputChangeProps = {
   event: ChangeEvent<HTMLInputElement>;
 };
-
-export type ValidateInputProps = {
-  value: number;
-};

@@ -9,7 +9,7 @@ export const ROUTES = {
   INIT_ROOM_REGISTRATION: '/init/room-registration',
   INIT_INFO_CONFIRMATION: '/init/info-confirmation',
   COUPON: '/coupon',
-  COUPON_REGISTRATION: '/coupon/registration',
+  COUPON_REGISTRATION: '/coupon-registration',
   MAIN: '/main',
   ROOM: '/room',
   ROOM_REGISTRATION: '/room/registration',

@@ -14,6 +14,7 @@ import { PriceContainer } from '@components/room/price-container';
 import { TimeContainer } from '@components/room/time-container';
 import { useImageFile } from '@queries/init';
 import {
+  addRoomState,
   checkedRoomOptions,
   imageFileState,
   isUpdatedAccommodationState,
@@ -64,6 +65,8 @@ export const InitRoomRegistration = () => {
 
   const isUpdatedAccommodation = useRecoilValue(isUpdatedAccommodationState);
 
+  const [isAddRoom, setIsAddRoom] = useRecoilState(addRoomState);
+
   useEffect(() => {
     if (
       userInputValue[0].editRoomIndex !== undefined &&
@@ -102,7 +105,7 @@ export const InitRoomRegistration = () => {
   const getPrevImageFiles = () => {
     const prevImageFile: Image[] = [];
     for (let i = 0; i < imageFiles.length; i++) {
-      prevImageFile.push({ url: imageFiles[i].url });
+      if (imageFiles[i].url) prevImageFile.push({ url: imageFiles[i].url });
     }
     return prevImageFile;
   };
@@ -216,7 +219,9 @@ export const InitRoomRegistration = () => {
           checkOutTime: checkOutTime,
           count: count,
           options: selectedOptions,
-          images: userInputValue[0].images,
+          images:
+            userInputValue[0].rooms[userInputValue[0].editRoomIndex as number]
+              .images,
         };
 
         const updatedRooms = [...prevUserInputValue.rooms];
@@ -243,6 +248,7 @@ export const InitRoomRegistration = () => {
     setSelectedOptions({ airCondition: false, tv: false, internet: false });
     setImageFiles([]);
     setSameRoomName(false);
+    setIsAddRoom(false);
     navigate(ROUTES.INIT_INFO_CONFIRMATION);
   };
 
@@ -266,7 +272,7 @@ export const InitRoomRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [imageFiles, priceHasError, capacityError]);
+  }, [imageFiles, priceError, capacityError]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
@@ -297,7 +303,12 @@ export const InitRoomRegistration = () => {
         />
         <ButtonContainer
           buttonStyle={
-            userInputValue[0].editRoomIndex !== -1 ? 'edit' : 'navigate'
+            userInputValue[0].editRoomIndex !== -1 &&
+            userInputValue[0].editRoomIndex !== undefined
+              ? 'edit'
+              : isAddRoom
+                ? 'addRoom'
+                : 'navigate'
           }
           isValid={isValid}
         />

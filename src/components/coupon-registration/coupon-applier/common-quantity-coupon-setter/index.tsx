@@ -4,16 +4,14 @@ import styled from 'styled-components';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
 import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   groupQuantityValueState,
   isGroupQuantitySelectedState,
-  selectedDiscountTypeState,
 } from '@stores/coupon-registration/atoms';
 import { isNumber } from '@/utils/isNumber';
 
 export const CommonQuantityCouponSetter = () => {
-  const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
   const setGroupQuantityValue = useSetRecoilState(groupQuantityValueState);
   const [isGroupQuantitySelected, setIsGroupQuantitySelected] = useRecoilState(
     isGroupQuantitySelectedState,

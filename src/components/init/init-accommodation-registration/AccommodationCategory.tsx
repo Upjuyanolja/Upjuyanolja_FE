@@ -14,11 +14,19 @@ import { FaCheck } from 'react-icons/fa';
 import { colors } from '@/constants/colors';
 import { RadioButtonCustomContainer } from './RadioButtonCustomContainer';
 import { Form, Radio } from 'antd';
-import { FormInstance } from 'antd/es/form/Form';
+import { userInputValueState } from '@stores/init/atoms';
+import { useRecoilValue } from 'recoil';
+import { AccommodationCategoryProps } from '../type';
 
-export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
+export const AccommodationCategory = ({
+  form,
+  defaultValue,
+  isClickedPrevButton,
+  updatedAccommodationInfo,
+}: AccommodationCategoryProps) => {
   const [clickedCategory, setClickedCategory] =
     useState<AccommodationCategoryType>(null);
+  const userInputValue = useRecoilValue(userInputValueState);
 
   const handleButtonClick = (category: AccommodationCategoryType) => {
     if (clickedCategory !== category) {
@@ -42,6 +50,37 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
   useEffect(() => {
     form.setFieldValue('accommodation-category', clickedCategory);
   }, [clickedCategory, form]);
+
+  useEffect(() => {
+    const checkedType = userInputValue[0].type;
+    if (
+      userInputValue[0].isAccommodationEdit ||
+      isClickedPrevButton ||
+      updatedAccommodationInfo
+    ) {
+      switch (checkedType) {
+        case 'HOTEL':
+        case 'RESORT':
+        case 'TOURIST_HOTEL':
+        case 'CONDO':
+        case 'RESIDENCE':
+          setClickedCategory('HOTEL/RESORT');
+          break;
+        case 'MOTEL':
+          setClickedCategory('MOTEL');
+          break;
+        case 'PENSION_POOL_VILLA':
+          setClickedCategory('PENSION_POOL_VILLA');
+          break;
+        case 'GUEST_HOUSE':
+        case 'HANOK':
+          setClickedCategory('GUEST_HOUSE');
+          break;
+        default:
+          setClickedCategory(null);
+      }
+    }
+  }, []);
 
   return (
     <StyledInputWrapper>
@@ -138,6 +177,9 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
           options={hotelResortDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
+          defaultValue={defaultValue}
+          isClickedPrevButton={isClickedPrevButton}
+          updatedAccommodationInfo={updatedAccommodationInfo}
         />
       )}
       {clickedCategory === 'GUEST_HOUSE' && (
@@ -146,6 +188,9 @@ export const AccommodationCategory = ({ form }: { form: FormInstance }) => {
           options={guestHouseDetailCategoryMapping}
           label="상세 유형을 선택해 주세요."
           icon={<FaCheck size={15} color={colors.primary} />}
+          defaultValue={defaultValue}
+          isClickedPrevButton={isClickedPrevButton}
+          updatedAccommodationInfo={updatedAccommodationInfo}
         />
       )}
     </StyledInputWrapper>

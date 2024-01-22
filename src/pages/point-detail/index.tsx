@@ -55,7 +55,7 @@ export const PointDetail = () => {
       `${location.pathname}?year=${currentYear}&month=${currentMonth}&menuStatus=${menuStatus}&pageNum=${pageNum}`,
     );
     pointDetailDataRefetch();
-  }, [menuStatus, pageNum]);
+  }, [menuStatus, pageNum, location.search]);
 
   useEffect(() => {
     handleChangeUrl(

@@ -1,20 +1,40 @@
 import { FormInstance } from 'antd';
-import { RoomOptions } from './init-accommodation-registration/type';
+import {
+  AccommodationOptions,
+  RoomOptions,
+} from './init-accommodation-registration/type';
 import { ImageFile } from '@stores/init/type';
 
 export type ButtonContainerProps = {
-  buttonStyle: 'navigate' | 'request' | 'edit';
+  buttonStyle: 'navigate' | 'request' | 'edit' | 'addRoom';
   isValid?: boolean;
 };
 
 export type ButtonContainerStyledWrapperProps = {
-  $buttonStyle: 'navigate' | 'request' | 'edit';
+  $buttonStyle: 'navigate' | 'request' | 'edit' | 'addRoom';
 };
 
 export type CheckBoxContainerProps = {
   options: { [key: string]: string };
   header: string;
-  defaultValue?: RoomOptions;
+  defaultValue?: RoomOptions | AccommodationOptions;
+};
+
+export type AccommodationCategoryProps = {
+  form: FormInstance;
+  defaultValue:
+    | 'HOTEL'
+    | 'RESORT'
+    | 'TOURIST_HOTEL'
+    | 'CONDO'
+    | 'RESIDENCE'
+    | 'MOTEL'
+    | 'PENSION_POOL_VILLA'
+    | 'GUEST_HOUSE'
+    | 'HANOK'
+    | undefined;
+  isClickedPrevButton: boolean;
+  updatedAccommodationInfo: boolean;
 };
 
 export type ImageUploadFileItem = {

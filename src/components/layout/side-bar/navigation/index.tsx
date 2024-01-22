@@ -1,5 +1,5 @@
 import { colors } from '@/constants/colors';
-import { navigationMap } from '@/constants/navigation';
+import { getNavigationMap } from '@/constants/navigation';
 import { TextBox } from '@components/text-box';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ export const Navigation = () => {
   return (
     <nav>
       <StyledNavWrap>
-        {Object.entries(navigationMap).map(([key, { label, link }]) => (
+        {Object.entries(getNavigationMap()).map(([key, { label, link }]) => (
           <StyledNavItem key={key}>
             <Link to={link}>
               <TextBox
