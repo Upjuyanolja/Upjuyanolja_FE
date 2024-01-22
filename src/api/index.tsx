@@ -4,6 +4,7 @@ import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { ROUTES } from '@/constants/routes';
+
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
@@ -38,16 +39,10 @@ instance.interceptors.response.use(
     if (
       window.location.pathname !== ROUTES.SIGNIN &&
       window.location.pathname !== ROUTES.SIGNUP &&
+      window.location.pathname !== ROUTES.SIGNIN_AGREEMENT &&
+      window.location.pathname !== ROUTES.SIGNUP_SUCCESS &&
       !accessToken
     ) {
-      message.error({
-        content: (
-          <TextBox typography="body3" fontWeight={'400'}>
-            accessToken이 없습니다.
-          </TextBox>
-        ),
-        duration: 2,
-      });
       removeCookie('accessToken');
       removeCookie('refreshToken');
       removeCookie('accommodationId');
@@ -58,6 +53,8 @@ instance.interceptors.response.use(
     } else if (
       window.location.pathname !== ROUTES.SIGNIN &&
       window.location.pathname !== ROUTES.SIGNUP &&
+      window.location.pathname !== ROUTES.SIGNIN_AGREEMENT &&
+      window.location.pathname !== ROUTES.SIGNUP_SUCCESS &&
       error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED
     ) {
       try {
