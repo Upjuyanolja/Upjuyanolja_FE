@@ -13,6 +13,7 @@ import { roomPrevButtonState, userInputValueState } from '@stores/init/atoms';
 import { useAccommodationInfo } from '@queries/init';
 import { AxiosError } from 'axios';
 import { PostAccommodationParams } from '@api/init/type';
+import { RESPONSE_CODE } from '@/constants/api';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -73,6 +74,22 @@ export const ButtonContainer = ({
           content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
           style: { marginTop: '210px' },
         });
+      }
+      if (
+        error.response?.data.code === RESPONSE_CODE.INVALID_CATEGORY ||
+        error.response?.data.code ===
+          RESPONSE_CODE.EMPTY_ACCOMMODATION_IMAGES ||
+        error.response?.data.code === RESPONSE_CODE.EMPTY_ROOM_INFO ||
+        error.response?.data.code === RESPONSE_CODE.REQUEST_BODY_ERROR ||
+        error.response?.data.code === RESPONSE_CODE.EMPTY_ROOM_IMAGES
+      ) {
+        message.error({
+          content: '요청을 실패했습니다. 관리자에게 문의해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+      if (error.response?.data.code === RESPONSE_CODE.NOT_FOUND_MEMBER) {
+        navigate(ROUTES.SIGNIN);
       }
     },
   });
