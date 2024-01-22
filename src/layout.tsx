@@ -6,8 +6,11 @@ import { colors } from '@/constants/colors';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import logoImg from '@assets/image/logo.png';
-import { StyledLayoutProps } from './types/layout';
+import { StyledLayoutProps, StyledSiderProps } from './types/layout';
 import { FaBars } from 'react-icons/fa6';
+import { useRecoilState } from 'recoil';
+import { isSideBarOpenState } from '@stores/layout';
+import { getCookie } from '@hooks/sign-in/useSignIn';
 
 export const RootLayout = () => {
   const navigate = useNavigate();
@@ -17,19 +20,30 @@ export const RootLayout = () => {
     ROUTES.ROOM_REGISTRATION,
   );
   const isRoomUpdateRoute = currentRoute.includes(ROUTES.ROOM_UPDATE);
+  const [isOpenSideBar, setIsOpenSideBar] = useRecoilState(isSideBarOpenState);
 
   const shouldApplyGrayBackground =
     isRoomRegistrationRoute || isRoomUpdateRoute;
 
   const moveToMain = () => {
-    navigate(ROUTES.MAIN);
+    const accommodationId = getCookie('accommodationId');
+    const updatedMainPath = `/${accommodationId}${ROUTES.MAIN}`;
+    navigate(updatedMainPath);
+  };
+
+  const openSideBar = () => {
+    setIsOpenSideBar(true);
+  };
+
+  const closeSideBar = () => {
+    setIsOpenSideBar(false);
   };
 
   return (
     <Layout>
       <StyledHeader>
         <StyleLogo src={logoImg} onClick={moveToMain} />
-        <StyledBars>
+        <StyledBars onClick={openSideBar}>
           <FaBars />
         </StyledBars>
         <TextBox
@@ -43,9 +57,10 @@ export const RootLayout = () => {
         </TextBox>
       </StyledHeader>
       <StyledLayout shouldApplyGrayBackground={shouldApplyGrayBackground}>
-        <StyledSider width="256" theme={'light'}>
+        <StyledSider width="256" theme={'light'} isOpenSideBar={isOpenSideBar}>
           <SideBar />
         </StyledSider>
+        {isOpenSideBar && <StyledDim onClick={closeSideBar} />}
         <StyledContent>
           <Outlet />
         </StyledContent>
@@ -66,19 +81,23 @@ const StyledHeader = styled(Layout.Header)`
   background-color: ${colors.black100};
   box-shadow: 0px 1px 5px 0px #0000001a;
   padding: 0 24px;
-  z-index: 1001;
+  z-index: 1003;
+  @media (max-width: 1280px) {
+    z-index: 1000;
+  }
 `;
 
-const StyledSider = styled(Layout.Sider)`
+const StyledSider = styled(Layout.Sider)<StyledSiderProps>`
   position: fixed;
   top: 0;
   left: 0;
   padding: 56px 0 0;
   background-color: ${colors.white};
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  z-index: 1002;
   @media (max-width: 1280px) {
-    transform: translateX(-100%);
+    transform: ${(props) =>
+      props.isOpenSideBar ? 'translateX(0%)' : 'translateX(-100%)'};
   }
 `;
 
@@ -120,5 +139,19 @@ const StyledBars = styled.button`
   color: ${colors.primary};
   @media (max-width: 1280px) {
     display: flex;
+  }
+`;
+
+const StyledDim = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  display: none;
+  @media (max-width: 1280px) {
+    display: block;
   }
 `;

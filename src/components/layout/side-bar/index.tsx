@@ -6,13 +6,20 @@ import styled from 'styled-components';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { IoCloseOutline } from 'react-icons/io5';
 import { colors } from '@/constants/colors';
+import { useSetRecoilState } from 'recoil';
+import { isSideBarOpenState } from '@stores/layout';
 
 export const SideBar = () => {
   const { pointSummaryData, accommodationListData } = useSideBar();
+  const setIsSideBarOpen = useSetRecoilState(isSideBarOpenState);
+
+  const closeSideBar = () => {
+    setIsSideBarOpen(false);
+  };
 
   return (
     <Container>
-      <StyledClosedButton>
+      <StyledClosedButton onClick={closeSideBar}>
         <StyledIcon />
       </StyledClosedButton>
       <div>
@@ -30,7 +37,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  height: calc(100vh - 64px);
+  height: calc(100vh - 56px);
   transition: transform 0.3s ease-in;
 `;
 
@@ -44,6 +51,10 @@ const StyledClosedButton = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
+  display: none;
+  @media (max-width: 1280px) {
+    display: flex;
+  }
 `;
 
 const StyledIcon = styled(IoCloseOutline)`
