@@ -32,7 +32,10 @@ export const handlers = [
   http.post('/api/auth/owners/signin', postSignInResolver),
   http.post('/api/auth/owners/signup', postSignUpResolver),
   http.post('/api/auth/owners/request-email', postAuthenticationResolver),
-  http.get('/api/auth/owners/verify/*', getVerifyResolver),
+  http.get(
+    '/api/auth/owners/verify?email=*&verificationCode=*',
+    getVerifyResolver,
+  ),
   http.get('/api/accommodations/backoffice', getAccommodationsResolver),
   http.get('/api/coupons/backoffice/statistics/*', getStaticsResolver),
   http.get('/api/coupons/backoffice/revenue/*', getRevenueResolver),
