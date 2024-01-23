@@ -22,7 +22,7 @@ export const SignIn = () => {
   const { mutate } = usePostLogin({
     onSuccess: (response) => {
       setCookie('accessToken', response.data.data.accessToken);
-      setCookie('refreshToken', response.data.data.accessToken);
+      setCookie('refreshToken', response.data.data.refreshToken);
       const memberResponse = response.data.data.memberResponse;
       const memberData = JSON.stringify(memberResponse);
       localStorage.setItem('member', memberData);
