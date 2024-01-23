@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
 import { ValidateSchema } from '@/utils/sign-in/ValidateSchema';
-import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
+import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostLogin } from '@queries/sign-in';
 import { useFormik } from 'formik';
@@ -14,21 +14,22 @@ import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
+import { SignInData } from '@api/sign-in/type';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const { accommodationListData } = useSideBar();
-  const postLoginMutation = usePostLogin({
+  const { mutate } = usePostLogin({
     onSuccess: (response) => {
       setCookie('accessToken', response.data.data.accessToken);
-      setCookie('refreshToken', response.data.data.accessToken);
+      setCookie('refreshToken', response.data.data.refreshToken);
       const memberResponse = response.data.data.memberResponse;
       const memberData = JSON.stringify(memberResponse);
       localStorage.setItem('member', memberData);
       if (accommodationListData?.accommodations[0]?.id) {
         setCookie(
           'accommodationId',
-          accommodationListData?.accommodations[0]?.id.toString(),
+          accommodationListData?.accommodations[0]?.id,
         );
       }
     },
@@ -73,14 +74,15 @@ export const SignIn = () => {
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
       try {
-        removeCookie('accessToken');
-        removeCookie('refreshToken');
-        removeCookie('accomodationId');
-        await postLoginMutation.mutateAsync(values);
+        const signInData: SignInData = {
+          email: values.email,
+          password: values.password,
+        };
+        await mutate(signInData);
         try {
           const res = isAccomodationList();
-          const accomodationId = getCookie('accomodationId');
           if (res === true) {
+            const accomodationId = getCookie('accomodationId');
             setTimeout(() => {
               handleChangeUrl(`/${accomodationId}/main`);
             }, 1000);

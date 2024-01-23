@@ -32,56 +32,48 @@ import {
   getRoomDetailResolver,
 } from './room';
 import { postAccommodationInfoResolver, postImageFileResolver } from './init';
-
-const email = 'ivegaeul@naver.com';
-const verificationCode = '020924';
-const accommodationId = 1;
+import { postRefreshResolver } from './refresh';
 
 export const handlers = [
   http.post('/api/auth/owners/signin', postSignInResolver),
   http.post('/api/auth/owners/signup', postSignUpResolver),
   http.post('/api/auth/owners/request-email', postAuthenticationResolver),
   http.get(
-    `/api/auth/owners/verify?email=${email}&verificationCode=${verificationCode}`,
+    '/api/auth/owners/verify?email=*&verificationCode=*',
     getVerifyResolver,
   ),
+  http.post('/api/auth/refresh', postRefreshResolver),
   http.get('/api/accommodations/backoffice', getAccommodationsResolver),
   http.get(
-    `/api/coupons/backoffice/statistics/${accommodationId}`,
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/statistics/*`,
     getStaticsResolver,
   ),
   http.get(
-    `/api/coupons/backoffice/revenue/${accommodationId}`,
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/revenue/*`,
     getRevenueResolver,
   ),
-  http.get(
-    `/api/coupons/backoffice/manage/${accommodationId}`,
-    getCouponResolver,
-  ),
+  http.get('/api/coupons/backoffice/manage/*', getCouponResolver),
   http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
   http.patch('/api/coupons/backoffice/manage', editCouponResolver),
 
-  http.get(
-    '/api/coupons/backoffice/buy/accommodationId',
-    getCouponRoomListResolver,
-  ),
+  http.get('/api/coupons/backoffice/buy/*', getCouponRoomListResolver),
   http.post('/api/coupons/backoffice/buy', buyCouponResolver),
   http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
 
   http.get('/api/points/summary', getPointSummaryResolver),
 
   http.post('/api/points/charges', postPointChargeResolver),
-  http.get('/api/points/total?1', getPointDetailTotalResolver),
-  http.get('/api/points/usage?1', getPointDetailUsageResolver),
-  http.get('/api/points/charges?1', getPointDetailChargesResolver),
-  http.delete('/api/points/charges/1', deleteOrderCancelResolver),
+  http.get('/api/points/total?*', getPointDetailTotalResolver),
+  http.get('/api/points/usage?*', getPointDetailUsageResolver),
+  http.get('/api/points/charges?*', getPointDetailChargesResolver),
+  http.delete('/api/points/charges/*', deleteOrderCancelResolver),
 
-  http.post(`/api/rooms/${accommodationId}`, postRoomResolver),
+  http.post('/api/rooms/*', postRoomResolver),
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
   http.post('/api/accommodations/images', postImageFileResolver),
   http.get(
-    `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
+    '/api/rooms/list/*?pageSize={pageSize}&pageNum={pageNum}',
     getRoomListResolver,
   ),
   http.delete('/api/rooms/*', deleteRoomResolver),

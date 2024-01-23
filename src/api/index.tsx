@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { HTTP_BASE_URL, HTTP_STATUS_CODE } from '../constants/api';
+import { HTTP_STATUS_CODE } from '../constants/api';
 import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { ROUTES } from '@/constants/routes';
+import { REFRESH_API } from './refresh';
 
 export const instance = axios.create({
-  baseURL: HTTP_BASE_URL,
+  // baseURL: '',
+  baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
     timeout: 5000,
@@ -28,40 +30,34 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    if (response.status === HTTP_STATUS_CODE.NOTFOUND) {
-      // 콘솔 지우고 바로 404 페이지로 넘어가게 할 예정
-      console.log('404 페이지로 넘어가야 함!');
-    }
     return response;
   },
   async (error) => {
     const accessToken = getCookie('accessToken');
-    if (window.location.pathname !== ROUTES.SIGNIN && !accessToken) {
-      message.error({
-        content: (
-          <TextBox typography="body3" fontWeight={'400'}>
-            accessToken이 없습니다.
-          </TextBox>
-        ),
-        duration: 2,
-      });
-      removeCookie('accessToken');
-      removeCookie('refreshToken');
-      removeCookie('accommodationId');
-      setTimeout(() => {
-        window.location.href = ROUTES.SIGNIN;
-      }, 1000);
-      return Promise.reject(error);
+    const refreshToken = getCookie('refreshToken');
+    if (error.response.status === HTTP_STATUS_CODE.NOTFOUND) {
+      console.log('404페이지로 이동');
     } else if (
       window.location.pathname !== ROUTES.SIGNIN &&
-      error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED
+      window.location.pathname !== ROUTES.SIGNUP &&
+      window.location.pathname !== ROUTES.SIGNIN_AGREEMENT &&
+      window.location.pathname !== ROUTES.SIGNUP_SUCCESS &&
+      error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED &&
+      accessToken
     ) {
       try {
-        // 여기에 재발급 api 선언, 아래는 예시
-        const newAccessToken = 'ivegaeul';
+        const response = await REFRESH_API.postRefresh({
+          accessToken: accessToken,
+          refreshToken: refreshToken as string,
+        });
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
+        removeCookie('accommodationId');
+        const newAccessToken = response.data.data.accessToken;
+        const newRefreshToken = response.data.data.refreshToken;
         setCookie('accessToken', newAccessToken);
-        return axios(error.config);
-      } catch (refreshError) {
+        setCookie('refreshToken', newRefreshToken);
+      } catch (error) {
         removeCookie('accessToken');
         removeCookie('refreshToken');
         removeCookie('accommodationId');
@@ -76,9 +72,24 @@ instance.interceptors.response.use(
         setTimeout(() => {
           window.location.href = ROUTES.SIGNIN;
         }, 1000);
-        return Promise.reject(refreshError);
       }
+      return axios(error.config);
+    } else if (
+      !accessToken &&
+      window.location.pathname !== ROUTES.SIGNIN &&
+      window.location.pathname !== ROUTES.SIGNUP &&
+      window.location.pathname !== ROUTES.SIGNIN_AGREEMENT &&
+      window.location.pathname !== ROUTES.SIGNUP_SUCCESS
+    ) {
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      removeCookie('accommodationId');
+      localStorage.clear();
+      setTimeout(() => {
+        window.location.href = ROUTES.SIGNIN;
+      }, 1000);
     }
+    return Promise.reject(error);
   },
 );
 

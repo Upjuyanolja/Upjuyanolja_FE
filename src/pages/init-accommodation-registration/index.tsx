@@ -10,18 +10,23 @@ import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { NameContainer } from '@components/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
-  accommodationEditState,
   checkedAccommodationOptions,
   imageFileState,
   isUpdatedAccommodationState,
+  roomPrevButtonState,
   userInputValueState,
 } from '@stores/init/atoms';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { useImageFile } from '@queries/init';
 import { AxiosError } from 'axios';
 import { Image } from '@api/room/type';
+import {
+  UserInputValue,
+  defaultAccommodation,
+} from '@components/init/init-accommodation-registration/type';
+import { AccommodationCategoryProps } from '@components/init/type';
 
 export const InitAccommodationRegistration = () => {
   const navigate = useNavigate();
@@ -37,12 +42,18 @@ export const InitAccommodationRegistration = () => {
     checkedAccommodationOptions,
   );
 
-  const isEdit = useRecoilValue(accommodationEditState);
-
   const [imageFiles, setImageFiles] = useRecoilState(imageFileState);
-  const setUpdatedAccommodationInfo = useSetRecoilState(
-    isUpdatedAccommodationState,
-  );
+  const [updatedAccommodationInfo, setUpdatedAccommodationInfo] =
+    useRecoilState(isUpdatedAccommodationState);
+
+  const [defaultValue, setDefaultValue] = useState<defaultAccommodation>({
+    images: undefined,
+    options: undefined,
+    type: undefined,
+  });
+
+  const [isClickedPrevButton, setClickedPrevButton] =
+    useRecoilState(roomPrevButtonState);
 
   const accommodationOptions = {
     cooking: '객실취사',
@@ -86,18 +97,6 @@ export const InitAccommodationRegistration = () => {
         };
         return [updatedUserInputValue];
       });
-      setSelectedOptions({
-        cooking: false,
-        parking: false,
-        pickup: false,
-        barbecue: false,
-        fitness: false,
-        karaoke: false,
-        sauna: false,
-        sports: false,
-        seminar: false,
-      });
-      setImageFiles([]);
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -112,14 +111,67 @@ export const InitAccommodationRegistration = () => {
   const onFinish = () => {
     const formData = new FormData();
 
-    imageFiles.forEach((image) => {
-      if (image.file !== null) formData.append('image1', image.file);
-    });
+    let shouldExecuteImageFile = false;
 
-    imageFile(formData);
+    for (let index = 0; index < imageFiles.length; index++) {
+      const image = imageFiles[index];
+      if (image.file !== null) {
+        formData.append('image1', image.file);
+        shouldExecuteImageFile = true;
+      }
+    }
+
+    if (shouldExecuteImageFile) {
+      imageFile(formData);
+    } else {
+      setUserInputValue(() => {
+        let type;
+        switch (form.getFieldValue('accommodation-category')) {
+          case 'HOTEL/RESORT':
+            type = form.getFieldValue('accommodation-hotel-category');
+            break;
+          case 'GUEST_HOUSE':
+            type = form.getFieldValue('accommodation-guest-category');
+            break;
+          default:
+            type = form.getFieldValue('accommodation-category');
+        }
+
+        const updatedUserInputValue: UserInputValue = {
+          type,
+          name: form.getFieldValue('accommodation-name'),
+          address: form.getFieldValue('accommodation-address'),
+          detailAddress: form.getFieldValue('accommodation-detailAddress'),
+          zipCode: form.getFieldValue('accommodation-postCode'),
+          description: form.getFieldValue('accommodation-desc'),
+          options: selectedOptions,
+          images: userInputValue[0].images,
+          rooms: userInputValue[0].rooms,
+        };
+        return [updatedUserInputValue];
+      });
+    }
+
     setUpdatedAccommodationInfo(true);
+    setSelectedOptions({
+      cooking: false,
+      parking: false,
+      pickup: false,
+      barbecue: false,
+      fitness: false,
+      karaoke: false,
+      sauna: false,
+      sports: false,
+      seminar: false,
+    });
+    setImageFiles([]);
+    setClickedPrevButton(false);
 
-    navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    if (userInputValue[0].isAccommodationEdit) {
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    } else {
+      navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    }
   };
 
   const areFormFieldsValid = () => {
@@ -158,17 +210,26 @@ export const InitAccommodationRegistration = () => {
     setIsValid(areFormFieldsValid());
   };
 
-  /** isEdit일 때 input에 value set해주기 */
   useEffect(() => {
-    if (!isEdit) return;
-    form.setFieldValue('accommodation-name', accommodationData.name);
-    form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
-    form.setFieldValue('accommodation-address', accommodationData.address);
-    form.setFieldValue(
-      'accommodation-detailAddress',
-      accommodationData.detailAddress,
-    );
-    form.setFieldValue('accommodation-desc', accommodationData.description);
+    if (
+      accommodationData.isAccommodationEdit ||
+      isClickedPrevButton ||
+      updatedAccommodationInfo
+    ) {
+      form.setFieldValue('accommodation-name', accommodationData.name);
+      form.setFieldValue('accommodation-postCode', accommodationData.zipCode);
+      form.setFieldValue('accommodation-address', accommodationData.address);
+      form.setFieldValue(
+        'accommodation-detailAddress',
+        accommodationData.detailAddress,
+      );
+      form.setFieldValue('accommodation-desc', accommodationData.description);
+      setDefaultValue({
+        images: userInputValue[0].images,
+        options: userInputValue[0].options,
+        type: userInputValue[0].type as defaultAccommodation['type'],
+      });
+    }
   }, []);
 
   return (
@@ -178,18 +239,34 @@ export const InitAccommodationRegistration = () => {
         form={form}
         onFieldsChange={handleFormValuesChange}
       >
-        <AccommodationCategory form={form} />
+        <AccommodationCategory
+          form={form}
+          defaultValue={
+            defaultValue.type as AccommodationCategoryProps['defaultValue']
+          }
+          isClickedPrevButton={isClickedPrevButton}
+          updatedAccommodationInfo={updatedAccommodationInfo}
+        />
         <NameContainer
           header="숙소명"
           placeholder="숙소명을 입력해 주세요."
           form={form}
         />
         <AccommodationAddress form={form} />
-        <ImageUploadContainer header="숙소 대표 이미지 설정" />
-        <CheckBoxContainer options={accommodationOptions} header="숙소" />
+        <ImageUploadContainer
+          header="숙소 대표 이미지 설정"
+          images={defaultValue.images}
+        />
+        <CheckBoxContainer
+          options={accommodationOptions}
+          header="숙소"
+          defaultValue={defaultValue.options}
+        />
         <AccommodationDesc form={form} />
         <ButtonContainer
-          buttonStyle={isEdit ? 'edit' : 'navigate'}
+          buttonStyle={
+            accommodationData.isAccommodationEdit ? 'edit' : 'navigate'
+          }
           isValid={isValid}
         />
       </Form>

@@ -34,8 +34,17 @@ export const PointBox = () => {
       const addCurrentYear =
         currentMonth === MONTH_DECEMBER ? currentYear + 1 : currentYear;
 
-      setCurrentYear(addCurrentYear);
-      setCurrentMonth(addCurrentMonth);
+      const defaultDate = new Date();
+      const defaultYear = defaultDate.getFullYear();
+      const defaultMonth = defaultDate.getMonth() + 1;
+
+      if (
+        addCurrentYear < defaultYear ||
+        (addCurrentYear === defaultYear && addCurrentMonth <= defaultMonth)
+      ) {
+        setCurrentYear(addCurrentYear);
+        setCurrentMonth(addCurrentMonth);
+      }
     }
   };
 
@@ -46,29 +55,25 @@ export const PointBox = () => {
       </TextBox>
       <StyledPointDetailWrap>
         <StyledDateWrap>
-          <div>
-            <StyledDateButton
-              data-testid="datePrevButton"
-              onClick={() => handleClickDateButton('prev')}
-            >
-              <CaretLeftOutlined size={24} />
-            </StyledDateButton>
-            <TextBox
-              typography="h5"
-              color="white"
-              fontWeight="bold"
-              style={{ margin: '0px 24px' }}
-              data-testid="dateSpan"
-            >
-              {currentYear} . {currentMonth}월
-            </TextBox>
-            <StyledDateButton
-              data-testid="dateNextButton"
-              onClick={() => handleClickDateButton('next')}
-            >
-              <CaretRightOutlined size={24} />
-            </StyledDateButton>
-          </div>
+          <CaretLeftOutlined
+            size={24}
+            onClick={() => handleClickDateButton('prev')}
+          />
+
+          <TextBox
+            typography="h5"
+            color="white"
+            fontWeight="bold"
+            style={{ margin: '0px 24px' }}
+            data-testid="dateSpan"
+          >
+            {currentYear} . {currentMonth}월
+          </TextBox>
+
+          <CaretRightOutlined
+            size={24}
+            onClick={() => handleClickDateButton('next')}
+          />
         </StyledDateWrap>
         <StyledPointUsingInfo>
           <StyledPointUsingInfoList direction="vertical">
@@ -145,6 +150,8 @@ const StyledDateWrap = styled('div')`
   padding: 8px 0px;
 
   svg {
+    width: 24px;
+    height: 24px;
     color: ${colors.white};
   }
 `;
@@ -161,13 +168,4 @@ const StyledPointUsingInfoList = styled(Space)`
   align-items: center;
 
   text-align: center;
-`;
-const StyledDateButton = styled('button')`
-  width: 24px;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  outline: none;
-  cursor: pointer;
 `;

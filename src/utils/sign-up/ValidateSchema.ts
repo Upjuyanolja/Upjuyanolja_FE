@@ -1,23 +1,16 @@
 import * as yup from 'yup';
 
-export const getValidateSchema = (
-  queryClient: { getQueryData: (arg0: string[]) => any } | undefined,
-) => {
-  const num = queryClient?.getQueryData(['authenticationNum']);
-  const value = num?.verificationCode;
+export const getValidateSchema = () => {
   return yup.object({
     email: yup
       .string()
       .matches(/^[^@\s]+@[^\s]+\.[^@\s]+$/, '이메일 형식이 올바르지 않습니다.')
       .required('이메일을 입력하세요.'),
-    verificationCode: yup
-      .string()
-      .matches(new RegExp(`^${value}$`), ' ')
-      .required('인증번호를 입력하세요.'),
+    verificationCode: yup.string().required('인증번호를 입력하세요.'),
     password: yup
       .string()
       .matches(
-        /^(?=.*[a-zA-Z])(?=.*\d).{8,20}$/,
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
         '영문, 숫자 포함 8~20자로 입력해주세요.',
       )
       .required('영문, 숫자 포함 8~20자로 입력해주세요.'),

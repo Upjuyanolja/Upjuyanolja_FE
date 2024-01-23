@@ -66,6 +66,7 @@ export const DayLimitInput = ({
         onChange={(event) => {
           handleChangeDayLimit(event, record.key);
         }}
+        data-testid="day-limit-input"
       />
       <TextBox
         typography="body2"

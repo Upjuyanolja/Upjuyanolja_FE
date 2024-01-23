@@ -15,6 +15,7 @@ import {
 } from '@stores/init/atoms';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ROUTES } from '@/constants/routes';
 
 export const RoomItem = () => {
   const [userInputValue, setUserInputValue] =
@@ -78,7 +79,7 @@ export const RoomItem = () => {
 
   const roomEdit = (index: number) => {
     setUserInputValue([{ ...userInputValue[0], editRoomIndex: index }]);
-    navigate('/init/room-registration');
+    navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
 
   return (

@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { CouponHeader } from '@components/coupon/coupon-header';
-import { Modal } from 'antd';
+import { Modal, Spin } from 'antd';
 import styled from 'styled-components';
 import { AdditionalPurchaseFooter } from '@components/coupon/additional-purchase-footer';
 import { AdditionalPurchaseContent } from '@components/coupon/additional-purchase-content';
@@ -19,7 +19,6 @@ export const Coupon = () => {
     handleSelectCouponType,
     handleChangeDayLimit,
     handleDeleteButton,
-    isModified,
     handleChangeDate,
     handleEditButton,
     handleModalOpen,
@@ -35,15 +34,19 @@ export const Coupon = () => {
     isGetCouponLoading,
   } = useCoupon();
 
-  if (isGetCouponLoading) return <div>로딩</div>;
-  if (!data)
+  if (isGetCouponLoading)
+    return (
+      <StyledLoadingLayout>
+        <Spin tip="Loading..." size="large" />
+      </StyledLoadingLayout>
+    );
+  if (data === null)
     return (
       <>
         <CouponHeader
           expiry={''}
           handleSelectStatus={handleSelectStatus}
           handleDeleteButton={handleDeleteButton}
-          isModified={() => false}
           handleChangeDate={handleChangeDate}
           handleEditButton={handleEditButton}
           handleModalOpen={handleModalOpen}
@@ -59,7 +62,6 @@ export const Coupon = () => {
         expiry={couponData.expiry}
         handleSelectStatus={handleSelectStatus}
         handleDeleteButton={handleDeleteButton}
-        isModified={isModified}
         handleChangeDate={handleChangeDate}
         handleEditButton={handleEditButton}
         handleModalOpen={handleModalOpen}
@@ -98,6 +100,13 @@ export const Coupon = () => {
     </>
   );
 };
+
+const StyledLoadingLayout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`;
 
 const StyledModal = styled(Modal)`
   .ant-modal-content {

@@ -5,12 +5,9 @@ import styled from 'styled-components';
 import { EditOutlined } from '@ant-design/icons';
 import { CustomButton } from './CustomButton';
 import { ImageCarousel } from './ImageCarousel';
-import { Options } from '../init-accommodation-registration/type';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  accommodationEditState,
-  userInputValueState,
-} from '@stores/init/atoms';
+import { AccommodationOptions } from '../init-accommodation-registration/type';
+import { useRecoilState } from 'recoil';
+import { userInputValueState } from '@stores/init/atoms';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 
@@ -39,17 +36,19 @@ export const AccommodationInfo = () => {
     seminar: '세미나실',
   };
 
-  const userInputValue = useRecoilValue(userInputValueState);
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
   const accommodationData = userInputValue[0];
-  const setIsEdit = useSetRecoilState(accommodationEditState);
   const navigate = useNavigate();
 
   const getAccommodationOptionsKorean = (accommodationData: {
-    options: Options;
+    options: AccommodationOptions;
   }): string[] => {
     const selectedOptions = Object.keys(accommodationData.options)
       .filter(
-        (option) => accommodationData.options[option as keyof Options] === true,
+        (option) =>
+          accommodationData.options[option as keyof AccommodationOptions] ===
+          true,
       )
       .map(
         (selectedOption) =>
@@ -61,8 +60,8 @@ export const AccommodationInfo = () => {
     return selectedOptions;
   };
 
-  const handleEditButton = () => {
-    setIsEdit(true);
+  const handleAccommodationEdit = () => {
+    setUserInputValue([{ ...userInputValue[0], isAccommodationEdit: true }]);
     navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
   };
 
@@ -82,7 +81,7 @@ export const AccommodationInfo = () => {
               <CustomButton
                 text="수정"
                 icon={<EditOutlined />}
-                onClick={handleEditButton}
+                onClick={handleAccommodationEdit}
               />
             </StyledTextHeadWrapper>
             <List itemLayout="vertical">

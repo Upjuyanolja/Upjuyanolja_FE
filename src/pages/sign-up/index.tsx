@@ -1,5 +1,6 @@
 import { HTTP_STATUS_CODE, RESPONSE_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
+import { ROUTES } from '@/constants/routes';
 import { getValidateSchema } from '@/utils/sign-up/ValidateSchema';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { SIGN_UP_API } from '@api/sign-up';
@@ -7,14 +8,12 @@ import { Footer } from '@components/layout/footer';
 import { TextBox } from '@components/text-box';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostSignUp, usePostAuthentication } from '@queries/sign-up';
-import { useQueryClient } from '@tanstack/react-query';
 import { Button, Input, Layout, message } from 'antd';
 import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 export const SignUp = () => {
-  const queryClient = useQueryClient();
   const { handleChangeUrl } = useCustomNavigate();
   const [emailDisabled, setEmailDisabled] = useState(false);
   const [isVerifyRes, setIsVerifyRes] = useState(false);
@@ -30,16 +29,20 @@ export const SignUp = () => {
   const [emailError, setEmailError] = useState(false);
   const [verifyError, setVerifyError] = useState(false);
 
-  const validationSchema = getValidateSchema(queryClient);
-
-  const postSignUpMutation = usePostSignUp({
+  const postLoginMutation = usePostSignUp({
     onSuccess() {
-      handleChangeUrl('/signup/success');
+      setTimeout(() => {
+        window.location.href = ROUTES.SIGNUP_SUCCESS;
+      }, 1000);
+    },
+    onError(error) {
+      if (error instanceof AxiosError)
+        message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
     },
   });
 
   const postAuthenticationMutation = usePostAuthentication({
-    onSuccess: async (response) => {
+    onSuccess: () => {
       message.success({
         content: (
           <TextBox typography="body3" fontWeight={'400'}>
@@ -52,7 +55,6 @@ export const SignUp = () => {
           height: '41px',
         },
       });
-      queryClient.setQueryData(['authenticationNum'], response.data.data);
       setCheckOne(true);
       setCheckOne_1(false);
       setCheckOne_2(false);
@@ -63,7 +65,7 @@ export const SignUp = () => {
       if (error instanceof AxiosError && error.response) {
         const errorData = error.response.data;
         if (errorData) {
-          if (errorData.code === RESPONSE_CODE.INCORRECT_EMAIL_CODE) {
+          if (errorData.code === RESPONSE_CODE.NOT_REGISTERED) {
             setCheckOne(false);
             setCheckOne_1(true);
             setCheckOne_2(false);
@@ -82,9 +84,6 @@ export const SignUp = () => {
         }
       }
     },
-    onSettled: () => {
-      queryClient.invalidateQueries(['authenticationNum']);
-    },
   });
 
   const formik = useFormik({
@@ -94,11 +93,13 @@ export const SignUp = () => {
       password: '',
       checkPassword: '',
     },
-    validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    validationSchema: getValidateSchema,
+    onSubmit: (values) => {
       try {
-        const signUpData = { email: values.email, password: values.password };
-        await postSignUpMutation.mutateAsync(signUpData);
+        postLoginMutation.mutate({
+          email: values.email,
+          password: values.password,
+        });
       } catch (e) {
         console.error(e);
       }
@@ -110,20 +111,13 @@ export const SignUp = () => {
 
   const handleVerification = async () => {
     if (values.verificationCode.length > 0) {
-      const num = queryClient.getQueryData<{ verificationCode: string }>([
-        'authenticationNum',
-      ]);
-
       try {
         const res = await SIGN_UP_API.getVerify({
           // 버튼을 누를 때마다 갱신된 데이터를 받아와야 하기 때문에 쿼리 사용 안했습니다. (staleTime: 0)
           email: values.email,
           verificationCode: values.verificationCode,
         });
-        if (
-          res.status === HTTP_STATUS_CODE.SUCCESS &&
-          num?.verificationCode == values.verificationCode
-        ) {
+        if (res?.status === HTTP_STATUS_CODE.SUCCESS) {
           setIsVerifyRes(true);
           setCheckTwo(true);
           setCheckTwo_1(false);
@@ -175,10 +169,14 @@ export const SignUp = () => {
       setEmailError(false);
       setCheckOne_1(false);
       setCheckOne_2(false);
-    } else if (values.verificationCode.length > 0) {
+      setCheckOne_3(false);
+    }
+  }, [values.email]);
+  useEffect(() => {
+    if (values.verificationCode.length > 0) {
       setVerifyError(false);
     }
-  }, [values.email, values.verificationCode]);
+  }, [values.verificationCode]);
 
   return (
     <StyledLayout>
@@ -214,15 +212,21 @@ export const SignUp = () => {
                       ? `${colors.error}`
                       : checkOne_2
                         ? `${colors.error}`
-                        : emailError
+                        : checkOne_3
                           ? `${colors.error}`
-                          : values.email.length === 0
-                            ? errors.email && touched.email
-                              ? `${colors.error}`
-                              : `${colors.black600}`
-                            : errors.email && touched.email
-                              ? `${colors.error}`
-                              : `${colors.success}`,
+                          : emailError
+                            ? `${colors.error}`
+                            : values.email.length === 0
+                              ? errors.email && touched.email
+                                ? `${colors.error}`
+                                : `${colors.black600}`
+                              : errors.email &&
+                                  touched.email &&
+                                  errors.email &&
+                                  touched.email &&
+                                  (checkOne_1 || checkOne_2 || checkOne_3)
+                                ? `${colors.error}`
+                                : `${colors.success}`,
                   }}
                 />
                 {emailError && (
@@ -341,16 +345,18 @@ export const SignUp = () => {
                     인증번호를 입력하세요.
                   </TextBox>
                 )}
-                {touched.verificationCode && errors.verificationCode && (
-                  <TextBox
-                    typography="body4"
-                    fontWeight={'400'}
-                    color="error"
-                    cursor="default"
-                  >
-                    {errors.verificationCode}
-                  </TextBox>
-                )}
+                {touched.verificationCode &&
+                  errors.verificationCode &&
+                  values.verificationCode.length > 0 && (
+                    <TextBox
+                      typography="body4"
+                      fontWeight={'400'}
+                      color="error"
+                      cursor="default"
+                    >
+                      {errors.verificationCode}
+                    </TextBox>
+                  )}
                 {checkTwo && (
                   <TextBox
                     typography="body4"

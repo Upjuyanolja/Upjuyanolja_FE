@@ -40,9 +40,9 @@
   width: 100%;
 
   .ant-btn-default {
-    border: 1px solid #0349e6;
+    border: 1px solid #0351ff;
 
-    color: #0349e6;
+    color: #0351ff;
     font-size: 20px;
     font-weight: 700;
 
@@ -50,7 +50,7 @@
   }
 
   .ant-btn-primary {
-    background-color: #0349e6;
+    background-color: #0351ff;
 
     height: 46px;
 
@@ -59,7 +59,7 @@
   }
 
   .ant-btn-primary:hover {
-    background-color: #0241cc;
+    background-color: #0349e6;
     transition: 0.4s;
   }
 }

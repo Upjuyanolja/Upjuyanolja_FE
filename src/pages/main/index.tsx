@@ -60,11 +60,7 @@ const StyledLoadingLayout = styled.div`
   height: 80vh;
 `;
 const StyledMainLayout = styled(Layout)`
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 32px;
 `;
 const StyledLayout = styled('div')`
   display: flex;

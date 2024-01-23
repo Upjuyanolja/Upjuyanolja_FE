@@ -1,5 +1,5 @@
 import { COUPON_API } from '@api/coupon';
-import { Response } from '@/types/api';
+import { ErrorResponse, Response } from '@/types/api';
 import {
   BuyCouponData,
   BuyCouponParams,
@@ -14,6 +14,7 @@ import {
 import { AxiosError, AxiosResponse } from 'axios';
 
 export const useGetCouponRoomList = (
+  accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<Response<CouponRoomList>>,
     AxiosError,
@@ -24,21 +25,25 @@ export const useGetCouponRoomList = (
     AxiosResponse<Response<CouponRoomList>>,
     AxiosError,
     CouponRoomList
-  >(['getCouponRoomList'], () => COUPON_API.getCouponRoomList(), {
-    ...options,
-  });
+  >(
+    ['getCouponRoomList'],
+    () => COUPON_API.getCouponRoomList(accommodationId),
+    {
+      ...options,
+    },
+  );
 };
 
 export const useBuyCoupon = (
   options?: UseMutationOptions<
     AxiosResponse<Response<BuyCouponData>>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     BuyCouponParams
   >,
 ) => {
   return useMutation<
     AxiosResponse<Response<BuyCouponData>>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     BuyCouponParams
   >((params: BuyCouponParams) => COUPON_API.buyCoupon(params), {
     ...options,

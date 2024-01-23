@@ -112,11 +112,12 @@ export const CouponTable = ({
 
   return (
     <StyledTable
+      data-testid="table-container"
       rowSelection={rowSelection}
       columns={columns}
       dataSource={couponTableData}
       pagination={false}
-      scroll={{ y: 510 }}
+      scroll={{ y: 'calc(88vh - 242px)' }}
     />
   );
 };
