@@ -95,6 +95,7 @@ export const InitAccommodationRegistration = () => {
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
           images: data.data.data.urls as unknown as Image[],
+          thumbnail: data.data.data.urls[0].url,
         };
         return [updatedUserInputValue];
       });
@@ -153,6 +154,7 @@ export const InitAccommodationRegistration = () => {
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
           images: userInputValue[0].images,
+          thumbnail: userInputValue[0].images[0].url,
           rooms: userInputValue[0].rooms,
         };
         return [updatedUserInputValue];

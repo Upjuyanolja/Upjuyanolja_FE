@@ -1,5 +1,5 @@
 export type PostImageFile = {
-  urls: string[];
+  urls: { url: string }[];
 };
 
 export type PostAccommodationParams = {
