@@ -85,6 +85,17 @@ export const InitAccommodationRegistration = () => {
             type = form.getFieldValue('accommodation-category');
         }
 
+        const newImages = [];
+
+        const urls = data.data.data.urls;
+
+        for (let i = 0; i < urls.length; i++) {
+          const url = urls[i].url;
+          if (typeof url === 'string') {
+            newImages.push({ url });
+          }
+        }
+
         const updatedUserInputValue = {
           ...userInputValue,
           type,
@@ -94,7 +105,7 @@ export const InitAccommodationRegistration = () => {
           zipCode: form.getFieldValue('accommodation-postCode'),
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
-          images: data.data.data.urls as unknown as Image[],
+          images: newImages,
           thumbnail: data.data.data.urls[0].url,
         };
         return [updatedUserInputValue];
@@ -142,15 +153,32 @@ export const InitAccommodationRegistration = () => {
 
     let shouldExecuteImageFile = false;
 
+    for (let i = 0; i < imageFiles.length; i++) {
+      const image = imageFiles[i];
+      if (image.file) shouldExecuteImageFile = true;
+    }
+
     for (let index = 0; index < imageFiles.length; index++) {
       const image = imageFiles[index];
       if (image.file !== null) {
         formData.append(`image${index + 1}`, image.file);
-        shouldExecuteImageFile = true;
       }
     }
 
+    for (let i = imageFiles.length; i < 5; i++) {
+      const emptyBlob = new Blob([], { type: 'application/octet-stream' });
+      const nullFile = new File([emptyBlob], 'nullFile.txt', {
+        type: 'text/plain',
+      });
+      formData.append(`image${i + 1}`, nullFile);
+    }
+
     if (shouldExecuteImageFile) {
+      console.log(formData.get('image1'));
+      console.log(formData.get('image2'));
+      console.log(formData.get('image3'));
+      console.log(formData.get('image4'));
+      console.log(formData.get('image5'));
       imageFile(formData);
     } else {
       setUserInputValue(() => {
