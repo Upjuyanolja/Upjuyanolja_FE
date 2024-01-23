@@ -76,7 +76,7 @@ const StyledHeader = styled(Layout.Header)`
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 100vw;
+  width: 100%;
   height: 56px;
   background-color: ${colors.black100};
   box-shadow: 0px 1px 5px 0px #0000001a;
@@ -146,7 +146,7 @@ const StyledDim = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1001;
