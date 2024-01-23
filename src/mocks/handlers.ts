@@ -38,7 +38,10 @@ export const handlers = [
     getVerifyResolver,
   ),
   http.post('/api/auth/refresh', postRefreshResolver),
-  http.get('/api/accommodations/backoffice', getAccommodationsResolver),
+  http.get(
+    `${process.env.REACT_APP_SERVER_URL}pi/accommodations/backoffice`,
+    getAccommodationsResolver,
+  ),
   http.get('/api/coupons/backoffice/statistics/*', getStaticsResolver),
   http.get('/api/coupons/backoffice/revenue/*', getRevenueResolver),
   http.get('/api/coupons/backoffice/manage/*', getCouponResolver),
@@ -49,7 +52,10 @@ export const handlers = [
   http.post('/api/coupons/backoffice/buy', buyCouponResolver),
   http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
 
-  http.get('/api/points/summary', getPointSummaryResolver),
+  http.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/points/summary`,
+    getPointSummaryResolver,
+  ),
 
   http.post('/api/points/charges', postPointChargeResolver),
   http.get('/api/points/total?*', getPointDetailTotalResolver),
