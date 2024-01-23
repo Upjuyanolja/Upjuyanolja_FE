@@ -32,17 +32,35 @@ export const SignIn = () => {
           accommodationListData?.accommodations[0]?.id,
         );
       }
+      const res = isAccommodationList();
+      if (res === true) {
+        const accommodationId = getCookie('accommodationId');
+        setTimeout(() => {
+          handleChangeUrl(`/${accommodationId}/main`);
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          handleChangeUrl('/init');
+        }, 1000);
+      }
+    },
+    onError() {
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            이메일과 비밀번호를 확인해 주세요.
+          </TextBox>
+        ),
+        duration: 2,
+      });
     },
   });
-  const isAccomodationList = () => {
-    if (
+
+  const isAccommodationList = () => {
+    return (
       accommodationListData?.accommodations &&
       accommodationListData.accommodations.length > 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   };
 
   const handleOnclick = () => {
@@ -66,6 +84,7 @@ export const SignIn = () => {
       });
     }
   };
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -79,32 +98,6 @@ export const SignIn = () => {
           password: values.password,
         };
         await mutate(signInData);
-        try {
-          const res = isAccomodationList();
-          if (res === true) {
-            const accomodationId = getCookie('accomodationId');
-            setTimeout(() => {
-              handleChangeUrl(`/${accomodationId}/main`);
-            }, 1000);
-          } else {
-            setTimeout(() => {
-              handleChangeUrl('/init');
-            }, 1000);
-          }
-        } catch (e) {
-          message.error({
-            content: (
-              <TextBox typography="body3" fontWeight={'400'}>
-                요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
-              </TextBox>
-            ),
-            duration: 2,
-            style: {
-              width: '346px',
-              height: '41px',
-            },
-          });
-        }
       } catch (e) {
         if (e instanceof AxiosError && e.response) {
           if (e.response.status === HTTP_STATUS_CODE.BAD_GATEWAY) {
@@ -156,7 +149,7 @@ export const SignIn = () => {
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-            ></StyledInput>
+            />
             {touched.email && errors.email && (
               <TextBox typography="body4" color="error">
                 {errors.email}
@@ -172,7 +165,7 @@ export const SignIn = () => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-            ></StyledPassword>
+            />
             {touched.password && errors.password && (
               <TextBox typography="body4" color="error">
                 {errors.password}
