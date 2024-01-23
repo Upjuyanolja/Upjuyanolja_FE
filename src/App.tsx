@@ -29,9 +29,13 @@ import { MainRedirect } from '@pages/main-redirect';
 import { TossSuccess } from '@pages/toss-success';
 import { TossFail } from '@pages/toss-fail';
 import { UserGuide } from '@pages/user-guide';
+import { useMediaQuery } from 'react-responsive';
+import { Mobile } from '@pages/mobile';
 
 function App() {
   const accessToken = getCookie('accessToken');
+  const isMobile = useMediaQuery({ maxWidth: 1024 });
+  if (isMobile) return <Mobile />;
   return (
     <Router>
       <Routes>
