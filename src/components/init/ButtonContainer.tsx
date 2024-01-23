@@ -134,7 +134,6 @@ export const ButtonContainer = ({
   });
 
   const handleConfirmModalOk = () => {
-    console.log(postAccommodationParams);
     accommodationInfo(postAccommodationParams);
   };
 
