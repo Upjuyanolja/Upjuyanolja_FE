@@ -71,13 +71,13 @@ export const ButtonContainer = ({
 
   const { mutate: accommodationInfo } = useAccommodationInfo({
     onSuccess(data) {
-      accommodationId = data.data.data.accommodationId;
+      accommodationId = data.data.accommodationId;
       setIsUpdatedAccommodation(false);
 
       const cookieAccommodationId = getCookie('accommodationId');
       if (!cookieAccommodationId) setCookie('accommodationId', accommodationId);
 
-      message.success(`${data.data.data.name} 숙소가 등록되었습니다.`);
+      message.success(`${data.data.name} 숙소가 등록되었습니다.`);
       navigate(`/${accommodationId}${ROUTES.MAIN}`);
 
       setUserInputValue([

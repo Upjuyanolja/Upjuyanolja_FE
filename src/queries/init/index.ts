@@ -5,18 +5,18 @@ import {
 } from '@api/init/type';
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { ErrorResponse, Response } from '@/types/api';
+import { ErrorResponse } from '@/types/api';
 import { ACCOMMODATION_REGISTRATION_API } from '@api/init';
 
 export const useImageFile = (
   options?: UseMutationOptions<
-    AxiosResponse<Response<PostImageFile>>,
+    AxiosResponse<PostImageFile>,
     AxiosError<ErrorResponse>,
     FormData
   >,
 ) => {
   return useMutation<
-    AxiosResponse<Response<PostImageFile>>,
+    AxiosResponse<PostImageFile>,
     AxiosError<ErrorResponse>,
     FormData
   >(
@@ -30,13 +30,13 @@ export const useImageFile = (
 
 export const useAccommodationInfo = (
   options?: UseMutationOptions<
-    AxiosResponse<Response<PostAccommodation>>,
+    AxiosResponse<PostAccommodation>,
     AxiosError<ErrorResponse>,
     PostAccommodationParams
   >,
 ) => {
   return useMutation<
-    AxiosResponse<Response<PostAccommodation>>,
+    AxiosResponse<PostAccommodation>,
     AxiosError<ErrorResponse>,
     PostAccommodationParams
   >(

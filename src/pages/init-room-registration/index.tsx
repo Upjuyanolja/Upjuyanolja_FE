@@ -117,7 +117,7 @@ export const InitRoomRegistration = () => {
 
         const newImages = [];
 
-        const urls = data.data.data.urls;
+        const urls = data.data.urls;
         for (let i = 0; i < imageFiles.length; i++) {
           const image = imageFiles[i];
           if (image.url !== '') {
