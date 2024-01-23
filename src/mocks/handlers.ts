@@ -27,6 +27,7 @@ import {
 } from './coupon-registration';
 import { postRoomResolver, getRoomListResolver } from './room';
 import { postAccommodationInfoResolver, postImageFileResolver } from './init';
+import { postRefreshResolver } from './refresh';
 
 export const handlers = [
   http.post('/api/auth/owners/signin', postSignInResolver),
@@ -36,6 +37,7 @@ export const handlers = [
     '/api/auth/owners/verify?email=*&verificationCode=*',
     getVerifyResolver,
   ),
+  http.post('/api/auth/refresh', postRefreshResolver),
   http.get('/api/accommodations/backoffice', getAccommodationsResolver),
   http.get('/api/coupons/backoffice/statistics/*', getStaticsResolver),
   http.get('/api/coupons/backoffice/revenue/*', getRevenueResolver),
