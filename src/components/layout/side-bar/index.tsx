@@ -8,6 +8,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { colors } from '@/constants/colors';
 import { useSetRecoilState } from 'recoil';
 import { isSideBarOpenState } from '@stores/layout';
+import { mobileBreakPoint } from '@/constants/mobile';
 
 export const SideBar = () => {
   const { pointSummaryData, accommodationListData } = useSideBar();
@@ -53,7 +54,7 @@ const StyledClosedButton = styled.button`
   padding: 0;
   cursor: pointer;
   display: none;
-  @media (max-width: 1280px) {
+  @media (max-width: ${mobileBreakPoint}) {
     display: flex;
   }
 `;
