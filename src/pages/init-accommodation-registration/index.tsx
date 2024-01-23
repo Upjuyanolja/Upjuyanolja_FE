@@ -99,6 +99,27 @@ export const InitAccommodationRegistration = () => {
         };
         return [updatedUserInputValue];
       });
+
+      setUpdatedAccommodationInfo(true);
+      setSelectedOptions({
+        cooking: false,
+        parking: false,
+        pickup: false,
+        barbecue: false,
+        fitness: false,
+        karaoke: false,
+        sauna: false,
+        sports: false,
+        seminar: false,
+      });
+      setImageFiles([]);
+      setClickedPrevButton(false);
+
+      if (userInputValue[0].isAccommodationEdit) {
+        navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      } else {
+        navigate(ROUTES.INIT_ROOM_REGISTRATION);
+      }
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -159,27 +180,27 @@ export const InitAccommodationRegistration = () => {
         };
         return [updatedUserInputValue];
       });
-    }
 
-    setUpdatedAccommodationInfo(true);
-    setSelectedOptions({
-      cooking: false,
-      parking: false,
-      pickup: false,
-      barbecue: false,
-      fitness: false,
-      karaoke: false,
-      sauna: false,
-      sports: false,
-      seminar: false,
-    });
-    setImageFiles([]);
-    setClickedPrevButton(false);
+      setUpdatedAccommodationInfo(true);
+      setSelectedOptions({
+        cooking: false,
+        parking: false,
+        pickup: false,
+        barbecue: false,
+        fitness: false,
+        karaoke: false,
+        sauna: false,
+        sports: false,
+        seminar: false,
+      });
+      setImageFiles([]);
+      setClickedPrevButton(false);
 
-    if (userInputValue[0].isAccommodationEdit) {
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
-    } else {
-      navigate(ROUTES.INIT_ROOM_REGISTRATION);
+      if (userInputValue[0].isAccommodationEdit) {
+        navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      } else {
+        navigate(ROUTES.INIT_ROOM_REGISTRATION);
+      }
     }
   };
 

@@ -156,6 +156,12 @@ export const InitRoomRegistration = () => {
 
         return [updatedUserInputValue];
       });
+
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
+      setImageFiles([]);
+      setSameRoomName(false);
+      setIsAddRoom(false);
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -250,13 +256,13 @@ export const InitRoomRegistration = () => {
 
         return [updatedUserInputValue];
       });
-    }
 
-    setSelectedOptions({ airCondition: false, tv: false, internet: false });
-    setImageFiles([]);
-    setSameRoomName(false);
-    setIsAddRoom(false);
-    navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
+      setImageFiles([]);
+      setSameRoomName(false);
+      setIsAddRoom(false);
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    }
   };
 
   const areFormFieldsValid = () => {
