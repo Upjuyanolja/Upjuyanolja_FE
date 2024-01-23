@@ -19,7 +19,5 @@ export const ACCOMMODATION_REGISTRATION_API = {
     ),
 
   postAccommodationInfo: (params: PostAccommodationParams) =>
-    instance.post<Response<PostAccommodation>>('/api/accommodations', {
-      params,
-    }),
+    instance.post<Response<PostAccommodation>>('/api/accommodations', params),
 };
