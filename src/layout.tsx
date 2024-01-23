@@ -11,6 +11,7 @@ import { FaBars } from 'react-icons/fa6';
 import { useRecoilState } from 'recoil';
 import { isSideBarOpenState } from '@stores/layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
+import { mobileBreakPoint } from './constants/mobile';
 
 export const RootLayout = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ const StyledHeader = styled(Layout.Header)`
   box-shadow: 0px 1px 5px 0px #0000001a;
   padding: 0 24px;
   z-index: 1003;
-  @media (max-width: 1280px) {
+  @media (max-width: ${mobileBreakPoint}) {
     z-index: 1000;
   }
 `;
@@ -95,7 +96,7 @@ const StyledSider = styled(Layout.Sider)<StyledSiderProps>`
   background-color: ${colors.white};
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1002;
-  @media (max-width: 1280px) {
+  @media (max-width: ${mobileBreakPoint}) {
     transform: ${(props) =>
       props.isOpenSideBar ? 'translateX(0%)' : 'translateX(-100%)'};
   }
@@ -105,7 +106,7 @@ const StyleLogo = styled.img`
   height: 24px;
   object-fit: contain;
   cursor: pointer;
-  @media (max-width: 1280px) {
+  @media (max-width: ${mobileBreakPoint}) {
     display: none;
   }
 `;
@@ -120,7 +121,7 @@ const StyledLayout = styled(Layout)<StyledLayoutProps>`
   background-color: ${(props) =>
     props.shouldApplyGrayBackground ? colors.midGray : 'white'};
   padding: 0 0 0 256px;
-  @media (max-width: 1280px) {
+  @media (max-width: ${mobileBreakPoint}) {
     padding: 0;
   }
 `;
@@ -137,7 +138,7 @@ const StyledBars = styled.button`
   align-items: center;
   cursor: pointer;
   color: ${colors.primary};
-  @media (max-width: 1280px) {
+  @media (max-width: ${mobileBreakPoint}) {
     display: flex;
   }
 `;
@@ -151,7 +152,7 @@ const StyledDim = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1001;
   display: none;
-  @media (max-width: 1280px) {
+  @media (max-width: ${mobileBreakPoint}) {
     display: block;
   }
 `;
