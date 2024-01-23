@@ -21,7 +21,7 @@ export type PostAccommodationParams = {
     sauna: boolean;
     sports: boolean;
     seminar: boolean;
-  };
+  }[];
   rooms: {
     name: string;
     price: number;

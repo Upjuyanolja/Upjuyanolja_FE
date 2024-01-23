@@ -45,6 +45,7 @@ export const ButtonContainer = ({
   const imageUrls: { url: string }[] = userInputValue[0].images.map(
     (image) => ({ url: image.url }),
   );
+  const thumbnailImage = imageUrls[0].url;
 
   const postAccommodationParams: PostAccommodationParams = {
     name: userInputValue[0].name,
@@ -53,9 +54,9 @@ export const ButtonContainer = ({
     zipCode: userInputValue[0].zipCode,
     description: userInputValue[0].description,
     category: userInputValue[0].type,
-    thumbnail: imageUrls[0].url,
+    thumbnail: thumbnailImage,
     images: imageUrls,
-    options: userInputValue[0].options,
+    options: [userInputValue[0].options],
     rooms: userInputValue[0].rooms.map((room) => ({
       name: room.name,
       price: room.price as number,
