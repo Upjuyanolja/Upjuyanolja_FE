@@ -8,8 +8,9 @@ export type PostAccommodationParams = {
   detailAddress: string;
   zipCode: string;
   description: string;
-  type: string;
+  category: string;
   images: { url: string }[];
+  thumbnail: string;
   options: {
     cooking: boolean;
     parking: boolean;

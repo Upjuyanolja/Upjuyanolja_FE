@@ -52,7 +52,8 @@ export const ButtonContainer = ({
     detailAddress: userInputValue[0].detailAddress,
     zipCode: userInputValue[0].zipCode,
     description: userInputValue[0].description,
-    type: userInputValue[0].type,
+    category: userInputValue[0].type,
+    thumbnail: imageUrls[0].url,
     images: imageUrls,
     options: userInputValue[0].options,
     rooms: userInputValue[0].rooms.map((room) => ({
