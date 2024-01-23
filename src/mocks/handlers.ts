@@ -38,6 +38,15 @@ export const handlers = [
     getVerifyResolver,
   ),
   http.post('/api/auth/refresh', postRefreshResolver),
+  http.get('/api/accommodations/backoffice', getAccommodationsResolver),
+  http.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/statistics/*`,
+    getStaticsResolver,
+  ),
+  http.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/revenue/*`,
+    getRevenueResolver,
+  ),
   http.get(
     `${process.env.REACT_APP_SERVER_URL}pi/accommodations/backoffice`,
     getAccommodationsResolver,

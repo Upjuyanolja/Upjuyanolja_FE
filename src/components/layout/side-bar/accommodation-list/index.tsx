@@ -1,5 +1,5 @@
 import { TextBox } from '@components/text-box';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
 import { useState } from 'react';
@@ -9,6 +9,8 @@ import { Accommodation } from '@api/accommodation/type';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { setCookie } from '@hooks/sign-in/useSignIn';
+import { useRecoilValue } from 'recoil';
+import { isCouponModifiedState } from '@stores/coupon/atom';
 
 export const AccommodationList = ({
   accommodationListData,
@@ -18,10 +20,28 @@ export const AccommodationList = ({
   const { accommodations } = accommodationListData || { accommodations: [] };
   const navigate = useNavigate();
   const location = useLocation();
+  const isCouponModified = useRecoilValue(isCouponModifiedState);
 
   const handleSelectBox = () => {
     if (accommodations.length <= 1) return;
     setClickedSelectBox(!clickedSelectBox);
+  };
+
+  const checkModified = (item: Accommodation, idx: number) => {
+    if (isCouponModified)
+      Modal.confirm({
+        title: '수정사항이 저장되지 않았습니다.',
+        content: '페이지를 나가겠습니까?',
+        cancelText: '나가기',
+        okText: '취소',
+        className: 'confirm-modal',
+        onCancel: () => {
+          handleNavigate(item, idx);
+        },
+      });
+    else {
+      handleNavigate(item, idx);
+    }
   };
 
   const handleNavigate = (item: Accommodation, idx: number) => {
@@ -46,7 +66,20 @@ export const AccommodationList = ({
   };
 
   const navigateToAccommodationAddPage = () => {
-    navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+    if (isCouponModified)
+      Modal.confirm({
+        title: '수정사항이 저장되지 않았습니다.',
+        content: '페이지를 나가겠습니까?',
+        cancelText: '나가기',
+        okText: '취소',
+        className: 'confirm-modal',
+        onCancel: () => {
+          navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+        },
+      });
+    else {
+      navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
+    }
   };
 
   return (
@@ -67,7 +100,7 @@ export const AccommodationList = ({
         {accommodations?.map((item, idx) => (
           <StyledAccommodationItem
             key={item.id}
-            onClick={() => handleNavigate(item, idx)}
+            onClick={() => checkModified(item, idx)}
           >
             <StyledFlex>
               <TextBox typography="body3" fontWeight="bold">

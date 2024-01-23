@@ -86,7 +86,7 @@ export const InitAccommodationRegistration = () => {
 
         const newImages = [];
 
-        const urls = data.data.data.urls;
+        const urls = data.data.urls;
         for (let i = 0; i < imageFiles.length; i++) {
           const image = imageFiles[i];
           if (image.url !== '') {
@@ -111,7 +111,7 @@ export const InitAccommodationRegistration = () => {
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
           images: newImages,
-          thumbnail: data.data.data.urls[0].url,
+          thumbnail: data.data.urls[0].url,
         };
         return [updatedUserInputValue];
       });

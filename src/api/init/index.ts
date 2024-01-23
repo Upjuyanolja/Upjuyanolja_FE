@@ -4,20 +4,15 @@ import {
   PostAccommodationParams,
   PostImageFile,
 } from './type';
-import { Response } from '@/types/api';
 
 export const ACCOMMODATION_REGISTRATION_API = {
   postImageFile: (formData: FormData) =>
-    instance.post<Response<PostImageFile>>(
-      '/api/accommodations/images',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    instance.post<PostImageFile>('/api/accommodations/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    ),
+    }),
 
   postAccommodationInfo: (params: PostAccommodationParams) =>
-    instance.post<Response<PostAccommodation>>('/api/accommodations', params),
+    instance.post<PostAccommodation>('/api/accommodations', params),
 };

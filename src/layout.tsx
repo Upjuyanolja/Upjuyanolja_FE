@@ -1,5 +1,5 @@
 import { SideBar } from '@components/layout/side-bar';
-import { Layout } from 'antd';
+import { Layout, Modal } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from './constants/routes';
 import { colors } from '@/constants/colors';
@@ -8,10 +8,11 @@ import { TextBox } from '@components/text-box';
 import logoImg from '@assets/image/logo.png';
 import { StyledLayoutProps, StyledSiderProps } from './types/layout';
 import { FaBars } from 'react-icons/fa6';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { isSideBarOpenState } from '@stores/layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
 import { mobileBreakPoint } from './constants/mobile';
+import { isCouponModifiedState } from '@stores/coupon/atom';
 
 export const RootLayout = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export const RootLayout = () => {
   );
   const isRoomUpdateRoute = currentRoute.includes(ROUTES.ROOM_UPDATE);
   const [isOpenSideBar, setIsOpenSideBar] = useRecoilState(isSideBarOpenState);
+  const isCouponModified = useRecoilValue(isCouponModifiedState);
 
   const shouldApplyGrayBackground =
     isRoomRegistrationRoute || isRoomUpdateRoute;
@@ -29,7 +31,21 @@ export const RootLayout = () => {
   const moveToMain = () => {
     const accommodationId = getCookie('accommodationId');
     const updatedMainPath = `/${accommodationId}${ROUTES.MAIN}`;
-    navigate(updatedMainPath);
+
+    if (isCouponModified)
+      Modal.confirm({
+        title: '수정사항이 저장되지 않았습니다.',
+        content: '페이지를 나가겠습니까?',
+        cancelText: '나가기',
+        okText: '취소',
+        className: 'confirm-modal',
+        onCancel: () => {
+          navigate(updatedMainPath);
+        },
+      });
+    else {
+      navigate(updatedMainPath);
+    }
   };
 
   const openSideBar = () => {
@@ -81,9 +97,9 @@ const StyledHeader = styled(Layout.Header)`
   background-color: ${colors.black100};
   box-shadow: 0px 1px 5px 0px #0000001a;
   padding: 0 24px;
-  z-index: 1003;
+  z-index: 7;
   @media (max-width: ${mobileBreakPoint}) {
-    z-index: 1000;
+    z-index: 4;
   }
 `;
 
@@ -93,13 +109,13 @@ const StyledSider = styled(Layout.Sider)<StyledSiderProps>`
   height: calc(100vh - 56px);
   background-color: ${colors.white};
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 1002;
+  z-index: 6;
   @media (max-width: ${mobileBreakPoint}) {
     transform: ${(props) =>
       props.isOpenSideBar ? 'translateX(0%)' : 'translateX(-100%)'};
     top: 0;
     position: fixed;
-    z-index: 2001;
+    z-index: 8;
     height: 100%;
   }
 `;
@@ -150,7 +166,7 @@ const StyledDim = styled.div`
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1001;
+  z-index: 5;
   display: none;
   @media (max-width: ${mobileBreakPoint}) {
     display: block;

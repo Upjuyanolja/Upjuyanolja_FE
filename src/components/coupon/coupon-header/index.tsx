@@ -14,15 +14,18 @@ import {
 } from '@/constants/coupon';
 import 'moment/locale/ko';
 import locale from 'antd/es/locale/ko_KR';
+import { isCouponModifiedState } from '@stores/coupon/atom';
+import { useRecoilValue } from 'recoil';
 export const CouponHeader = ({
   expiry,
   handleSelectStatus,
   handleDeleteButton,
-  isModified,
   handleChangeDate,
   handleEditButton,
   handleModalOpen,
 }: CouponHeaderProps) => {
+  const isCouponModified = useRecoilValue(isCouponModifiedState);
+
   const couponStatusOption = [
     { value: COUPON_STATUS_ENABLE.value, label: COUPON_STATUS_ENABLE.label },
     { value: COUPON_STATUS_DISABLE.value, label: COUPON_STATUS_DISABLE.label },
@@ -43,7 +46,7 @@ export const CouponHeader = ({
           </TextBox>
           <StyledSaveButton
             type="primary"
-            disabled={!isModified()}
+            disabled={!isCouponModified}
             onClick={handleEditButton}
             data-testid="save-button"
           >
