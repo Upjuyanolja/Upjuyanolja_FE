@@ -52,6 +52,7 @@ instance.interceptors.response.use(
         });
         removeCookie('accessToken');
         removeCookie('refreshToken');
+        removeCookie('accommodationId');
         const newAccessToken = response.data.data.accessToken;
         const newRefreshToken = response.data.data.refreshToken;
         setCookie('accessToken', newAccessToken);
