@@ -32,7 +32,7 @@ const StyledCarouselWrapper = styled.div`
   .ant-carousel .slick-next {
     top: 60%;
     transform: translateY(-60%);
-    z-index: 2;
+    z-index: 1;
   }
 
   .ant-carousel .slick-prev {

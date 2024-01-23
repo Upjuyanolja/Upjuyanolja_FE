@@ -81,9 +81,9 @@ const StyledHeader = styled(Layout.Header)`
   background-color: ${colors.black100};
   box-shadow: 0px 1px 5px 0px #0000001a;
   padding: 0 24px;
-  z-index: 1003;
+  z-index: 7;
   @media (max-width: ${mobileBreakPoint}) {
-    z-index: 1000;
+    z-index: 4;
   }
 `;
 
@@ -93,13 +93,13 @@ const StyledSider = styled(Layout.Sider)<StyledSiderProps>`
   height: calc(100vh - 56px);
   background-color: ${colors.white};
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 1002;
+  z-index: 6;
   @media (max-width: ${mobileBreakPoint}) {
     transform: ${(props) =>
       props.isOpenSideBar ? 'translateX(0%)' : 'translateX(-100%)'};
     top: 0;
     position: fixed;
-    z-index: 2001;
+    z-index: 8;
     height: 100%;
   }
 `;
@@ -150,7 +150,7 @@ const StyledDim = styled.div`
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1001;
+  z-index: 5;
   display: none;
   @media (max-width: ${mobileBreakPoint}) {
     display: block;
