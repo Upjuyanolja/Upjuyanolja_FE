@@ -66,7 +66,7 @@ export const useCoupon = () => {
     remove: getCouponRemove,
   } = useGetCoupon(accommodationId as string, {
     select(data) {
-      return data.data.data;
+      return data.data;
     },
   });
 
