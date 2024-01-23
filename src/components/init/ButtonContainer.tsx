@@ -63,7 +63,7 @@ export const ButtonContainer = ({
       maxCapacity: room.maxCapacity as number,
       checkInTime: room.checkInTime,
       checkOutTime: room.checkOutTime,
-      count: room.count as number,
+      amount: room.count as number,
       images: room.images.map((image) => ({ url: image.url })),
       option: room.options,
     })),
@@ -134,6 +134,7 @@ export const ButtonContainer = ({
   });
 
   const handleConfirmModalOk = () => {
+    console.log(postAccommodationParams);
     accommodationInfo(postAccommodationParams);
   };
 

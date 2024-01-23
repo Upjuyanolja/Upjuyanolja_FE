@@ -29,7 +29,7 @@ export type PostAccommodationParams = {
     maxCapacity: number;
     checkInTime: string;
     checkOutTime: string;
-    count: number;
+    amount: number;
     images: { url: string }[];
     option: {
       airCondition: boolean;
