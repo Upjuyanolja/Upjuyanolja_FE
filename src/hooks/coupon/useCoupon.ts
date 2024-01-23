@@ -58,6 +58,7 @@ export const useCoupon = () => {
   const [isCouponModified, setIsCouponModified] = useRecoilState(
     isCouponModifiedState,
   );
+  const [isAgreed, setIsAgreed] = useState(false);
 
   const {
     data,
@@ -128,6 +129,7 @@ export const useCoupon = () => {
 
   useEffect(() => {
     processPurchaseData();
+    setIsAgreed(false);
   }, [isModalOpen]);
 
   useEffect(() => {
@@ -564,6 +566,10 @@ export const useCoupon = () => {
     });
   };
 
+  const handleAgreeCheckbox = () => {
+    setIsAgreed((prev) => !prev);
+  };
+
   return {
     data,
     isGetCouponError,
@@ -587,5 +593,7 @@ export const useCoupon = () => {
     isPointModalOpen,
     setIsPointModalOpen,
     isGetCouponLoading,
+    handleAgreeCheckbox,
+    isAgreed,
   };
 };

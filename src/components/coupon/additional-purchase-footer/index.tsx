@@ -9,8 +9,9 @@ import { CouponAgreementModal } from '@components/agreement-modal/coupon-agreeme
 export const AdditionalPurchaseFooter = ({
   totalPoints,
   handlePurchaseButton,
+  handleAgreeCheckbox,
+  isAgreed,
 }: PurchaseFooterProps) => {
-  const [isAgreed, setIsAgreed] = useState(false);
   const [isAgreementModalOpen, setIsAgreementModalOpen] = useState(false);
 
   const handleAgreementModalOpen = () => {
@@ -25,11 +26,7 @@ export const AdditionalPurchaseFooter = ({
         </TextBox>
       </StyledTotalPriceContainer>
       <StyledCheckBoxContainer>
-        <Checkbox
-          onChange={() => {
-            setIsAgreed((prev) => !prev);
-          }}
-        />
+        <Checkbox onChange={handleAgreeCheckbox} checked={isAgreed} />
         <TextBox typography="body3" fontWeight={400}>
           주문 내용을 확인하였으며,
         </TextBox>
