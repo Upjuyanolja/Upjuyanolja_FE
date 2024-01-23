@@ -201,7 +201,7 @@ export const InitAccommodationRegistration = () => {
           zipCode: form.getFieldValue('accommodation-postCode'),
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
-          images: userInputValue[0].images,
+          images: imageFiles,
           thumbnail: userInputValue[0].images[0].url,
           rooms: userInputValue[0].rooms,
         };
