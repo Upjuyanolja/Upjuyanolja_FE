@@ -8,9 +8,11 @@
     "type": "PENSION_POOL_VILLA",
     "images": [
       {
+        "id": 1,
         "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
       },
       {
+        "id": 2,
         "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
       }
     ],
@@ -27,6 +29,7 @@
     },
     "rooms": [
       {
+        "id": 1,
         "name": "봄",
         "price": 100000,
         "defaultCapacity": 2,

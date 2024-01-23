@@ -45,7 +45,7 @@ export type PostAccommodation = {
   address: string;
   description: string;
   category: string;
-  images: { url: string }[];
+  images: { url: string; id: number }[];
   option: {
     cooking: boolean;
     parking: boolean;
@@ -58,6 +58,7 @@ export type PostAccommodation = {
     seminar: boolean;
   };
   rooms: {
+    id: number;
     name: string;
     price: number;
     defaultCapacity: number;
