@@ -55,7 +55,7 @@ export const ButtonContainer = ({
     category: userInputValue[0].type,
     thumbnail: userInputValue[0].thumbnail,
     images: imageUrls,
-    options: [userInputValue[0].options],
+    option: userInputValue[0].options,
     rooms: userInputValue[0].rooms.map((room) => ({
       name: room.name,
       price: room.price as number,
@@ -65,7 +65,7 @@ export const ButtonContainer = ({
       checkOutTime: room.checkOutTime,
       count: room.count as number,
       images: room.images.map((image) => ({ url: image.url })),
-      options: room.options,
+      option: room.options,
     })),
   };
 

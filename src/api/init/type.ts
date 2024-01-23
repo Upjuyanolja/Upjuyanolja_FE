@@ -11,7 +11,7 @@ export type PostAccommodationParams = {
   category: string;
   images: { url: string }[];
   thumbnail: string;
-  options: {
+  option: {
     cooking: boolean;
     parking: boolean;
     pickup: boolean;
@@ -21,7 +21,7 @@ export type PostAccommodationParams = {
     sauna: boolean;
     sports: boolean;
     seminar: boolean;
-  }[];
+  };
   rooms: {
     name: string;
     price: number;
@@ -31,7 +31,7 @@ export type PostAccommodationParams = {
     checkOutTime: string;
     count: number;
     images: { url: string }[];
-    options: {
+    option: {
       airCondition: boolean;
       tv: boolean;
       internet: boolean;
@@ -44,9 +44,9 @@ export type PostAccommodation = {
   name: string;
   address: string;
   description: string;
-  type: string;
+  category: string;
   images: { url: string }[];
-  options: {
+  option: {
     cooking: boolean;
     parking: boolean;
     pickup: boolean;
@@ -66,7 +66,7 @@ export type PostAccommodation = {
     checkOutTime: string;
     count: number;
     images: { id: number; url: string }[];
-    options: {
+    option: {
       airCondition: boolean;
       tv: boolean;
       internet: boolean;
