@@ -1,5 +1,5 @@
 import { SideBar } from '@components/layout/side-bar';
-import { Layout } from 'antd';
+import { Layout, Modal } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from './constants/routes';
 import { colors } from '@/constants/colors';
@@ -8,10 +8,11 @@ import { TextBox } from '@components/text-box';
 import logoImg from '@assets/image/logo.png';
 import { StyledLayoutProps, StyledSiderProps } from './types/layout';
 import { FaBars } from 'react-icons/fa6';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { isSideBarOpenState } from '@stores/layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
 import { mobileBreakPoint } from './constants/mobile';
+import { isCouponModifiedState } from '@stores/coupon/atom';
 
 export const RootLayout = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export const RootLayout = () => {
   );
   const isRoomUpdateRoute = currentRoute.includes(ROUTES.ROOM_UPDATE);
   const [isOpenSideBar, setIsOpenSideBar] = useRecoilState(isSideBarOpenState);
+  const isCouponModified = useRecoilValue(isCouponModifiedState);
 
   const shouldApplyGrayBackground =
     isRoomRegistrationRoute || isRoomUpdateRoute;
@@ -29,7 +31,21 @@ export const RootLayout = () => {
   const moveToMain = () => {
     const accommodationId = getCookie('accommodationId');
     const updatedMainPath = `/${accommodationId}${ROUTES.MAIN}`;
-    navigate(updatedMainPath);
+
+    if (isCouponModified)
+      Modal.confirm({
+        title: '수정사항이 저장되지 않았습니다.',
+        content: '페이지를 나가겠습니까?',
+        cancelText: '나가기',
+        okText: '취소',
+        className: 'confirm-modal',
+        onCancel: () => {
+          navigate(updatedMainPath);
+        },
+      });
+    else {
+      navigate(updatedMainPath);
+    }
   };
 
   const openSideBar = () => {
