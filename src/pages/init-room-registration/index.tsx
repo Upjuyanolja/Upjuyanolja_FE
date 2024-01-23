@@ -249,9 +249,7 @@ export const InitRoomRegistration = () => {
           checkOutTime: checkOutTime,
           count: count,
           options: selectedOptions,
-          images:
-            userInputValue[0].rooms[userInputValue[0].editRoomIndex as number]
-              .images,
+          images: imageFiles,
         };
 
         const updatedRooms = [...prevUserInputValue.rooms];
