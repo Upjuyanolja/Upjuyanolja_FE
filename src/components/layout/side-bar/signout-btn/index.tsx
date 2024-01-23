@@ -4,18 +4,19 @@ import styled from 'styled-components';
 
 export const SignOutBtn = () => {
   return (
-    <Container>
+    <StyledContainer>
       <StyledLogoutOutlined />
       <TextBox typography="body2" color="black700">
         로그아웃
       </TextBox>
-    </Container>
+    </StyledContainer>
   );
 };
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+
   gap: 4px;
   margin: 0 8px 14px 0;
   padding: 14px 0 0 0;

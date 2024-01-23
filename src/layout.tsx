@@ -70,13 +70,12 @@ export const RootLayout = () => {
 };
 
 const StyledHeader = styled(Layout.Header)`
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 100vw;
+  width: 100%;
   height: 56px;
   background-color: ${colors.black100};
   box-shadow: 0px 1px 5px 0px #0000001a;
@@ -88,16 +87,19 @@ const StyledHeader = styled(Layout.Header)`
 `;
 
 const StyledSider = styled(Layout.Sider)<StyledSiderProps>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 56px 0 0;
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
   background-color: ${colors.white};
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1002;
   @media (max-width: 1280px) {
     transform: ${(props) =>
       props.isOpenSideBar ? 'translateX(0%)' : 'translateX(-100%)'};
+    top: 0;
+    position: fixed;
+    z-index: 2001;
+    height: 100%;
   }
 `;
 
@@ -113,13 +115,11 @@ const StyleLogo = styled.img`
 const StyledContent = styled(Layout.Content)`
   max-width: 1024px;
   margin: 0 auto;
-  padding: 106px 0 50px;
 `;
 
 const StyledLayout = styled(Layout)<StyledLayoutProps>`
   background-color: ${(props) =>
     props.shouldApplyGrayBackground ? colors.midGray : 'white'};
-  padding: 0 0 0 256px;
   @media (max-width: 1280px) {
     padding: 0;
   }

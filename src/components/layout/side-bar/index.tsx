@@ -18,36 +18,36 @@ export const SideBar = () => {
   };
 
   return (
-    <Container>
-      <StyledClosedButton onClick={closeSideBar}>
-        <StyledIcon />
-      </StyledClosedButton>
+    <StyledContainer>
       <div>
-        <UserProfile pointSummaryData={pointSummaryData} />
-        <AccommodationList accommodationListData={accommodationListData} />
-        <Navigation />
+        <StyledClosedButton onClick={closeSideBar}>
+          <StyledIcon width={16} height={16} />
+        </StyledClosedButton>
+        <div>
+          <UserProfile pointSummaryData={pointSummaryData} />
+          <AccommodationList accommodationListData={accommodationListData} />
+          <Navigation />
+        </div>
       </div>
       <SignOutBtn />
-    </Container>
+    </StyledContainer>
   );
 };
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
 
-  height: calc(100vh - 56px);
   overflow-y: auto;
   transition: transform 0.3s ease-in;
 `;
 
 const StyledClosedButton = styled.button`
-  position: absolute;
-  top: 7px;
-  left: 7px;
   width: 16px;
-  height: 16px;
+  padding: 4px 4px 0 4px;
+  height: 22px;
   background-color: transparent;
   border: none;
   padding: 0;
