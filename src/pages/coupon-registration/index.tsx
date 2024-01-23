@@ -60,7 +60,7 @@ export const CouponRegistration = () => {
   };
 
   return (
-    <Container>
+    <StyledContainer>
       <StyledForm onSubmit={handleSubmit}>
         <StyledLeftWrap>
           <TextBox typography="h4" fontWeight="bold">
@@ -86,12 +86,12 @@ export const CouponRegistration = () => {
       {isModalOpen && (
         <PointModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       )}
-    </Container>
+    </StyledContainer>
   );
 };
 
-const Container = styled.section`
-  padding: 0px 48px;
+const StyledContainer = styled.section`
+  padding: 32px 48px;
 `;
 
 const StyledLeftWrap = styled.div`
