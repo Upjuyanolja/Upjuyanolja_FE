@@ -21,9 +21,9 @@ export const SignIn = () => {
   const { accommodationListData } = useSideBar();
   const { mutate } = usePostLogin({
     onSuccess: (response) => {
-      setCookie('accessToken', response.data.data.accessToken);
-      setCookie('refreshToken', response.data.data.refreshToken);
-      const memberResponse = response.data.data.memberResponse;
+      setCookie('accessToken', response.data.accessToken);
+      setCookie('refreshToken', response.data.refreshToken);
+      const memberResponse = response.data.memberResponse;
       const memberData = JSON.stringify(memberResponse);
       localStorage.setItem('member', memberData);
       if (accommodationListData?.accommodations[0]?.id) {

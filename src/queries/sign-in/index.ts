@@ -6,16 +6,15 @@ import { MemberData, SignInData } from '@api/sign-in/type';
 
 export const usePostLogin = (
   options?: UseMutationOptions<
-    AxiosResponse<Response<MemberData>>,
+    AxiosResponse<MemberData>,
     AxiosError,
     SignInData
   >,
 ) => {
-  return useMutation<
-    AxiosResponse<Response<MemberData>>,
-    AxiosError,
-    SignInData
-  >((data: SignInData) => SIGN_IN_API.postLogin(data), {
-    ...options,
-  });
+  return useMutation<AxiosResponse<MemberData>, AxiosError, SignInData>(
+    (data: SignInData) => SIGN_IN_API.postLogin(data),
+    {
+      ...options,
+    },
+  );
 };

@@ -15,8 +15,8 @@ export const SignIn = () => {
   const { accommodationListData } = useSideBar();
   const postLoginMutation = usePostLogin({
     onSuccess: (response) => {
-      setCookie('accessToken', response.data.data.accessToken);
-      setCookie('refreshToken', response.data.data.accessToken);
+      setCookie('accessToken', response.data.accessToken);
+      setCookie('refreshToken', response.data.accessToken);
     },
   });
 
