@@ -204,7 +204,7 @@ export const InitRoomRegistration = () => {
       const image = imageFiles[index];
       if (image.file !== null) {
         //사용자가 파일을 추가했을 때
-        formData.append('image1', image.file);
+        formData.append(`image${index + 1}`, image.file);
         shouldExecuteImageFile = true;
       }
     }

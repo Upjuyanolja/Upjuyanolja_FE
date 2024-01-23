@@ -145,7 +145,7 @@ export const InitAccommodationRegistration = () => {
     for (let index = 0; index < imageFiles.length; index++) {
       const image = imageFiles[index];
       if (image.file !== null) {
-        formData.append('image1', image.file);
+        formData.append(`image${index + 1}`, image.file);
         shouldExecuteImageFile = true;
       }
     }
