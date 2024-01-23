@@ -9,6 +9,5 @@ export type KoreanOptionNamesType = {
 
 export type RoomCardProps = {
   data: RoomCardData;
-  // eslint-disable-next-line no-unused-vars
   handleDeleteRoom: (roomId: number) => void;
 };

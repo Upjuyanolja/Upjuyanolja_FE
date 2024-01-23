@@ -77,8 +77,6 @@ export const handlers = [
   http.delete('/api/points/charges/1', deleteOrderCancelResolver),
 
   http.post(`/api/rooms/${accommodationId}`, postRoomResolver),
-  http.delete('/api/rooms/*', deleteRoomResolver),
-  http.get('/api/rooms/*', getRoomDetailResolver),
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
   http.post('/api/accommodations/images', postImageFileResolver),
@@ -86,4 +84,6 @@ export const handlers = [
     `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
     getRoomListResolver,
   ),
+  http.delete('/api/rooms/*', deleteRoomResolver),
+  http.get('/api/rooms/*', getRoomDetailResolver),
 ];

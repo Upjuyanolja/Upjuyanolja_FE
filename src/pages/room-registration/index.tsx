@@ -119,7 +119,7 @@ const RoomRegistration = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, imageFile, selectedOptions, priceError, capacityError]);
+  }, [form, imageFile, priceError, capacityError]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
