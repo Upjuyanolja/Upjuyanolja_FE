@@ -1,7 +1,6 @@
 import { SIGN_IN_API } from '@api/sign-in';
 import { AxiosError, AxiosResponse } from 'axios';
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
-import { Response } from '@/types/api';
 import { MemberData, SignInData } from '@api/sign-in/type';
 
 export const usePostLogin = (
