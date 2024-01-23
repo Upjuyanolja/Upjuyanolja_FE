@@ -23,7 +23,6 @@ export const SignUp = () => {
   const [checkThree, setCheckThree] = useState(false);
   const [checkFour, setCheckFour] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const validationSchema = getValidateSchema(queryClient);
 
   const postSignUpMutation = usePostSignUp({
     onSuccess() {
@@ -45,7 +44,6 @@ export const SignUp = () => {
           height: '41px',
         },
       });
-      queryClient.setQueryData(['authenticationNum'], response.data.data);
       setCheckOne(true);
       setCheckOne_1(false);
       setCheckOne_2(false);
@@ -67,9 +65,6 @@ export const SignUp = () => {
         }
       }
     },
-    onSettled: () => {
-      queryClient.invalidateQueries(['authenticationNum']);
-    },
   });
   const formik = useFormik({
     initialValues: {
@@ -78,7 +73,7 @@ export const SignUp = () => {
       password: '',
       checkPassword: '',
     },
-    validationSchema: validationSchema,
+    validationSchema: getValidateSchema,
     onSubmit: async (values) => {
       try {
         const signUpData = { email: values.email, password: values.password };

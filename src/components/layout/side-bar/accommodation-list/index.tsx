@@ -8,6 +8,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Accommodation } from '@api/accommodation/type';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import { setCookie } from '@hooks/sign-in/useSignIn';
 
 export const AccommodationList = ({
   accommodationListData,
@@ -41,6 +42,7 @@ export const AccommodationList = ({
     const newPath = `/${accommodationId}/${replacedPath}`;
     navigate(newPath);
     setAccommodationIdx(idx);
+    setCookie('accommodationId', accommodationId.toString());
   };
 
   const navigateToAccommodationAddPage = () => {

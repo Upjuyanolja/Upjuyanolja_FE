@@ -163,7 +163,7 @@ export const RoomCouponApplier = ({
     setPendingRoomDataList((prev: PendingRoomDataList) =>
       updateRoomDataList(prev, newItem),
     );
-  }, [itemQuantityValue, selectedDiscountType, discountValue]);
+  }, [itemQuantityValue, selectedDiscountType, determinedPrice]);
 
   useEffect(() => {
     if (!isGroupQuantitySelected || !isItemQuantitySelected) {

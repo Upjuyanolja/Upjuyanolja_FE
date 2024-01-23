@@ -2,7 +2,7 @@ export const ROUTES = {
   SIGNIN: '/signin',
   SIGNIN_AGREEMENT: '/signin/agreement',
   SIGNUP: '/signup',
-  SIGNUP_SUCCESS: 'signup/success',
+  SIGNUP_SUCCESS: '/signup/success',
   POINT_DETAIL: '/point-detail',
   INIT: '/init',
   INIT_ACCOMMODATION_REGISTRATION: '/accommodation-registration',
