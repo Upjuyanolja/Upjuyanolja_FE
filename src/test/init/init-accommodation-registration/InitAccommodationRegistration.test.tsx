@@ -25,7 +25,7 @@ describe('InitAccommodationRegistration', () => {
       return (
         <BrowserRouter>
           <RecoilRoot>
-            <Form>
+            <Form form={form}>
               <AccommodationAddress form={form} />
             </Form>
           </RecoilRoot>
@@ -48,7 +48,7 @@ describe('InitAccommodationRegistration', () => {
 
       return (
         <BrowserRouter>
-          <Form>
+          <Form form={form}>
             <AccommodationDesc form={form} />
           </Form>
         </BrowserRouter>

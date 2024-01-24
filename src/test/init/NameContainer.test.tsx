@@ -13,7 +13,7 @@ describe('NameContainer', () => {
       return (
         <BrowserRouter>
           <RecoilRoot>
-            <Form>
+            <Form form={form}>
               <NameContainer
                 header="숙소명"
                 placeholder="숙소명을 입력해 주세요."
