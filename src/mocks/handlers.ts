@@ -39,7 +39,7 @@ export const handlers = [
   ),
   http.post('/api/auth/refresh', postRefreshResolver),
   http.get(
-    `${process.env.REACT_APP_SERVER_URL}api/accommodations/backoffice`,
+    `${process.env.REACT_APP_SERVER_URL}/api/accommodations/backoffice`,
     getAccommodationsResolver,
   ),
   http.get(
@@ -50,14 +50,25 @@ export const handlers = [
     `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/revenue/*`,
     getRevenueResolver,
   ),
-
-  http.get('/api/coupons/backoffice/manage/*', getCouponResolver),
-  http.delete('/api/coupons/backoffice/manage', deleteCouponResolver),
-  http.patch('/api/coupons/backoffice/manage', editCouponResolver),
+  http.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/manage/*`,
+    getCouponResolver,
+  ),
+  http.delete(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/manage`,
+    deleteCouponResolver,
+  ),
+  http.patch(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/manage`,
+    editCouponResolver,
+  ),
 
   http.get('/api/coupons/backoffice/buy/*', getCouponRoomListResolver),
   http.post('/api/coupons/backoffice/buy', buyCouponResolver),
-  http.patch('/api/coupons/backoffice/manage/buy', successCouponResolver),
+  http.patch(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/manage/buy`,
+    successCouponResolver,
+  ),
 
   http.get(
     `${process.env.REACT_APP_SERVER_URL}/api/points/summary`,

@@ -14,23 +14,21 @@ import {
 
 export const COUPON_API = {
   getStatics: (accommodationId: string) =>
-    instance.get<Response<staticsData>>(
+    instance.get<staticsData>(
       `/api/coupons/backoffice/statistics/${accommodationId}`,
     ),
   getRevenue: (accommodationId: string) =>
-    instance.get<Response<revenueData>>(
+    instance.get<revenueData>(
       `/api/coupons/backoffice/revenue/${accommodationId}`,
     ),
   getCoupon: (accommodationId: string) =>
-    instance.get<Response<coupons>>(
-      `/api/coupons/backoffice/manage/${accommodationId}`,
-    ),
+    instance.get<coupons>(`/api/coupons/backoffice/manage/${accommodationId}`),
   deleteCoupon: (params: CouponDeleteParams) =>
-    instance.delete<Response<null>>('/api/coupons/backoffice/manage', {
+    instance.delete<null>('/api/coupons/backoffice/manage', {
       data: params,
     }),
   editCoupon: (params: CouponEditParams) =>
-    instance.patch<Response<null>>('/api/coupons/backoffice/manage', params),
+    instance.patch<null>('/api/coupons/backoffice/manage', params),
   getCouponRoomList: (accommodationId: string) =>
     instance.get<Response<CouponRoomList>>(
       `/api/coupons/backoffice/buy/${accommodationId}`,
@@ -40,8 +38,5 @@ export const COUPON_API = {
       params,
     }),
   purchaseAdditionalCoupon: (params: PurchaseCouponParams) =>
-    instance.patch<Response<null>>(
-      '/api/coupons/backoffice/manage/buy',
-      params,
-    ),
+    instance.patch<null>('/api/coupons/backoffice/manage/buy', params),
 };
