@@ -6,7 +6,6 @@ import { message } from 'antd';
 import { isAccessTokenExpired } from '@/utils/refresh';
 
 export const instance = axios.create({
-  // baseURL: '',
   baseURL: process.env.REACT_APP_SERVER_URL,
   timeout: 5000,
   headers: {
@@ -47,7 +46,6 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
-    // 여기 뺐습니다.
     return Promise.reject(error);
   },
 );

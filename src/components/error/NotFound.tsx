@@ -57,7 +57,6 @@ const StyledLayout = styled.main`
   margin: 0 auto;
   width: 374px;
   height: calc(100vh - 56px);
-  border: 1px solid red;
 
   display: flex;
   flex-direction: column;
