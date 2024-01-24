@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, message } from 'antd';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -6,10 +6,18 @@ import {
   ButtonContainerStyledWrapperProps,
 } from './type';
 import { TextBox } from '@components/text-box';
-import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
-import { useSetRecoilState } from 'recoil';
-import { roomPrevButtonState } from '@stores/init/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  isUpdatedAccommodationState,
+  roomPrevButtonState,
+  userInputValueState,
+} from '@stores/init/atoms';
+import { useAccommodationInfo } from '@queries/init';
+import { AxiosError } from 'axios';
+import { PostAccommodationParams } from '@api/init/type';
+import { RESPONSE_CODE } from '@/constants/api';
+import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 
 export const ButtonContainer = ({
   buttonStyle,
@@ -27,10 +35,106 @@ export const ButtonContainer = ({
     }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userInputValue, setUserInputValue] =
+    useRecoilState(userInputValueState);
+  let accommodationId = -1;
+  const setIsUpdatedAccommodation = useSetRecoilState(
+    isUpdatedAccommodationState,
+  );
 
-  const handleModalOk = () => {
-    setIsModalOpen(false);
+  const imageUrls: { url: string }[] = userInputValue[0].images.map(
+    (image) => ({ url: image.url }),
+  );
+
+  const postAccommodationParams: PostAccommodationParams = {
+    name: userInputValue[0].name,
+    address: userInputValue[0].address,
+    detailAddress: userInputValue[0].detailAddress,
+    zipCode: userInputValue[0].zipCode,
+    description: userInputValue[0].description,
+    category: userInputValue[0].type,
+    thumbnail: userInputValue[0].thumbnail,
+    images: imageUrls,
+    option: userInputValue[0].options,
+    rooms: userInputValue[0].rooms.map((room) => ({
+      name: room.name,
+      price: room.price as number,
+      defaultCapacity: room.defaultCapacity as number,
+      maxCapacity: room.maxCapacity as number,
+      checkInTime: room.checkInTime,
+      checkOutTime: room.checkOutTime,
+      amount: room.count as number,
+      images: room.images.map((image) => ({ url: image.url })),
+      option: room.options,
+    })),
+  };
+
+  const { mutate: accommodationInfo } = useAccommodationInfo({
+    onSuccess(data) {
+      accommodationId = data.data.accommodationId;
+      setIsUpdatedAccommodation(false);
+
+      const cookieAccommodationId = getCookie('accommodationId');
+      if (!cookieAccommodationId) setCookie('accommodationId', accommodationId);
+
+      message.success(`${data.data.name} 숙소가 등록되었습니다.`);
+      navigate(`/${accommodationId}${ROUTES.MAIN}`);
+
+      setUserInputValue([
+        {
+          name: '',
+          address: '',
+          detailAddress: '',
+          zipCode: '',
+          description: '',
+          type: '',
+          images: [],
+          thumbnail: '',
+          options: {
+            cooking: false,
+            parking: false,
+            pickup: false,
+            barbecue: false,
+            fitness: false,
+            karaoke: false,
+            sauna: false,
+            sports: false,
+            seminar: false,
+          },
+          rooms: [],
+          editRoomIndex: -1,
+          isAccommodationEdit: false,
+        },
+      ]);
+    },
+    onError(error) {
+      if (error instanceof AxiosError) {
+        message.error({
+          content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+      if (
+        error.response?.data.code === RESPONSE_CODE.INVALID_CATEGORY ||
+        error.response?.data.code ===
+          RESPONSE_CODE.EMPTY_ACCOMMODATION_IMAGES ||
+        error.response?.data.code === RESPONSE_CODE.EMPTY_ROOM_INFO ||
+        error.response?.data.code === RESPONSE_CODE.REQUEST_BODY_ERROR ||
+        error.response?.data.code === RESPONSE_CODE.EMPTY_ROOM_IMAGES
+      ) {
+        message.error({
+          content: '요청을 실패했습니다. 관리자에게 문의해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+      if (error.response?.data.code === RESPONSE_CODE.NOT_FOUND_MEMBER) {
+        navigate(ROUTES.SIGNIN);
+      }
+    },
+  });
+
+  const handleConfirmModalOk = () => {
+    accommodationInfo(postAccommodationParams);
   };
 
   const confirm = () => {
@@ -68,7 +172,7 @@ export const ButtonContainer = ({
       width: '576px',
       bodyStyle: { height: '621px' },
       centered: true,
-      onOk: () => setIsModalOpen(true),
+      onOk: handleConfirmModalOk,
     });
   };
 
@@ -120,35 +224,6 @@ export const ButtonContainer = ({
           추가하기
         </StyledButton>
       )}
-      <Modal
-        open={isModalOpen}
-        onOk={handleModalOk}
-        footer={[]}
-        closable={false}
-        width={576}
-        centered={true}
-      >
-        <StyledTextContainer>
-          <TextBox typography="h1" fontWeight={700} color="primary">
-            환영합니다!
-          </TextBox>
-          <TextBox
-            typography="h4"
-            fontWeight={400}
-            style={{ textAlign: 'center' }}
-          >
-            레스케이프 호텔 숙소
-            <br />
-            등록이 완료되었습니다.
-          </TextBox>
-        </StyledTextContainer>
-        <StyledToMainButton
-          type="primary"
-          onClick={() => navigate(ROUTES.MAIN)}
-        >
-          홈으로 이동
-        </StyledToMainButton>
-      </Modal>
     </StyledWrapper>
   );
 };
@@ -187,24 +262,6 @@ const StyledNextText = styled.div`
   margin: 130px 0 3px;
 `;
 
-const StyledTextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  height: 507px;
-`;
-
 const StyledMiddleTextContainer = styled.div`
   text-align: center;
-`;
-
-const StyledToMainButton = styled(Button)`
-  width: 100%;
-  height: 46px;
-
-  font-size: 20px;
-  font-weight: 700;
 `;

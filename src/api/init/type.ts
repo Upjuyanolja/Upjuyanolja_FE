@@ -1,5 +1,5 @@
 export type PostImageFile = {
-  urls: string[];
+  urls: { url: string }[];
 };
 
 export type PostAccommodationParams = {
@@ -8,9 +8,10 @@ export type PostAccommodationParams = {
   detailAddress: string;
   zipCode: string;
   description: string;
-  type: string;
+  category: string;
   images: { url: string }[];
-  options: {
+  thumbnail: string;
+  option: {
     cooking: boolean;
     parking: boolean;
     pickup: boolean;
@@ -28,9 +29,9 @@ export type PostAccommodationParams = {
     maxCapacity: number;
     checkInTime: string;
     checkOutTime: string;
-    count: number;
+    amount: number;
     images: { url: string }[];
-    options: {
+    option: {
       airCondition: boolean;
       tv: boolean;
       internet: boolean;
@@ -39,40 +40,38 @@ export type PostAccommodationParams = {
 };
 
 export type PostAccommodation = {
-  message: string;
-  code?: number | undefined;
-  data: {
-    accommodationId: number;
-    name: string;
-    address: string;
-    description: string;
-    type: string;
-    images: { url: string }[];
-    options: {
-      cooking: boolean;
-      parking: boolean;
-      pickup: boolean;
-      barbecue: boolean;
-      fitness: boolean;
-      karaoke: boolean;
-      sauna: boolean;
-      sports: boolean;
-      seminar: boolean;
-    };
-    rooms: {
-      name: string;
-      price: number;
-      defaultCapacity: number;
-      maxCapacity: number;
-      checkInTime: string;
-      checkOutTime: string;
-      count: number;
-      images: { id: number; url: string }[];
-      options: {
-        airCondition: boolean;
-        tv: boolean;
-        internet: boolean;
-      };
-    }[];
+  accommodationId: number;
+  name: string;
+  address: string;
+  description: string;
+  category: string;
+  images: { id: number; url: string }[];
+  option: {
+    cooking: boolean;
+    parking: boolean;
+    pickup: boolean;
+    barbecue: boolean;
+    fitness: boolean;
+    karaoke: boolean;
+    sauna: boolean;
+    sports: boolean;
+    seminar: boolean;
   };
+  rooms: {
+    id: number;
+    status: string;
+    name: string;
+    price: number;
+    defaultCapacity: number;
+    maxCapacity: number;
+    checkInTime: string;
+    checkOutTime: string;
+    amount: number;
+    images: { id: number; url: string }[];
+    option: {
+      airCondition: boolean;
+      tv: boolean;
+      internet: boolean;
+    };
+  }[];
 };

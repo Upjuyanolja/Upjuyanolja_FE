@@ -21,12 +21,12 @@ import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { useImageFile } from '@queries/init';
 import { AxiosError } from 'axios';
-import { Image } from '@api/room/type';
 import {
   UserInputValue,
   defaultAccommodation,
 } from '@components/init/init-accommodation-registration/type';
 import { AccommodationCategoryProps } from '@components/init/type';
+import { RESPONSE_CODE } from '@/constants/api';
 
 export const InitAccommodationRegistration = () => {
   const navigate = useNavigate();
@@ -84,6 +84,23 @@ export const InitAccommodationRegistration = () => {
             type = form.getFieldValue('accommodation-category');
         }
 
+        const newImages = [];
+
+        const urls = data.data.urls;
+        for (let i = 0; i < imageFiles.length; i++) {
+          const image = imageFiles[i];
+          if (image.url !== '') {
+            newImages.push({ url: image.url });
+          } // 이미 이미지 url이 있는 상태
+        }
+
+        for (let i = 0; i < urls.length; i++) {
+          const url = urls[i].url;
+          if (typeof url === 'string') {
+            newImages.push({ url });
+          }
+        }
+
         const updatedUserInputValue = {
           ...userInputValue,
           type,
@@ -93,15 +110,43 @@ export const InitAccommodationRegistration = () => {
           zipCode: form.getFieldValue('accommodation-postCode'),
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
-          images: data.data.data.urls as unknown as Image[],
+          images: newImages,
+          thumbnail: data.data.urls[0].url,
         };
         return [updatedUserInputValue];
       });
+
+      setUpdatedAccommodationInfo(true);
+      setSelectedOptions({
+        cooking: false,
+        parking: false,
+        pickup: false,
+        barbecue: false,
+        fitness: false,
+        karaoke: false,
+        sauna: false,
+        sports: false,
+        seminar: false,
+      });
+      setImageFiles([]);
+      setClickedPrevButton(false);
+
+      if (userInputValue[0].isAccommodationEdit) {
+        navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      } else {
+        navigate(ROUTES.INIT_ROOM_REGISTRATION);
+      }
     },
     onError(error) {
       if (error instanceof AxiosError) {
         message.error({
           content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+      if (error.response?.data.code === RESPONSE_CODE.IMAGE_SAVE_FAIL) {
+        message.error({
+          content: '요청을 실패했습니다. 관리자에게 문의해주세요',
           style: { marginTop: '210px' },
         });
       }
@@ -113,11 +158,22 @@ export const InitAccommodationRegistration = () => {
 
     let shouldExecuteImageFile = false;
 
-    for (let index = 0; index < imageFiles.length; index++) {
+    for (let i = 0; i < imageFiles.length; i++) {
+      const image = imageFiles[i];
+      if (image.file) shouldExecuteImageFile = true;
+    }
+
+    for (let index = 0; index < 5; index++) {
       const image = imageFiles[index];
-      if (image.file !== null) {
-        formData.append('image1', image.file);
-        shouldExecuteImageFile = true;
+      if (!image || image.file === null) {
+        // 등록한 적이 있거나 이미지 자체를 등록하지 않은 순서
+        const emptyBlob = new Blob([], { type: 'application/octet-stream' });
+        const nullFile = new File([emptyBlob], 'nullFile.txt', {
+          type: 'text/plain',
+        });
+        formData.append(`image${index + 1}`, nullFile);
+      } else {
+        formData.append(`image${index + 1}`, image.file);
       }
     }
 
@@ -145,32 +201,33 @@ export const InitAccommodationRegistration = () => {
           zipCode: form.getFieldValue('accommodation-postCode'),
           description: form.getFieldValue('accommodation-desc'),
           options: selectedOptions,
-          images: userInputValue[0].images,
+          images: imageFiles,
+          thumbnail: userInputValue[0].images[0].url,
           rooms: userInputValue[0].rooms,
         };
         return [updatedUserInputValue];
       });
-    }
 
-    setUpdatedAccommodationInfo(true);
-    setSelectedOptions({
-      cooking: false,
-      parking: false,
-      pickup: false,
-      barbecue: false,
-      fitness: false,
-      karaoke: false,
-      sauna: false,
-      sports: false,
-      seminar: false,
-    });
-    setImageFiles([]);
-    setClickedPrevButton(false);
+      setUpdatedAccommodationInfo(true);
+      setSelectedOptions({
+        cooking: false,
+        parking: false,
+        pickup: false,
+        barbecue: false,
+        fitness: false,
+        karaoke: false,
+        sauna: false,
+        sports: false,
+        seminar: false,
+      });
+      setImageFiles([]);
+      setClickedPrevButton(false);
 
-    if (userInputValue[0].isAccommodationEdit) {
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
-    } else {
-      navigate(ROUTES.INIT_ROOM_REGISTRATION);
+      if (userInputValue[0].isAccommodationEdit) {
+        navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      } else {
+        navigate(ROUTES.INIT_ROOM_REGISTRATION);
+      }
     }
   };
 

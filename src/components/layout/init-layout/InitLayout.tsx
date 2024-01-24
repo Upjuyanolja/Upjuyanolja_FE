@@ -6,7 +6,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { RouteConfigProps } from './type';
 import couponLogo from '@assets/image/logo.png';
-import { LeftOutlined } from '@ant-design/icons';
 
 export const InitLayout = () => {
   const location = useLocation();
@@ -33,24 +32,13 @@ export const InitLayout = () => {
   const { pageName = '숙소 등록하기', pageDesc = '숙소 정보를 알려주세요.' } =
     routeConfig[currentRoute as keyof typeof routeConfig] || {};
 
-  const kindOfIcon = () => {
-    if (
-      window.location.pathname === ROUTES.INIT ||
-      window.location.pathname === ROUTES.INIT_INFO_CONFIRMATION
-    ) {
-      return <StyledImage src={couponLogo} />;
-    } else {
-      return <StyledPrevButton />;
-    }
-  };
-
   return (
     <StyledLayout>
       <StyledHeader>
         <StyledHeaderContent>
           <StyledHeaderTextWrapper>
-            {kindOfIcon()}
-            <TextBox typography="h5" fontWeight={700}>
+            <StyledImage src={couponLogo} />
+            <TextBox typography="h5" fontWeight={700} cursor="default">
               빨리잡아! 쿠폰센터
             </TextBox>
           </StyledHeaderTextWrapper>
@@ -110,8 +98,6 @@ const StyledHeaderTextWrapper = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-
-  cursor: pointer;
 `;
 
 const StyledHeadContentCotainer = styled.div`
@@ -158,9 +144,4 @@ const StyledMainContent = styled(Layout.Content)`
 const StyledImage = styled.img`
   width: 26px;
   height: 15px;
-`;
-
-const StyledPrevButton = styled(LeftOutlined)`
-  color: ${colors.primary};
-  font-size: '24px';
 `;
