@@ -10,6 +10,7 @@ export const SignOutBtn = () => {
     // 밑에는 onSuccess 시 할 일
     removeCookie('accessToken');
     removeCookie('refreshToken');
+    removeCookie('accommodationId');
     localStorage.clear();
     window.location.href = ROUTES.SIGNIN;
     // 여기 밑에는 onError 시 할 일 추가할 예정
