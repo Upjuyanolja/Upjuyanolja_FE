@@ -18,13 +18,13 @@ export const useGetPointDetail = (
   menuStatus: menuStatusType,
   page: number,
   options?: UseQueryOptions<
-    AxiosResponse<Response<PointDetailDataType>>,
+    AxiosResponse<PointDetailDataType>,
     AxiosError,
     PointDetailDataType
   >,
 ) => {
   return useQuery<
-    AxiosResponse<Response<PointDetailDataType>>,
+    AxiosResponse<PointDetailDataType>,
     AxiosError,
     PointDetailDataType
   >(
