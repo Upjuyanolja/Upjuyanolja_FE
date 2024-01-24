@@ -92,7 +92,15 @@ export const ImageUploadContainer = ({
 
   const handleRemove = (key: number) => {
     const itemToRemove = imageFile.find((item) => item.key === key);
-    if (itemToRemove) {
+    if (!itemToRemove) return;
+
+    const isInAddedImages = addedImageFile.some((item) => item.key === key);
+
+    if (isInAddedImages) {
+      setAddedImageFile((prevAddedImageFile) =>
+        prevAddedImageFile.filter((item) => item.key !== key),
+      );
+    } else {
       setRemovedImageFile((prevRemovedImageFile) => [
         ...prevRemovedImageFile,
         itemToRemove,
