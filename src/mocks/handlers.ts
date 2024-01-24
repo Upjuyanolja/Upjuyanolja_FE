@@ -30,6 +30,7 @@ import {
   getRoomListResolver,
   deleteRoomResolver,
   getRoomDetailResolver,
+  updateRoomResolver,
 } from './room';
 import { postAccommodationInfoResolver, postImageFileResolver } from './init';
 import { postRefreshResolver } from './refresh';
@@ -96,4 +97,5 @@ export const handlers = [
   ),
   http.delete('/api/rooms/*', deleteRoomResolver),
   http.get('/api/rooms/*', getRoomDetailResolver),
+  http.put('/api/rooms/*', updateRoomResolver),
 ];

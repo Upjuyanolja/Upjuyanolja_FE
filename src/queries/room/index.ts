@@ -13,6 +13,8 @@ import {
   RoomPostResponseData,
   RoomListResponseData,
   RoomDeleteResponseData,
+  RoomUpdateData,
+  RoomUpdateResponseData,
 } from '@api/room/type';
 import { ROOM_API } from '@api/room';
 
@@ -91,4 +93,21 @@ export const useGetRoomDetail = (
     },
     options,
   );
+};
+
+export const useUpdateRoom = (
+  roomId: string,
+  options?: UseMutationOptions<
+    AxiosResponse<Response<RoomUpdateResponseData>>,
+    AxiosError,
+    RoomUpdateData
+  >,
+) => {
+  return useMutation<
+    AxiosResponse<Response<RoomUpdateResponseData>>,
+    AxiosError,
+    RoomUpdateData
+  >((data: RoomUpdateData) => ROOM_API.updateRoom(data, roomId), {
+    ...options,
+  });
 };

@@ -91,3 +91,31 @@ export type RoomDeleteResponseData = {
   images: Image[];
   options: Options;
 };
+
+export type RoomUpdateData = {
+  name: string;
+  price: number | null;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  status: string;
+  amount: number | null;
+  addImages: Image[];
+  removeImages: Image[];
+  options: Options;
+};
+
+export type RoomUpdateResponseData = {
+  id: number;
+  name: string;
+  price: number | null;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  status: string;
+  amount: number | null;
+  images: Image[];
+  options: Options;
+};

@@ -24,3 +24,13 @@ export const imageFileState = atom<ImageFile[]>({
   key: 'imageFileState',
   default: [],
 });
+
+export const addedImageFileState = atom<ImageFile[]>({
+  key: 'imageFileState',
+  default: [],
+});
+
+export const removedImageFileState = atom<ImageFile[]>({
+  key: 'imageFileState',
+  default: [],
+});

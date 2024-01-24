@@ -5,6 +5,8 @@ import {
   RoomData,
   RoomPostResponseData,
   RoomDeleteResponseData,
+  RoomUpdateData,
+  RoomUpdateResponseData,
 } from './type';
 
 export const ROOM_API = {
@@ -23,6 +25,8 @@ export const ROOM_API = {
     instance.delete<Response<RoomDeleteResponseData>>(`/api/rooms/${roomId}`),
   getRoomDetail: (roomId: string) =>
     instance.get<Response<RoomDeleteResponseData>>(`/api/rooms/${roomId}`),
-  //   editRoom: (params: RoomEditParams) =>
-  //     instance.patch<Response<null>>('/api/rooms/{roomId}', params),
+  updateRoom: (data: RoomUpdateData, roomId: string) =>
+    instance.put<Response<RoomUpdateResponseData>>(`/api/rooms/${roomId}`, {
+      data,
+    }),
 };
