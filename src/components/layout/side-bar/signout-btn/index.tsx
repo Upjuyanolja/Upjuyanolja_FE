@@ -1,19 +1,65 @@
+import { RESPONSE_CODE } from '@/constants/api';
 import { ROUTES } from '@/constants/routes';
 import { LogoutOutlined } from '@ant-design/icons';
 import { TextBox } from '@components/text-box';
 import { removeCookie } from '@hooks/sign-in/useSignIn';
+import { useDeleteLogout } from '@queries/logout';
+import { message } from 'antd';
+import { AxiosError } from 'axios';
 import styled from 'styled-components';
 
 export const SignOutBtn = () => {
+  const deleteLogoutMutation = useDeleteLogout({
+    onSuccess() {
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      removeCookie('accommodationId');
+      localStorage.clear();
+      setTimeout(() => {
+        window.location.href = ROUTES.SIGNIN;
+      }, 1000);
+    },
+    onError(error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        const errorData = error.response.data;
+        if (errorData.code === RESPONSE_CODE.NOT_FOUND_MEMBER) {
+          message.error({
+            content: (
+              <TextBox typography="body3" fontWeight={'400'}>
+                회원 정보를 찾을 수 없습니다.
+              </TextBox>
+            ),
+            duration: 2,
+          });
+          removeCookie('accessToken');
+          removeCookie('refreshToken');
+          removeCookie('accommodationId');
+          localStorage.clear();
+          setTimeout(() => {
+            window.location.href = ROUTES.SIGNIN;
+          }, 1000);
+        } else {
+          message.error({
+            content: (
+              <TextBox typography="body3" fontWeight={'400'}>
+                이미 로그아웃한 회원입니다.
+              </TextBox>
+            ),
+            duration: 2,
+          });
+          removeCookie('accessToken');
+          removeCookie('refreshToken');
+          removeCookie('accommodationId');
+          localStorage.clear();
+          setTimeout(() => {
+            window.location.href = ROUTES.SIGNIN;
+          }, 1000);
+        }
+      }
+    },
+  });
   const handleSignOut = () => {
-    // 여기에 로그아웃 api 연결할 예정
-    // 밑에는 onSuccess 시 할 일
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-    removeCookie('accommodationId');
-    localStorage.clear();
-    window.location.href = ROUTES.SIGNIN;
-    // 여기 밑에는 onError 시 할 일 추가할 예정
+    deleteLogoutMutation.mutate();
   };
   return (
     <StyledContainer>
