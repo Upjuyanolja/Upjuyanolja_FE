@@ -1,19 +1,16 @@
 {
-  "message": "성공적으로 이미지를 저장했습니다.",
-  "data": {
-    "urls": [
-      {
-        "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
-      },
-      {
-        "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
-      },
-      {
-        "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
-      },
-      {
-        "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
-      }
-    ]
-  }
+  "urls": [
+    {
+      "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
+    },
+    {
+      "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
+    },
+    {
+      "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
+    },
+    {
+      "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
+    }
+  ]
 }

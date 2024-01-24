@@ -27,9 +27,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { Image } from '@api/room/type';
 import { TextBox } from '@components/text-box';
 import moment from 'moment';
+import { RESPONSE_CODE } from '@/constants/api';
 
 export const InitRoomRegistration = () => {
   const [form] = Form.useForm();
@@ -102,14 +102,6 @@ export const InitRoomRegistration = () => {
     }
   }, []);
 
-  const getPrevImageFiles = () => {
-    const prevImageFile: Image[] = [];
-    for (let i = 0; i < imageFiles.length; i++) {
-      if (imageFiles[i].url) prevImageFile.push({ url: imageFiles[i].url });
-    }
-    return prevImageFile;
-  };
-
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
       setUserInputValue((prevUserInputValueState) => {
@@ -123,7 +115,23 @@ export const InitRoomRegistration = () => {
         const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
         const count = form.getFieldValue('count');
 
-        const prevImg = getPrevImageFiles();
+        const newImages = [];
+
+        const urls = data.data.urls;
+        for (let i = 0; i < imageFiles.length; i++) {
+          const image = imageFiles[i];
+          if (image.url !== '') {
+            newImages.push({ url: image.url });
+          } // 이미 이미지 url이 있는 상태
+        }
+
+        for (let i = 0; i < urls.length; i++) {
+          const url = urls[i].url;
+          if (typeof url === 'string') {
+            newImages.push({ url });
+          }
+        }
+
         const updatedRoom: Room = {
           name: roomName,
           price: price,
@@ -133,7 +141,7 @@ export const InitRoomRegistration = () => {
           checkOutTime: checkOutTime,
           count: count,
           options: selectedOptions,
-          images: [...prevImg, ...(data.data.data.urls as unknown as Image[])],
+          images: newImages,
         };
 
         const updatedRooms = [...prevUserInputValue.rooms];
@@ -155,11 +163,23 @@ export const InitRoomRegistration = () => {
 
         return [updatedUserInputValue];
       });
+
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
+      setImageFiles([]);
+      setSameRoomName(false);
+      setIsAddRoom(false);
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
     },
     onError(error) {
       if (error instanceof AxiosError) {
         message.error({
           content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
+          style: { marginTop: '210px' },
+        });
+      }
+      if (error.response?.data.code === RESPONSE_CODE.IMAGE_SAVE_FAIL) {
+        message.error({
+          content: '요청을 실패했습니다. 관리자에게 문의해주세요',
           style: { marginTop: '210px' },
         });
       }
@@ -187,12 +207,22 @@ export const InitRoomRegistration = () => {
 
     let shouldExecuteImageFile = false;
 
-    for (let index = 0; index < imageFiles.length; index++) {
+    for (let i = 0; i < imageFiles.length; i++) {
+      const image = imageFiles[i];
+      if (image.file) shouldExecuteImageFile = true;
+    }
+
+    for (let index = 0; index < 5; index++) {
       const image = imageFiles[index];
-      if (image.file !== null) {
-        //사용자가 파일을 추가했을 때
-        formData.append('image1', image.file);
-        shouldExecuteImageFile = true;
+      if (!image || image.file === null) {
+        // 등록한 적이 있거나 이미지 자체를 등록하지 않은 순서
+        const emptyBlob = new Blob([], { type: 'application/octet-stream' });
+        const nullFile = new File([emptyBlob], 'nullFile.txt', {
+          type: 'text/plain',
+        });
+        formData.append(`image${index + 1}`, nullFile);
+      } else {
+        formData.append(`image${index + 1}`, image.file);
       }
     }
 
@@ -219,9 +249,7 @@ export const InitRoomRegistration = () => {
           checkOutTime: checkOutTime,
           count: count,
           options: selectedOptions,
-          images:
-            userInputValue[0].rooms[userInputValue[0].editRoomIndex as number]
-              .images,
+          images: imageFiles,
         };
 
         const updatedRooms = [...prevUserInputValue.rooms];
@@ -243,13 +271,13 @@ export const InitRoomRegistration = () => {
 
         return [updatedUserInputValue];
       });
-    }
 
-    setSelectedOptions({ airCondition: false, tv: false, internet: false });
-    setImageFiles([]);
-    setSameRoomName(false);
-    setIsAddRoom(false);
-    navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
+      setImageFiles([]);
+      setSameRoomName(false);
+      setIsAddRoom(false);
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    }
   };
 
   const areFormFieldsValid = () => {

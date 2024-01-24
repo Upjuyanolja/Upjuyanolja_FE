@@ -112,6 +112,7 @@ export type UserInputValue = {
   description: string;
   type: string;
   images: Image[];
+  thumbnail: string;
   options: AccommodationOptions;
   rooms: Room[];
   editRoomIndex?: number | undefined;

@@ -1,130 +1,127 @@
 {
-  "message": "쿠폰 조회에 성공했습니다.",
-  "data": {
-    "accommodationId": 1,
-    "accommodationName": "패캠 럭셔리 호텔 상설점",
-    "expiry": "2024-05-13",
-    "rooms": [
-      {
-        "roomId": 1,
-        "roomName": "스탠다드 트윈룸",
-        "roomPrice": 100000,
-        "coupons": [
-          {
-            "couponId": 1,
-            "status": "ENABLE",
-            "discountType": "FLAT",
-            "discount": 1000,
-            "couponName": "1,000원 쿠폰",
-            "appliedPrice": 99000,
-            "dayLimit": -1,
-            "quantity": 50,
-            "couponType": "WEEKDAYS"
-          },
-          {
-            "couponId": 2,
-            "status": "DISABLE",
-            "discountType": "RATE",
-            "discount": 15,
-            "couponName": "15% 쿠폰",
-            "appliedPrice": 85000,
-            "dayLimit": 10,
-            "quantity": 100,
-            "couponType": "WEEKENDS"
-          },
-          {
-            "couponId": 3,
-            "status": "SOLD_OUT",
-            "discountType": "RATE",
-            "discount": 15,
-            "couponName": "15% 쿠폰",
-            "appliedPrice": 85000,
-            "dayLimit": 10,
-            "quantity": 0,
-            "couponType": "ALL_DAYS"
-          }
-        ]
-      },
-      {
-        "roomId": 2,
-        "roomName": "디럭스 룸",
-        "roomPrice": 150000,
-        "coupons": [
-          {
-            "couponId": 1,
-            "status": "ENABLE",
-            "discountType": "FLAT",
-            "discount": 1000,
-            "couponName": "1,000원 쿠폰",
-            "appliedPrice": 14000,
-            "dayLimit": -1,
-            "quantity": 50,
-            "couponType": "WEEKDAYS"
-          },
-          {
-            "couponId": 2,
-            "status": "DISABLE",
-            "discountType": "RATE",
-            "discount": 15,
-            "couponName": "15% 쿠폰",
-            "appliedPrice": 127500,
-            "dayLimit": 10,
-            "quantity": 100,
-            "couponType": "WEEKENDS"
-          },
-          {
-            "couponId": 3,
-            "status": "SOLD_OUT",
-            "discountType": "RATE",
-            "discount": 15,
-            "couponName": "15% 쿠폰",
-            "appliedPrice": 127500,
-            "dayLimit": 10,
-            "quantity": 0,
-            "couponType": "ALL_DAYS"
-          }
-        ]
-      },
-      {
-        "roomId": 3,
-        "roomName": "디럭스 룸",
-        "roomPrice": 150000,
-        "coupons": [
-          {
-            "couponId": 1,
-            "status": "ENABLE",
-            "discountType": "FLAT",
-            "discount": 1000,
-            "couponName": "1,000원 쿠폰",
-            "appliedPrice": 14000,
-            "dayLimit": -1,
-            "quantity": 50,
-            "couponType": "WEEKDAYS"
-          },
-          {
-            "couponId": 2,
-            "status": "DISABLE",
-            "discountType": "RATE",
-            "discount": 15,
-            "couponName": "15% 쿠폰",
-            "appliedPrice": 127500,
-            "dayLimit": 10,
-            "quantity": 100,
-            "couponType": "WEEKENDS"
-          },
-          {
-            "couponId": 3,
-            "status": "SOLD_OUT",
-            "discountType": "RATE",
-            "discount": 15,
-            "couponName": "15% 쿠폰",
-            "appliedPrice": 127500,
-            "dayLimit": 10,
-            "quantity": 0,
-            "couponType": "ALL_DAYS"
-          }
-        ]
-      }
-    ]
-  }
+  "accommodationId": 1,
+  "accommodationName": "패캠 럭셔리 호텔 상설점",
+  "expiry": "2024-05-13",
+  "rooms": [
+    {
+      "roomId": 1,
+      "roomName": "스탠다드 트윈룸",
+      "roomPrice": 100000,
+      "coupons": [
+        {
+          "couponId": 1,
+          "status": "ENABLE",
+          "discountType": "FLAT",
+          "discount": 1000,
+          "couponName": "1,000원 쿠폰",
+          "appliedPrice": 99000,
+          "dayLimit": -1,
+          "quantity": 50,
+          "couponType": "WEEKDAYS"
+        },
+        {
+          "couponId": 2,
+          "status": "DISABLE",
+          "discountType": "RATE",
+          "discount": 15,
+          "couponName": "15% 쿠폰",
+          "appliedPrice": 85000,
+          "dayLimit": 10,
+          "quantity": 100,
+          "couponType": "WEEKENDS"
+        },
+        {
+          "couponId": 3,
+          "status": "SOLD_OUT",
+          "discountType": "RATE",
+          "discount": 15,
+          "couponName": "15% 쿠폰",
+          "appliedPrice": 85000,
+          "dayLimit": 10,
+          "quantity": 0,
+          "couponType": "ALL_DAYS"
+        }
+      ]
+    },
+    {
+      "roomId": 2,
+      "roomName": "디럭스 룸",
+      "roomPrice": 150000,
+      "coupons": [
+        {
+          "couponId": 1,
+          "status": "ENABLE",
+          "discountType": "FLAT",
+          "discount": 1000,
+          "couponName": "1,000원 쿠폰",
+          "appliedPrice": 14000,
+          "dayLimit": -1,
+          "quantity": 50,
+          "couponType": "WEEKDAYS"
+        },
+        {
+          "couponId": 2,
+          "status": "DISABLE",
+          "discountType": "RATE",
+          "discount": 15,
+          "couponName": "15% 쿠폰",
+          "appliedPrice": 127500,
+          "dayLimit": 10,
+          "quantity": 100,
+          "couponType": "WEEKENDS"
+        },
+        {
+          "couponId": 3,
+          "status": "SOLD_OUT",
+          "discountType": "RATE",
+          "discount": 15,
+          "couponName": "15% 쿠폰",
+          "appliedPrice": 127500,
+          "dayLimit": 10,
+          "quantity": 0,
+          "couponType": "ALL_DAYS"
+        }
+      ]
+    },
+    {
+      "roomId": 3,
+      "roomName": "디럭스 룸",
+      "roomPrice": 150000,
+      "coupons": [
+        {
+          "couponId": 1,
+          "status": "ENABLE",
+          "discountType": "FLAT",
+          "discount": 1000,
+          "couponName": "1,000원 쿠폰",
+          "appliedPrice": 14000,
+          "dayLimit": -1,
+          "quantity": 50,
+          "couponType": "WEEKDAYS"
+        },
+        {
+          "couponId": 2,
+          "status": "DISABLE",
+          "discountType": "RATE",
+          "discount": 15,
+          "couponName": "15% 쿠폰",
+          "appliedPrice": 127500,
+          "dayLimit": 10,
+          "quantity": 100,
+          "couponType": "WEEKENDS"
+        },
+        {
+          "couponId": 3,
+          "status": "SOLD_OUT",
+          "discountType": "RATE",
+          "discount": 15,
+          "couponName": "15% 쿠폰",
+          "appliedPrice": 127500,
+          "dayLimit": 10,
+          "quantity": 0,
+          "couponType": "ALL_DAYS"
+        }
+      ]
+    }
+  ]
 }

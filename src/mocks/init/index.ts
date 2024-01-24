@@ -1,5 +1,5 @@
 import { HttpResponse } from 'msw';
-import postAccommodationData from '@assets/data/accommodationsData.json';
+import postAccommodationData from '@assets/data/postAccommodationData.json';
 import postImageFileData from '@assets/data/postImageFileData.json';
 
 export const postAccommodationInfoResolver = () => {
