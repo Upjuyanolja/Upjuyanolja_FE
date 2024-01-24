@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { RoomItem } from './RoomItem';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { useSetRecoilState } from 'recoil';
-import { addRoomState } from '@stores/init/atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { addRoomState, userInputValueState } from '@stores/init/atoms';
 
 export const RoomInfo = () => {
   const navigate = useNavigate();
@@ -16,15 +16,24 @@ export const RoomInfo = () => {
     navigate(ROUTES.INIT_ROOM_REGISTRATION);
   };
 
+  const userInputValue = useRecoilValue(userInputValueState);
+
   return (
     <StyledWrapper>
       <StyledHeadContainer>
-        <TextBox typography="h4" fontWeight={700}>
-          객실 정보
-        </TextBox>
-        <StyledButton type="primary" onClick={handleAddButton}>
-          + 객실추가
-        </StyledButton>
+        <StyledHeadTextContainer>
+          <TextBox typography="h4" fontWeight={700}>
+            객실 정보
+          </TextBox>
+          <TextBox color="black600" typography="body3">
+            최대 15개 까지 등록 가능합니다.
+          </TextBox>
+        </StyledHeadTextContainer>
+        {userInputValue[0].rooms.length < 15 && (
+          <StyledButton type="primary" onClick={handleAddButton}>
+            + 객실추가
+          </StyledButton>
+        )}
       </StyledHeadContainer>
       <StyledRoomListContainer>
         <RoomItem />
@@ -56,6 +65,12 @@ const StyledWrapper = styled.div`
 const StyledHeadContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const StyledHeadTextContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
 `;
 
 const StyledButton = styled(Button)`

@@ -21,6 +21,7 @@ export const userInputValueState = atom<UserInputValue[]>({
       detailAddress: '',
       zipCode: '',
       description: '',
+      thumbnail: '',
       type: '',
       images: [{ url: '' }],
       options: {
