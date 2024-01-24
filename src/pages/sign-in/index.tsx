@@ -24,6 +24,8 @@ export const SignIn = () => {
       setCookie('accessToken', response.data.accessToken);
       setCookie('refreshToken', response.data.refreshToken);
       const memberResponse = response.data.memberResponse;
+      setCookie('accessToken', response.data.accessToken);
+      setCookie('refreshToken', response.data.refreshToken);
       const memberData = JSON.stringify(memberResponse);
       localStorage.setItem('member', memberData);
       if (accommodationListData?.accommodations[0]?.id) {
@@ -32,74 +34,35 @@ export const SignIn = () => {
           accommodationListData?.accommodations[0]?.id,
         );
       }
-      try {
-        const res = isAccomodationList();
-        if (res === true) {
-          const accomodationId = getCookie('accomodationId');
-          setTimeout(() => {
-            handleChangeUrl(`/${accomodationId}/main`);
-          }, 1000);
-        } else {
-          setTimeout(() => {
-            handleChangeUrl('/init');
-          }, 1000);
-        }
-      } catch (e) {
-        message.error({
-          content: (
-            <TextBox typography="body3" fontWeight={'400'}>
-              요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
-            </TextBox>
-          ),
-          duration: 2,
-          style: {
-            width: '346px',
-            height: '41px',
-          },
-        });
+      const res = isAccommodationList();
+      if (res === true) {
+        const accommodationId = getCookie('accommodationId');
+        setTimeout(() => {
+          handleChangeUrl(`/${accommodationId}/main`);
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          handleChangeUrl('/init');
+        }, 1000);
       }
     },
-    onError(error) {
-      if (error instanceof AxiosError && error.response) {
-        if (error.response.status === HTTP_STATUS_CODE.BAD_GATEWAY) {
-          message.error({
-            content: (
-              <TextBox typography="body3" fontWeight={'400'}>
-                요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
-              </TextBox>
-            ),
-            duration: 2,
-            style: {
-              width: '346px',
-              height: '41px',
-            },
-          });
-        } else {
-          message.error({
-            content: (
-              <TextBox typography="body3" fontWeight={'400'}>
-                이메일과 비밀번호를 확인해 주세요.
-              </TextBox>
-            ),
-            duration: 2,
-            style: {
-              width: '346px',
-              height: '41px',
-            },
-          });
-        }
-      }
+    onError() {
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            이메일과 비밀번호를 확인해 주세요.
+          </TextBox>
+        ),
+        duration: 2,
+      });
     },
   });
-  const isAccomodationList = () => {
-    if (
+
+  const isAccommodationList = () => {
+    return (
       accommodationListData?.accommodations &&
       accommodationListData.accommodations.length > 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   };
 
   const handleOnclick = () => {
@@ -123,6 +86,7 @@ export const SignIn = () => {
       });
     }
   };
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -130,11 +94,43 @@ export const SignIn = () => {
     },
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
-      const signInData: SignInData = {
-        email: values.email,
-        password: values.password,
-      };
-      mutate(signInData);
+      try {
+        const signInData: SignInData = {
+          email: values.email,
+          password: values.password,
+        };
+        await mutate(signInData);
+      } catch (e) {
+        if (e instanceof AxiosError && e.response) {
+          if (e.response.status === HTTP_STATUS_CODE.BAD_GATEWAY) {
+            message.error({
+              content: (
+                <TextBox typography="body3" fontWeight={'400'}>
+                  요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
+                </TextBox>
+              ),
+              duration: 2,
+              style: {
+                width: '346px',
+                height: '41px',
+              },
+            });
+          } else {
+            message.error({
+              content: (
+                <TextBox typography="body3" fontWeight={'400'}>
+                  이메일과 비밀번호를 확인해 주세요.
+                </TextBox>
+              ),
+              duration: 2,
+              style: {
+                width: '346px',
+                height: '41px',
+              },
+            });
+          }
+        }
+      }
     },
   });
 
@@ -155,7 +151,7 @@ export const SignIn = () => {
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-            ></StyledInput>
+            />
             {touched.email && errors.email && (
               <TextBox typography="body4" color="error">
                 {errors.email}
@@ -171,7 +167,7 @@ export const SignIn = () => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-            ></StyledPassword>
+            />
             {touched.password && errors.password && (
               <TextBox typography="body4" color="error">
                 {errors.password}
