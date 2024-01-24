@@ -3,7 +3,6 @@ import { HTTP_STATUS_CODE } from '../constants/api';
 import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { REFRESH_API } from './refresh';
 import { message } from 'antd';
-import { ROUTES } from '@/constants/routes';
 import { isAccessTokenExpired } from '@/utils/refresh';
 
 export const instance = axios.create({
@@ -18,6 +17,7 @@ export const instance = axios.create({
 const handleUnauthorized = () => {
   removeCookie('accessToken');
   removeCookie('refreshToken');
+  removeCookie('accommodationId');
   localStorage.clear();
   message.error('로그인 만료 입니다.');
   window.location.replace('/signin');
@@ -38,7 +38,7 @@ instance.interceptors.request.use(
           setCookie('accessToken', res.data.accessToken);
           setCookie('refreshToken', res.data.refreshToken);
         } catch (refreshError) {
-          console.log('재발급 실패');
+          handleUnauthorized();
         }
       } else {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
@@ -55,16 +55,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (
-      error.response?.status === HTTP_STATUS_CODE.UNAUTHORIZED &&
-      window.location.pathname !== ROUTES.SIGNIN &&
-      window.location.pathname !== ROUTES.SIGNIN_AGREEMENT &&
-      window.location.pathname !== ROUTES.SIGNUP &&
-      window.location.pathname !== ROUTES.SIGNUP_SUCCESS
-    ) {
+    if (error.response?.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
       handleUnauthorized();
-    } else if (error.response?.status === HTTP_STATUS_CODE.NOTFOUND) {
-      console.log('여기 404에러 핸들링 필요해요~');
     }
     return Promise.reject(error);
   },

@@ -147,11 +147,7 @@ function App() {
             path={`/:accommodationId${ROUTES.ROOM}`}
             element={accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Room />}
           />
-          <Route
-            element={
-              accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RoomLayout />
-            }
-          >
+          <Route element={<RoomLayout />}>
             <Route
               path={`/:accommodationId${ROUTES.ROOM_REGISTRATION}`}
               element={
@@ -163,11 +159,7 @@ function App() {
               }
             />
           </Route>
-          <Route
-            element={
-              accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RoomLayout />
-            }
-          >
+          <Route element={<RoomLayout />}>
             <Route
               path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
               element={
