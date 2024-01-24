@@ -32,6 +32,8 @@ export const Coupon = () => {
     isPointModalOpen,
     setIsPointModalOpen,
     isGetCouponLoading,
+    handleAgreeCheckbox,
+    isAgreed,
   } = useCoupon();
 
   if (isGetCouponLoading)
@@ -81,6 +83,8 @@ export const Coupon = () => {
           <AdditionalPurchaseFooter
             totalPoints={purchaseData?.totalPoints}
             handlePurchaseButton={handlePurchaseButton}
+            isAgreed={isAgreed}
+            handleAgreeCheckbox={handleAgreeCheckbox}
           />
         }
       >
