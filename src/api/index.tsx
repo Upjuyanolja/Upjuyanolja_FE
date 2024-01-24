@@ -18,6 +18,7 @@ export const instance = axios.create({
 const handleUnauthorized = () => {
   removeCookie('accessToken');
   removeCookie('refreshToken');
+  removeCookie('accommodationId');
   localStorage.clear();
   message.error('로그인 만료 입니다.');
   window.location.replace('/signin');
