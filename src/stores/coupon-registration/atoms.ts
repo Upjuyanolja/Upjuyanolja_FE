@@ -59,11 +59,6 @@ export const totalPointsState = atom<number>({
   default: 0,
 });
 
-export const accommodationIdState = atom<string>({
-  key: 'accommodationId',
-  default: '0',
-});
-
 export const getCouponRoomDataListState = atom<CouponRoomList | undefined>({
   key: 'getCouponRoomDataList',
   default: undefined,
