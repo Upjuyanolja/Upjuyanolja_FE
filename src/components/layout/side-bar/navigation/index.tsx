@@ -30,21 +30,20 @@ export const Navigation = () => {
     <nav>
       <StyledNavWrap>
         {Object.entries(getNavigationMap()).map(([key, { label, link }]) => (
-          <StyledNavItem key={key}>
-            <div
-              onClick={() => {
-                handleNavigate(link);
-              }}
+          <StyledNavItem
+            key={key}
+            onClick={() => {
+              handleNavigate(link);
+            }}
+          >
+            <TextBox
+              typography="body2"
+              color="black900"
+              fontWeight="bold"
+              cursor="pointer"
             >
-              <TextBox
-                typography="body2"
-                color="black900"
-                fontWeight="bold"
-                cursor="pointer"
-              >
-                {label}
-              </TextBox>
-            </div>
+              {label}
+            </TextBox>
           </StyledNavItem>
         ))}
       </StyledNavWrap>
@@ -60,6 +59,7 @@ const StyledNavWrap = styled.ul`
 const StyledNavItem = styled.li`
   padding: 8px 0 8px 16px;
   border-bottom: 0.5px solid ${colors.black500};
+  cursor: pointer;
   a {
     display: block;
   }

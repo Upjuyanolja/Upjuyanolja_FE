@@ -22,8 +22,8 @@ export const useCouponRegistration = () => {
     refetch: isGetCouponRoomListRefetch,
   } = useGetCouponRoomList(accommodationId as string, {
     select(data) {
-      setGetCouponRoomList(data.data.data);
-      return data.data.data;
+      setGetCouponRoomList(data.data);
+      return data.data;
     },
   });
 

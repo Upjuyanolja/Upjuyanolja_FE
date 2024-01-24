@@ -8,7 +8,7 @@ export const useSideBar = () => {
     isError: isPointSummaryError,
   } = useGetPointSummary({
     select(data) {
-      return data.data.data;
+      return data.data;
     },
     staleTime: 60 * 60 * 1000,
   });
@@ -19,7 +19,7 @@ export const useSideBar = () => {
     isError: isAccommodationListError,
   } = useGetAccommodationList({
     select(data) {
-      return data.data.data;
+      return data.data;
     },
     staleTime: 60 * 60 * 1000,
   });
