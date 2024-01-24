@@ -26,7 +26,6 @@ export const SignIn = () => {
       const memberResponse = response.data.memberResponse;
       setCookie('accessToken', response.data.accessToken);
       setCookie('refreshToken', response.data.refreshToken);
-      const memberResponse = response.data.memberResponse;
       const memberData = JSON.stringify(memberResponse);
       localStorage.setItem('member', memberData);
       if (accommodationListData?.accommodations[0]?.id) {
