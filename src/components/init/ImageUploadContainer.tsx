@@ -8,7 +8,7 @@ import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useRecoilState } from 'recoil';
 import { imageFileState } from '@stores/init/atoms';
-import { addedImageFileState, removedImageFileState } from '@stores/room/atoms';
+import { addedImageFileState, deletedImageFileState } from '@stores/room/atoms';
 import { ROUTES } from '@/constants/routes';
 import { Image } from '@api/room/type';
 
@@ -34,7 +34,7 @@ export const ImageUploadContainer = ({
   const [addedImageFile, setAddedImageFile] =
     useRecoilState(addedImageFileState);
   const [removedImageFile, setRemovedImageFile] = useRecoilState(
-    removedImageFileState,
+    deletedImageFileState,
   );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

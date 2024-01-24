@@ -30,7 +30,7 @@ export const addedImageFileState = atom<ImageFile[]>({
   default: [],
 });
 
-export const removedImageFileState = atom<ImageFile[]>({
+export const deletedImageFileState = atom<ImageFile[]>({
   key: 'imageFileState',
   default: [],
 });

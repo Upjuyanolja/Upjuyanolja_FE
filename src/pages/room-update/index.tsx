@@ -14,8 +14,9 @@ import { useRecoilState } from 'recoil';
 import {
   checkedRoomOptions,
   imageFileState,
+  addedImageFileState,
+  deletedImageFileState,
 } from '@stores/room/atoms';
-import { addedImageFileState } from '@stores/room/atoms';
 import { RoomUpdateData, Image } from '@api/room/type';
 import { useGetRoomDetail, useUpdateRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -78,64 +79,87 @@ const RoomUpdate = () => {
     }
   }, [data, isLoading, error, form]);
 
-  const { mutate: updateRoom } = useUpdateRoom(
-    roomId as string,
-    {
-      onSuccess() {
-        message.success({
-          content: '수정되었습니다',
-          className: 'coupon-message',
-        });
-        navigate(`/${accommodationId}${ROUTES.ROOM}`);
-        //setSelectedRoomFiles([]);
-        setSelectedRoomOptions({
-          airCondition: false,
-          tv: false,
-          internet: false,
-        });
-      },
-      onError(error) {
-        if (error instanceof AxiosError)
-          message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
-      },
+  const { mutate: updateRoom } = useUpdateRoom(roomId as string, {
+    onSuccess() {
+      message.success({
+        content: '수정되었습니다',
+        className: 'coupon-message',
+      });
+      navigate(`/${accommodationId}${ROUTES.ROOM}`);
+      //setSelectedRoomFiles([]);
+      setSelectedRoomOptions({
+        airCondition: false,
+        tv: false,
+        internet: false,
+      });
     },
-  );
+    onError(error) {
+      if (error instanceof AxiosError)
+        message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+    },
+  });
 
-  const [imageFile, setImageFile] = useState(imageFileState);
+  const [imageFile, setImageFile] = useRecoilState(imageFileState);
+  const [addedImageFile, setAddedImageFile] =
+    useRecoilState(addedImageFileState);
+  const [deletedImageFile, setDeletedImageFile] = useRecoilState(
+    deletedImageFileState,
+  );
   const [selectedOptions, setSelectedRoomOptions] =
     useRecoilState(checkedRoomOptions);
 
-    const { mutate: getImageUrl } = useImageFile({
-      onSuccess(data) {
-        const roomName = form.getFieldValue('room-name');
-        const price = parseInt(form.getFieldValue('price').replace(',', ''));
-        const defaultCapacity = form.getFieldValue('defaultCapacity');
-        const maxCapacity = form.getFieldValue('maxCapacity');
-        const checkInTime = form.getFieldValue('checkInTime').format('HH:mm');
-        const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
-        const count = form.getFieldValue('count');
-  
-        const updatedRoomData: RoomUpdateData = {
-          name: roomName,
-          price: price,
-          defaultCapacity: defaultCapacity,
-          maxCapacity: maxCapacity,
-          checkInTime: checkInTime,
-          checkOutTime: checkOutTime,
-          status: "STOP_SELLING",
-          amount: count,
-          addImages: ,
-          removeImages: ,
-          options: selectedOptions,
-        };
+  const { mutate: getImageUrl } = useImageFile({
+    onSuccess(data) {
+      const roomName = form.getFieldValue('room-name');
+      const price = parseInt(form.getFieldValue('price').replace(',', ''));
+      const defaultCapacity = form.getFieldValue('defaultCapacity');
+      const maxCapacity = form.getFieldValue('maxCapacity');
+      const checkInTime = form.getFieldValue('checkInTime').format('HH:mm');
+      const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
+      const count = form.getFieldValue('count');
 
-        updateRoom(updatedRoomData);
-      },
-    });
+      const updatedRoomData: RoomUpdateData = {
+        name: roomName,
+        price: price,
+        defaultCapacity: defaultCapacity,
+        maxCapacity: maxCapacity,
+        checkInTime: checkInTime,
+        checkOutTime: checkOutTime,
+        status: 'STOP_SELLING',
+        amount: count,
+        addImages: addedImageFile,
+        removeImages: deletedImageFile,
+        options: selectedOptions,
+      };
 
-  const onFinish = (value: any) => {
+      updateRoom(updatedRoomData);
+    },
+  });
 
-    getImageUrl();
+  const onFinish = () => {
+    const formData = new FormData();
+
+    let shouldExecuteImageFile = false;
+
+    for (let i = 0; i < imageFile.length; i++) {
+      const image = imageFile[i];
+      if (image.file) shouldExecuteImageFile = true;
+    }
+
+    for (let index = 0; index < 5; index++) {
+      const image = imageFile[index];
+      if (!image || image.file === null) {
+        // 등록한 적이 있거나 이미지 자체를 등록하지 않은 순서
+        const emptyBlob = new Blob([], { type: 'application/octet-stream' });
+        const nullFile = new File([emptyBlob], 'nullFile.txt', {
+          type: 'text/plain',
+        });
+        formData.append(`image${index + 1}`, nullFile);
+      } else {
+        formData.append(`image${index + 1}`, image.file);
+      }
+    }
+    getImageUrl(formData);
   };
 
   const areFormFieldsValid = () => {
