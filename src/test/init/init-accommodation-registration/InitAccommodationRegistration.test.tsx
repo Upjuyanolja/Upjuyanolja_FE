@@ -1,7 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import '../../matchMedia.mock';
 import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
 import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
 import {
