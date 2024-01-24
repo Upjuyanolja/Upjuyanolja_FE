@@ -15,28 +15,23 @@ import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
 import { SignInData } from '@api/sign-in/type';
+import { ACCOMMODATION_API } from '@api/accommodation';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const { accommodationListData } = useSideBar();
   const { mutate } = usePostLogin({
     onSuccess: async (response) => {
-      setCookie('accessToken', response.data.accessToken);
-      setCookie('refreshToken', response.data.refreshToken);
-      const memberResponse = response.data.memberResponse;
-      setCookie('accessToken', response.data.accessToken);
-      setCookie('refreshToken', response.data.refreshToken);
-      const memberData = JSON.stringify(memberResponse);
-      localStorage.setItem('member', memberData);
       try {
-        const res = await isAccommodationList();
-        if (accommodationListData?.accommodations[0]?.id) {
-          setCookie(
-            'accommodationId',
-            accommodationListData?.accommodations[0]?.id,
-          );
-        }
-        if (res === true) {
+        setCookie('accessToken', response.data.accessToken);
+        setCookie('refreshToken', response.data.refreshToken);
+        const { data } = await ACCOMMODATION_API.getAccommodationList();
+        const hasAccommodationData = data.accommodations.length > 0;
+        const memberResponse = response.data.memberResponse;
+        const memberData = JSON.stringify(memberResponse);
+        localStorage.setItem('member', memberData);
+        if (hasAccommodationData) {
+          const firstAccommodationId = data.accommodations[0].id;
+          setCookie('accommodationId', firstAccommodationId);
           const accommodationId = getCookie('accommodationId');
           setTimeout(() => {
             handleChangeUrl(`/${accommodationId}/main`);
@@ -61,14 +56,6 @@ export const SignIn = () => {
       });
     },
   });
-
-  const isAccommodationList = async () => {
-    return (
-      accommodationListData &&
-      accommodationListData.accommodations &&
-      accommodationListData.accommodations.length > 0
-    );
-  };
 
   const handleOnclick = () => {
     if (
