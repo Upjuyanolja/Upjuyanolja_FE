@@ -7,7 +7,7 @@ import { colors } from '@/constants/colors';
 import { KoreanOptionNamesType, RoomCardProps } from './type';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-//import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
+import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
 
 const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
   const isOnSale = data.coupons.length !== 0;
@@ -50,6 +50,7 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
         <StyledImageContainer>
           <StyledCouponImage src={COUPON} alt="Coupon" />
           {/* <StyledRoomImageCarousel images={data.images} /> */}
+          <ImageCarousel images={data.images} />
           <StyledSaleBanner isOnSale={isOnSale}>
             {isOnSale ? '판매중' : '판매중지'}
           </StyledSaleBanner>

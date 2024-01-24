@@ -21,10 +21,11 @@ const RoomManagement = () => {
       }),
     },
   );
+  console.log('inside room management');
+
   const roomItems = useMemo(() => {
     return data?.pages.flatMap((page) => page.data.rooms);
   }, [data]);
-
   const { mutate: deleteRoom } = useDeleteRoom();
 
   const handleDeleteRoom = (roomId: number) => {
