@@ -10,7 +10,6 @@ export const useSideBar = () => {
     select(data) {
       return data.data;
     },
-    staleTime: 60 * 60 * 1000,
   });
 
   const {
@@ -21,7 +20,6 @@ export const useSideBar = () => {
     select(data) {
       return data.data;
     },
-    staleTime: 60 * 60 * 1000,
   });
 
   return {
