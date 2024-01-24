@@ -97,7 +97,7 @@ export const handlers = [
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
   http.post('/api/accommodations/images', postImageFileResolver),
-  http.get('/api/rooms/list/*', getRoomListResolver),
+  http.get(`/api/rooms/list/*`, getRoomListResolver),
   http.delete('/api/rooms/*', deleteRoomResolver),
   http.get('/api/rooms/*', getRoomDetailResolver),
   http.put('/api/rooms/*', updateRoomResolver),

@@ -40,16 +40,17 @@ export type Coupons = {
 export type RoomCardData = {
   id: number;
   name: string;
-  basePrice: number | null;
+  price: number | null;
   discountPrice: number | null;
   defaultCapacity: number | null;
   maxCapacity: number | null;
   checkInTime: string;
   checkOutTime: string;
-  count: number | null;
+  amount: number | null;
   images: Image[];
-  options: Options;
+  option: Options;
   coupons: Coupons[];
+  status: string;
 };
 
 export type RoomData = {
@@ -87,9 +88,9 @@ export type RoomDeleteResponseData = {
   checkInTime: string;
   checkOutTime: string;
   soldOut: boolean;
-  count: number;
+  amount: number;
   images: Image[];
-  options: Options;
+  option: Options;
 };
 
 export type RoomUpdateData = {

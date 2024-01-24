@@ -10,7 +10,7 @@ import { ROUTES } from '@/constants/routes';
 import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
 
 const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
-  const isOnSale = data.coupons.length !== 0;
+  const isOnSale = false;
   const navigate = useNavigate();
   const { accommodationId } = useParams();
 
@@ -23,7 +23,7 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
   };
 
   const renderOptionTags = () => {
-    return Object.entries(data.options)
+    return Object.entries(data.option)
       .filter(([, value]) => value)
       .map(([key]) => (
         <StyledOptionTag key={key}>
@@ -51,8 +51,8 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
           <StyledCouponImage src={COUPON} alt="Coupon" />
           {/* <StyledRoomImageCarousel images={data.images} /> */}
           <ImageCarousel images={data.images} />
-          <StyledSaleBanner isOnSale={isOnSale}>
-            {isOnSale ? '판매중' : '판매중지'}
+          <StyledSaleBanner isOnSale={data.status === 'SELLING'}>
+            {data.status === 'SELLING' ? '판매중' : '판매중지'}
           </StyledSaleBanner>
         </StyledImageContainer>
         <StyledDetailsCol>
@@ -113,10 +113,10 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
           </StyledEditDeleteContainer>
           <StyledNumRoomPriceContainer>
             <TextBox typography="body3" color="black900" fontWeight="normal">
-              객실 수 : {data.count}개
+              객실 수 : {data.amount}개
             </TextBox>
             <TextBox typography="h5" color="black900" fontWeight="bold">
-              {data.basePrice?.toLocaleString()}원
+              {data.price?.toLocaleString()}원
             </TextBox>
           </StyledNumRoomPriceContainer>
         </StyledRightContent>

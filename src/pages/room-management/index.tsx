@@ -1,5 +1,5 @@
 import RoomCard from '../../components/room/room-card';
-import { Card, Button, Row, Modal, message, Spin } from 'antd';
+import { Card, Button, Row, Modal, message } from 'antd';
 import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,10 +21,9 @@ const RoomManagement = () => {
       }),
     },
   );
-  console.log('inside room management');
 
   const roomItems = useMemo(() => {
-    return data?.pages.flatMap((page) => page.data.rooms);
+    return data?.pages.flatMap((page) => page.rooms);
   }, [data]);
   const { mutate: deleteRoom } = useDeleteRoom();
 
@@ -82,7 +81,7 @@ const RoomManagement = () => {
         scrollThreshold={0.95}
         next={fetchNextPage}
         hasMore={hasNextPage ?? false}
-        loader={<Spin tip="Loading" size="small" />}
+        loader={<></>}
       >
         {roomItems?.map((room) => (
           <StyledRoomCardWrapper key={room.name}>

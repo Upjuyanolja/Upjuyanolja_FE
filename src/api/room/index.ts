@@ -18,13 +18,13 @@ export const ROOM_API = {
       },
     ),
   getRoomList: (accommodationId: string, pageSize: number, pageNum: number) =>
-    instance.get<Response<RoomListResponseData>>(
+    instance.get<RoomListResponseData>(
       `/api/rooms/list/${accommodationId}?pageSize=${pageSize}&pageNum=${pageNum}`,
     ),
   deleteRoom: (roomId: number) =>
     instance.delete<Response<RoomDeleteResponseData>>(`/api/rooms/${roomId}`),
   getRoomDetail: (roomId: string) =>
-    instance.get<Response<RoomDeleteResponseData>>(`/api/rooms/${roomId}`),
+    instance.get<RoomDeleteResponseData>(`/api/rooms/${roomId}`),
   updateRoom: (data: RoomUpdateData, roomId: string) =>
     instance.put<Response<RoomUpdateResponseData>>(`/api/rooms/${roomId}`, {
       data,

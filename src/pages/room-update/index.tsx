@@ -24,11 +24,8 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import { RoomImageOptions } from '@components/room/type';
 import { useImageFile } from '@queries/init';
-import { ImageFile } from '@stores/room/type';
-import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
-import { getRoomDetailResolver } from 'src/mocks/room';
 
 const RoomUpdate = () => {
   const navigate = useNavigate();
@@ -50,18 +47,17 @@ const RoomUpdate = () => {
     roomId: string;
   }>();
 
-  const shouldFetch = !!accommodationId && !!roomId;
-  const roomDetailQuery = useGetRoomDetail(accommodationId, roomId, {
-    enabled: shouldFetch,
+  const { data, isLoading, error } = useGetRoomDetail(roomId, {
+    select(data) {
+      return data.data;
+    },
   });
 
-  const { data, isLoading, error } = roomDetailQuery;
   const [form] = Form.useForm();
-
-  console.log(accommodationId, roomId, data);
 
   useEffect(() => {
     if (data && !isLoading && !error) {
+      console.log(data.option);
       const imageObjects = data.images.map((image) => ({ url: image.url }));
       form.setFieldsValue({
         'room-name': data.name,
@@ -70,11 +66,11 @@ const RoomUpdate = () => {
         maxCapacity: data.maxCapacity,
         checkInTime: moment(data.checkInTime, 'HH:mm'),
         checkOutTime: moment(data.checkOutTime, 'HH:mm'),
-        count: data.count,
+        count: data.amount,
       });
       setDefaultValue({
         images: imageObjects,
-        options: data.options,
+        options: data.option,
       });
     }
   }, [data, isLoading, error, form]);

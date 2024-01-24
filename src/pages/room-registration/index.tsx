@@ -92,17 +92,9 @@ const RoomRegistration = () => {
   const onFinish = () => {
     const formData = new FormData();
 
-    let shouldExecuteImageFile = false;
-
-    for (let i = 0; i < imageFile.length; i++) {
-      const image = imageFile[i];
-      if (image.file) shouldExecuteImageFile = true;
-    }
-
     for (let index = 0; index < 5; index++) {
       const image = imageFile[index];
       if (!image || image.file === null) {
-        // 등록한 적이 있거나 이미지 자체를 등록하지 않은 순서
         const emptyBlob = new Blob([], { type: 'application/octet-stream' });
         const nullFile = new File([emptyBlob], 'nullFile.txt', {
           type: 'text/plain',
@@ -112,6 +104,7 @@ const RoomRegistration = () => {
         formData.append(`image${index + 1}`, image.file);
       }
     }
+
     getImageUrl(formData);
   };
 

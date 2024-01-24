@@ -38,24 +38,20 @@ export const useAddRoom = (
 export const useGetInfiniteRoomList = (
   accommodationId: string,
   options?: UseInfiniteQueryOptions<
-    AxiosResponse<Response<RoomListResponseData>>,
+    AxiosResponse<RoomListResponseData>,
     AxiosError,
-    Response<RoomListResponseData>
+    RoomListResponseData
   >,
 ) => {
   return useInfiniteQuery<
-    AxiosResponse<Response<RoomListResponseData>>,
+    AxiosResponse<RoomListResponseData>,
     AxiosError,
-    Response<RoomListResponseData>
+    RoomListResponseData
   >(
     ['room-list'],
-    ({ pageParam = 1 }) => ROOM_API.getRoomList(accommodationId, 8, pageParam),
+    ({ pageParam = 0 }) => ROOM_API.getRoomList(accommodationId, 8, pageParam),
     {
-      getNextPageParam: ({
-        data: {
-          data: { pageNum, totalPages },
-        },
-      }) => {
+      getNextPageParam: ({ data: { pageNum, totalPages } }) => {
         const nextPage = pageNum + 1;
         return totalPages > pageNum ? nextPage : undefined;
       },
@@ -81,18 +77,18 @@ export const useDeleteRoom = (
 };
 
 export const useGetRoomDetail = (
-  accommodationId: string,
   roomId: string,
-  options?: UseQueryOptions<RoomDeleteResponseData, AxiosError>,
+  options?: UseQueryOptions<
+    AxiosResponse<RoomDeleteResponseData>,
+    AxiosError,
+    RoomDeleteResponseData
+  >,
 ) => {
-  return useQuery<RoomDeleteResponseData, AxiosError>(
-    ['getRoomDetail'],
-    async () => {
-      const response = await ROOM_API.getRoomDetail(roomId);
-      return response.data.data;
-    },
-    options,
-  );
+  return useQuery<
+    AxiosResponse<RoomDeleteResponseData>,
+    AxiosError,
+    RoomDeleteResponseData
+  >(['getRoomDetail'], () => ROOM_API.getRoomDetail(roomId), { ...options });
 };
 
 export const useUpdateRoom = (
