@@ -69,8 +69,14 @@ export const handlers = [
     editCouponResolver,
   ),
 
-  http.get('/api/coupons/backoffice/buy/*', getCouponRoomListResolver),
-  http.post('/api/coupons/backoffice/buy', buyCouponResolver),
+  http.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/buy/*`,
+    getCouponRoomListResolver,
+  ),
+  http.post(
+    `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/buy`,
+    buyCouponResolver,
+  ),
   http.patch(
     `${process.env.REACT_APP_SERVER_URL}/api/coupons/backoffice/manage/buy`,
     successCouponResolver,

@@ -33,7 +33,7 @@ export const PointDetail = () => {
   const { isLoading: pointDetailDataLoading, refetch: pointDetailDataRefetch } =
     useGetPointDetail(menuStatus, pageNum, {
       select(data) {
-        return data.data.data;
+        return data.data;
       },
 
       onSuccess: (data) => setPointDetailData(data),
@@ -44,7 +44,7 @@ export const PointDetail = () => {
     refetch: pointSummaryDataRefetch,
   } = useGetPointSummary({
     select(data) {
-      return data.data.data;
+      return data.data;
     },
 
     onSuccess: (data) => setPointSummaryData(data),

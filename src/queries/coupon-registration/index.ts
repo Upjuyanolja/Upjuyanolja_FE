@@ -16,16 +16,12 @@ import { AxiosError, AxiosResponse } from 'axios';
 export const useGetCouponRoomList = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<Response<CouponRoomList>>,
+    AxiosResponse<CouponRoomList>,
     AxiosError,
     CouponRoomList
   >,
 ) => {
-  return useQuery<
-    AxiosResponse<Response<CouponRoomList>>,
-    AxiosError,
-    CouponRoomList
-  >(
+  return useQuery<AxiosResponse<CouponRoomList>, AxiosError, CouponRoomList>(
     ['getCouponRoomList'],
     () => COUPON_API.getCouponRoomList(accommodationId),
     {
@@ -36,13 +32,13 @@ export const useGetCouponRoomList = (
 
 export const useBuyCoupon = (
   options?: UseMutationOptions<
-    AxiosResponse<Response<BuyCouponData>>,
+    AxiosResponse<BuyCouponData>,
     AxiosError<ErrorResponse>,
     BuyCouponParams
   >,
 ) => {
   return useMutation<
-    AxiosResponse<Response<BuyCouponData>>,
+    AxiosResponse<BuyCouponData>,
     AxiosError<ErrorResponse>,
     BuyCouponParams
   >((params: BuyCouponParams) => COUPON_API.buyCoupon(params), {
