@@ -10,6 +10,9 @@ export const instance = axios.create({
   // baseURL: '',
   baseURL: process.env.REACT_APP_SERVER_URL,
   timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 const handleUnauthorized = () => {
@@ -22,19 +25,6 @@ const handleUnauthorized = () => {
 
 instance.interceptors.request.use(
   async (config) => {
-    const accessToken = getCookie('accessToken');
-    config.headers.Authorization = `Bearer ${accessToken}`;
-    return config;
-  },
-  (error) => {
-    handleUnauthorized();
-    return Promise.reject(error);
-  },
-);
-
-instance.interceptors.request.use(
-  async (config) => {
-    config.headers['Content-Type'] = 'application/json';
     const accessToken = getCookie('accessToken');
     if (accessToken) {
       const isTokenExpired = isAccessTokenExpired(accessToken);
@@ -57,6 +47,7 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
+    // 여기 뺐습니다.
     return Promise.reject(error);
   },
 );
