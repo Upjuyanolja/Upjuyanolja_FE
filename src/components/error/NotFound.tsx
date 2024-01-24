@@ -1,7 +1,7 @@
 import { ROUTES } from '@/constants/routes';
 import { ACCOMMODATION_API } from '@api/accommodation';
 import { TextBox } from '@components/text-box';
-import { getCookie } from '@hooks/sign-in/useSignIn';
+import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,10 +12,17 @@ export const NotFound = () => {
     const accommodationId = getCookie('accommodationId');
     if (accommodationId) {
       navigate(`${accommodationId}${ROUTES.MAIN}`);
-    } else {
-      const AccommodationList = await ACCOMMODATION_API.getAccommodationList();
-      console.log(AccommodationList);
+      return;
     }
+    const { data } = await ACCOMMODATION_API.getAccommodationList();
+    const hasAccommodationData = data.accommodations.length > 0;
+    const accommodationIdData = data.accommodations[0].id;
+    if (hasAccommodationData && accommodationIdData) {
+      setCookie('accommodationId', accommodationIdData.toString());
+      navigate(`${accommodationIdData}${ROUTES.MAIN}`);
+      return;
+    }
+    navigate(ROUTES.INIT);
   };
   return (
     <StyledLayout>

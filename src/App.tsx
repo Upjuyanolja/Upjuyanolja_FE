@@ -102,6 +102,7 @@ function App() {
           </Route>
           <Route path={ROUTES.USER_GUIDE} element={<UserGuide />} />
         </Route>
+        <Route path={'/*'} element={<RootLayout isError={true} />} />
       </Routes>
     </Router>
   );
