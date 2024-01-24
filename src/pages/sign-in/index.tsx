@@ -20,7 +20,7 @@ export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const { accommodationListData } = useSideBar();
   const { mutate } = usePostLogin({
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       setCookie('accessToken', response.data.accessToken);
       setCookie('refreshToken', response.data.refreshToken);
       const memberResponse = response.data.memberResponse;
@@ -28,22 +28,26 @@ export const SignIn = () => {
       setCookie('refreshToken', response.data.refreshToken);
       const memberData = JSON.stringify(memberResponse);
       localStorage.setItem('member', memberData);
-      if (accommodationListData?.accommodations[0]?.id) {
-        setCookie(
-          'accommodationId',
-          accommodationListData?.accommodations[0]?.id,
-        );
-      }
-      const res = isAccommodationList();
-      if (res === true) {
-        const accommodationId = getCookie('accommodationId');
-        setTimeout(() => {
-          handleChangeUrl(`/${accommodationId}/main`);
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          handleChangeUrl('/init');
-        }, 1000);
+      try {
+        const res = await isAccommodationList();
+        if (accommodationListData?.accommodations[0]?.id) {
+          setCookie(
+            'accommodationId',
+            accommodationListData?.accommodations[0]?.id,
+          );
+        }
+        if (res === true) {
+          const accommodationId = getCookie('accommodationId');
+          setTimeout(() => {
+            handleChangeUrl(`/${accommodationId}/main`);
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            handleChangeUrl('/init');
+          }, 1000);
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     onError() {
@@ -58,9 +62,10 @@ export const SignIn = () => {
     },
   });
 
-  const isAccommodationList = () => {
+  const isAccommodationList = async () => {
     return (
-      accommodationListData?.accommodations &&
+      accommodationListData &&
+      accommodationListData.accommodations &&
       accommodationListData.accommodations.length > 0
     );
   };
