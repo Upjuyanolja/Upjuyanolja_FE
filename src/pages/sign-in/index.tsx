@@ -32,9 +32,9 @@ export const SignIn = () => {
           const firstAccommodationId = data.accommodations[0].id;
           setCookie('accommodationId', firstAccommodationId);
           const accommodationId = getCookie('accommodationId');
-          handleChangeUrl(`/${accommodationId}${ROUTES.MAIN}`);
+          window.location.replace(`/${accommodationId}${ROUTES.MAIN}`);
         } else {
-          handleChangeUrl(`${ROUTES.INIT}`);
+          window.location.replace(`${ROUTES.INIT}`);
         }
       } catch (error) {
         console.log(error);
@@ -154,6 +154,7 @@ export const SignIn = () => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
+              autoComplete="off"
             />
             {touched.password && errors.password && (
               <TextBox typography="body4" color="error">
