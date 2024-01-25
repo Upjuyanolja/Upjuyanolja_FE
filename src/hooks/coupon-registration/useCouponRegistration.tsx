@@ -6,14 +6,13 @@ import {
 import { getCouponRoomDataListState } from '@stores/coupon-registration/atoms';
 import { message, Modal } from 'antd';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 export const useCouponRegistration = () => {
   const { accommodationId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const setGetCouponRoomList = useSetRecoilState(getCouponRoomDataListState);
-  const navigate = useNavigate();
 
   const {
     data: couponRoomListData,
