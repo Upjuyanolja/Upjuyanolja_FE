@@ -126,7 +126,7 @@ const RoomUpdate = () => {
         amount: count,
         addImages: addedImageFile,
         removeImages: deletedImageFile,
-        options: selectedOptions,
+        option: selectedOptions,
       };
       updateRoom(updatedRoomData);
     },

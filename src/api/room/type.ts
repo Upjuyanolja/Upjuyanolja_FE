@@ -62,7 +62,7 @@ export type RoomData = {
   checkOutTime: string;
   amount: number | null;
   images: Image[];
-  options: Options;
+  option: Options;
 };
 
 export type RoomPostResponseData = {
@@ -76,7 +76,7 @@ export type RoomPostResponseData = {
   status: string;
   amount: number | null;
   images: Image[];
-  options: Options;
+  option: Options;
 };
 
 export type RoomDeleteResponseData = {
@@ -104,7 +104,7 @@ export type RoomUpdateData = {
   amount: number | null;
   addImages: Image[];
   removeImages: Image[];
-  options: Options;
+  option: Options;
 };
 
 export type RoomUpdateResponseData = {
@@ -118,5 +118,5 @@ export type RoomUpdateResponseData = {
   status: string;
   amount: number | null;
   images: Image[];
-  options: Options;
+  option: Options;
 };
