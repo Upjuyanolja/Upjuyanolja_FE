@@ -45,6 +45,7 @@ const RoomRegistration = () => {
       setSelectedImageFile([]);
     },
     onError(error) {
+      console.log(error);
       if (error instanceof AxiosError)
         message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
     },
@@ -151,7 +152,6 @@ const RoomRegistration = () => {
           header="객실명"
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
           form={form}
-          //isSameRoomName={sameRoomName}
         />
         <StyledInputWrapper>
           <PriceContainer header="객실 가격" form={form} />

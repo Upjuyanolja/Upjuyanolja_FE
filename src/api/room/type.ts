@@ -40,7 +40,7 @@ export type Coupons = {
 export type RoomCardData = {
   id: number;
   name: string;
-  price: number | null;
+  basePrice: number | null;
   discountPrice: number | null;
   defaultCapacity: number | null;
   maxCapacity: number | null;
