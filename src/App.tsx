@@ -165,7 +165,7 @@ function App() {
           </Route>
           <Route element={<RoomLayout />}>
             <Route
-              path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
+              path={`/:accommodationId/:roomId${ROUTES.ROOM_UPDATE}`}
               element={
                 !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RoomUpdate />
               }
