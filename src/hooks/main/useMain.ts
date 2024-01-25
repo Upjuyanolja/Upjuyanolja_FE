@@ -59,34 +59,38 @@ export const useMain = () => {
     return hours;
   };
 
-  const { data: staticsData, isError: isStaticsError } = useGetStatics(
-    accommodationId as string,
-    {
-      select(data) {
-        return data.data;
-      },
-      staleTime: calculateStaleTime(),
+  const {
+    data: staticsData,
+    error: staticsError,
+    isLoading: isStaticsLoading,
+  } = useGetStatics(accommodationId as string, {
+    select(data) {
+      return data.data;
     },
-  );
+    staleTime: calculateStaleTime(),
+  });
 
-  const { data, isError: isRevenueError } = useGetRevenue(
-    accommodationId as string,
-    {
-      select(data) {
-        return data.data;
-      },
-      staleTime: calculateStaleTime(),
+  const {
+    data,
+    error: revenueError,
+    isLoading: isRevenueLoading,
+  } = useGetRevenue(accommodationId as string, {
+    select(data) {
+      return data.data;
     },
-  );
+    staleTime: calculateStaleTime(),
+  });
 
   const revenueData = handleRevenueDataFormat(data?.revenue);
   return {
     navigateCoupon,
     navigateCouponRegistration,
     staticsData,
-    isStaticsError,
+    staticsError,
     revenueData,
-    isRevenueError,
+    revenueError,
+    isStaticsLoading,
+    isRevenueLoading,
     couponMessage: data?.couponMessage,
     navigateUserGuide,
     navigateBusinessCenter,

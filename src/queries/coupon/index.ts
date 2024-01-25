@@ -20,34 +20,34 @@ export const useGetStatics = (
   accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<staticsData>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     staticsData
   >,
 ) => {
-  return useQuery<AxiosResponse<staticsData>, AxiosError, staticsData>(
-    ['getStatics'],
-    () => COUPON_API.getStatics(accommodationId),
-    {
-      ...options,
-    },
-  );
+  return useQuery<
+    AxiosResponse<staticsData>,
+    AxiosError<ErrorResponse>,
+    staticsData
+  >(['getStatics'], () => COUPON_API.getStatics(accommodationId), {
+    ...options,
+  });
 };
 
 export const useGetRevenue = (
   accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<revenueData>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     revenueData
   >,
 ) => {
-  return useQuery<AxiosResponse<revenueData>, AxiosError, revenueData>(
-    ['getRevenue'],
-    () => COUPON_API.getRevenue(accommodationId),
-    {
-      ...options,
-    },
-  );
+  return useQuery<
+    AxiosResponse<revenueData>,
+    AxiosError<ErrorResponse>,
+    revenueData
+  >(['getRevenue'], () => COUPON_API.getRevenue(accommodationId), {
+    ...options,
+  });
 };
 
 export const useGetCoupon = (
