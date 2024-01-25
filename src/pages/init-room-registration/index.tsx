@@ -102,6 +102,14 @@ export const InitRoomRegistration = () => {
     }
   }, []);
 
+  const resetStateAndNavigate = () => {
+    setSelectedOptions({ airCondition: false, tv: false, internet: false });
+    setImageFiles([]);
+    setSameRoomName(false);
+    setIsAddRoom(false);
+    navigate(ROUTES.INIT_INFO_CONFIRMATION);
+  };
+
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
       setUserInputValue((prevUserInputValueState) => {
@@ -164,11 +172,7 @@ export const InitRoomRegistration = () => {
         return [updatedUserInputValue];
       });
 
-      setSelectedOptions({ airCondition: false, tv: false, internet: false });
-      setImageFiles([]);
-      setSameRoomName(false);
-      setIsAddRoom(false);
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      resetStateAndNavigate();
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -272,11 +276,7 @@ export const InitRoomRegistration = () => {
         return [updatedUserInputValue];
       });
 
-      setSelectedOptions({ airCondition: false, tv: false, internet: false });
-      setImageFiles([]);
-      setSameRoomName(false);
-      setIsAddRoom(false);
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      resetStateAndNavigate();
     }
   };
 
