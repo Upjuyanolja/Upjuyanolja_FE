@@ -75,7 +75,7 @@ const RoomRegistration = () => {
         options: selectedOptions,
         images: data.data.urls as unknown as Image[],
       };
-
+      console.log('roomData', roomData);
       addRoom(roomData);
     },
   });
