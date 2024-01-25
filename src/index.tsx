@@ -7,7 +7,7 @@ import { RecoilRoot } from 'recoil';
 import './index.css';
 import { worker } from './mocks/browsers';
 
-worker.start();
+// worker.start();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

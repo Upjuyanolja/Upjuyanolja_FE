@@ -14,7 +14,7 @@ export type RoomListResponseData = {
   totalPages: number;
   totalElements: number;
   isLast: boolean;
-  rooms: RoomData[];
+  rooms: RoomCardData[];
 };
 
 export type Options = {
@@ -25,6 +25,32 @@ export type Options = {
 
 export type Image = {
   url: string;
+};
+
+export type ImageUrls = {
+  urls: string[];
+};
+
+export type Coupons = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+export type RoomCardData = {
+  id: number;
+  name: string;
+  price: number | null;
+  discountPrice: number | null;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  amount: number | null;
+  images: Image[];
+  option: Options;
+  coupons: Coupons[];
+  status: string;
 };
 
 export type RoomData = {
@@ -53,6 +79,44 @@ export type RoomPostResponseData = {
   options: Options;
 };
 
-export type AccommodationData = {
-  accommodationId: number;
+export type RoomDeleteResponseData = {
+  id: number;
+  name: string;
+  price: number;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  soldOut: boolean;
+  amount: number;
+  images: Image[];
+  option: Options;
+};
+
+export type RoomUpdateData = {
+  name: string;
+  price: number | null;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  status: string;
+  amount: number | null;
+  addImages: Image[];
+  removeImages: Image[];
+  options: Options;
+};
+
+export type RoomUpdateResponseData = {
+  id: number;
+  name: string;
+  price: number | null;
+  defaultCapacity: number | null;
+  maxCapacity: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  status: string;
+  amount: number | null;
+  images: Image[];
+  options: Options;
 };

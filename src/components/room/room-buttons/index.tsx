@@ -12,6 +12,7 @@ export const ButtonContainer = ({
 }: ButtonContainerProps) => {
   const navigate = useNavigate();
   const handlePreviousClick = () => {
+    // 이미지랑 옵션 초기화
     navigate(-1);
   };
 

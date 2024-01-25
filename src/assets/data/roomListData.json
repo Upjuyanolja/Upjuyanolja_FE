@@ -3,7 +3,7 @@
   "data": {
     "pageNum": 1,
     "pageSize": 5,
-    "totalPages": 2,
+    "totalPages": 10,
     "totalElements": 8,
     "isLast": false,
     "rooms": [
@@ -40,13 +40,38 @@
         ],
         "options": {
           "airCondition": true,
-          "tv": true,
+          "tv": false,
           "internet": true
         }
       },
       {
-        "id": 286,
-        "name": "봄",
+        "id": 287,
+        "name": "여름",
+        "basePrice": 90000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "14:00",
+        "checkOutTime": "16:00",
+        "count": 5,
+        "images": [
+          {
+            "fileName": "pension_room2_2.webp"
+          },
+          {
+            "fileName": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [],
+        "options": {
+          "airCondition": true,
+          "tv": false,
+          "internet": false
+        }
+      },
+      {
+        "id": 288,
+        "name": "가을",
         "basePrice": 100000,
         "discountPrice": 80000,
         "defaultCapacity": 2,
@@ -81,8 +106,8 @@
         }
       },
       {
-        "id": 286,
-        "name": "봄",
+        "id": 289,
+        "name": "겨울",
         "basePrice": 100000,
         "discountPrice": 80000,
         "defaultCapacity": 2,
@@ -113,6 +138,154 @@
         "options": {
           "airCondition": true,
           "tv": true,
+          "internet": true
+        }
+      },
+      {
+        "id": 290,
+        "name": "스탠다드룸",
+        "basePrice": 100000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "status": "SELLING",
+        "count": 5,
+        "images": [
+          {
+            "url": "pension_room2_2.webp"
+          },
+          {
+            "url": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [
+          {
+            "id": 56,
+            "name": "10% 할인",
+            "price": 90000
+          },
+          {
+            "id": 57,
+            "name": "2000원 할인",
+            "price": 80000
+          }
+        ],
+        "options": {
+          "airCondition": true,
+          "tv": false,
+          "internet": true
+        }
+      },
+      {
+        "id": 291,
+        "name": "트윈룸",
+        "basePrice": 100000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "status": "SELLING",
+        "count": 5,
+        "images": [
+          {
+            "url": "pension_room2_2.webp"
+          },
+          {
+            "url": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [
+          {
+            "id": 56,
+            "name": "10% 할인",
+            "price": 90000
+          },
+          {
+            "id": 57,
+            "name": "2000원 할인",
+            "price": 80000
+          }
+        ],
+        "options": {
+          "airCondition": true,
+          "tv": false,
+          "internet": true
+        }
+      },
+      {
+        "id": 292,
+        "name": "더블룸",
+        "basePrice": 100000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "status": "SELLING",
+        "count": 5,
+        "images": [
+          {
+            "url": "pension_room2_2.webp"
+          },
+          {
+            "url": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [
+          {
+            "id": 56,
+            "name": "10% 할인",
+            "price": 90000
+          },
+          {
+            "id": 57,
+            "name": "2000원 할인",
+            "price": 80000
+          }
+        ],
+        "options": {
+          "airCondition": true,
+          "tv": false,
+          "internet": true
+        }
+      },
+      {
+        "id": 293,
+        "name": "스위트룸",
+        "basePrice": 100000,
+        "discountPrice": 80000,
+        "defaultCapacity": 2,
+        "maxCapacity": 6,
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "status": "SELLING",
+        "count": 5,
+        "images": [
+          {
+            "url": "pension_room2_2.webp"
+          },
+          {
+            "url": "pension_room2_1.webp"
+          }
+        ],
+        "coupons": [
+          {
+            "id": 56,
+            "name": "10% 할인",
+            "price": 90000
+          },
+          {
+            "id": 57,
+            "name": "2000원 할인",
+            "price": 80000
+          }
+        ],
+        "options": {
+          "airCondition": true,
+          "tv": false,
           "internet": true
         }
       }

@@ -1,0 +1,29 @@
+{
+  "message": "성공적으로 객실을 조회했습니다.",
+  "data": {
+    "id": 1,
+    "name": "봄",
+    "price": 100000,
+    "defaultCapacity": 2,
+    "maxCapacity": 6,
+    "checkInTime": "15:00",
+    "checkOutTime": "12:00",
+    "soldOut": false,
+    "count": 5,
+    "images": [
+      {
+        "roomImageId": 1,
+        "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
+      },
+      {
+        "roomImageId": 2,
+        "url": "http://tong.visitkorea.or.kr/cms/resource/77/2876777_image2_1.jpg"
+      }
+    ],
+    "options": {
+      "airCondition": true,
+      "tv": true,
+      "internet": true
+    }
+  }
+}

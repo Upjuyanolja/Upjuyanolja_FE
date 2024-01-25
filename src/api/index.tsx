@@ -56,17 +56,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (
-      error.response?.status === HTTP_STATUS_CODE.UNAUTHORIZED &&
-      window.location.pathname !== ROUTES.SIGNIN &&
-      window.location.pathname !== ROUTES.SIGNIN_AGREEMENT &&
-      window.location.pathname !== ROUTES.SIGNUP &&
-      window.location.pathname !== ROUTES.SIGNUP_SUCCESS
-    ) {
-      handleUnauthorized();
-    } else if (error.response?.status === HTTP_STATUS_CODE.NOTFOUND) {
-      console.log('여기 404에러 핸들링 필요해요~');
-    }
     return Promise.reject(error);
   },
 );
