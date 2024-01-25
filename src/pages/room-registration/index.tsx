@@ -10,15 +10,11 @@ import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { Image, RoomData } from '@api/room/type';
+import { RoomData } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  capacityHasError,
-  priceHasError,
-  checkedRoomOptions,
-  imageFileState,
-} from '@stores/room/atoms';
+import { capacityHasError, priceHasError } from '@stores/room/atoms';
+import { imageFileState, checkedRoomOptions } from '@stores/init/atoms';
 import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
@@ -55,7 +51,7 @@ const RoomRegistration = () => {
   });
 
   const { mutate: getImageUrl } = useImageFile({
-    onSuccess(data) {
+    onSuccess() {
       const roomName = form.getFieldValue('room-name');
       const price = parseInt(form.getFieldValue('price').replace(',', ''));
       const defaultCapacity = form.getFieldValue('defaultCapacity');
@@ -63,7 +59,13 @@ const RoomRegistration = () => {
       const checkInTime = form.getFieldValue('checkInTime').format('HH:mm');
       const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
       const count = form.getFieldValue('count');
-
+      const newImages = [];
+      for (let i = 0; i < imageFile.length; i++) {
+        const image = imageFile[i];
+        if (image && image.url !== null) {
+          newImages.push({ url: image.url });
+        }
+      }
       const roomData: RoomData = {
         name: roomName,
         price: price,
@@ -72,11 +74,15 @@ const RoomRegistration = () => {
         checkInTime: checkInTime,
         checkOutTime: checkOutTime,
         amount: count,
-        options: selectedOptions,
-        images: data.data.urls as unknown as Image[],
+        images: newImages,
+        option: selectedOptions,
+        // images: data.data.urls as unknown as Image[],
       };
       console.log('roomData', roomData);
       addRoom(roomData);
+    },
+    onError(error) {
+      console.log('errored', error);
     },
   });
 
@@ -92,20 +98,41 @@ const RoomRegistration = () => {
   const onFinish = () => {
     const formData = new FormData();
 
-    for (let index = 0; index < 5; index++) {
+    //const newImages = [];
+
+    for (let index = 0; index < imageFile.length; index++) {
       const image = imageFile[index];
-      if (!image || image.file === null) {
-        const emptyBlob = new Blob([], { type: 'application/octet-stream' });
-        const nullFile = new File([emptyBlob], 'nullFile.txt', {
-          type: 'text/plain',
-        });
-        formData.append(`image${index + 1}`, nullFile);
-      } else {
+      if (image && image.file) {
+        console.log('this is image', image, 'this is imagefile', image.file);
         formData.append(`image${index + 1}`, image.file);
       }
     }
+    console.log(formData);
+    // for (let i = 0; i < urls.length; i++) {
+    //   const image = imageFile[i];
+    //   if (image.url !== '') {
+    //     formData.append(`image${i + 1}`, image.file);
+    //     //newImages.push({ url: image.url });
+    //   }
+    // }
+    // for (let index = 0; index < 5; index++) {
+    //   const image = imageFile[index];
+    //   // if (!image || image.file === null) {
+    //   //   const emptyBlob = new Blob([], { type: 'application/octet-stream' });
+    //   //   const nullFile = new File([emptyBlob], 'nullFile.txt', {
+    //   //     type: 'text/plain',
+    //   //   });
+    //   //   formData.append(`image${index + 1}`, nullFile);
+    //   // } else {
+    //   if (image && image.file !== null) {
+    //     formData.append(`image${index + 1}`, image.file);
+    //   }
+    // }
 
     getImageUrl(formData);
+
+    setSelectedOptions({ airCondition: false, tv: false, internet: false });
+    setSelectedImageFile([]);
   };
 
   const areFormFieldsValid = () => {
