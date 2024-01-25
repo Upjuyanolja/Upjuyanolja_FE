@@ -8,6 +8,7 @@ import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
 import { useRecoilState } from 'recoil';
 import { imageFileState } from '@stores/init/atoms';
+import { addedImageFileState, deletedImageFileState } from '@stores/room/atoms';
 import { ROUTES } from '@/constants/routes';
 import { Image } from '@api/room/type';
 
@@ -30,6 +31,11 @@ export const ImageUploadContainer = ({
   }, [images]);
 
   const [imageFile, setImageFile] = useRecoilState(imageFileState);
+  const [addedImageFile, setAddedImageFile] =
+    useRecoilState(addedImageFileState);
+  const [removedImageFile, setRemovedImageFile] = useRecoilState(
+    deletedImageFileState,
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
@@ -85,6 +91,22 @@ export const ImageUploadContainer = ({
   };
 
   const handleRemove = (key: number) => {
+    const itemToRemove = imageFile.find((item) => item.key === key);
+    if (!itemToRemove) return;
+
+    const isInAddedImages = addedImageFile.some((item) => item.key === key);
+
+    if (isInAddedImages) {
+      setAddedImageFile((prevAddedImageFile) =>
+        prevAddedImageFile.filter((item) => item.key !== key),
+      );
+    } else {
+      setRemovedImageFile((prevRemovedImageFile) => [
+        ...prevRemovedImageFile,
+        itemToRemove,
+      ]);
+    }
+
     const newFileList = imageFile.filter((item) => item.key !== key);
     setImageFile(newFileList);
   };

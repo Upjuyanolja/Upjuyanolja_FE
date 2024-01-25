@@ -4,7 +4,9 @@ import {
   RoomListResponseData,
   RoomData,
   RoomPostResponseData,
-  AccommodationData,
+  RoomDeleteResponseData,
+  RoomUpdateData,
+  RoomUpdateResponseData,
 } from './type';
 
 export const ROOM_API = {
@@ -15,10 +17,16 @@ export const ROOM_API = {
         data,
       },
     ),
-  getRoomList: (accommodationId: string) =>
-    instance.get<Response<RoomListResponseData>>(
-      `/api/rooms/list/${accommodationId}?pageSize={pageSize}&pageNum={pageNum}`,
+  getRoomList: (accommodationId: string, pageSize: number, pageNum: number) =>
+    instance.get<RoomListResponseData>(
+      `/api/rooms/list/${accommodationId}?pageSize=${pageSize}&pageNum=${pageNum}`,
     ),
-  //   editRoom: (params: RoomEditParams) =>
-  //     instance.patch<Response<null>>('/api/rooms/{roomId}', params),
+  deleteRoom: (roomId: number) =>
+    instance.delete<Response<RoomDeleteResponseData>>(`/api/rooms/${roomId}`),
+  getRoomDetail: (roomId: string) =>
+    instance.get<RoomDeleteResponseData>(`/api/rooms/${roomId}`),
+  updateRoom: (data: RoomUpdateData, roomId: string) =>
+    instance.put<Response<RoomUpdateResponseData>>(`/api/rooms/${roomId}`, {
+      data,
+    }),
 };

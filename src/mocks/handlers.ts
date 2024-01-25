@@ -25,7 +25,13 @@ import {
   buyCouponResolver,
   getCouponRoomListResolver,
 } from './coupon-registration';
-import { postRoomResolver, getRoomListResolver } from './room';
+import {
+  postRoomResolver,
+  getRoomListResolver,
+  deleteRoomResolver,
+  getRoomDetailResolver,
+  updateRoomResolver,
+} from './room';
 import { postAccommodationInfoResolver, postImageFileResolver } from './init';
 import { postRefreshResolver } from './refresh';
 
@@ -91,8 +97,8 @@ export const handlers = [
 
   http.post('/api/accommodations', postAccommodationInfoResolver),
   http.post('/api/accommodations/images', postImageFileResolver),
-  http.get(
-    '/api/rooms/list/*?pageSize={pageSize}&pageNum={pageNum}',
-    getRoomListResolver,
-  ),
+  http.get(`/api/rooms/list/*`, getRoomListResolver),
+  http.delete('/api/rooms/*', deleteRoomResolver),
+  http.get('/api/rooms/*', getRoomDetailResolver),
+  http.put('/api/rooms/*', updateRoomResolver),
 ];

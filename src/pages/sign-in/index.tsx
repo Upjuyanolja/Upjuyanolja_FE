@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
@@ -10,40 +9,39 @@ import { useFormik } from 'formik';
 import { Layout, Input, Button, message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
 import { SignInData } from '@api/sign-in/type';
+import { ACCOMMODATION_API } from '@api/accommodation';
+import { ROUTES } from '@/constants/routes';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const { accommodationListData } = useSideBar();
   const { mutate } = usePostLogin({
-    onSuccess: (response) => {
-      setCookie('accessToken', response.data.accessToken);
-      setCookie('refreshToken', response.data.refreshToken);
-      const memberResponse = response.data.memberResponse;
-      setCookie('accessToken', response.data.accessToken);
-      setCookie('refreshToken', response.data.refreshToken);
-      const memberData = JSON.stringify(memberResponse);
-      localStorage.setItem('member', memberData);
-      if (accommodationListData?.accommodations[0]?.id) {
-        setCookie(
-          'accommodationId',
-          accommodationListData?.accommodations[0]?.id,
-        );
-      }
-      const res = isAccommodationList();
-      if (res === true) {
-        const accommodationId = getCookie('accommodationId');
-        setTimeout(() => {
-          handleChangeUrl(`/${accommodationId}/main`);
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          handleChangeUrl('/init');
-        }, 1000);
+    onSuccess: async (response) => {
+      try {
+        setCookie('accessToken', response.data.accessToken);
+        setCookie('refreshToken', response.data.refreshToken);
+        const { data } = await ACCOMMODATION_API.getAccommodationList();
+        const hasAccommodationData = data.accommodations.length > 0;
+        const memberResponse = response.data.memberResponse;
+        const memberData = JSON.stringify(memberResponse);
+        localStorage.setItem('member', memberData);
+        if (hasAccommodationData) {
+          const firstAccommodationId = data.accommodations[0].id;
+          setCookie('accommodationId', firstAccommodationId);
+          const accommodationId = getCookie('accommodationId');
+          setTimeout(() => {
+            handleChangeUrl(`/${accommodationId}${ROUTES.MAIN}`);
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            handleChangeUrl(`${ROUTES.INIT}`);
+          }, 1000);
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     onError() {
@@ -57,13 +55,6 @@ export const SignIn = () => {
       });
     },
   });
-
-  const isAccommodationList = () => {
-    return (
-      accommodationListData?.accommodations &&
-      accommodationListData.accommodations.length > 0
-    );
-  };
 
   const handleOnclick = () => {
     if (

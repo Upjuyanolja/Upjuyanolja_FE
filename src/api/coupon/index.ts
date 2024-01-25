@@ -1,4 +1,3 @@
-import { Response } from '@/types/api';
 import { instance } from '..';
 import {
   BuyCouponData,
