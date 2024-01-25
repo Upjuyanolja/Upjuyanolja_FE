@@ -11,9 +11,7 @@ import {
 
 export const ROOM_API = {
   addRoom: (data: RoomData, accommodationId: string) =>
-    instance.post<RoomPostResponseData>(`/api/rooms/${accommodationId}`, {
-      data,
-    }),
+    instance.post<RoomPostResponseData>(`/api/rooms/${accommodationId}`, data),
   getRoomList: (accommodationId: string, pageSize: number, pageNum: number) =>
     instance.get<RoomListResponseData>(
       `/api/rooms/list/${accommodationId}?pageSize=${pageSize}&pageNum=${pageNum}`,
