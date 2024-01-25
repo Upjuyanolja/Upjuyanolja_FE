@@ -27,6 +27,7 @@ import {
 } from '@components/init/init-accommodation-registration/type';
 import { AccommodationCategoryProps } from '@components/init/type';
 import { RESPONSE_CODE } from '@/constants/api';
+import { getTypeValue } from '@/utils/init';
 
 export const InitAccommodationRegistration = () => {
   const navigate = useNavigate();
@@ -72,17 +73,7 @@ export const InitAccommodationRegistration = () => {
       setUserInputValue((prevUserInputValueState) => {
         const [userInputValue] = prevUserInputValueState;
 
-        let type;
-        switch (form.getFieldValue('accommodation-category')) {
-          case 'HOTEL/RESORT':
-            type = form.getFieldValue('accommodation-hotel-category');
-            break;
-          case 'GUEST_HOUSE':
-            type = form.getFieldValue('accommodation-guest-category');
-            break;
-          default:
-            type = form.getFieldValue('accommodation-category');
-        }
+        const type = getTypeValue(form);
 
         const newImages = [];
 
@@ -181,17 +172,7 @@ export const InitAccommodationRegistration = () => {
       imageFile(formData);
     } else {
       setUserInputValue(() => {
-        let type;
-        switch (form.getFieldValue('accommodation-category')) {
-          case 'HOTEL/RESORT':
-            type = form.getFieldValue('accommodation-hotel-category');
-            break;
-          case 'GUEST_HOUSE':
-            type = form.getFieldValue('accommodation-guest-category');
-            break;
-          default:
-            type = form.getFieldValue('accommodation-category');
-        }
+        const type = getTypeValue(form);
 
         const updatedUserInputValue: UserInputValue = {
           type,
