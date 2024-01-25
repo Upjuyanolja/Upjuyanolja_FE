@@ -122,7 +122,7 @@ export const InitRoomRegistration = () => {
           const image = imageFiles[i];
           if (image.url !== '') {
             newImages.push({ url: image.url });
-          } // 이미 이미지 url이 있는 상태
+          }
         }
 
         for (let i = 0; i < urls.length; i++) {
