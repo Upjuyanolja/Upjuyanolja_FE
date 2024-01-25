@@ -23,7 +23,6 @@ export const AccommodationList = ({
   const isCouponModified = useRecoilValue(isCouponModifiedState);
 
   const handleSelectBox = () => {
-    if (accommodations.length <= 1) return;
     setClickedSelectBox(!clickedSelectBox);
   };
 
@@ -90,8 +89,7 @@ export const AccommodationList = ({
             {accommodations[accommodationIdx]?.name}
           </TextBox>
         </StyledFlex>
-        {accommodations.length > 1 &&
-          (clickedSelectBox ? <UpOutlined /> : <DownOutlined />)}
+        {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
       </StyledButton>
       <StyledAccommodationWrap
         clickedSelectBox={clickedSelectBox}
