@@ -41,7 +41,6 @@ instance.interceptors.response.use(
       if (error.response?.data && 'code' in error.response.data) {
         // 리프레시 토큰이 유효하지 않을 때
         if (error.response.data.code === RESPONSE_CODE.INVALID_REFRESH_TOKEN) {
-          message.error('로그인 만료 입니다.');
           handleUnauthorized();
         }
       } else {
