@@ -52,9 +52,13 @@ export const useGetRevenue = (
 
 export const useGetCoupon = (
   accommodationId: string,
-  options?: UseQueryOptions<AxiosResponse<coupons>, AxiosError, coupons>,
+  options?: UseQueryOptions<
+    AxiosResponse<coupons>,
+    AxiosError<ErrorResponse>,
+    coupons
+  >,
 ) =>
-  useQuery<AxiosResponse<coupons>, AxiosError, coupons>(
+  useQuery<AxiosResponse<coupons>, AxiosError<ErrorResponse>, coupons>(
     ['getCoupon'],
     () => COUPON_API.getCoupon(accommodationId),
     { ...options },

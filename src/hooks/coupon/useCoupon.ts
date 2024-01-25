@@ -65,12 +65,19 @@ export const useCoupon = () => {
     isLoading: isGetCouponLoading,
     isError: isGetCouponError,
     remove: getCouponRemove,
+    error,
   } = useGetCoupon(accommodationId as string, {
     select(data) {
       return data.data;
     },
+    onError(error) {
+      console.log(error);
+      console.log('erorroro!!!');
+      if (error.response?.data.code === 9004) {
+        console.log('요청');
+      }
+    },
   });
-
   const { mutate: deleteCoupon } = useDeleteCoupon({
     onSuccess() {
       message.success('삭제되었습니다');
@@ -571,8 +578,6 @@ export const useCoupon = () => {
   };
 
   return {
-    data,
-    isGetCouponError,
     deleteCoupon,
     couponData,
     handleSelectStatus,
@@ -595,5 +600,6 @@ export const useCoupon = () => {
     isGetCouponLoading,
     handleAgreeCheckbox,
     isAgreed,
+    error,
   };
 };

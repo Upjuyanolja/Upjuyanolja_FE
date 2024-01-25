@@ -8,11 +8,11 @@ import { useCoupon } from '@hooks/coupon/useCoupon';
 import { CouponTable } from '@components/coupon/table';
 import { PointModal } from '@components/point-charge-modal/point-modal';
 import { NotFoundCoupon } from '@components/coupon/not-found-coupon';
+import { RESPONSE_CODE } from '@/constants/api';
+import { NotFound } from '@components/error/NotFound';
 
 export const Coupon = () => {
   const {
-    data,
-    isGetCouponError,
     couponData,
     handleSelectStatus,
     handleSelectRecord,
@@ -34,15 +34,19 @@ export const Coupon = () => {
     isGetCouponLoading,
     handleAgreeCheckbox,
     isAgreed,
+    error,
   } = useCoupon();
 
+  if (error?.response?.data.code === RESPONSE_CODE.NOT_ACCOMMODATION_OWNER)
+    return <NotFound />;
   if (isGetCouponLoading)
     return (
       <StyledLoadingLayout>
         <Spin tip="Loading..." size="large" />
       </StyledLoadingLayout>
     );
-  if (data === null)
+
+  if (couponData.coupons.length === 0)
     return (
       <>
         <CouponHeader
@@ -56,7 +60,6 @@ export const Coupon = () => {
         <NotFoundCoupon />
       </>
     );
-  if (isGetCouponError) return <div>에러</div>;
 
   return (
     <>
