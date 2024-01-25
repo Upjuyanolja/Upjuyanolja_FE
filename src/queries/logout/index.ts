@@ -3,9 +3,9 @@ import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { AxiosResponse, AxiosError } from 'axios';
 
 export const useDeleteLogout = (
-  options?: UseMutationOptions<AxiosResponse<null>, AxiosError>,
+  options?: UseMutationOptions<AxiosResponse, AxiosError>,
 ) => {
-  return useMutation<AxiosResponse<null>, AxiosError>(
+  return useMutation<AxiosResponse, AxiosError>(
     () => LOGOUT_API.deleteLogout(),
     {
       ...options,
