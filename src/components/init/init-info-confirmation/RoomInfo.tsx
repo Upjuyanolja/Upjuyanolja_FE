@@ -30,7 +30,11 @@ export const RoomInfo = () => {
           </TextBox>
         </StyledHeadTextContainer>
         {userInputValue[0].rooms.length < 15 && (
-          <StyledButton type="primary" onClick={handleAddButton}>
+          <StyledButton
+            type="primary"
+            onClick={handleAddButton}
+            data-testid="add-room-button"
+          >
             + 객실추가
           </StyledButton>
         )}

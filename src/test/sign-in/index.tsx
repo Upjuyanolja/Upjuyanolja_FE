@@ -45,13 +45,9 @@ export const SignIn = () => {
         try {
           const res = isAccomodationList();
           if (res === true) {
-            setTimeout(() => {
-              handleChangeUrl('/');
-            }, 1000);
+            handleChangeUrl('/');
           } else {
-            setTimeout(() => {
-              handleChangeUrl('/init');
-            }, 1000);
+            handleChangeUrl('/init');
           }
         } catch (e) {
           message.error({

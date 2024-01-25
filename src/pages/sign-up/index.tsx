@@ -31,9 +31,7 @@ export const SignUp = () => {
 
   const postLoginMutation = usePostSignUp({
     onSuccess() {
-      setTimeout(() => {
-        window.location.href = ROUTES.SIGNUP_SUCCESS;
-      }, 1000);
+      window.location.href = ROUTES.SIGNUP_SUCCESS;
     },
     onError(error) {
       if (error instanceof AxiosError)

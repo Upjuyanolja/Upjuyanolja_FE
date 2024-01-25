@@ -19,14 +19,7 @@ export const ServerError = () => {
         </TextBox>
       </StyledContainer>
       <StyledButton type="primary">
-        <TextBox
-          typography="h5"
-          fontWeight={700}
-          color="white"
-          onClick={() => {
-            location.reload();
-          }}
-        >
+        <TextBox typography="h5" fontWeight={700} color="white">
           새로고침
         </TextBox>
       </StyledButton>

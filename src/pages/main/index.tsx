@@ -38,12 +38,7 @@ export const Main = () => {
         <Spin tip="Loading..." size="large" />
       </StyledLoadingLayout>
     );
-  if (!staticsData || !revenueData)
-    return (
-      <StyledLoadingLayout>
-        <Spin tip="Loading..." size="large" />
-      </StyledLoadingLayout>
-    );
+  if (!staticsData || !revenueData) return <></>;
   return (
     <StyledMainLayout>
       <StyledLayout>

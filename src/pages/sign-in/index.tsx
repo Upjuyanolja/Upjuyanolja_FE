@@ -32,13 +32,9 @@ export const SignIn = () => {
           const firstAccommodationId = data.accommodations[0].id;
           setCookie('accommodationId', firstAccommodationId);
           const accommodationId = getCookie('accommodationId');
-          setTimeout(() => {
-            handleChangeUrl(`/${accommodationId}${ROUTES.MAIN}`);
-          }, 1000);
+          handleChangeUrl(`/${accommodationId}${ROUTES.MAIN}`);
         } else {
-          setTimeout(() => {
-            handleChangeUrl(`${ROUTES.INIT}`);
-          }, 1000);
+          handleChangeUrl(`${ROUTES.INIT}`);
         }
       } catch (error) {
         console.log(error);
