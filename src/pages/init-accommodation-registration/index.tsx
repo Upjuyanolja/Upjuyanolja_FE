@@ -68,6 +68,29 @@ export const InitAccommodationRegistration = () => {
     seminar: '세미나실',
   };
 
+  const resetStateAndNavigate = () => {
+    setUpdatedAccommodationInfo(true);
+    setSelectedOptions({
+      cooking: false,
+      parking: false,
+      pickup: false,
+      barbecue: false,
+      fitness: false,
+      karaoke: false,
+      sauna: false,
+      sports: false,
+      seminar: false,
+    });
+    setImageFiles([]);
+    setClickedPrevButton(false);
+
+    if (userInputValue[0].isAccommodationEdit) {
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    } else {
+      navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    }
+  };
+
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
       setUserInputValue((prevUserInputValueState) => {
@@ -107,26 +130,7 @@ export const InitAccommodationRegistration = () => {
         return [updatedUserInputValue];
       });
 
-      setUpdatedAccommodationInfo(true);
-      setSelectedOptions({
-        cooking: false,
-        parking: false,
-        pickup: false,
-        barbecue: false,
-        fitness: false,
-        karaoke: false,
-        sauna: false,
-        sports: false,
-        seminar: false,
-      });
-      setImageFiles([]);
-      setClickedPrevButton(false);
-
-      if (userInputValue[0].isAccommodationEdit) {
-        navigate(ROUTES.INIT_INFO_CONFIRMATION);
-      } else {
-        navigate(ROUTES.INIT_ROOM_REGISTRATION);
-      }
+      resetStateAndNavigate();
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -146,7 +150,6 @@ export const InitAccommodationRegistration = () => {
 
   const onFinish = () => {
     const formData = new FormData();
-
     let shouldExecuteImageFile = false;
 
     for (let i = 0; i < imageFiles.length; i++) {
@@ -189,26 +192,7 @@ export const InitAccommodationRegistration = () => {
         return [updatedUserInputValue];
       });
 
-      setUpdatedAccommodationInfo(true);
-      setSelectedOptions({
-        cooking: false,
-        parking: false,
-        pickup: false,
-        barbecue: false,
-        fitness: false,
-        karaoke: false,
-        sauna: false,
-        sports: false,
-        seminar: false,
-      });
-      setImageFiles([]);
-      setClickedPrevButton(false);
-
-      if (userInputValue[0].isAccommodationEdit) {
-        navigate(ROUTES.INIT_INFO_CONFIRMATION);
-      } else {
-        navigate(ROUTES.INIT_ROOM_REGISTRATION);
-      }
+      resetStateAndNavigate();
     }
   };
 
