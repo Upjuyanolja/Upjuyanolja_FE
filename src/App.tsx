@@ -59,26 +59,28 @@ function App() {
         <Route
           path={ROUTES.TOSS_SUCCESS}
           element={
-            accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <TossSuccess />
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <TossSuccess />
           }
         />
         <Route
           path={ROUTES.TOSS_FAIL}
-          element={accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <TossFail />}
+          element={
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <TossFail />
+          }
         />
         <Route
           path={ROUTES.INIT}
-          element={accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Init />}
+          element={!accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Init />}
         />
         <Route
           element={
-            accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <InitLayout />
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <InitLayout />
           }
         >
           <Route
             path={ROUTES.INIT_ACCOMMODATION_REGISTRATION}
             element={
-              accessToken ? (
+              !accessToken ? (
                 <Navigate to={ROUTES.SIGNIN} />
               ) : (
                 <InitAccommodationRegistration />
@@ -88,7 +90,7 @@ function App() {
           <Route
             path={ROUTES.INIT_ROOM_REGISTRATION}
             element={
-              accessToken ? (
+              !accessToken ? (
                 <Navigate to={ROUTES.SIGNIN} />
               ) : (
                 <InitRoomRegistration />
@@ -98,7 +100,7 @@ function App() {
           <Route
             path={ROUTES.INIT_INFO_CONFIRMATION}
             element={
-              accessToken ? (
+              !accessToken ? (
                 <Navigate to={ROUTES.SIGNIN} />
               ) : (
                 <InitInfoConfirmation />
@@ -109,29 +111,31 @@ function App() {
         {/* 레이아웃 적용 페이지  */}
         <Route
           element={
-            accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RootLayout />
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RootLayout />
           }
         >
           <Route
             path={ROUTES.POINT_DETAIL}
             element={
-              accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <PointDetail />
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <PointDetail />
             }
           />
           <Route
             path={`/:accommodationId${ROUTES.COUPON}`}
-            element={accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Coupon />}
+            element={
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Coupon />
+            }
           />
           <Route
             path={'/'}
             element={
-              accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <MainRedirect />
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <MainRedirect />
             }
           />
           <Route
             path={`/:accommodationId${ROUTES.COUPON_REGISTRATION}`}
             element={
-              accessToken ? (
+              !accessToken ? (
                 <Navigate to={ROUTES.SIGNIN} />
               ) : (
                 <CouponRegistration />
@@ -141,17 +145,17 @@ function App() {
 
           <Route
             path={`/:accommodationId${ROUTES.MAIN}`}
-            element={accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Main />}
+            element={!accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Main />}
           />
           <Route
             path={`/:accommodationId${ROUTES.ROOM}`}
-            element={accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Room />}
+            element={!accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Room />}
           />
           <Route element={<RoomLayout />}>
             <Route
               path={`/:accommodationId${ROUTES.ROOM_REGISTRATION}`}
               element={
-                accessToken ? (
+                !accessToken ? (
                   <Navigate to={ROUTES.SIGNIN} />
                 ) : (
                   <RoomRegistration />
@@ -163,21 +167,21 @@ function App() {
             <Route
               path={`/:accommodationId${ROUTES.ROOM_UPDATE}`}
               element={
-                accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RoomUpdate />
+                !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RoomUpdate />
               }
             />
           </Route>
           <Route
             path={ROUTES.USER_GUIDE}
             element={
-              accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <UserGuide />
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <UserGuide />
             }
           />
         </Route>
         <Route
           path={'/*'}
           element={
-            accessToken ? (
+            !accessToken ? (
               <Navigate to={ROUTES.SIGNIN} />
             ) : (
               <RootLayout isError={true} />
