@@ -20,41 +20,45 @@ export const useGetStatics = (
   accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<staticsData>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     staticsData
   >,
 ) => {
-  return useQuery<AxiosResponse<staticsData>, AxiosError, staticsData>(
-    ['getStatics'],
-    () => COUPON_API.getStatics(accommodationId),
-    {
-      ...options,
-    },
-  );
+  return useQuery<
+    AxiosResponse<staticsData>,
+    AxiosError<ErrorResponse>,
+    staticsData
+  >(['getStatics'], () => COUPON_API.getStatics(accommodationId), {
+    ...options,
+  });
 };
 
 export const useGetRevenue = (
   accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<revenueData>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     revenueData
   >,
 ) => {
-  return useQuery<AxiosResponse<revenueData>, AxiosError, revenueData>(
-    ['getRevenue'],
-    () => COUPON_API.getRevenue(accommodationId),
-    {
-      ...options,
-    },
-  );
+  return useQuery<
+    AxiosResponse<revenueData>,
+    AxiosError<ErrorResponse>,
+    revenueData
+  >(['getRevenue'], () => COUPON_API.getRevenue(accommodationId), {
+    ...options,
+  });
 };
 
 export const useGetCoupon = (
   accommodationId: string,
-  options?: UseQueryOptions<AxiosResponse<coupons>, AxiosError, coupons>,
+  options?: UseQueryOptions<
+    AxiosResponse<coupons>,
+    AxiosError<ErrorResponse>,
+    coupons
+  >,
 ) =>
-  useQuery<AxiosResponse<coupons>, AxiosError, coupons>(
+  useQuery<AxiosResponse<coupons>, AxiosError<ErrorResponse>, coupons>(
     ['getCoupon'],
     () => COUPON_API.getCoupon(accommodationId),
     { ...options },
