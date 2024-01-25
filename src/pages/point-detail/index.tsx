@@ -39,15 +39,17 @@ export const PointDetail = () => {
       onSuccess: (data) => setPointDetailData(data),
     });
 
+  // ${('0' + currentMonth).slice(-2)} : 1, 2, 3 을 날짜데이터형식에 맞춰 01, 02 로 바꾸기.
   const {
     isLoading: pointSummaryDataLoading,
     refetch: pointSummaryDataRefetch,
-  } = useGetPointSummary({
+  } = useGetPointSummary(`${currentYear}-${('0' + currentMonth).slice(-2)}`, {
     select(data) {
       return data.data;
     },
-
-    onSuccess: (data) => setPointSummaryData(data),
+    onSuccess: (data) => {
+      setPointSummaryData(data);
+    },
   });
 
   useEffect(() => {
