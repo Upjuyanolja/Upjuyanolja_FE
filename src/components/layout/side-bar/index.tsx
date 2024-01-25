@@ -11,12 +11,21 @@ import { isSideBarOpenState } from '@stores/layout';
 import { MOBILE_BREAKPOINTS } from '@/constants/mobile';
 
 export const SideBar = () => {
-  const { pointSummaryData, accommodationListData } = useSideBar();
+  const {
+    pointSummaryData,
+    accommodationListData,
+    isPointSummaryError,
+    isAccommodationListError,
+  } = useSideBar();
   const setIsSideBarOpen = useSetRecoilState(isSideBarOpenState);
 
   const closeSideBar = () => {
     setIsSideBarOpen(false);
   };
+
+  if (isPointSummaryError || isAccommodationListError) {
+    return <></>;
+  }
 
   return (
     <StyledContainer>
