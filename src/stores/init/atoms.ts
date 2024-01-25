@@ -44,7 +44,7 @@ export const userInputValueState = atom<UserInputValue[]>({
 });
 
 export const checkedRoomOptions = atom<RoomOptions>({
-  key: 'checkedAccommodationOptions',
+  key: 'checkedRoomOptions',
   default: {
     airCondition: false,
     tv: false,
@@ -53,7 +53,7 @@ export const checkedRoomOptions = atom<RoomOptions>({
 });
 
 export const checkedAccommodationOptions = atom<AccommodationOptions>({
-  key: 'checkedRoomOptions',
+  key: 'checkedAccommodationOptions',
   default: {
     cooking: false,
     parking: false,
