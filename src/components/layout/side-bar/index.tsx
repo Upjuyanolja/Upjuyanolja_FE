@@ -49,7 +49,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   transition: transform 0.3s ease-in;
 `;

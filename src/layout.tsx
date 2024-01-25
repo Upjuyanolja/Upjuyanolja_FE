@@ -56,7 +56,6 @@ const StyledSider = styled(Layout.Sider)<StyledSiderProps>`
   top: 56px;
   height: calc(100vh - 56px);
   background-color: ${colors.white};
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   z-index: 6;
   @media (max-width: ${MOBILE_BREAKPOINTS}) {
     transform: ${(props) =>
@@ -65,6 +64,9 @@ const StyledSider = styled(Layout.Sider)<StyledSiderProps>`
     position: fixed;
     z-index: 8;
     height: 100%;
+  }
+  .ant-layout-sider-children {
+    box-shadow: none;
   }
 `;
 
