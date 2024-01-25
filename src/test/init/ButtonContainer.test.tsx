@@ -1,13 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import '../matchMedia.mock';
 import { ButtonContainer } from '@components/init/ButtonContainer';
+import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('ButtonContainer', () => {
   test('모든 필수 항목을 입력하면 다음 버튼이 활성화된다.', () => {
+    const queryClient = new QueryClient();
     render(
       <BrowserRouter>
-        <ButtonContainer buttonStyle={'navigate'} isValid={true} />
+        <RecoilRoot>
+          <QueryClientProvider client={queryClient}>
+            <ButtonContainer buttonStyle={'navigate'} isValid={true} />
+          </QueryClientProvider>
+        </RecoilRoot>
       </BrowserRouter>,
     );
 

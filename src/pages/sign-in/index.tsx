@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
@@ -10,12 +9,12 @@ import { useFormik } from 'formik';
 import { Layout, Input, Button, message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
 import { SignInData } from '@api/sign-in/type';
 import { ACCOMMODATION_API } from '@api/accommodation';
+import { ROUTES } from '@/constants/routes';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -33,13 +32,9 @@ export const SignIn = () => {
           const firstAccommodationId = data.accommodations[0].id;
           setCookie('accommodationId', firstAccommodationId);
           const accommodationId = getCookie('accommodationId');
-          setTimeout(() => {
-            handleChangeUrl(`/${accommodationId}/main`);
-          }, 1000);
+          window.location.replace(`/${accommodationId}${ROUTES.MAIN}`);
         } else {
-          setTimeout(() => {
-            handleChangeUrl('/init');
-          }, 1000);
+          window.location.replace(`${ROUTES.INIT}`);
         }
       } catch (error) {
         console.log(error);
@@ -159,6 +154,7 @@ export const SignIn = () => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
+              autoComplete="off"
             />
             {touched.password && errors.password && (
               <TextBox typography="body4" color="error">

@@ -67,6 +67,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
               max={15}
               value={defaultCapacity}
               onChange={handleCapacityChange('default')}
+              data-testid="default-capacity"
             />
           </Form.Item>
           <StyledTextBoxWrapper>
@@ -87,6 +88,7 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
               max={15}
               value={maxCapacity}
               onChange={handleCapacityChange('maximum')}
+              data-testid="max-capacity"
             />
           </Form.Item>
           <StyledTextBoxWrapper>

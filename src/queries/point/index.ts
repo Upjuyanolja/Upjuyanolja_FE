@@ -4,6 +4,7 @@ import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 
 export const useGetPointSummary = (
+  rangeDate: string,
   options?: UseQueryOptions<
     AxiosResponse<pointSummaryData>,
     AxiosError,
@@ -14,5 +15,7 @@ export const useGetPointSummary = (
     AxiosResponse<pointSummaryData>,
     AxiosError,
     pointSummaryData
-  >(['getPointSummary'], () => POINT_API.getPointSummary(), { ...options });
+  >(['getPointSummary'], () => POINT_API.getPointSummary(rangeDate), {
+    ...options,
+  });
 };

@@ -6,27 +6,39 @@ import { Image, Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import { useMain } from '@hooks/main/useMain';
 import { UserGuidNavigationContainer } from '@components/main/user-guide-navigation-container';
+import { RESPONSE_CODE } from '@/constants/api';
+import { NotFound } from '@components/error/NotFound';
+import { ServerError } from '@components/error/ServerError';
 
 export const Main = () => {
   const {
     navigateCoupon,
     navigateCouponRegistration,
     staticsData,
-    isStaticsError,
+    staticsError,
     revenueData,
-    isRevenueError,
+    revenueError,
+    isStaticsLoading,
+    isRevenueLoading,
     couponMessage,
     navigateUserGuide,
     navigateBusinessCenter,
   } = useMain();
 
-  if (!staticsData || !revenueData)
+  if (
+    staticsError?.response?.data.code ===
+      RESPONSE_CODE.NOT_ACCOMMODATION_OWNER ||
+    revenueError?.response?.data.code === RESPONSE_CODE.NOT_ACCOMMODATION_OWNER
+  )
+    return <NotFound />;
+  if (staticsError !== null || revenueError !== null) return <ServerError />;
+  if (isStaticsLoading || isRevenueLoading)
     return (
       <StyledLoadingLayout>
         <Spin tip="Loading..." size="large" />
       </StyledLoadingLayout>
     );
-  if (isStaticsError || isRevenueError) return <div>에러</div>;
+  if (!staticsData || !revenueData) return <></>;
   return (
     <StyledMainLayout>
       <StyledLayout>

@@ -2,5 +2,8 @@ import { instance } from '..';
 import { pointSummaryData } from './type';
 
 export const POINT_API = {
-  getPointSummary: () => instance.get<pointSummaryData>('/api/points/summary'),
+  getPointSummary: (rangeDate: string) =>
+    instance.get<pointSummaryData>(
+      `/api/points/summary?rangeDate=${rangeDate}`,
+    ),
 };

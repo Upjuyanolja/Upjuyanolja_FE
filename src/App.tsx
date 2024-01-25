@@ -56,52 +56,138 @@ function App() {
           path={ROUTES.SIGNUP_SUCCESS}
           element={accessToken ? <Navigate to="/" /> : <SignUpSuccess />}
         />
-        <Route path={ROUTES.TOSS_SUCCESS} element={<TossSuccess />} />
-        <Route path={ROUTES.TOSS_FAIL} element={<TossFail />} />
-        <Route path={ROUTES.INIT} element={<Init />} />
-        <Route element={<InitLayout />}>
+        <Route
+          path={ROUTES.TOSS_SUCCESS}
+          element={
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <TossSuccess />
+          }
+        />
+        <Route
+          path={ROUTES.TOSS_FAIL}
+          element={
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <TossFail />
+          }
+        />
+        <Route
+          path={ROUTES.INIT}
+          element={!accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Init />}
+        />
+        <Route
+          element={
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <InitLayout />
+          }
+        >
           <Route
             path={ROUTES.INIT_ACCOMMODATION_REGISTRATION}
-            element={<InitAccommodationRegistration />}
+            element={
+              !accessToken ? (
+                <Navigate to={ROUTES.SIGNIN} />
+              ) : (
+                <InitAccommodationRegistration />
+              )
+            }
           />
           <Route
             path={ROUTES.INIT_ROOM_REGISTRATION}
-            element={<InitRoomRegistration />}
+            element={
+              !accessToken ? (
+                <Navigate to={ROUTES.SIGNIN} />
+              ) : (
+                <InitRoomRegistration />
+              )
+            }
           />
           <Route
             path={ROUTES.INIT_INFO_CONFIRMATION}
-            element={<InitInfoConfirmation />}
+            element={
+              !accessToken ? (
+                <Navigate to={ROUTES.SIGNIN} />
+              ) : (
+                <InitInfoConfirmation />
+              )
+            }
           />
         </Route>
         {/* 레이아웃 적용 페이지  */}
-        <Route element={<RootLayout />}>
-          <Route path={ROUTES.POINT_DETAIL} element={<PointDetail />} />
+        <Route
+          element={
+            !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RootLayout />
+          }
+        >
+          <Route
+            path={ROUTES.POINT_DETAIL}
+            element={
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <PointDetail />
+            }
+          />
           <Route
             path={`/:accommodationId${ROUTES.COUPON}`}
-            element={<Coupon />}
+            element={
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Coupon />
+            }
           />
-          <Route path={'/'} element={<MainRedirect />} />
+          <Route
+            path={'/'}
+            element={
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <MainRedirect />
+            }
+          />
           <Route
             path={`/:accommodationId${ROUTES.COUPON_REGISTRATION}`}
-            element={<CouponRegistration />}
+            element={
+              !accessToken ? (
+                <Navigate to={ROUTES.SIGNIN} />
+              ) : (
+                <CouponRegistration />
+              )
+            }
           />
 
-          <Route path={`/:accommodationId${ROUTES.MAIN}`} element={<Main />} />
-          <Route path={`/:accommodationId${ROUTES.ROOM}`} element={<Room />} />
+          <Route
+            path={`/:accommodationId${ROUTES.MAIN}`}
+            element={!accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Main />}
+          />
+          <Route
+            path={`/:accommodationId${ROUTES.ROOM}`}
+            element={!accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Room />}
+          />
           <Route element={<RoomLayout />}>
             <Route
               path={`/:accommodationId${ROUTES.ROOM_REGISTRATION}`}
-              element={<RoomRegistration />}
+              element={
+                !accessToken ? (
+                  <Navigate to={ROUTES.SIGNIN} />
+                ) : (
+                  <RoomRegistration />
+                )
+              }
             />
           </Route>
           <Route element={<RoomLayout />}>
             <Route
               path={`/:accommodationId/:roomId${ROUTES.ROOM_UPDATE}`}
-              element={<RoomUpdate />}
+              element={
+                !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <RoomUpdate />
+              }
             />
           </Route>
-          <Route path={ROUTES.USER_GUIDE} element={<UserGuide />} />
+          <Route
+            path={ROUTES.USER_GUIDE}
+            element={
+              !accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <UserGuide />
+            }
+          />
         </Route>
+        <Route
+          path={'/*'}
+          element={
+            !accessToken ? (
+              <Navigate to={ROUTES.SIGNIN} />
+            ) : (
+              <RootLayout isError={true} />
+            )
+          }
+        />
       </Routes>
     </Router>
   );
