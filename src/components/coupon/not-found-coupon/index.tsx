@@ -1,8 +1,15 @@
+import { ROUTES } from '@/constants/routes';
 import { TextBox } from '@components/text-box';
 import { Button } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const NotFoundCoupon = () => {
+  const navigate = useNavigate();
+  const { accommodationId } = useParams();
+  const handleNavigateCouponRegistration = () => {
+    navigate(`/${accommodationId}${ROUTES.COUPON_REGISTRATION}`);
+  };
   return (
     <StyledLayout>
       <StyledTextBox>
@@ -14,7 +21,12 @@ export const NotFoundCoupon = () => {
         </TextBox>
       </StyledTextBox>
       <StyledButton type="primary">
-        <TextBox fontWeight={700} typography="h5" color="white">
+        <TextBox
+          fontWeight={700}
+          typography="h5"
+          color="white"
+          onClick={handleNavigateCouponRegistration}
+        >
           쿠폰 만들기
         </TextBox>
       </StyledButton>

@@ -1,7 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import '../matchMedia.mock';
 import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
 import { message } from 'antd';
 import { IMAGE_MAX_CAPACITY } from '@/constants/init';
