@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
@@ -10,12 +9,12 @@ import { useFormik } from 'formik';
 import { Layout, Input, Button, message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
 import { SignInData } from '@api/sign-in/type';
 import { ACCOMMODATION_API } from '@api/accommodation';
+import { ROUTES } from '@/constants/routes';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -34,11 +33,11 @@ export const SignIn = () => {
           setCookie('accommodationId', firstAccommodationId);
           const accommodationId = getCookie('accommodationId');
           setTimeout(() => {
-            handleChangeUrl(`/${accommodationId}/main`);
+            handleChangeUrl(`/${accommodationId}${ROUTES.MAIN}`);
           }, 1000);
         } else {
           setTimeout(() => {
-            handleChangeUrl('/init');
+            handleChangeUrl(`${ROUTES.INIT}`);
           }, 1000);
         }
       } catch (error) {

@@ -11,7 +11,7 @@ export const NotFound = () => {
   const handleNavigate = async () => {
     const accommodationId = getCookie('accommodationId');
     if (accommodationId) {
-      navigate(`${accommodationId}${ROUTES.MAIN}`);
+      navigate(`/${accommodationId}${ROUTES.MAIN}`);
       return;
     }
     const { data } = await ACCOMMODATION_API.getAccommodationList();
@@ -19,7 +19,7 @@ export const NotFound = () => {
     const accommodationIdData = data.accommodations[0].id;
     if (hasAccommodationData && accommodationIdData) {
       setCookie('accommodationId', accommodationIdData.toString());
-      navigate(`${accommodationIdData}${ROUTES.MAIN}`);
+      navigate(`/${accommodationIdData}${ROUTES.MAIN}`);
       return;
     }
     navigate(ROUTES.INIT);

@@ -10,6 +10,7 @@ import { PointModal } from '@components/point-charge-modal/point-modal';
 import { NotFoundCoupon } from '@components/coupon/not-found-coupon';
 import { RESPONSE_CODE } from '@/constants/api';
 import { NotFound } from '@components/error/NotFound';
+import { ServerError } from '@components/error/ServerError';
 
 export const Coupon = () => {
   const {
@@ -39,6 +40,7 @@ export const Coupon = () => {
 
   if (error?.response?.data.code === RESPONSE_CODE.NOT_ACCOMMODATION_OWNER)
     return <NotFound />;
+  if (error !== null) return <ServerError />;
   if (isGetCouponLoading)
     return (
       <StyledLoadingLayout>

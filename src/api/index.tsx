@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { HTTP_STATUS_CODE } from '../constants/api';
+import { HTTP_STATUS_CODE, RESPONSE_CODE } from '../constants/api';
 import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { REFRESH_API } from './refresh';
 import { message } from 'antd';
-import { isAccessTokenExpired } from '@/utils/refresh';
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
@@ -26,22 +25,7 @@ instance.interceptors.request.use(
   async (config) => {
     const accessToken = getCookie('accessToken');
     if (accessToken) {
-      const isTokenExpired = isAccessTokenExpired(accessToken);
-      if (isTokenExpired) {
-        try {
-          const res = await REFRESH_API.postRefresh({
-            accessToken: accessToken,
-            refreshToken: getCookie('refreshToken') as string,
-          });
-          config.headers['Authorization'] = `Bearer ${res.data.accessToken}`;
-          setCookie('accessToken', res.data.accessToken);
-          setCookie('refreshToken', res.data.refreshToken);
-        } catch (refreshError) {
-          handleUnauthorized();
-        }
-      } else {
-        config.headers['Authorization'] = `Bearer ${accessToken}`;
-      }
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -52,9 +36,30 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response?.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
-      handleUnauthorized();
+      if (error.response?.data && 'code' in error.response.data) {
+        // 리프레시 토큰이 유효하지 않을 때
+        if (error.response.data.code === RESPONSE_CODE.INVALID_REFRESH_TOKEN) {
+          message.error('로그인 만료 입니다.');
+          handleUnauthorized();
+        }
+      } else {
+        const accessToken = getCookie('accessToken');
+        if (accessToken) {
+          const res = await REFRESH_API.postRefresh({
+            accessToken: accessToken,
+            refreshToken: getCookie('refreshToken') as string,
+          });
+          setCookie('accessToken', res.data.accessToken);
+          setCookie('refreshToken', res.data.refreshToken);
+        } else {
+          removeCookie('accessToken');
+          removeCookie('refreshToken');
+          removeCookie('accommodationId');
+          window.location.replace('/signin');
+        }
+      }
     }
     return Promise.reject(error);
   },
