@@ -82,8 +82,7 @@ export type BuyCouponParams = {
 };
 
 export type BuyCouponData = {
-  message: string;
-  data: null;
+  data: string;
   code?: number;
 };
 

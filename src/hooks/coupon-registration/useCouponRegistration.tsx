@@ -43,7 +43,7 @@ export const useCouponRegistration = () => {
 
   const handleErrorResponse = (errorCode: number | undefined) => {
     switch (errorCode) {
-      case RESPONSE_CODE.NOT_ENOUGH_POINT:
+      case RESPONSE_CODE.INSUFFICIENT_POINT_BALANCE:
         return Modal.confirm({
           title: '포인트 잔액이 부족합니다',
           content: '포인트 충전을 하시겠습니까?',
@@ -53,7 +53,7 @@ export const useCouponRegistration = () => {
           onOk: () => setIsModalOpen(true),
         });
       case RESPONSE_CODE.NOT_FOUND_ACCOMMODATION_ID:
-        return navigate('/404');
+        return message.error('요청을 실패했습니다. 관리자에게 문의해주세요.');
       default:
         return message.error('요청에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
