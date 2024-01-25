@@ -7,23 +7,20 @@ import {
   VerificationData,
 } from './type';
 import { instance } from '..';
-import { Response } from '@/types/api';
 
 export const SIGN_UP_API = {
   postSignUp: (data: SignUpData) =>
-    instance.post<Response<PostSignUpResData>>('/api/auth/owners/signup', {
-      data,
-    }),
+    instance.post<PostSignUpResData>('/api/auth/owners/signup', data),
   postAuthentication: (data: AuthenticationData) =>
-    instance.post<Response<PostAuthenticationData>>(
+    instance.post<PostAuthenticationData>(
       '/api/auth/owners/request-email',
       data,
     ),
   getVerify: (data: VerificationData) =>
-    instance.get<Response<GetVerificationData>>('/api/auth/owners/verify', {
+    instance.get<GetVerificationData>('/api/auth/owners/verify', {
       params: {
         email: data.email,
-        verificationCode: data.verificationCode,
+        'verification-code': data.verificationCode,
       },
     }),
 };

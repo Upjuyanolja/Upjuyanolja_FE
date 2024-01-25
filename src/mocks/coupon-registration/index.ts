@@ -1,4 +1,4 @@
-import buyCouponData from '@assets/data/buyCouponData.json';
+import failBuyCouponData from '@assets/data/failBuyCouponData.json';
 import couponRoomListData from '@assets/data/couponRoomListData.json';
 
 import { HttpResponse } from 'msw';
@@ -8,5 +8,5 @@ export const getCouponRoomListResolver = () => {
 };
 
 export const buyCouponResolver = () => {
-  return HttpResponse.json(buyCouponData, { status: 200 });
+  return HttpResponse.json(failBuyCouponData, { status: 401 });
 };

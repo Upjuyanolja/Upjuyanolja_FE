@@ -8,7 +8,7 @@ export const usePointDetail = (menuStatus: menuStatusType, page: number) => {
     refetch: pointSummaryDataRefetch,
   } = useGetPointSummary({
     select(data) {
-      return data.data.data;
+      return data.data;
     },
   });
 
@@ -18,7 +18,7 @@ export const usePointDetail = (menuStatus: menuStatusType, page: number) => {
     refetch: pointDetailDataRefetch,
   } = useGetPointDetail(menuStatus, page, {
     select(data) {
-      return data.data.data;
+      return data.data;
     },
   });
   return {

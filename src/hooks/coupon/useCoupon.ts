@@ -19,6 +19,8 @@ import {
 import { calculatedCouponPoints } from '@/utils/discountCoupon';
 import { useParams } from 'react-router-dom';
 import { RESPONSE_CODE } from '@/constants/api';
+import { useRecoilState } from 'recoil';
+import { isCouponModifiedState } from '@stores/coupon/atom';
 /**
  * @description 쿠폰 관리 페이지 로직을 다루는 hook
  * 
@@ -53,6 +55,10 @@ export const useCoupon = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { accommodationId } = useParams();
   const [isPointModalOpen, setIsPointModalOpen] = useState(false);
+  const [isCouponModified, setIsCouponModified] = useRecoilState(
+    isCouponModifiedState,
+  );
+  const [isAgreed, setIsAgreed] = useState(false);
 
   const {
     data,
@@ -61,7 +67,7 @@ export const useCoupon = () => {
     remove: getCouponRemove,
   } = useGetCoupon(accommodationId as string, {
     select(data) {
-      return data.data.data;
+      return data.data;
     },
   });
 
@@ -123,7 +129,41 @@ export const useCoupon = () => {
 
   useEffect(() => {
     processPurchaseData();
+    setIsAgreed(false);
   }, [isModalOpen]);
+
+  useEffect(() => {
+    setSelectedStatus('');
+    setSelectedRowKeys([]);
+    setCouponData({
+      expiry: '',
+      coupons: [],
+    });
+    setPurchaseData({
+      batchValue: 0,
+      isAppliedBatchEdit: false,
+      totalPoints: 0,
+      rooms: [],
+    });
+    originCouponTableData.current = {
+      expiry: '',
+      coupons: [],
+    };
+    getCouponRemove();
+  }, [accommodationId]);
+
+  useEffect(() => {
+    setIsCouponModified(
+      JSON.stringify(originCouponTableData.current) !==
+        JSON.stringify(couponData),
+    );
+  }, [couponData]);
+
+  useEffect(() => {
+    return () => {
+      setIsCouponModified(false);
+    };
+  }, []);
 
   const processCouponTableData = (data: coupons) => {
     const couponTableData = [];
@@ -270,13 +310,6 @@ export const useCoupon = () => {
     setCouponData({ expiry: date, coupons });
   };
 
-  const isModified = () => {
-    return (
-      JSON.stringify(originCouponTableData.current) !==
-      JSON.stringify(couponData)
-    );
-  };
-
   const isSelectedRow = () => {
     return selectedRowKeys.length !== 0;
   };
@@ -356,7 +389,7 @@ export const useCoupon = () => {
   };
 
   const handleDeleteButton = () => {
-    if (isModified()) {
+    if (isCouponModified) {
       message.warning('수정 중인 내용을 먼저 저장하세요');
       return;
     }
@@ -404,7 +437,7 @@ export const useCoupon = () => {
   };
 
   const handleModalOpen = () => {
-    if (isModified()) {
+    if (isCouponModified) {
       message.warning('수정 중인 내용을 먼저 저장하세요');
       return;
     }
@@ -533,6 +566,10 @@ export const useCoupon = () => {
     });
   };
 
+  const handleAgreeCheckbox = () => {
+    setIsAgreed((prev) => !prev);
+  };
+
   return {
     data,
     isGetCouponError,
@@ -543,7 +580,6 @@ export const useCoupon = () => {
     handleSelectCouponType,
     handleChangeDayLimit,
     handleDeleteButton,
-    isModified,
     handleChangeDate,
     handleEditButton,
     handleModalOpen,
@@ -557,5 +593,7 @@ export const useCoupon = () => {
     isPointModalOpen,
     setIsPointModalOpen,
     isGetCouponLoading,
+    handleAgreeCheckbox,
+    isAgreed,
   };
 };

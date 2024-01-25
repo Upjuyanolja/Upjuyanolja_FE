@@ -22,6 +22,7 @@ export const AdditionalPurchaseInfo = ({
             onChange={(event) =>
               handleChangeBuyQuantity(event, coupon.couponId, roomId)
             }
+            data-testid="buy-input"
           />
           <TextBox fontWeight={400} typography="body3">
             장

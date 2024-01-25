@@ -29,6 +29,7 @@ export type PendingRoomData = {
   discount: number;
   quantity: number;
   roomPrice: number;
+  eachPoint: number;
 };
 
 export type PendingRoomDataList = PendingRoomData[];

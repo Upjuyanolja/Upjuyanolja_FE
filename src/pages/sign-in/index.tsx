@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
 import { Main } from '@components/sign-up';
 import { ValidateSchema } from '@/utils/sign-in/ValidateSchema';
-import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
+import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostLogin } from '@queries/sign-in';
 import { useFormik } from 'formik';
@@ -13,35 +13,49 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
+import { colors } from '@/constants/colors';
+import { SignInData } from '@api/sign-in/type';
+import { ACCOMMODATION_API } from '@api/accommodation';
 
 export const SignIn = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const { accommodationListData } = useSideBar();
-  const postLoginMutation = usePostLogin({
-    onSuccess: (response) => {
-      setCookie('accessToken', response.data.data.accessToken);
-      setCookie('refreshToken', response.data.data.accessToken);
-      const memberResponse = response.data.data.memberResponse;
-      const memberData = JSON.stringify(memberResponse);
-      localStorage.setItem('member', memberData);
-      if (accommodationListData?.accommodations[0]?.id) {
-        setCookie(
-          'accomodationId',
-          accommodationListData?.accommodations[0]?.id.toString(),
-        );
+  const { mutate } = usePostLogin({
+    onSuccess: async (response) => {
+      try {
+        setCookie('accessToken', response.data.accessToken);
+        setCookie('refreshToken', response.data.refreshToken);
+        const { data } = await ACCOMMODATION_API.getAccommodationList();
+        const hasAccommodationData = data.accommodations.length > 0;
+        const memberResponse = response.data.memberResponse;
+        const memberData = JSON.stringify(memberResponse);
+        localStorage.setItem('member', memberData);
+        if (hasAccommodationData) {
+          const firstAccommodationId = data.accommodations[0].id;
+          setCookie('accommodationId', firstAccommodationId);
+          const accommodationId = getCookie('accommodationId');
+          setTimeout(() => {
+            handleChangeUrl(`/${accommodationId}/main`);
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            handleChangeUrl('/init');
+          }, 1000);
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
+    onError() {
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            이메일과 비밀번호를 확인해 주세요.
+          </TextBox>
+        ),
+        duration: 2,
+      });
+    },
   });
-  const isAccomodationList = () => {
-    if (
-      accommodationListData?.accommodations &&
-      accommodationListData.accommodations.length > 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   const handleOnclick = () => {
     if (
@@ -64,6 +78,7 @@ export const SignIn = () => {
       });
     }
   };
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -72,36 +87,11 @@ export const SignIn = () => {
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
       try {
-        removeCookie('accessToken');
-        removeCookie('refreshToken');
-        removeCookie('accomodationId');
-        await postLoginMutation.mutateAsync(values);
-        try {
-          const res = isAccomodationList();
-          const accomodationId = getCookie('accomodationId');
-          if (res === true) {
-            setTimeout(() => {
-              handleChangeUrl(`/${accomodationId}/main`);
-            }, 1000);
-          } else {
-            setTimeout(() => {
-              handleChangeUrl('/init');
-            }, 1000);
-          }
-        } catch (e) {
-          message.error({
-            content: (
-              <TextBox typography="body3" fontWeight={'400'}>
-                요청에 실패했습니다. 잠시 후 다시 시도해 주세요.
-              </TextBox>
-            ),
-            duration: 2,
-            style: {
-              width: '346px',
-              height: '41px',
-            },
-          });
-        }
+        const signInData: SignInData = {
+          email: values.email,
+          password: values.password,
+        };
+        await mutate(signInData);
       } catch (e) {
         if (e instanceof AxiosError && e.response) {
           if (e.response.status === HTTP_STATUS_CODE.BAD_GATEWAY) {
@@ -153,7 +143,7 @@ export const SignIn = () => {
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-            ></StyledInput>
+            />
             {touched.email && errors.email && (
               <TextBox typography="body4" color="error">
                 {errors.email}
@@ -169,7 +159,7 @@ export const SignIn = () => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-            ></StyledPassword>
+            />
             {touched.password && errors.password && (
               <TextBox typography="body4" color="error">
                 {errors.password}
@@ -276,6 +266,7 @@ const StyledButton = styled(Button)`
   height: 54px;
   border-radius: 2px;
   padding: 12px 32px 12px 32px;
+  border: 1px solid ${colors.primary};
 `;
 
 const SignUpContainer = styled.div`

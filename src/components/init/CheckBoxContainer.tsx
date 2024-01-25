@@ -9,18 +9,38 @@ import {
   checkedAccommodationOptions,
   checkedRoomOptions,
 } from '@stores/init/atoms';
-import { Options, RoomOptions } from './init-accommodation-registration/type';
+import {
+  AccommodationOptions,
+  RoomOptions,
+} from './init-accommodation-registration/type';
+import { useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 
 export const CheckBoxContainer = ({
   options,
   header,
+  defaultValue,
 }: CheckBoxContainerProps) => {
   const [selectedAccommodationOptions, setSelectedAccommodationOptions] =
     useRecoilState(checkedAccommodationOptions);
 
   const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
     useRecoilState(checkedRoomOptions);
+
+  useEffect(() => {
+    if (defaultValue) {
+      if (
+        window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION ||
+        window.location.pathname === ROUTES.ROOM_UPDATE
+      ) {
+        setSelectedInitRoomOptions(defaultValue as RoomOptions);
+      } else if (
+        window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION
+      ) {
+        setSelectedAccommodationOptions(defaultValue as AccommodationOptions);
+      }
+    }
+  }, [defaultValue]);
 
   const handleCheckboxChange = (event: CheckboxChangeEvent) => {
     const checkedOption = event.target.value;
@@ -55,7 +75,9 @@ export const CheckBoxContainer = ({
               onChange={handleCheckboxChange}
               checked={
                 header === '숙소'
-                  ? selectedAccommodationOptions[english as keyof Options]
+                  ? selectedAccommodationOptions[
+                      english as keyof AccommodationOptions
+                    ]
                   : selectedInitRoomOptions[english as keyof RoomOptions]
               }
             >

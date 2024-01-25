@@ -1,33 +1,41 @@
 import { TextBox } from '@components/text-box';
-import { Modal, message } from 'antd';
+import { message } from 'antd';
 import { styled } from 'styled-components';
 import { CloseCircleTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useState, useRef, ChangeEvent } from 'react';
-import { ImageUploadFileItem, StyledImageContainerProps } from './type';
+import { useRef, ChangeEvent, useEffect } from 'react';
+import { StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
-import { useSetRecoilState } from 'recoil';
-import {
-  selectedAccommodationFilesState,
-  selectedInitRoomFilesState,
-} from '@stores/init/atoms';
+import { useRecoilState } from 'recoil';
+import { imageFileState } from '@stores/init/atoms';
+import { addedImageFileState, deletedImageFileState } from '@stores/room/atoms';
 import { ROUTES } from '@/constants/routes';
+import { Image } from '@api/room/type';
 
-export const ImageUploadContainer = ({ header }: { header: string }) => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState<ImageUploadFileItem[]>([]);
+export const ImageUploadContainer = ({
+  header,
+  images,
+}: {
+  header: string;
+  images?: Image[];
+}) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const setSelectedAccommodationFiles = useSetRecoilState(
-    selectedAccommodationFilesState,
-  );
+  useEffect(() => {
+    if (images) {
+      const data = images.map((image, index) => {
+        return { key: index, url: image.url, file: null };
+      });
+      setImageFile(data);
+    }
+  }, [images]);
 
-  const setSelectedInitRoomFiles = useSetRecoilState(
-    selectedInitRoomFilesState,
+  const [imageFile, setImageFile] = useRecoilState(imageFileState);
+  const [addedImageFile, setAddedImageFile] =
+    useRecoilState(addedImageFileState);
+  const [removedImageFile, setRemovedImageFile] = useRecoilState(
+    deletedImageFileState,
   );
-
-  const handleCancel = () => setPreviewOpen(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
@@ -46,42 +54,32 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     ) {
       return message.error({
         content: '.png, .jpeg, .jpg 파일만 등록 가능합니다.',
+        style: {
+          marginTop:
+            window.location.pathname ===
+              ROUTES.INIT_ACCOMMODATION_REGISTRATION ||
+            ROUTES.INIT_ROOM_REGISTRATION
+              ? '210px'
+              : '0',
+        },
       });
     }
     if (selectedFile.size <= IMAGE_MAX_CAPACITY * 1024 * 1024) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const imageUrl = reader.result as string;
-
-        setFileList((prevFileList) => [
-          ...prevFileList,
-          {
-            uid: Date.now(),
-            name: selectedFile.name,
-            url: imageUrl,
-          },
-        ]);
-
-        if (header === '숙소 대표 이미지 설정') {
-          setSelectedAccommodationFiles((prevSelectedFiles) => [
-            ...prevSelectedFiles,
-            { url: imageUrl },
-          ]);
-        } else if (
-          header === '객실 사진' &&
-          window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION
-        ) {
-          setSelectedInitRoomFiles((prevSelectedFiles) => [
-            ...prevSelectedFiles,
-            { url: imageUrl },
-          ]);
-        }
-      };
-
-      reader.readAsDataURL(selectedFile);
+      setImageFile((prev) => [
+        ...prev,
+        { key: imageFile.length, url: '', file: selectedFile },
+      ]);
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
+        style: {
+          marginTop:
+            window.location.pathname ===
+              ROUTES.INIT_ACCOMMODATION_REGISTRATION ||
+            ROUTES.INIT_ROOM_REGISTRATION
+              ? '210px'
+              : '0',
+        },
       });
     }
   };
@@ -92,23 +90,25 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
     }
   };
 
-  const handleImageClick = (file: ImageUploadFileItem) => {
-    setPreviewOpen(true);
-    setPreviewTitle(file.name);
-  };
+  const handleRemove = (key: number) => {
+    const itemToRemove = imageFile.find((item) => item.key === key);
+    if (!itemToRemove) return;
 
-  const handleRemove = (file: ImageUploadFileItem) => {
-    const newFileList = fileList.filter((item) => item.uid !== file.uid);
-    setFileList(newFileList);
+    const isInAddedImages = addedImageFile.some((item) => item.key === key);
 
-    if (header === '숙소 대표 이미지 설정') {
-      setSelectedAccommodationFiles(newFileList);
-    } else if (
-      header === '객실 사진' &&
-      window.location.pathname === '/init/room-registration'
-    ) {
-      setSelectedInitRoomFiles(newFileList);
+    if (isInAddedImages) {
+      setAddedImageFile((prevAddedImageFile) =>
+        prevAddedImageFile.filter((item) => item.key !== key),
+      );
+    } else {
+      setRemovedImageFile((prevRemovedImageFile) => [
+        ...prevRemovedImageFile,
+        itemToRemove,
+      ]);
     }
+
+    const newFileList = imageFile.filter((item) => item.key !== key);
+    setImageFile(newFileList);
   };
 
   return (
@@ -121,21 +121,20 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           이미지는 최대 {IMAGE_MAX_COUNT}개까지 등록 가능합니다.
         </TextBox>
       </StyledHeadTextContainer>
-      <StyledImageContainer $fileList={fileList} header={header}>
-        {fileList.map((file) => (
-          <div key={file.uid}>
+      <StyledImageContainer $fileList={imageFile} header={header}>
+        {imageFile.map((obj) => (
+          <div key={obj.key}>
             <StyledCloseButton
-              onClick={() => handleRemove(file)}
+              onClick={() => handleRemove(obj.key)}
               twoToneColor={colors.black600}
             />
             <img
-              src={file.url}
-              alt={file.name}
-              onClick={() => handleImageClick(file)}
+              src={obj.file !== null ? URL.createObjectURL(obj.file) : obj.url}
+              alt={'이미지'}
             />
           </div>
         ))}
-        {fileList.length < IMAGE_MAX_COUNT && (
+        {imageFile.length < IMAGE_MAX_COUNT && (
           <StyledUploadButtonWrapper onClick={openFileInput}>
             <PlusOutlined />
             <TextBox typography="body3" color="black600">
@@ -153,18 +152,6 @@ export const ImageUploadContainer = ({ header }: { header: string }) => {
           </StyledUploadButtonWrapper>
         )}
       </StyledImageContainer>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img
-          alt={previewTitle}
-          style={{ width: '100%' }}
-          src={fileList.find((file) => file.name === previewTitle)?.url}
-        />
-      </Modal>
     </StyledInputWrapper>
   );
 };
@@ -215,7 +202,6 @@ const StyledImageContainer = styled.div<StyledImageContainerProps>`
       width: 100%;
       height: 100%;
       object-fit: cover;
-      cursor: pointer;
 
       &:hover {
         opacity: 80%;

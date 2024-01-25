@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import { Outlet, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { RouteConfigProps } from './type';
+import couponLogo from '@assets/image/logo.png';
 
 export const InitLayout = () => {
   const location = useLocation();
@@ -33,7 +34,16 @@ export const InitLayout = () => {
 
   return (
     <StyledLayout>
-      <StyledHeader>Header</StyledHeader>
+      <StyledHeader>
+        <StyledHeaderContent>
+          <StyledHeaderTextWrapper>
+            <StyledImage src={couponLogo} />
+            <TextBox typography="h5" fontWeight={700} cursor="default">
+              빨리잡아! 쿠폰센터
+            </TextBox>
+          </StyledHeaderTextWrapper>
+        </StyledHeaderContent>
+      </StyledHeader>
       <StyledHeadContentCotainer>
         <StyledHeadContent>
           <StyledTextWrapper>
@@ -65,15 +75,36 @@ const StyledLayout = styled(Layout)`
 const StyledHeader = styled(Layout.Header)`
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 2;
   width: 100%;
+
+  background-color: ${colors.black100};
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
+
+  padding: 16px 0;
+`;
+
+const StyledHeaderContent = styled.div`
+  background-color: ${colors.black100};
+
+  width: 1024px;
+
+  margin: 0 auto;
+`;
+
+const StyledHeaderTextWrapper = styled.div`
+  margin-left: 24px;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
 `;
 
 const StyledHeadContentCotainer = styled.div`
   background-color: ${colors.white};
 
   position: fixed;
-  z-index: 10;
+  z-index: 2;
   width: 100%;
 
   margin-top: 64px;
@@ -103,8 +134,14 @@ const StyledMainContent = styled(Layout.Content)`
   max-width: 1024px;
   width: 1024px;
   height: 100%;
+  min-height: 100vh;
 
-  margin: 204px auto 0;
+  margin: 0 auto;
 
   padding: 32px 48px;
+`;
+
+const StyledImage = styled.img`
+  width: 26px;
+  height: 15px;
 `;

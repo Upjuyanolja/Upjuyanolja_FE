@@ -1,10 +1,11 @@
 import {
-  Options,
-  Image,
+  AccommodationOptions,
+  RoomOptions,
   UserInputValue,
 } from '@components/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { ImageFile } from './type';
 
 const { persistAtom } = recoilPersist({
   key: 'userInput',
@@ -20,6 +21,7 @@ export const userInputValueState = atom<UserInputValue[]>({
       detailAddress: '',
       zipCode: '',
       description: '',
+      thumbnail: '',
       type: '',
       images: [{ url: '' }],
       options: {
@@ -34,12 +36,14 @@ export const userInputValueState = atom<UserInputValue[]>({
         seminar: false,
       },
       rooms: [],
+      editRoomIndex: -1,
+      isAccommodationEdit: false,
     },
   ],
   effects_UNSTABLE: [persistAtom],
 });
 
-export const checkedRoomOptions = atom({
+export const checkedRoomOptions = atom<RoomOptions>({
   key: 'checkedAccommodationOptions',
   default: {
     airCondition: false,
@@ -48,7 +52,7 @@ export const checkedRoomOptions = atom({
   },
 });
 
-export const checkedAccommodationOptions = atom<Options>({
+export const checkedAccommodationOptions = atom<AccommodationOptions>({
   key: 'checkedRoomOptions',
   default: {
     cooking: false,
@@ -63,12 +67,43 @@ export const checkedAccommodationOptions = atom<Options>({
   },
 });
 
-export const selectedAccommodationFilesState = atom<Image[]>({
-  key: 'selectedAccommodationFilesState',
+export const imageFileState = atom<ImageFile[]>({
+  key: 'imageFileState',
   default: [],
 });
 
-export const selectedInitRoomFilesState = atom<Image[]>({
-  key: 'selectedInitRoomFilesState',
-  default: [],
+/** 숙소 정보를 입력했는지 여부 */
+const { persistAtom: updateAccommodationPersist } = recoilPersist({
+  key: 'isUpdatedAccommodationState',
+  storage: localStorage,
+});
+
+export const isUpdatedAccommodationState = atom({
+  key: 'isUpdatedAccommodation',
+  default: false,
+  effects_UNSTABLE: [updateAccommodationPersist],
+});
+
+/** 객실 정보를 입력했는지 여부 */
+const { persistAtom: addRoomPersist } = recoilPersist({
+  key: 'addRoomState',
+  storage: localStorage,
+});
+
+export const addRoomState = atom({
+  key: 'addRoomState',
+  default: false,
+  effects_UNSTABLE: [addRoomPersist],
+});
+
+/** 객실 페이지에서 이전 버튼을 눌렀을 때 */
+const { persistAtom: clickPrevButtonInRoomRegistration } = recoilPersist({
+  key: 'clickPrevButtonInRoomRegistration',
+  storage: localStorage,
+});
+
+export const roomPrevButtonState = atom({
+  key: 'roomPrevButtonState',
+  default: false,
+  effects_UNSTABLE: [clickPrevButtonInRoomRegistration],
 });

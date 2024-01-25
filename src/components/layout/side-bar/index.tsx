@@ -4,34 +4,64 @@ import { Navigation } from './navigation';
 import { SignOutBtn } from './signout-btn';
 import styled from 'styled-components';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
+import { IoCloseOutline } from 'react-icons/io5';
+import { colors } from '@/constants/colors';
+import { useSetRecoilState } from 'recoil';
+import { isSideBarOpenState } from '@stores/layout';
+import { mobileBreakPoint } from '@/constants/mobile';
 
 export const SideBar = () => {
-  const {
-    pointSummaryData,
-    isPointSummaryError,
-    accommodationListData,
-    isAccommodationListError,
-  } = useSideBar();
+  const { pointSummaryData, accommodationListData } = useSideBar();
+  const setIsSideBarOpen = useSetRecoilState(isSideBarOpenState);
 
-  if (!pointSummaryData || !accommodationListData) return <div>로딩</div>;
-  if (isPointSummaryError || isAccommodationListError) return <div>에러</div>;
+  const closeSideBar = () => {
+    setIsSideBarOpen(false);
+  };
 
   return (
-    <Container>
+    <StyledContainer>
       <div>
-        <UserProfile pointSummaryData={pointSummaryData} />
-        <AccommodationList accommodationListData={accommodationListData} />
-        <Navigation />
+        <StyledClosedButton onClick={closeSideBar}>
+          <StyledIcon width={16} height={16} />
+        </StyledClosedButton>
+        <div>
+          <UserProfile pointSummaryData={pointSummaryData} />
+          <AccommodationList accommodationListData={accommodationListData} />
+          <Navigation />
+        </div>
       </div>
       <SignOutBtn />
-    </Container>
+    </StyledContainer>
   );
 };
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  height: calc(100vh - 64px);
+  height: 100%;
+
+  overflow-y: auto;
+  transition: transform 0.3s ease-in;
+`;
+
+const StyledClosedButton = styled.button`
+  width: 16px;
+  padding: 4px 4px 0 4px;
+  height: 22px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: none;
+  @media (max-width: ${mobileBreakPoint}) {
+    display: flex;
+  }
+`;
+
+const StyledIcon = styled(IoCloseOutline)`
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  color: ${colors.black900};
 `;

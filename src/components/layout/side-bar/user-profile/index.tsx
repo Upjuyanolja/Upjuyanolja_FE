@@ -9,18 +9,19 @@ import { PointModal } from '@components/point-charge-modal/point-modal';
 
 export const UserProfile = ({ pointSummaryData }: UserProfileProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const showModal = () => {
     setIsModalOpen(true);
   };
+  const memberData = JSON.parse(localStorage.getItem('member') || '{}');
+  const memberName = memberData?.name;
 
   return (
     <StyledSpace direction="vertical" align="center">
       <TextBox typography="h5" color="primary" fontWeight="bold">
-        {'김업주'} 님
+        {memberName} 님
       </TextBox>
-      <TextBox typography="h3" color="black900" fontWeight="bold">
-        {numberFormat(pointSummaryData.currentPoint)} P
+      <TextBox typography="body1" color="black900" fontWeight="bold">
+        {numberFormat(Number(pointSummaryData?.currentPoint))} P
       </TextBox>
       <StyledButton
         type="primary"
@@ -28,7 +29,9 @@ export const UserProfile = ({ pointSummaryData }: UserProfileProps) => {
         onClick={showModal}
         data-testid="charge-point-button"
       >
-        포인트 추가하기
+        <TextBox typography="h5" fontWeight={700}>
+          포인트 충전하기
+        </TextBox>
       </StyledButton>
       {isModalOpen && (
         <PointModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />

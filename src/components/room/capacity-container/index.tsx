@@ -22,7 +22,6 @@ export const CapacityContainer = ({ header, form }: CapacityContainerProps) => {
       setError('최대 인원은 기준 인원보다 작을 수 없습니다.');
     }
   }, [defaultCapacity, maxCapacity]);
-
   const validateInput = ({ value }: ValidateInputProps) => {
     setError(null);
     if (value < MIN_CAPACITY || value > MAX_CAPACITY) {
