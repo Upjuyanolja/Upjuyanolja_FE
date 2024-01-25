@@ -66,12 +66,12 @@ export const useGetCoupon = (
 
 export const useDeleteCoupon = (
   options?: UseMutationOptions<
-    AxiosResponse<null>,
+    AxiosResponse<''>,
     AxiosError,
     CouponDeleteParams
   >,
 ) =>
-  useMutation<AxiosResponse<null>, AxiosError, CouponDeleteParams>(
+  useMutation<AxiosResponse<''>, AxiosError, CouponDeleteParams>(
     (params: CouponDeleteParams) => COUPON_API.deleteCoupon(params),
     {
       ...options,
@@ -79,13 +79,9 @@ export const useDeleteCoupon = (
   );
 
 export const useEditCoupon = (
-  options?: UseMutationOptions<
-    AxiosResponse<null>,
-    AxiosError,
-    CouponEditParams
-  >,
+  options?: UseMutationOptions<AxiosResponse<''>, AxiosError, CouponEditParams>,
 ) =>
-  useMutation<AxiosResponse<null>, AxiosError, CouponEditParams>(
+  useMutation<AxiosResponse<''>, AxiosError, CouponEditParams>(
     (params: CouponEditParams) => COUPON_API.editCoupon(params),
     {
       ...options,
@@ -94,13 +90,13 @@ export const useEditCoupon = (
 
 export const usePurchaseAdditionalCoupon = (
   options?: UseMutationOptions<
-    AxiosResponse<null>,
+    AxiosResponse<''>,
     AxiosError<ErrorResponse>,
     PurchaseCouponParams
   >,
 ) =>
   useMutation<
-    AxiosResponse<null>,
+    AxiosResponse<''>,
     AxiosError<ErrorResponse>,
     PurchaseCouponParams
   >(
