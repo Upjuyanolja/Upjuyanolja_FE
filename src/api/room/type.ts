@@ -89,7 +89,7 @@ export type RoomDeleteResponseData = {
   checkOutTime: string;
   soldOut: boolean;
   amount: number;
-  images: Image[];
+  images: { url: string; id: number }[];
   option: Options;
 };
 
