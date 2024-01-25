@@ -15,9 +15,7 @@ export const SignOutBtn = () => {
       removeCookie('refreshToken');
       removeCookie('accommodationId');
       localStorage.clear();
-      setTimeout(() => {
-        window.location.href = ROUTES.SIGNIN;
-      }, 1000);
+      window.location.href = ROUTES.SIGNIN;
     },
     onError(error: unknown) {
       if (error instanceof AxiosError && error.response) {
@@ -35,9 +33,7 @@ export const SignOutBtn = () => {
           removeCookie('refreshToken');
           removeCookie('accommodationId');
           localStorage.clear();
-          setTimeout(() => {
-            window.location.href = ROUTES.SIGNIN;
-          }, 1000);
+          window.location.href = ROUTES.SIGNIN;
         } else {
           message.error({
             content: (
@@ -51,9 +47,7 @@ export const SignOutBtn = () => {
           removeCookie('refreshToken');
           removeCookie('accommodationId');
           localStorage.clear();
-          setTimeout(() => {
-            window.location.href = ROUTES.SIGNIN;
-          }, 1000);
+          window.location.href = ROUTES.SIGNIN;
         }
       }
     },
