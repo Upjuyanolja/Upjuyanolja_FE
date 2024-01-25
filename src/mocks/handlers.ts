@@ -76,13 +76,13 @@ export const handlers = [
     successCouponResolver,
   ),
 
-  http.get(
-    `${process.env.REACT_APP_SERVER_URL}/api/points/summary`,
-    getPointSummaryResolver,
-  ),
+  // http.get('/api/points/summary', getPointSummaryResolver) 서버 연결 완.,
 
   http.post('/api/points/charges', postPointChargeResolver),
-  http.get('/api/points/total?*', getPointDetailTotalResolver),
+  http.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/points/total?*`,
+    getPointDetailTotalResolver,
+  ),
   http.get('/api/points/usage?*', getPointDetailUsageResolver),
   http.get('/api/points/charges?*', getPointDetailChargesResolver),
   http.delete('/api/points/charges/*', deleteOrderCancelResolver),
