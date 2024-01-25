@@ -57,7 +57,6 @@ const RoomUpdate = () => {
 
   useEffect(() => {
     if (data && !isLoading && !error) {
-      console.log(data.option);
       const imageObjects = data.images.map((image) => ({ url: image.url }));
       form.setFieldsValue({
         'room-name': data.name,
@@ -82,7 +81,9 @@ const RoomUpdate = () => {
         className: 'coupon-message',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
-      //setSelectedRoomFiles([]);
+      setImageFile([]);
+      setAddedImageFile([]);
+      setDeletedImageFile([]);
       setSelectedRoomOptions({
         airCondition: false,
         tv: false,
@@ -105,7 +106,7 @@ const RoomUpdate = () => {
     useRecoilState(checkedRoomOptions);
 
   const { mutate: getImageUrl } = useImageFile({
-    onSuccess(data) {
+    onSuccess() {
       const roomName = form.getFieldValue('room-name');
       const price = parseInt(form.getFieldValue('price').replace(',', ''));
       const defaultCapacity = form.getFieldValue('defaultCapacity');
@@ -127,7 +128,6 @@ const RoomUpdate = () => {
         removeImages: deletedImageFile,
         options: selectedOptions,
       };
-
       updateRoom(updatedRoomData);
     },
   });
