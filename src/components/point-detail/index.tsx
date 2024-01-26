@@ -12,7 +12,7 @@ export const PointDetailComp = () => {
   return (
     <>
       <PointMenu />
-      {pointDetailData.histories.length > 0 ? (
+      {pointDetailData.totalElements > 0 ? (
         <>
           <PointDetailList />
           <PageComp />
