@@ -23,11 +23,11 @@ export const COUPON_API = {
   getCoupon: (accommodationId: string) =>
     instance.get<coupons>(`/api/coupons/backoffice/manage/${accommodationId}`),
   deleteCoupon: (params: CouponDeleteParams) =>
-    instance.delete<null>('/api/coupons/backoffice/manage', {
+    instance.delete<''>('/api/coupons/backoffice/manage', {
       data: params,
     }),
   editCoupon: (params: CouponEditParams) =>
-    instance.patch<null>('/api/coupons/backoffice/manage', params),
+    instance.patch<''>('/api/coupons/backoffice/manage', params),
   getCouponRoomList: (accommodationId: string) =>
     instance.get<CouponRoomList>(
       `/api/coupons/backoffice/buy/${accommodationId}`,
@@ -35,5 +35,5 @@ export const COUPON_API = {
   buyCoupon: (params: BuyCouponParams) =>
     instance.post<BuyCouponData>('/api/coupons/backoffice/buy', params),
   purchaseAdditionalCoupon: (params: PurchaseCouponParams) =>
-    instance.patch<null>('/api/coupons/backoffice/manage/buy', params),
+    instance.patch<''>('/api/coupons/backoffice/manage/buy', params),
 };

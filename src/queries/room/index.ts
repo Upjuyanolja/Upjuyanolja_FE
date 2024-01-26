@@ -21,18 +21,17 @@ import { ROOM_API } from '@api/room';
 export const useAddRoom = (
   accommodationId: string,
   options?: UseMutationOptions<
-    AxiosResponse<Response<RoomPostResponseData>>,
+    AxiosResponse<RoomPostResponseData>,
     AxiosError,
     RoomData
   >,
 ) => {
-  return useMutation<
-    AxiosResponse<Response<RoomPostResponseData>>,
-    AxiosError,
-    RoomData
-  >((data: RoomData) => ROOM_API.addRoom(data, accommodationId), {
-    ...options,
-  });
+  return useMutation<AxiosResponse<RoomPostResponseData>, AxiosError, RoomData>(
+    (data: RoomData) => ROOM_API.addRoom(data, accommodationId),
+    {
+      ...options,
+    },
+  );
 };
 
 export const useGetInfiniteRoomList = (

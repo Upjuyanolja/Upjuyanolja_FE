@@ -17,6 +17,11 @@ export type RoomListResponseData = {
   rooms: RoomCardData[];
 };
 
+export type RoomErrorResponse = {
+  code?: number;
+  message?: string;
+};
+
 export type Options = {
   airCondition: boolean;
   tv: boolean;
@@ -40,7 +45,7 @@ export type Coupons = {
 export type RoomCardData = {
   id: number;
   name: string;
-  price: number | null;
+  basePrice: number | null;
   discountPrice: number | null;
   defaultCapacity: number | null;
   maxCapacity: number | null;
@@ -62,7 +67,7 @@ export type RoomData = {
   checkOutTime: string;
   amount: number | null;
   images: Image[];
-  options: Options;
+  option: Options;
 };
 
 export type RoomPostResponseData = {
@@ -76,7 +81,7 @@ export type RoomPostResponseData = {
   status: string;
   amount: number | null;
   images: Image[];
-  options: Options;
+  option: Options;
 };
 
 export type RoomDeleteResponseData = {
@@ -89,7 +94,7 @@ export type RoomDeleteResponseData = {
   checkOutTime: string;
   soldOut: boolean;
   amount: number;
-  images: Image[];
+  images: { url: string; id: number }[];
   option: Options;
 };
 
@@ -104,7 +109,7 @@ export type RoomUpdateData = {
   amount: number | null;
   addImages: Image[];
   removeImages: Image[];
-  options: Options;
+  option: Options;
 };
 
 export type RoomUpdateResponseData = {
@@ -118,5 +123,5 @@ export type RoomUpdateResponseData = {
   status: string;
   amount: number | null;
   images: Image[];
-  options: Options;
+  option: Options;
 };

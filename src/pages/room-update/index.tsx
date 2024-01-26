@@ -12,20 +12,19 @@ import { TimeContainer } from '@components/room/time-container';
 import { StatusContainer } from '@components/room/status-container';
 import { useRecoilState } from 'recoil';
 import {
-  checkedRoomOptions,
-  imageFileState,
   addedImageFileState,
   deletedImageFileState,
+  imageRoomFileState,
 } from '@stores/room/atoms';
 import { RoomUpdateData, Image } from '@api/room/type';
 import { useGetRoomDetail, useUpdateRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
-import { RoomImageOptions } from '@components/room/type';
 import { useImageFile } from '@queries/init';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
+import { checkedRoomOptions } from '@stores/init/atoms';
 
 const RoomUpdate = () => {
   const navigate = useNavigate();
@@ -36,11 +35,6 @@ const RoomUpdate = () => {
     airCondition: '에어컨',
     internet: '인터넷',
   };
-
-  const [defaultValue, setDefaultValue] = useState<RoomImageOptions>({
-    images: undefined,
-    options: undefined,
-  });
 
   const { accommodationId = '', roomId = '' } = useParams<{
     accommodationId: string;
@@ -54,10 +48,16 @@ const RoomUpdate = () => {
   });
 
   const [form] = Form.useForm();
+  const [imageFile, setImageFile] = useRecoilState(imageRoomFileState);
 
   useEffect(() => {
     if (data && !isLoading && !error) {
-      const imageObjects = data.images.map((image) => ({ url: image.url }));
+      const imageObjects = data.images.map((image, index) => ({
+        url: image.url,
+        key: index,
+        file: null,
+      }));
+
       form.setFieldsValue({
         'room-name': data.name,
         price: data.price.toString(),
@@ -67,10 +67,8 @@ const RoomUpdate = () => {
         checkOutTime: moment(data.checkOutTime, 'HH:mm'),
         count: data.amount,
       });
-      setDefaultValue({
-        images: imageObjects,
-        options: data.option,
-      });
+      setImageFile(imageObjects);
+      setSelectedInitRoomOptions(data.option);
     }
   }, [data, isLoading, error, form]);
 
@@ -84,7 +82,7 @@ const RoomUpdate = () => {
       setImageFile([]);
       setAddedImageFile([]);
       setDeletedImageFile([]);
-      setSelectedRoomOptions({
+      setSelectedInitRoomOptions({
         airCondition: false,
         tv: false,
         internet: false,
@@ -96,15 +94,13 @@ const RoomUpdate = () => {
     },
   });
 
-  const [imageFile, setImageFile] = useRecoilState(imageFileState);
   const [addedImageFile, setAddedImageFile] =
     useRecoilState(addedImageFileState);
   const [deletedImageFile, setDeletedImageFile] = useRecoilState(
     deletedImageFileState,
   );
-  const [selectedOptions, setSelectedRoomOptions] =
+  const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
     useRecoilState(checkedRoomOptions);
-
   const { mutate: getImageUrl } = useImageFile({
     onSuccess() {
       const roomName = form.getFieldValue('room-name');
@@ -126,9 +122,16 @@ const RoomUpdate = () => {
         amount: count,
         addImages: addedImageFile,
         removeImages: deletedImageFile,
-        options: selectedOptions,
+        option: selectedInitRoomOptions,
       };
+      // console.log('updatedRoomData', updatedRoomData);
       updateRoom(updatedRoomData);
+      setSelectedInitRoomOptions({
+        airCondition: false,
+        tv: false,
+        internet: false,
+      });
+      setImageFile([]);
     },
   });
 
@@ -175,11 +178,13 @@ const RoomUpdate = () => {
 
   useEffect(() => {
     setIsValid(areFormFieldsValid());
-  }, [form, imageFile, selectedOptions]);
+  }, [form, imageFile, selectedInitRoomOptions]);
 
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
   };
+
+  // console.log(imageFile);
 
   return (
     <StyledWrapper color={colors.white}>
@@ -199,7 +204,7 @@ const RoomUpdate = () => {
         <StyledInputWrapper>
           <PriceContainer header="객실 가격" form={form} />
         </StyledInputWrapper>
-        <ImageUploadContainer header="객실 사진" images={defaultValue.images} />
+        <ImageUploadContainer header="객실 사진" images={imageFile} />
         <StyledInputWrapper>
           <CountContainer header="객실 수" form={form} />
         </StyledInputWrapper>
@@ -210,11 +215,7 @@ const RoomUpdate = () => {
           <CapacityContainer header="인원" form={form} />
         </StyledInputWrapper>
         <StyledInputWrapper>
-          <CheckBoxContainer
-            options={roomOptions}
-            header="객실"
-            defaultValue={defaultValue.options}
-          />
+          <CheckBoxContainer options={roomOptions} header="객실" />
         </StyledInputWrapper>
         <ButtonContainer buttonStyle={'update'} isValid={isValid} />
       </Form>

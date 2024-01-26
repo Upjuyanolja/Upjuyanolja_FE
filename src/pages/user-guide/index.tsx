@@ -10,7 +10,7 @@ import UserGuideAccommodation from '@assets/image/userGuideAccommodation.png';
 export const UserGuide = () => {
   const handleDownLoad = () => {
     const pdfUrl =
-      'https://github.com/Upjuyanolja/Upjuyanolja_FE/files/14011613/coupon-center-guide.pdf';
+      'https://github.com/Upjuyanolja/Upjuyanolja_FE/files/14050917/coupon-center-guide.pdf';
     const link = document.createElement('a');
     link.href = pdfUrl;
     link.click();
@@ -30,8 +30,8 @@ export const UserGuide = () => {
       </StyledTitle>
       <Image src={UserGuideHome} preview={false} />
       <Image src={UserGuideCoupon} preview={false} />
-      <Image src={UserGuidePoint} preview={false} />
       <Image src={UserGuideAccommodation} preview={false} />
+      <Image src={UserGuidePoint} preview={false} />
     </StyledLayout>
   );
 };
