@@ -1,18 +1,28 @@
 import { RESPONSE_CODE } from '@/constants/api';
+import { ROUTES } from '@/constants/routes';
 import {
   useBuyCoupon,
   useGetCouponRoomList,
 } from '@queries/coupon-registration';
-import { getCouponRoomDataListState } from '@stores/coupon-registration/atoms';
+import {
+  getCouponRoomDataListState,
+  isActivityResetCouponState,
+} from '@stores/coupon-registration/atoms';
+import { useQueryClient } from '@tanstack/react-query';
 import { message, Modal } from 'antd';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export const useCouponRegistration = () => {
   const { accommodationId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const setGetCouponRoomList = useSetRecoilState(getCouponRoomDataListState);
+  const navigate = useNavigate();
+  const [isActivityResetCoupon, setIsActivityResetCoupon] = useRecoilState(
+    isActivityResetCouponState,
+  );
+  const queryClient = useQueryClient();
 
   const {
     data: couponRoomListData,
@@ -28,9 +38,17 @@ export const useCouponRegistration = () => {
 
   const { mutate: buyCoupon } = useBuyCoupon({
     onSuccess() {
-      message.success({
-        content: '쿠폰을 구매하였습니다.',
-        className: 'coupon-message',
+      queryClient.invalidateQueries(['getPointTotal']);
+      return Modal.confirm({
+        content: '쿠폰이 발급되었습니다.',
+        okText: '새 쿠폰 만들기',
+        cancelText: '쿠폰 관리',
+        className: 'confirm-modal',
+        onOk: () => {
+          setIsActivityResetCoupon(!isActivityResetCoupon),
+            navigate(`/${accommodationId}${ROUTES.COUPON_REGISTRATION}`);
+        },
+        onCancel: () => navigate(`/${accommodationId}${ROUTES.COUPON}`),
       });
     },
     onError(error) {

@@ -11,6 +11,7 @@ import {
   determinedPriceState,
   discountValueState,
   groupQuantityValueState,
+  isActivityResetCouponState,
   isGroupQuantitySelectedState,
   isTermsCheckedState,
   pendingRoomDataListState,
@@ -53,6 +54,9 @@ export const RoomCouponApplier = ({
   const setIsTermsCheckedState = useSetRecoilState(isTermsCheckedState);
   const setDeterminedPrice = useSetRecoilState(determinedPriceState);
   const { accommodationId } = useParams();
+  const [isActivityResetCoupon, setIsActivityResetCoupon] = useRecoilState(
+    isActivityResetCouponState,
+  );
 
   const newItem: PendingRoomData = {
     isChecked: isItemQuantitySelected,
@@ -145,6 +149,14 @@ export const RoomCouponApplier = ({
       return;
     }
 
+    setIsActivityResetCoupon(!isActivityResetCoupon);
+  }, [accommodationId]);
+
+  useEffect(() => {
+    resetAllValues();
+  }, [isActivityResetCoupon]);
+
+  const resetAllValues = () => {
     setInputValue('0');
     setPendingRoomDataList([]);
     setDeterminedPrice('');
@@ -154,7 +166,7 @@ export const RoomCouponApplier = ({
     setDiscountValue('');
     setSelectedDiscountType(FLAT_DISCOUNT_TYPE);
     setIsTermsCheckedState(false);
-  }, [accommodationId]);
+  };
 
   useEffect(() => {
     if (itemQuantityValue === '' || !isItemQuantitySelected) {
