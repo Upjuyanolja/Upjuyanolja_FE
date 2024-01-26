@@ -30,6 +30,7 @@ export type Options = {
 
 export type Image = {
   url: string;
+  id?: number;
 };
 
 export type ImageUrls = {
@@ -96,6 +97,7 @@ export type RoomDeleteResponseData = {
   amount: number;
   images: { url: string; id: number }[];
   option: Options;
+  status: 'SELLING' | 'STOP_SELLING';
 };
 
 export type RoomUpdateData = {
@@ -108,7 +110,7 @@ export type RoomUpdateData = {
   status: string;
   amount: number | null;
   addImages: Image[];
-  removeImages: Image[];
+  deleteImages: { id: number }[];
   option: Options;
 };
 

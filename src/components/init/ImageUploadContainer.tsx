@@ -6,11 +6,12 @@ import { useRef, ChangeEvent, useEffect } from 'react';
 import { StyledImageContainerProps } from './type';
 import { IMAGE_MAX_CAPACITY, IMAGE_MAX_COUNT } from '@/constants/init';
 import { colors } from '@/constants/colors';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { imageFileState } from '@stores/init/atoms';
-import { addedImageFileState, deletedImageFileState } from '@stores/room/atoms';
+import { deletedImageFileState } from '@stores/room/atoms';
 import { ROUTES } from '@/constants/routes';
 import { Image } from '@api/room/type';
+import { ImageFile } from '@stores/init/type';
 
 export const ImageUploadContainer = ({
   header,
@@ -24,18 +25,17 @@ export const ImageUploadContainer = ({
   useEffect(() => {
     if (images) {
       const data = images.map((image, index) => {
+        if (image.id)
+          return { key: index, url: image.url, file: null, id: image.id };
         return { key: index, url: image.url, file: null };
       });
       setImageFile(data);
+      setRemovedImageFile([]);
     }
   }, [images]);
 
   const [imageFile, setImageFile] = useRecoilState(imageFileState);
-  const [addedImageFile, setAddedImageFile] =
-    useRecoilState(addedImageFileState);
-  const [removedImageFile, setRemovedImageFile] = useRecoilState(
-    deletedImageFileState,
-  );
+  const setRemovedImageFile = useSetRecoilState(deletedImageFileState);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputElement = event.target;
@@ -69,11 +69,6 @@ export const ImageUploadContainer = ({
         ...prev,
         { key: imageFile.length, url: '', file: selectedFile },
       ]);
-
-      setAddedImageFile((prev) => [
-        ...prev,
-        { key: imageFile.length, url: '', file: selectedFile },
-      ]);
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
@@ -95,24 +90,16 @@ export const ImageUploadContainer = ({
     }
   };
 
-  const handleRemove = (key: number) => {
-    const itemToRemove = imageFile.find((item) => item.key === key);
+  const handleRemove = (image: ImageFile) => {
+    const itemToRemove = imageFile.find((item) => item.key === image.key);
     if (!itemToRemove) return;
-
-    const isInAddedImages = addedImageFile.some((item) => item.key === key);
-
-    if (isInAddedImages) {
-      setAddedImageFile((prevAddedImageFile) =>
-        prevAddedImageFile.filter((item) => item.key !== key),
-      );
-    } else {
+    if (itemToRemove.id)
       setRemovedImageFile((prevRemovedImageFile) => [
         ...prevRemovedImageFile,
         itemToRemove,
       ]);
-    }
 
-    const newFileList = imageFile.filter((item) => item.key !== key);
+    const newFileList = imageFile.filter((item) => item.key !== image.key);
     setImageFile(newFileList);
   };
 
@@ -130,7 +117,7 @@ export const ImageUploadContainer = ({
         {imageFile.map((obj) => (
           <div key={obj.key}>
             <StyledCloseButton
-              onClick={() => handleRemove(obj.key)}
+              onClick={() => handleRemove(obj)}
               twoToneColor={colors.black600}
             />
             <img

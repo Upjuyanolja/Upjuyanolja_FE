@@ -21,7 +21,8 @@ export const ROOM_API = {
   getRoomDetail: (roomId: string) =>
     instance.get<RoomDeleteResponseData>(`/api/rooms/${roomId}`),
   updateRoom: (data: RoomUpdateData, roomId: string) =>
-    instance.put<Response<RoomUpdateResponseData>>(`/api/rooms/${roomId}`, {
+    instance.put<Response<RoomUpdateResponseData>>(
+      `/api/rooms/${roomId}`,
       data,
-    }),
+    ),
 };

@@ -1,15 +1,22 @@
 import { Switch, Form } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { TextBox } from '@components/text-box';
 
-export const StatusContainer = () => {
-  const [isOnSale, setIsOnSale] = useState(true);
+export const StatusContainer = ({
+  defaultStatus,
+}: {
+  defaultStatus: 'SELLING' | 'STOP_SELLING' | undefined;
+}) => {
+  const [isOnSale, setIsOnSale] = useState(defaultStatus === 'SELLING');
 
-  const handleInputChange = (isOnSale: boolean) => {
-    setIsOnSale(!isOnSale);
-    return;
+  const handleInputChange = () => {
+    setIsOnSale((prev) => !prev);
   };
+
+  useEffect(() => {
+    setIsOnSale(defaultStatus === 'SELLING');
+  }, [defaultStatus]);
 
   return (
     <StyledInputWrapper>
@@ -20,14 +27,11 @@ export const StatusContainer = () => {
       </StyledDesc>
       <StyledRow>
         <Form.Item name="status">
-          <StyledSwitch
-            defaultChecked={isOnSale}
-            onChange={handleInputChange}
-          />
+          <StyledSwitch defaultChecked={true} onChange={handleInputChange} />
         </Form.Item>
         <StyledTextBoxWrapper>
           <TextBox typography="body1" color="black900" fontWeight="normal">
-            {!isOnSale ? '판매 중' : '판매 중지'}
+            {isOnSale ? '판매 중' : '판매 중지'}
           </TextBox>
         </StyledTextBoxWrapper>
       </StyledRow>

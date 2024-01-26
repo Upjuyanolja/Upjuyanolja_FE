@@ -1,5 +1,5 @@
+import { ImageFile } from '@stores/init/type';
 import { atom } from 'recoil';
-import { ImageFile } from './type';
 
 export const priceHasError = atom<string | null>({
   key: 'hasError',
@@ -22,11 +22,6 @@ export const checkedRoomDetailOptions = atom({
 
 export const imageRoomFileState = atom<ImageFile[]>({
   key: 'imageRoomFileState',
-  default: [],
-});
-
-export const addedImageFileState = atom<ImageFile[]>({
-  key: 'addedImageFileState',
   default: [],
 });
 

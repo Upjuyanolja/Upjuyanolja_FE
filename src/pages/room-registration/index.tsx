@@ -68,6 +68,17 @@ const RoomRegistration = () => {
     },
   });
 
+  useEffect(() => {
+    return () => {
+      setSelectedOptions({
+        airCondition: false,
+        tv: false,
+        internet: false,
+      });
+      setSelectedImageFile([]);
+    };
+  }, []);
+
   const { mutate: getImageUrl } = useImageFile({
     onSuccess(data) {
       const roomName = form.getFieldValue('room-name');
@@ -97,9 +108,6 @@ const RoomRegistration = () => {
         images: newImage,
       };
       addRoom(roomData);
-
-      setSelectedOptions({ airCondition: false, tv: false, internet: false });
-      setSelectedImageFile([]);
     },
   });
 
