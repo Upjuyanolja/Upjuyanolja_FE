@@ -62,33 +62,33 @@ const RoomManagement = () => {
 
   return (
     <StyledPageContainer bodyStyle={{ padding: 0 }}>
-      <StyledFixedTitle>
-        <StyledTitleButton>
-          <TextBox typography="h4" color={'black900'} fontWeight={700}>
-            객실 관리
-          </TextBox>
-          <StyledButton
-            type="primary"
-            onClick={() => navigate(`/${accommodationId}/room/registration`)}
-          >
-            + 객실추가
-          </StyledButton>
-        </StyledTitleButton>
-      </StyledFixedTitle>
-
-      <InfiniteScroll
-        dataLength={roomItems?.length ?? 0}
-        scrollThreshold={0.95}
-        next={fetchNextPage}
-        hasMore={hasNextPage ?? false}
-        loader={<></>}
-      >
-        {roomItems?.map((room) => (
-          <StyledRoomCardWrapper key={room.name}>
-            <RoomCard data={room} handleDeleteRoom={handleDeleteRoom} />
-          </StyledRoomCardWrapper>
-        ))}
-      </InfiniteScroll>
+      <StyledTitleButton>
+        <TextBox typography="h4" color={'black900'} fontWeight={700}>
+          객실 관리
+        </TextBox>
+        <StyledButton
+          type="primary"
+          onClick={() => navigate(`/${accommodationId}/room/registration`)}
+        >
+          + 객실추가
+        </StyledButton>
+      </StyledTitleButton>
+      <StyledInfiniteScrollContainer>
+        <InfiniteScroll
+          dataLength={roomItems?.length ?? 0}
+          scrollThreshold={0.95}
+          next={fetchNextPage}
+          hasMore={hasNextPage ?? false}
+          loader={<></>}
+          style={{ overflow: 'visible', height: 'auto' }}
+        >
+          {roomItems?.map((room) => (
+            <StyledRoomCardWrapper key={room.name}>
+              <RoomCard data={room} handleDeleteRoom={handleDeleteRoom} />
+            </StyledRoomCardWrapper>
+          ))}
+        </InfiniteScroll>
+      </StyledInfiniteScrollContainer>
     </StyledPageContainer>
   );
 };
@@ -105,6 +105,7 @@ const StyledTitleButton = styled(Row)`
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  background-color: white;
 `;
 
 const StyledButton = styled(Button)`
@@ -116,12 +117,13 @@ const StyledButton = styled(Button)`
   margin-top: 2px;
 `;
 
-const StyledFixedTitle = styled.div`
-  // position: fixed;
-`;
-
 const StyledRoomCardWrapper = styled.div`
   &:not(:last-child) {
     margin-bottom: 32px;
   }
+`;
+
+const StyledInfiniteScrollContainer = styled.div`
+  height: auto;
+  overflow: hidden;
 `;
