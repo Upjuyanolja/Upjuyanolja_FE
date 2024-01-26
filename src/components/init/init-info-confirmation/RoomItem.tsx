@@ -95,12 +95,12 @@ export const RoomItem = () => {
               <StyledButtonContainer>
                 <CustomButton
                   text="수정"
-                  icon={<EditOutlined />}
+                  icon={<StyledEditOutlined />}
                   onClick={() => roomEdit(index)}
                 />
                 <CustomButton
                   text="삭제"
-                  icon={<DeleteOutlined />}
+                  icon={<StyledDeleteOutlined />}
                   onClick={() => confirm(room)}
                 />
               </StyledButtonContainer>
@@ -222,4 +222,12 @@ const StyledRoomInfoMainRight = styled.div`
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
+`;
+
+const StyledEditOutlined = styled(EditOutlined)`
+  font-size: 18px;
+`;
+
+const StyledDeleteOutlined = styled(DeleteOutlined)`
+  font-size: 18px;
 `;

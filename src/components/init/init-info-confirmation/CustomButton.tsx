@@ -26,11 +26,9 @@ const StyledButton = styled(Button)`
   font-weight: 700;
   text-shadow: none;
 
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 
   border: none;
-
-  box-shadow: none;
 
   display: flex;
   justify-content: center;

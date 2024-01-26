@@ -80,7 +80,7 @@ export const AccommodationInfo = () => {
               </TextBox>
               <CustomButton
                 text="수정"
-                icon={<EditOutlined />}
+                icon={<StyledEditOutlined />}
                 onClick={handleAccommodationEdit}
               />
             </StyledTextHeadWrapper>
@@ -212,4 +212,8 @@ const StyledTextHeadWrapper = styled.div`
 
 const StyledDescWrapper = styled.div`
   font-size: 14px;
+`;
+
+const StyledEditOutlined = styled(EditOutlined)`
+  font-size: 18px;
 `;
