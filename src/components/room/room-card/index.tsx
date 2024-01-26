@@ -10,7 +10,6 @@ import { ROUTES } from '@/constants/routes';
 import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
 
 const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
-  const isOnSale = false;
   const navigate = useNavigate();
   const { accommodationId } = useParams();
 
@@ -44,7 +43,6 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
     return koreanOptionsNames[key] || key;
   };
 
-  console.log(data);
   return (
     <StyledCardContainer isOnSale={data.status === 'SELLING'}>
       <StyledContentContainer wrap={false}>
@@ -117,7 +115,7 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
           </StyledEditDeleteContainer>
           <StyledNumRoomPriceContainer>
             <TextBox typography="body3" color="black900" fontWeight="normal">
-              객실 수 : {data.amount}x개
+              객실 수 : {data.amount}개
             </TextBox>
             <TextBox typography="h5" color="black900" fontWeight="bold">
               {data.basePrice?.toLocaleString()}원

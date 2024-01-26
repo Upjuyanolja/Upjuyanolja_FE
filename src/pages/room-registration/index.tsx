@@ -13,14 +13,17 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { RoomData, RoomErrorResponse } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
-import { capacityHasError, priceHasError } from '@stores/room/atoms';
-import { imageFileState, checkedRoomOptions } from '@stores/init/atoms';
+import {
+  capacityHasError,
+  priceHasError,
+  imageRoomFileState,
+  checkedRoomDetailOptions,
+} from '@stores/room/atoms';
 import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 import { useImageFile } from '@queries/init';
 import { RESPONSE_CODE } from '@/constants/api';
-import { FaBullseye } from 'react-icons/fa';
 
 const RoomRegistration = () => {
   const navigate = useNavigate();
@@ -102,9 +105,10 @@ const RoomRegistration = () => {
 
   const [form] = Form.useForm();
 
-  const [imageFile, setSelectedImageFile] = useRecoilState(imageFileState);
-  const [selectedOptions, setSelectedOptions] =
-    useRecoilState(checkedRoomOptions);
+  const [imageFile, setSelectedImageFile] = useRecoilState(imageRoomFileState);
+  const [selectedOptions, setSelectedOptions] = useRecoilState(
+    checkedRoomDetailOptions,
+  );
 
   const priceError = useRecoilValue(priceHasError);
   const capacityError = useRecoilValue(capacityHasError);
