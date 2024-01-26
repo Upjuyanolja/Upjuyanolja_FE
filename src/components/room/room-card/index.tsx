@@ -50,7 +50,7 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
       <StyledContentContainer wrap={false}>
         <StyledImageContainer>
           <StyledCouponImage
-            hasCoupon={data.coupons.length === 0}
+            hasCoupon={data.coupons.length > 0}
             src={COUPON}
             alt="Coupon"
           />

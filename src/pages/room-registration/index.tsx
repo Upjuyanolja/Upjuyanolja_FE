@@ -53,8 +53,13 @@ const RoomRegistration = () => {
         if (errorData) {
           if (errorData.code === RESPONSE_CODE.DUPLICATE_ROOM_NAME) {
             setIsSameRoomName(true);
+            message.error({
+              content: '동일한 객실명의 상품이 이미 존재합니다.',
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
           }
-          message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
         }
       }
     },

@@ -124,6 +124,7 @@ const RoomUpdate = () => {
         removeImages: deletedImageFile,
         option: selectedInitRoomOptions,
       };
+      // console.log('updatedRoomData', updatedRoomData);
       updateRoom(updatedRoomData);
       setSelectedInitRoomOptions({
         airCondition: false,
@@ -183,7 +184,7 @@ const RoomUpdate = () => {
     setIsValid(areFormFieldsValid());
   };
 
-  console.log(imageFile);
+  // console.log(imageFile);
 
   return (
     <StyledWrapper color={colors.white}>
