@@ -3,7 +3,7 @@ import {
   PointDetailDataType,
   menuStatusType,
 } from '@api/point-detail/get-point-detail/type';
-import { pointSummaryData } from '@api/point/type';
+import { PointSummaryData } from '@api/point/type';
 
 export const currentYearState = atom({
   key: 'currentYearState',
@@ -30,7 +30,7 @@ export const menuStatusState = atom<menuStatusType>({
   default: 'total',
 });
 
-export const pointSummaryDataState = atom<pointSummaryData>({
+export const pointSummaryDataState = atom<PointSummaryData>({
   key: 'pointSummaryDataState',
   default: {
     chargePoint: 0,

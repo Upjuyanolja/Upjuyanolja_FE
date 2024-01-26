@@ -1,6 +1,7 @@
 import { ROUTES } from '@/constants/routes';
 import { dailyRevenue } from '@api/coupon/type';
 import { useGetStatics, useGetRevenue } from '@queries/coupon';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const useMain = () => {
@@ -23,6 +24,11 @@ export const useMain = () => {
       'https://business.yanolja.com/web/kr/business/contentview?presentPage=1&pageRowSize=9&boardType=CONTENTS&boardGroup=Trends&searchDiv=&searchText=&boardNum=551',
     );
   };
+
+  useEffect(() => {
+    staticsRemove();
+    revenueRemove();
+  }, [accommodationId]);
 
   const handleRevenueDataFormat = (data: dailyRevenue[] | undefined) => {
     const revenueData = [];
@@ -63,6 +69,7 @@ export const useMain = () => {
     data: staticsData,
     error: staticsError,
     isLoading: isStaticsLoading,
+    remove: staticsRemove,
   } = useGetStatics(accommodationId as string, {
     select(data) {
       return data.data;
@@ -74,6 +81,7 @@ export const useMain = () => {
     data,
     error: revenueError,
     isLoading: isRevenueLoading,
+    remove: revenueRemove,
   } = useGetRevenue(accommodationId as string, {
     select(data) {
       return data.data;

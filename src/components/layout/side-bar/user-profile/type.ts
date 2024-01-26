@@ -1,5 +1,5 @@
-import { pointSummaryData } from '@api/point/type';
+import { PointTotalData } from '@api/point/type';
 
 export type UserProfileProps = {
-  pointSummaryData: pointSummaryData | undefined;
+  pointTotalData: PointTotalData | undefined;
 };

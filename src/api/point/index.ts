@@ -1,9 +1,11 @@
 import { instance } from '..';
-import { pointSummaryData } from './type';
+import { PointSummaryData, PointTotalData } from './type';
 
 export const POINT_API = {
   getPointSummary: (rangeDate: string) =>
-    instance.get<pointSummaryData>(
+    instance.get<PointSummaryData>(
       `/api/points/summary?rangeDate=${rangeDate}`,
     ),
+
+  getPointTotal: () => instance.get<PointTotalData>('/api/points/total'),
 };
