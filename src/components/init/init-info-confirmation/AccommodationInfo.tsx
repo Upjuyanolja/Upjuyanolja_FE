@@ -98,7 +98,7 @@ export const AccommodationInfo = () => {
               <List.Item>
                 <List.Item.Meta
                   title="숙소 위치 :"
-                  description={`[${accommodationData.zipCode}] ${accommodationData.address}`}
+                  description={`[${accommodationData.zipCode}] ${accommodationData.address} ${accommodationData.detailAddress}`}
                 />
               </List.Item>
               <List.Item>
