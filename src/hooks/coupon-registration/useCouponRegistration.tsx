@@ -45,7 +45,7 @@ export const useCouponRegistration = () => {
       return Modal.confirm({
         content: '쿠폰이 발급되었습니다.',
         okText: '새 쿠폰 만들기',
-        cancelText: '쿠폰 관리',
+        cancelText: '발급한 쿠폰 보기',
         className: 'confirm-modal',
         onOk: () => {
           setIsActivityResetCoupon(!isActivityResetCoupon);
