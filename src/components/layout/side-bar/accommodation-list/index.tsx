@@ -86,7 +86,7 @@ export const AccommodationList = ({
     <Container>
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
-          <TextBox typography="body2" fontWeight="bold">
+          <TextBox typography="body2" fontWeight="bold" color="black500">
             {selectedAccommodation?.name}
           </TextBox>
         </StyledFlex>
@@ -102,7 +102,7 @@ export const AccommodationList = ({
             onClick={() => checkModified(item)}
           >
             <StyledFlex>
-              <TextBox typography="body3" fontWeight="bold">
+              <TextBox typography="body3" fontWeight="bold" color="black500">
                 {item.name}
               </TextBox>
             </StyledFlex>
