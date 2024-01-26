@@ -76,6 +76,10 @@ const StyledWrapper = styled.div`
   }
 
   margin-bottom: 48px;
+
+  .ant-form-item {
+    margin-bottom: 0;
+  }
 `;
 
 const StyledTextContainer = styled.div`
