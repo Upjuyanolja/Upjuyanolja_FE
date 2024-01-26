@@ -203,7 +203,16 @@ export const InitRoomRegistration = () => {
       (room: Room) => room.name === roomNameValue,
     );
 
-    if (hasDuplicate) {
+    const editHasDuplicate = roomsArray.some(
+      (room, index) =>
+        index !== userInputValue[0].editRoomIndex &&
+        room.name === roomNameValue,
+    );
+
+    if (
+      (hasDuplicate && userInputValue[0].editRoomIndex == -1) ||
+      editHasDuplicate
+    ) {
       setSameRoomName(true);
       message.error({
         content: '동일한 객실명의 상품이 이미 존재합니다.',
