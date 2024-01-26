@@ -45,8 +45,8 @@ export const useCouponRegistration = () => {
         cancelText: '쿠폰 관리',
         className: 'confirm-modal',
         onOk: () => {
-          setIsActivityResetCoupon(!isActivityResetCoupon),
-            navigate(`/${accommodationId}${ROUTES.COUPON_REGISTRATION}`);
+          setIsActivityResetCoupon(!isActivityResetCoupon);
+          navigate(`/${accommodationId}${ROUTES.COUPON_REGISTRATION}`);
         },
         onCancel: () => navigate(`/${accommodationId}${ROUTES.COUPON}`),
       });
