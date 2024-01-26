@@ -27,6 +27,7 @@ import {
 } from '@components/init/init-accommodation-registration/type';
 import { AccommodationCategoryProps } from '@components/init/type';
 import { RESPONSE_CODE } from '@/constants/api';
+import { getTypeValue } from '@/utils/init';
 
 export const InitAccommodationRegistration = () => {
   const navigate = useNavigate();
@@ -67,22 +68,36 @@ export const InitAccommodationRegistration = () => {
     seminar: '세미나실',
   };
 
+  const resetStateAndNavigate = () => {
+    setUpdatedAccommodationInfo(true);
+    setSelectedOptions({
+      cooking: false,
+      parking: false,
+      pickup: false,
+      barbecue: false,
+      fitness: false,
+      karaoke: false,
+      sauna: false,
+      sports: false,
+      seminar: false,
+    });
+    setImageFiles([]);
+    setClickedPrevButton(false);
+
+    if (userInputValue[0].isAccommodationEdit) {
+      message.success('수정되었습니다.');
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+    } else {
+      navigate(ROUTES.INIT_ROOM_REGISTRATION);
+    }
+  };
+
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
       setUserInputValue((prevUserInputValueState) => {
         const [userInputValue] = prevUserInputValueState;
 
-        let type;
-        switch (form.getFieldValue('accommodation-category')) {
-          case 'HOTEL/RESORT':
-            type = form.getFieldValue('accommodation-hotel-category');
-            break;
-          case 'GUEST_HOUSE':
-            type = form.getFieldValue('accommodation-guest-category');
-            break;
-          default:
-            type = form.getFieldValue('accommodation-category');
-        }
+        const type = getTypeValue(form);
 
         const newImages = [];
 
@@ -116,26 +131,7 @@ export const InitAccommodationRegistration = () => {
         return [updatedUserInputValue];
       });
 
-      setUpdatedAccommodationInfo(true);
-      setSelectedOptions({
-        cooking: false,
-        parking: false,
-        pickup: false,
-        barbecue: false,
-        fitness: false,
-        karaoke: false,
-        sauna: false,
-        sports: false,
-        seminar: false,
-      });
-      setImageFiles([]);
-      setClickedPrevButton(false);
-
-      if (userInputValue[0].isAccommodationEdit) {
-        navigate(ROUTES.INIT_INFO_CONFIRMATION);
-      } else {
-        navigate(ROUTES.INIT_ROOM_REGISTRATION);
-      }
+      resetStateAndNavigate();
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -155,7 +151,6 @@ export const InitAccommodationRegistration = () => {
 
   const onFinish = () => {
     const formData = new FormData();
-
     let shouldExecuteImageFile = false;
 
     for (let i = 0; i < imageFiles.length; i++) {
@@ -181,17 +176,7 @@ export const InitAccommodationRegistration = () => {
       imageFile(formData);
     } else {
       setUserInputValue(() => {
-        let type;
-        switch (form.getFieldValue('accommodation-category')) {
-          case 'HOTEL/RESORT':
-            type = form.getFieldValue('accommodation-hotel-category');
-            break;
-          case 'GUEST_HOUSE':
-            type = form.getFieldValue('accommodation-guest-category');
-            break;
-          default:
-            type = form.getFieldValue('accommodation-category');
-        }
+        const type = getTypeValue(form);
 
         const updatedUserInputValue: UserInputValue = {
           type,
@@ -208,26 +193,7 @@ export const InitAccommodationRegistration = () => {
         return [updatedUserInputValue];
       });
 
-      setUpdatedAccommodationInfo(true);
-      setSelectedOptions({
-        cooking: false,
-        parking: false,
-        pickup: false,
-        barbecue: false,
-        fitness: false,
-        karaoke: false,
-        sauna: false,
-        sports: false,
-        seminar: false,
-      });
-      setImageFiles([]);
-      setClickedPrevButton(false);
-
-      if (userInputValue[0].isAccommodationEdit) {
-        navigate(ROUTES.INIT_INFO_CONFIRMATION);
-      } else {
-        navigate(ROUTES.INIT_ROOM_REGISTRATION);
-      }
+      resetStateAndNavigate();
     }
   };
 
