@@ -127,58 +127,61 @@ export const SignIn = () => {
   return (
     <StyledLayout>
       <StyledContent>
-        <Main />
-        <LoginContainer>
-          <FormContainer onSubmit={handleSubmit}>
-            <StyledInput
-              size="large"
-              placeholder="이메일 입력"
-              type="text"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {touched.email && errors.email && (
-              <TextBox typography="body4" color="error">
-                {errors.email}
-              </TextBox>
-            )}
-            <StyledPassword
-              size="large"
-              placeholder="비밀번호 입력"
-              iconRender={(visible) =>
-                visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
-              }
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="off"
-            />
-            {touched.password && errors.password && (
-              <TextBox typography="body4" color="error">
-                {errors.password}
-              </TextBox>
-            )}
-            <ButtonContainer>
-              <StyledButton
-                htmlType="submit"
-                type="primary"
-                onClick={handleOnclick}
-              >
-                <TextBox
-                  typography="h5"
-                  color="white"
-                  fontWeight={'700'}
-                  textAlign="center"
-                >
-                  로그인
+        <Inner>
+          <Main />
+          <LoginContainer>
+            <FormContainer onSubmit={handleSubmit}>
+              <StyledInput
+                size="large"
+                placeholder="이메일 입력"
+                type="text"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.email && errors.email && (
+                <TextBox typography="body4" color="error">
+                  {errors.email}
                 </TextBox>
-              </StyledButton>
-            </ButtonContainer>
-          </FormContainer>
-        </LoginContainer>
+              )}
+              <StyledPassword
+                size="large"
+                placeholder="비밀번호 입력"
+                iconRender={(visible) =>
+                  visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
+                }
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="off"
+              />
+              {touched.password && errors.password && (
+                <TextBox typography="body4" color="error">
+                  {errors.password}
+                </TextBox>
+              )}
+              <ButtonContainer>
+                <StyledButton
+                  htmlType="submit"
+                  type="primary"
+                  onClick={handleOnclick}
+                >
+                  <TextBox
+                    typography="h5"
+                    color="white"
+                    fontWeight={'700'}
+                    textAlign="center"
+                  >
+                    로그인
+                  </TextBox>
+                </StyledButton>
+              </ButtonContainer>
+            </FormContainer>
+          </LoginContainer>
+        </Inner>
+
         <SignUpContainer>
           <TextContainer>
             <TextBox
@@ -226,9 +229,16 @@ const StyledContent = styled(Layout.Content)`
   align-items: center;
   margin: 0 auto;
   height: 666px;
-  gap: 32px;
+  gap: 52px;
 `;
 
+const Inner = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+`;
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
