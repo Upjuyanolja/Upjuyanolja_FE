@@ -16,7 +16,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   capacityHasError,
   priceHasError,
-  imageRoomFileState,
   checkedRoomDetailOptions,
 } from '@stores/room/atoms';
 import { useState, useEffect } from 'react';
@@ -24,6 +23,7 @@ import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 import { useImageFile } from '@queries/init';
 import { RESPONSE_CODE } from '@/constants/api';
+import { imageFileState } from '@stores/init/atoms';
 
 const RoomRegistration = () => {
   const navigate = useNavigate();
@@ -113,7 +113,7 @@ const RoomRegistration = () => {
 
   const [form] = Form.useForm();
 
-  const [imageFile, setSelectedImageFile] = useRecoilState(imageRoomFileState);
+  const [imageFile, setSelectedImageFile] = useRecoilState(imageFileState);
   const [selectedOptions, setSelectedOptions] = useRecoilState(
     checkedRoomDetailOptions,
   );
