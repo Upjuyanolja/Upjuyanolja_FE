@@ -48,8 +48,6 @@ export const CouponRegistration = () => {
       rooms: formattedPendingRoomDataList,
     };
 
-    console.log(buyCouponParams);
-
     Modal.confirm({
       content: '쿠폰을 구매하시겠습니까?',
       okText: '구매',
