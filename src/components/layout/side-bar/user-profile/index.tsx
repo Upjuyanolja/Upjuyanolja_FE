@@ -7,7 +7,7 @@ import { UserProfileProps } from './type';
 import { numberFormat } from '@/utils/Format/numberFormat';
 import { PointModal } from '@components/point-charge-modal/point-modal';
 
-export const UserProfile = ({ pointSummaryData }: UserProfileProps) => {
+export const UserProfile = ({ pointTotalData }: UserProfileProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -21,7 +21,7 @@ export const UserProfile = ({ pointSummaryData }: UserProfileProps) => {
         {memberName} 님
       </TextBox>
       <TextBox typography="body1" color="black900" fontWeight="bold">
-        {numberFormat(Number(pointSummaryData?.currentPoint))} P
+        {numberFormat(Number(pointTotalData?.totalPoint))} P
       </TextBox>
       <StyledButton
         type="primary"

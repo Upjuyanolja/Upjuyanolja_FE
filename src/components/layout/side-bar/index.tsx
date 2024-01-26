@@ -12,9 +12,10 @@ import { MOBILE_BREAKPOINTS } from '@/constants/mobile';
 
 export const SideBar = () => {
   const {
-    pointSummaryData,
+    pointTotalData,
+    isPointTotalLoading,
+    isPointTotalError,
     accommodationListData,
-    isPointSummaryError,
     isAccommodationListError,
   } = useSideBar();
   const setIsSideBarOpen = useSetRecoilState(isSideBarOpenState);
@@ -23,7 +24,7 @@ export const SideBar = () => {
     setIsSideBarOpen(false);
   };
 
-  if (isPointSummaryError || isAccommodationListError) {
+  if (isPointTotalError || isAccommodationListError) {
     return <></>;
   }
 
@@ -34,7 +35,7 @@ export const SideBar = () => {
           <StyledIcon width={16} height={16} />
         </StyledClosedButton>
         <div>
-          <UserProfile pointSummaryData={pointSummaryData} />
+          <UserProfile pointTotalData={pointTotalData} />
           <AccommodationList accommodationListData={accommodationListData} />
           <Navigation />
         </div>
