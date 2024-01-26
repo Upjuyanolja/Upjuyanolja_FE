@@ -13,7 +13,6 @@ import { MOBILE_BREAKPOINTS } from '@/constants/mobile';
 export const SideBar = () => {
   const {
     pointTotalData,
-    isPointTotalLoading,
     isPointTotalError,
     accommodationListData,
     isAccommodationListError,
@@ -32,7 +31,7 @@ export const SideBar = () => {
     <StyledContainer>
       <div>
         <StyledClosedButton onClick={closeSideBar}>
-          <StyledIcon width={16} height={16} />
+          <StyledIcon size={22} />
         </StyledClosedButton>
         <div>
           <UserProfile pointTotalData={pointTotalData} />
@@ -56,22 +55,21 @@ const StyledContainer = styled.div`
 `;
 
 const StyledClosedButton = styled.button`
-  width: 16px;
-  padding: 4px 4px 0 4px;
+  width: 22px;
   height: 22px;
   background-color: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
   display: none;
+  margin: 4px 0 0 4px;
   @media (max-width: ${MOBILE_BREAKPOINTS}) {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 
 const StyledIcon = styled(IoCloseOutline)`
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
   color: ${colors.black900};
 `;
