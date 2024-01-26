@@ -38,6 +38,14 @@ export const NameContainer = ({
             message: `${header}은 최소 ${ACCOMMODATION_NAME_MIN_LENGTH}자 이상 작성해 주세요.`,
           },
         ]}
+        help={
+          header === '객실명' && isSameRoomName
+            ? '객실명이 중복됩니다. 다른 이름을 입력해주세요.'
+            : ''
+        }
+        validateStatus={
+          header === '객실명' && isSameRoomName ? 'error' : 'success'
+        }
       >
         <Input
           id={header === '숙소명' ? 'accommodation-name' : 'room-name'}

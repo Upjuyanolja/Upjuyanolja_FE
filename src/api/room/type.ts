@@ -17,6 +17,11 @@ export type RoomListResponseData = {
   rooms: RoomCardData[];
 };
 
+export type RoomErrorResponse = {
+  code?: number;
+  message?: string;
+};
+
 export type Options = {
   airCondition: boolean;
   tv: boolean;
