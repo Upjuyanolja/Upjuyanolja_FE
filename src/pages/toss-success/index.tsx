@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import './style.css';
 import { usePointCharge } from '@queries/point-charge-modal';
 
 export function TossSuccess() {
