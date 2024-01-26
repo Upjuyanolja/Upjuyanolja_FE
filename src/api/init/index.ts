@@ -7,12 +7,12 @@ import {
 
 export const ACCOMMODATION_REGISTRATION_API = {
   postImageFile: (formData: FormData) =>
-    instance.post<PostImageFile>('/api/accommodations/images', formData, {
+    instance.post<PostImageFile>('/backoffice-api/images', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     }),
 
   postAccommodationInfo: (params: PostAccommodationParams) =>
-    instance.post<PostAccommodation>('/api/accommodations', params),
+    instance.post<PostAccommodation>('/backoffice-api/accommodations', params),
 };
