@@ -70,7 +70,7 @@ export const useDeleteOrderCancel = (
       queryClient.invalidateQueries(['getPointTotal']);
       queryClient.invalidateQueries(['getPointDetail']);
       message.success({
-        content: '결제가 완료되었습니다.',
+        content: '결제가 취소되었습니다.',
         duration: 2,
       });
     },
