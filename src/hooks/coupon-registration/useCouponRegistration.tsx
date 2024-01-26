@@ -37,8 +37,6 @@ export const useCouponRegistration = () => {
     },
     staleTime: Infinity,
     cacheTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
 
   const { mutate: buyCoupon } = useBuyCoupon({
