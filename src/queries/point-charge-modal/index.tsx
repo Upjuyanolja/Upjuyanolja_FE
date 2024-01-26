@@ -9,8 +9,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { ErrorResponse } from '@/types/api';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-// import { currentUrlState } from '@stores/point-charge-modal';
-// import { useRecoilValue } from 'recoil';
+import { currentUrlState } from '@stores/point-charge-modal';
+import { useRecoilValue } from 'recoil';
 import { RESPONSE_CODE } from '@/constants/api';
 
 export const usePointCharge = (
@@ -22,7 +22,7 @@ export const usePointCharge = (
 ) => {
   const queryClient = useQueryClient();
   const navigation = useNavigate();
-  // const currentUrl = useRecoilValue(currentUrlState);
+  const currentUrl = useRecoilValue(currentUrlState);
 
   const handleErrorResponse = (errorCode: number | undefined) => {
     switch (errorCode) {
@@ -45,15 +45,16 @@ export const usePointCharge = (
         content: '결제가 완료되었습니다.',
         duration: 2,
       });
-
-      // navigation(currentUrl);
+      setTimeout(() => {
+        navigation(currentUrl);
+      }, 2000);
     },
     onError: (error) => {
       const errorCode = error.response?.data.code;
 
       handleErrorResponse(errorCode);
 
-      // navigation(currentUrl);
+      navigation(currentUrl);
     },
     ...options,
   });

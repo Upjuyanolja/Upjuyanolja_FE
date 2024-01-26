@@ -1,30 +1,28 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import './style.css';
-// import { usePointCharge } from '@queries/point-charge-modal';
+import { usePointCharge } from '@queries/point-charge-modal';
 import { numberFormat } from '@/utils/Format/numberFormat';
+
 export function TossSuccess() {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey');
   const orderId = searchParams.get('orderId');
   const amount = searchParams.get('amount');
-  // 테스트 미완성 ( 백엔드 API 에러)
-  // const pointChargeMutation = usePointCharge();
+  const pointChargeMutation = usePointCharge();
 
   async function confirmPayment() {
     if (orderId && paymentKey && amount) {
-      // const data = {
-      //   orderId,
-      //   paymentKey,
-      //   amount: parseInt(amount),
-      // };
-      setIsConfirmed(true);
+      const data = {
+        orderId,
+        paymentKey,
+        amount: parseInt(amount),
+      };
 
-      // const res = await pointChargeMutation.mutateAsync(data);
-      // if (res.status) {
-      //   setIsConfirmed(true);
-      // }
+      await pointChargeMutation
+        .mutateAsync(data)
+        .then(() => setIsConfirmed(true));
     }
   }
 
@@ -43,6 +41,7 @@ export function TossSuccess() {
             height="120"
           />
           <h2 className="title">결제를 완료했어요</h2>
+          <h2 className="title mt-64">잠시후 이전페이지로 이동합니다.</h2>
           <div className="response-section w-100">
             <div className="flex justify-between">
               <span className="response-label">결제 금액</span>

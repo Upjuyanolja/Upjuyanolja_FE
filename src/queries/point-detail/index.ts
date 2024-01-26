@@ -67,6 +67,8 @@ export const useDeleteOrderCancel = (
   >((chargeId: number) => ORDER_CANCEL_API.deleteOrderCancel(chargeId), {
     onSuccess: () => {
       queryClient.invalidateQueries(['getPointSummary']);
+      queryClient.invalidateQueries(['getPointTotal']);
+      queryClient.invalidateQueries(['getPointDetail']);
       message.success({
         content: '결제가 완료되었습니다.',
         duration: 2,
@@ -79,37 +81,3 @@ export const useDeleteOrderCancel = (
     ...options,
   });
 };
-
-// export const useDeleteOrderCancel = () => {
-//   const queryClient = useQueryClient();
-//   const handleErrorResponse = (errorCode: number | undefined) => {
-//     switch (errorCode) {
-//       case RESPONSE_CODE.NOT_FOUND_POINT:
-//         return message.error('포인트 정보를 불러오는데 실패 했습니다.');
-//       default:
-//         return message.error(
-//           '요청에 실패했습니다. 잠시 후 다시 시도해주세요.',
-//         );
-//     }
-//   };
-//   const mutation = useMutation(
-//     (chargeId: number) => ORDER_CANCEL_API.deleteOrderCancel(chargeId),
-//     {
-//       onSuccess: () => {
-//         queryClient.invalidateQueries(['getPointDetail']);
-//         message.success({
-//           content: '결제 취소신청이 완료되었습니다.',
-//         });
-//       },
-//       onError: (error) => {
-//         const errorCode = error.response?.data.code;
-
-//         handleErrorResponse(errorCode);
-
-//         // navigation(currentUrl);
-//       },
-//     },
-//   );
-
-//   return mutation;
-// };
