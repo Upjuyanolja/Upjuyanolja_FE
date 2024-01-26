@@ -45,9 +45,8 @@ export const usePointCharge = (
         content: '결제가 완료되었습니다.',
         duration: 2,
       });
-      setTimeout(() => {
-        navigation(currentUrl);
-      }, 2000);
+
+      navigation(currentUrl);
     },
     onError: (error) => {
       const errorCode = error.response?.data.code;
