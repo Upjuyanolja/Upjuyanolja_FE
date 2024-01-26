@@ -103,7 +103,10 @@ export const InitRoomRegistration = () => {
   }, []);
 
   const resetStateAndNavigate = () => {
-    if (userInputValue[0].editRoomIndex !== -1) {
+    if (
+      userInputValue[0].editRoomIndex !== undefined &&
+      userInputValue[0].editRoomIndex !== -1
+    ) {
       message.success('수정되었습니다.');
     }
 
