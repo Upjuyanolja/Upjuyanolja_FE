@@ -226,7 +226,7 @@ const StyledContent = styled(Layout.Content)`
   align-items: center;
   margin: 0 auto;
   height: 666px;
-  gap: 52px;
+  gap: 32px;
 `;
 
 const LoginContainer = styled.div`
