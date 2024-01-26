@@ -29,7 +29,7 @@ const RoomManagement = () => {
   const roomItems = useMemo(() => {
     return data?.pages.flatMap((page) => page.rooms);
   }, [data]);
-  const { mutate: deleteRoom } = useDeleteRoom();
+  const { mutate: deleteRoom } = useDeleteRoom(tempAccommodationId as string);
 
   const handleDeleteRoom = (roomId: number) => {
     Modal.confirm({

@@ -60,6 +60,7 @@ export const useGetInfiniteRoomList = (
 };
 
 export const useDeleteRoom = (
+  accommodationId: string,
   options?: UseMutationOptions<
     AxiosResponse<Response<RoomDeleteResponseData>>,
     AxiosError,
@@ -70,13 +71,14 @@ export const useDeleteRoom = (
     AxiosResponse<Response<RoomDeleteResponseData>>,
     AxiosError,
     number
-  >((roomId) => ROOM_API.deleteRoom(roomId), {
+  >((roomId) => ROOM_API.deleteRoom(roomId, accommodationId), {
     ...options,
   });
 };
 
 export const useGetRoomDetail = (
   roomId: string,
+  accommodationId: string,
   options?: UseQueryOptions<
     AxiosResponse<RoomDeleteResponseData>,
     AxiosError,
@@ -87,11 +89,14 @@ export const useGetRoomDetail = (
     AxiosResponse<RoomDeleteResponseData>,
     AxiosError,
     RoomDeleteResponseData
-  >(['getRoomDetail'], () => ROOM_API.getRoomDetail(roomId), { ...options });
+  >(['getRoomDetail'], () => ROOM_API.getRoomDetail(roomId, accommodationId), {
+    ...options,
+  });
 };
 
 export const useUpdateRoom = (
   roomId: string,
+  accommodationId: string,
   options?: UseMutationOptions<
     AxiosResponse<Response<RoomUpdateResponseData>>,
     AxiosError,
@@ -102,7 +107,11 @@ export const useUpdateRoom = (
     AxiosResponse<Response<RoomUpdateResponseData>>,
     AxiosError,
     RoomUpdateData
-  >((data: RoomUpdateData) => ROOM_API.updateRoom(data, roomId), {
-    ...options,
-  });
+  >(
+    (data: RoomUpdateData) =>
+      ROOM_API.updateRoom(data, roomId, accommodationId),
+    {
+      ...options,
+    },
+  );
 };

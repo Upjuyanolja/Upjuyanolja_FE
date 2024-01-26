@@ -37,11 +37,15 @@ const RoomUpdate = () => {
     roomId: string;
   }>();
 
-  const { data, isLoading, error } = useGetRoomDetail(roomId, {
-    select(data) {
-      return data.data;
+  const { data, isLoading, error } = useGetRoomDetail(
+    roomId,
+    accommodationId as string,
+    {
+      select(data) {
+        return data.data;
+      },
     },
-  });
+  );
 
   const [form] = Form.useForm();
 
@@ -86,19 +90,23 @@ const RoomUpdate = () => {
     };
   }, []);
 
-  const { mutate: updateRoom } = useUpdateRoom(roomId as string, {
-    onSuccess() {
-      message.success({
-        content: '수정되었습니다',
-        className: 'coupon-message',
-      });
-      navigate(`/${accommodationId}${ROUTES.ROOM}`);
+  const { mutate: updateRoom } = useUpdateRoom(
+    roomId as string,
+    accommodationId as string,
+    {
+      onSuccess() {
+        message.success({
+          content: '수정되었습니다',
+          className: 'coupon-message',
+        });
+        navigate(`/${accommodationId}${ROUTES.ROOM}`);
+      },
+      onError(error) {
+        if (error instanceof AxiosError)
+          message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+      },
     },
-    onError(error) {
-      if (error instanceof AxiosError)
-        message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
-    },
-  });
+  );
 
   const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
     useRecoilState(checkedRoomOptions);

@@ -11,18 +11,25 @@ import {
 
 export const ROOM_API = {
   addRoom: (data: RoomData, accommodationId: string) =>
-    instance.post<RoomPostResponseData>(`/api/rooms/${accommodationId}`, data),
+    instance.put<RoomPostResponseData>(
+      `/backoffice-api/accomodations/${accommodationId}/rooms`,
+      data,
+    ),
   getRoomList: (accommodationId: string, pageSize: number, pageNum: number) =>
     instance.get<RoomListResponseData>(
-      `/api/rooms/list/${accommodationId}?pageSize=${pageSize}&pageNum=${pageNum}`,
+      `/backoffice-api/accomodations/${accommodationId}/rooms?pageSize=${pageSize}&pageNum=${pageNum}`,
     ),
-  deleteRoom: (roomId: number) =>
-    instance.delete<Response<RoomDeleteResponseData>>(`/api/rooms/${roomId}`),
-  getRoomDetail: (roomId: string) =>
-    instance.get<RoomDeleteResponseData>(`/api/rooms/${roomId}`),
-  updateRoom: (data: RoomUpdateData, roomId: string) =>
+  deleteRoom: (roomId: number, accommodationId: string) =>
+    instance.delete<Response<RoomDeleteResponseData>>(
+      `/backoffice-api/accomodations/${accommodationId}/rooms/${roomId}`,
+    ),
+  getRoomDetail: (roomId: string, accommodationId: string) =>
+    instance.get<RoomDeleteResponseData>(
+      `/backoffice-api/accomodations/${accommodationId}/rooms/${roomId}`,
+    ),
+  updateRoom: (data: RoomUpdateData, roomId: string, accommodationId: string) =>
     instance.put<Response<RoomUpdateResponseData>>(
-      `/api/rooms/${roomId}`,
+      ` /backoffice-api/accomodations/${accommodationId}/rooms/${roomId}`,
       data,
     ),
 };
