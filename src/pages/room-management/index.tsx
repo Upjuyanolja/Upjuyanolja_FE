@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDeleteRoom, useGetInfiniteRoomList } from '@queries/room';
 import { AxiosError } from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const RoomManagement = () => {
   const navigate = useNavigate();
@@ -21,6 +21,10 @@ const RoomManagement = () => {
       }),
     },
   );
+
+  useEffect(() => {
+    refetch();
+  }, [accommodationId]);
 
   const roomItems = useMemo(() => {
     return data?.pages.flatMap((page) => page.rooms);
