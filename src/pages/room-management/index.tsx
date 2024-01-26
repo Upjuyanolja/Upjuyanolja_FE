@@ -62,19 +62,17 @@ const RoomManagement = () => {
 
   return (
     <StyledPageContainer bodyStyle={{ padding: 0 }}>
-      <StyledFixedTitle>
-        <StyledTitleButton>
-          <TextBox typography="h4" color={'black900'} fontWeight={700}>
-            객실 관리
-          </TextBox>
-          <StyledButton
-            type="primary"
-            onClick={() => navigate(`/${accommodationId}/room/registration`)}
-          >
-            + 객실추가
-          </StyledButton>
-        </StyledTitleButton>
-      </StyledFixedTitle>
+      <StyledTitleButton>
+        <TextBox typography="h4" color={'black900'} fontWeight={700}>
+          객실 관리
+        </TextBox>
+        <StyledButton
+          type="primary"
+          onClick={() => navigate(`/${accommodationId}/room/registration`)}
+        >
+          + 객실추가
+        </StyledButton>
+      </StyledTitleButton>
       <StyledInfiniteScrollContainer>
         <InfiniteScroll
           dataLength={roomItems?.length ?? 0}
@@ -82,7 +80,7 @@ const RoomManagement = () => {
           next={fetchNextPage}
           hasMore={hasNextPage ?? false}
           loader={<></>}
-          className="infinite-scroll-container"
+          style={{ overflow: 'visible', height: 'auto' }}
         >
           {roomItems?.map((room) => (
             <StyledRoomCardWrapper key={room.name}>
@@ -107,6 +105,7 @@ const StyledTitleButton = styled(Row)`
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  background-color: white;
 `;
 
 const StyledButton = styled(Button)`
@@ -116,10 +115,6 @@ const StyledButton = styled(Button)`
   display: flex;
   align-items: center;
   margin-top: 2px;
-`;
-
-const StyledFixedTitle = styled.div`
-  // position: fixed;
 `;
 
 const StyledRoomCardWrapper = styled.div`
