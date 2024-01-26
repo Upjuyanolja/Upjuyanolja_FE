@@ -10,7 +10,6 @@ import { ROUTES } from '@/constants/routes';
 import { ImageCarousel } from '@components/init/init-info-confirmation/ImageCarousel';
 
 const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
-  const isOnSale = false;
   const navigate = useNavigate();
   const { accommodationId } = useParams();
 

@@ -75,20 +75,22 @@ const RoomManagement = () => {
           </StyledButton>
         </StyledTitleButton>
       </StyledFixedTitle>
-
-      <InfiniteScroll
-        dataLength={roomItems?.length ?? 0}
-        scrollThreshold={0.95}
-        next={fetchNextPage}
-        hasMore={hasNextPage ?? false}
-        loader={<></>}
-      >
-        {roomItems?.map((room) => (
-          <StyledRoomCardWrapper key={room.name}>
-            <RoomCard data={room} handleDeleteRoom={handleDeleteRoom} />
-          </StyledRoomCardWrapper>
-        ))}
-      </InfiniteScroll>
+      <StyledInfiniteScrollContainer>
+        <InfiniteScroll
+          dataLength={roomItems?.length ?? 0}
+          scrollThreshold={0.95}
+          next={fetchNextPage}
+          hasMore={hasNextPage ?? false}
+          loader={<></>}
+          className="infinite-scroll-container"
+        >
+          {roomItems?.map((room) => (
+            <StyledRoomCardWrapper key={room.name}>
+              <RoomCard data={room} handleDeleteRoom={handleDeleteRoom} />
+            </StyledRoomCardWrapper>
+          ))}
+        </InfiniteScroll>
+      </StyledInfiniteScrollContainer>
     </StyledPageContainer>
   );
 };
@@ -124,4 +126,9 @@ const StyledRoomCardWrapper = styled.div`
   &:not(:last-child) {
     margin-bottom: 32px;
   }
+`;
+
+const StyledInfiniteScrollContainer = styled.div`
+  height: auto;
+  overflow: hidden;
 `;

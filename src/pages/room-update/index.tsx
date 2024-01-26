@@ -16,7 +16,7 @@ import {
   deletedImageFileState,
   imageRoomFileState,
 } from '@stores/room/atoms';
-import { RoomUpdateData, Image } from '@api/room/type';
+import { RoomUpdateData } from '@api/room/type';
 import { useGetRoomDetail, useUpdateRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -101,6 +101,7 @@ const RoomUpdate = () => {
   );
   const [selectedInitRoomOptions, setSelectedInitRoomOptions] =
     useRecoilState(checkedRoomOptions);
+
   const { mutate: getImageUrl } = useImageFile({
     onSuccess() {
       const roomName = form.getFieldValue('room-name');
@@ -110,6 +111,8 @@ const RoomUpdate = () => {
       const checkInTime = form.getFieldValue('checkInTime').format('HH:mm');
       const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
       const count = form.getFieldValue('count');
+
+      console.log('imageFile', imageFile);
 
       const updatedRoomData: RoomUpdateData = {
         name: roomName,
@@ -124,7 +127,7 @@ const RoomUpdate = () => {
         removeImages: deletedImageFile,
         option: selectedInitRoomOptions,
       };
-      // console.log('updatedRoomData', updatedRoomData);
+      console.log('updatedRoomData', updatedRoomData);
       updateRoom(updatedRoomData);
       setSelectedInitRoomOptions({
         airCondition: false,
