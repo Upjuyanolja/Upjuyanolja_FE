@@ -21,7 +21,7 @@ const StyledButton = styled(Button)`
 
   padding: 2px 4px;
 
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
   font-weight: 700;
   text-shadow: none;
@@ -37,8 +37,8 @@ const StyledButton = styled(Button)`
   align-items: center;
   gap: 4px;
 
-  width: 60px;
-  height: 28px;
+  width: 57px;
+  height: 25px;
 
   &:focus {
     border: none;
