@@ -85,6 +85,7 @@ export const InitAccommodationRegistration = () => {
     setClickedPrevButton(false);
 
     if (userInputValue[0].isAccommodationEdit) {
+      message.success('수정되었습니다.');
       navigate(ROUTES.INIT_INFO_CONFIRMATION);
     } else {
       navigate(ROUTES.INIT_ROOM_REGISTRATION);
