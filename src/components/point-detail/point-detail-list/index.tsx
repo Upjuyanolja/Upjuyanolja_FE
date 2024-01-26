@@ -38,7 +38,7 @@ export const PointDetailList = () => {
 
   return (
     <StyledLayout>
-      {pointDetailData.histories &&
+      {pointDetailData.histories.length > 0 &&
         pointDetailData.histories.map((histories, index) => (
           <StyledList key={index}>
             <StyledListItem>
