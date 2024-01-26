@@ -43,7 +43,13 @@ export const CouponPreviewItem = ({
         {selectedDiscountType === RATE_DISCOUNT_TYPE &&
           `${determinedPrice ? determinedPrice : '0'}% 할인 (${
             roomPrice
-              ? numberFormat((roomPrice * formattedDeterminedPrice) / 100)
+              ? numberFormat(
+                  calculatedCouponPoints(
+                    roomPrice,
+                    formattedDeterminedPrice,
+                    'RATE',
+                  ) * 10,
+                )
               : 0
           }원)`}
       </TextBox>

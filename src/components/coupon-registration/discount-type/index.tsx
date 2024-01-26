@@ -237,12 +237,15 @@ const StyledDiscountButton = styled.button`
   &.price {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
+    border-width: 2px 0px 2px 2px;
   }
   &.rate {
+    border-width: 2px 2px 2px 0;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
   }
   &.active {
+    border-width: 2px;
     color: ${colors.primary};
     background: linear-gradient(268.34deg, #e0edff 1.74%, #ffffff 120.49%);
     border-color: ${colors.primary};

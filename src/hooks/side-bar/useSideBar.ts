@@ -1,20 +1,12 @@
-import { useGetPointSummary } from '@queries/point';
+import { useGetPointTotal } from '@queries/point';
 import { useGetAccommodationList } from '@queries/accommodation';
-import { useRecoilValue } from 'recoil';
-import {
-  currentMonthState,
-  currentYearState,
-} from '@stores/point-detail/atoms';
 
 export const useSideBar = () => {
-  const currentYear = useRecoilValue(currentYearState);
-  const currentMonth = useRecoilValue(currentMonthState);
-
   const {
-    data: pointSummaryData,
-    isLoading: isPointSummaryLoading,
-    isError: isPointSummaryError,
-  } = useGetPointSummary(`${currentYear}-${('0' + currentMonth).slice(-2)}`, {
+    data: pointTotalData,
+    isLoading: isPointTotalLoading,
+    isError: isPointTotalError,
+  } = useGetPointTotal({
     select(data) {
       return data.data;
     },
@@ -31,10 +23,10 @@ export const useSideBar = () => {
   });
 
   return {
-    pointSummaryData,
-    isPointSummaryLoading,
+    pointTotalData,
+    isPointTotalLoading,
+    isPointTotalError,
     isAccommodationListLoading,
-    isPointSummaryError,
     accommodationListData,
     isAccommodationListError,
   };

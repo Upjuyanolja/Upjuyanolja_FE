@@ -102,6 +102,21 @@ export const InitRoomRegistration = () => {
     }
   }, []);
 
+  const resetStateAndNavigate = () => {
+    if (userInputValue[0].editRoomIndex !== -1) {
+      message.success('수정되었습니다.');
+    }
+
+    setSelectedOptions({ airCondition: false, tv: false, internet: false });
+    setImageFiles([]);
+    setSameRoomName(false);
+    setIsAddRoom(false);
+    if (userInputValue[0].editRoomIndex !== -1) {
+      setUserInputValue((prev) => [{ ...prev[0], editRoomIndex: -1 }]);
+    }
+    navigate(ROUTES.INIT_INFO_CONFIRMATION);
+  };
+
   const { mutate: imageFile } = useImageFile({
     onSuccess(data) {
       setUserInputValue((prevUserInputValueState) => {
@@ -122,7 +137,7 @@ export const InitRoomRegistration = () => {
           const image = imageFiles[i];
           if (image.url !== '') {
             newImages.push({ url: image.url });
-          } // 이미 이미지 url이 있는 상태
+          }
         }
 
         for (let i = 0; i < urls.length; i++) {
@@ -158,17 +173,12 @@ export const InitRoomRegistration = () => {
         const updatedUserInputValue = {
           ...prevUserInputValue,
           rooms: updatedRooms,
-          editRoomIndex: -1,
         };
 
         return [updatedUserInputValue];
       });
 
-      setSelectedOptions({ airCondition: false, tv: false, internet: false });
-      setImageFiles([]);
-      setSameRoomName(false);
-      setIsAddRoom(false);
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      resetStateAndNavigate();
     },
     onError(error) {
       if (error instanceof AxiosError) {
@@ -193,7 +203,16 @@ export const InitRoomRegistration = () => {
       (room: Room) => room.name === roomNameValue,
     );
 
-    if (hasDuplicate && userInputValue[0].editRoomIndex == -1) {
+    const editHasDuplicate = roomsArray.some(
+      (room, index) =>
+        index !== userInputValue[0].editRoomIndex &&
+        room.name === roomNameValue,
+    );
+
+    if (
+      (hasDuplicate && userInputValue[0].editRoomIndex == -1) ||
+      editHasDuplicate
+    ) {
       setSameRoomName(true);
       message.error({
         content: '동일한 객실명의 상품이 이미 존재합니다.',
@@ -266,17 +285,12 @@ export const InitRoomRegistration = () => {
         const updatedUserInputValue = {
           ...prevUserInputValue,
           rooms: updatedRooms,
-          editRoomIndex: -1,
         };
 
         return [updatedUserInputValue];
       });
 
-      setSelectedOptions({ airCondition: false, tv: false, internet: false });
-      setImageFiles([]);
-      setSameRoomName(false);
-      setIsAddRoom(false);
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      resetStateAndNavigate();
     }
   };
 

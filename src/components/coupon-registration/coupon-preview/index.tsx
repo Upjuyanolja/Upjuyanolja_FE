@@ -20,6 +20,7 @@ import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { useEffect, useState } from 'react';
 import { MouseEvent } from '@/types/event';
 import { CouponAgreementModal } from '@components/agreement-modal/coupon-agreement-modal';
+import { calculatedCouponPoints } from '@/utils/discountCoupon';
 
 export const CouponPreview = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);
@@ -51,16 +52,17 @@ export const CouponPreview = () => {
         );
       }, 0);
     } else {
-      return (
-        pendingRoomDataList.reduce((total, room) => {
-          const priceWithoutDiscount =
-            Number(removeNumberFormat(determinedPrice)) * room.roomPrice;
+      return pendingRoomDataList.reduce((total, room) => {
+        const calculatedPrice = calculatedCouponPoints(
+          Number(removeNumberFormat(determinedPrice)),
+          room.roomPrice,
+          'RATE',
+        );
 
-          const calculatedValue = Number(room.quantity) * priceWithoutDiscount;
+        const calculatedValue = Number(room.quantity) * calculatedPrice;
 
-          return total + calculatedValue;
-        }, 0) / 1000
-      );
+        return total + calculatedValue;
+      }, 0);
     }
   };
 

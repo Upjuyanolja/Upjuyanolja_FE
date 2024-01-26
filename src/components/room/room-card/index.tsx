@@ -44,13 +44,17 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
     return koreanOptionsNames[key] || key;
   };
 
+  console.log(data);
   return (
-    <StyledCardContainer isOnSale={isOnSale}>
+    <StyledCardContainer isOnSale={data.status === 'SELLING'}>
       <StyledContentContainer wrap={false}>
         <StyledImageContainer>
-          <StyledCouponImage src={COUPON} alt="Coupon" />
-          {/* <StyledRoomImageCarousel images={data.images} /> */}
-          <ImageCarousel images={data.images} />
+          <StyledCouponImage
+            hasCoupon={data.coupons.length > 0}
+            src={COUPON}
+            alt="Coupon"
+          />
+          <StyledRoomImageCarousel images={data.images} />
           <StyledSaleBanner isOnSale={data.status === 'SELLING'}>
             {data.status === 'SELLING' ? '판매중' : '판매중지'}
           </StyledSaleBanner>
@@ -113,10 +117,10 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
           </StyledEditDeleteContainer>
           <StyledNumRoomPriceContainer>
             <TextBox typography="body3" color="black900" fontWeight="normal">
-              객실 수 : {data.amount}개
+              객실 수 : {data.amount}x개
             </TextBox>
             <TextBox typography="h5" color="black900" fontWeight="bold">
-              {data.price?.toLocaleString()}원
+              {data.basePrice?.toLocaleString()}원
             </TextBox>
           </StyledNumRoomPriceContainer>
         </StyledRightContent>
@@ -128,6 +132,8 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
 export default RoomCard;
 
 const StyledCardContainer = styled(Card)<{ isOnSale: boolean }>`
+  height: 176px;
+  padding: 0px;
   border-radius: 8px;
   border: 2px solid
     ${({ isOnSale }) => (isOnSale ? colors.primary : colors.black600)};
@@ -138,34 +144,49 @@ const StyledCardContainer = styled(Card)<{ isOnSale: boolean }>`
   &:hover {
     transform: scale(1);
   }
+
+  .ant-card-body {
+    padding: 16px !important;
+  }
 `;
 
 const StyledContentContainer = styled(Row)`
+  height: 144px;
+  padding: 0px;
+  display: flex;
+  align-items: start;
   wrap: false;
 `;
 
 const StyledImageContainer = styled(Col)`
+  border-radius: 8px;
   position: relative;
-  height: 144px;
-  overflow: hidden;
+  margin-bottom: 20px !important;
+  display: flex;
+  align-items: start;
 `;
 
-const StyledCouponImage = styled(Image)`
+const StyledCouponImage = styled(Image)<{ hasCoupon: boolean }>`
   position: absolute;
-  bottom: 50px;
-  left: -8px;
+  top: -4px;
+  left: -4px;
   width: 39.636px;
   height: 31.143px;
-  z-index: 2;
+  z-index: 3;
+
+  display: ${({ hasCoupon }) => (hasCoupon ? 'block' : 'none')};
 `;
 
-// const StyledRoomImageCarousel = styled(ImageCarousel)`
-//   width: 224px;
-//   height: 144px;
-//   border-radius: 8px;
-//   object-fit: cover;
-//   z-index: 1;
-// `;
+const StyledRoomImageCarousel = styled(ImageCarousel)`
+  width: 224px;
+  height: 144px;
+  object-fit: cover;
+  z-index: 1;
+
+  .ant-carousel .slick-slide img {
+    margin-bottom: 0px !important;
+  }
+`;
 
 const StyledSaleBanner = styled.div<{ isOnSale: boolean }>`
   position: absolute;

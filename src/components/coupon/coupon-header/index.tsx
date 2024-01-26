@@ -180,6 +180,10 @@ const StyledDeleteButton = styled(Button)`
   &.ant-click-animating-node {
     display: none;
   }
+
+  &.ant-btn:disabled:hover {
+    color: ${colors.black500};
+  }
 `;
 const StyledPurchaseButton = styled(Button)`
   background-color: ${colors.dark};
@@ -193,6 +197,11 @@ const StyledPurchaseButton = styled(Button)`
 
   &.ant-btn:hover {
     background-color: ${colors.darkHover};
+    color: white;
+  }
+
+  &.ant-btn:disabled:hover {
+    background-color: ${colors.black600};
     color: white;
   }
 

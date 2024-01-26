@@ -10,23 +10,22 @@ import { CapacityContainer } from '@components/room/capacity-container';
 import { CountContainer } from '@components/room/num-of-rooms-container';
 import { TimeContainer } from '@components/room/time-container';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { Image, RoomData } from '@api/room/type';
+import { RoomData, RoomErrorResponse } from '@api/room/type';
 import { useAddRoom } from '@queries/room';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  capacityHasError,
-  priceHasError,
-  checkedRoomOptions,
-  imageFileState,
-} from '@stores/room/atoms';
+import { capacityHasError, priceHasError } from '@stores/room/atoms';
+import { imageFileState, checkedRoomOptions } from '@stores/init/atoms';
 import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 import { useImageFile } from '@queries/init';
+import { RESPONSE_CODE } from '@/constants/api';
+import { FaBullseye } from 'react-icons/fa';
 
 const RoomRegistration = () => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
+  const [isSameRoomName, setIsSameRoomName] = useState(false);
 
   const roomOptions = {
     tv: 'TV',
@@ -49,8 +48,20 @@ const RoomRegistration = () => {
       setSelectedImageFile([]);
     },
     onError(error) {
-      if (error instanceof AxiosError)
-        message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+      if (error instanceof AxiosError && error.message && error.response) {
+        const errorData = error.response.data as RoomErrorResponse;
+        if (errorData) {
+          if (errorData.code === RESPONSE_CODE.DUPLICATE_ROOM_NAME) {
+            setIsSameRoomName(true);
+            message.error({
+              content: '동일한 객실명의 상품이 이미 존재합니다.',
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+          }
+        }
+      }
     },
   });
 
@@ -64,6 +75,13 @@ const RoomRegistration = () => {
       const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
       const count = form.getFieldValue('count');
 
+      const newImage = [];
+      for (let i = 0; i < data.data.urls.length; i++) {
+        const { url } = data.data.urls[i];
+        if (url) {
+          newImage.push({ url });
+        }
+      }
       const roomData: RoomData = {
         name: roomName,
         price: price,
@@ -72,11 +90,13 @@ const RoomRegistration = () => {
         checkInTime: checkInTime,
         checkOutTime: checkOutTime,
         amount: count,
-        options: selectedOptions,
-        images: data.data.urls as unknown as Image[],
+        option: selectedOptions,
+        images: newImage,
       };
-
       addRoom(roomData);
+
+      setSelectedOptions({ airCondition: false, tv: false, internet: false });
+      setSelectedImageFile([]);
     },
   });
 
@@ -91,10 +111,12 @@ const RoomRegistration = () => {
 
   const onFinish = () => {
     const formData = new FormData();
+    setIsSameRoomName(false);
 
     for (let index = 0; index < 5; index++) {
       const image = imageFile[index];
       if (!image || image.file === null) {
+        // 등록한 적이 있거나 이미지 자체를 등록하지 않은 순서
         const emptyBlob = new Blob([], { type: 'application/octet-stream' });
         const nullFile = new File([emptyBlob], 'nullFile.txt', {
           type: 'text/plain',
@@ -145,7 +167,7 @@ const RoomRegistration = () => {
           header="객실명"
           placeholder="객실명을 입력해 주세요. (ex. 디럭스 더블 룸)"
           form={form}
-          //isSameRoomName={sameRoomName}
+          isSameRoomName={isSameRoomName}
         />
         <StyledInputWrapper>
           <PriceContainer header="객실 가격" form={form} />

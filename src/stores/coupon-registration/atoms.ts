@@ -63,3 +63,8 @@ export const getCouponRoomDataListState = atom<CouponRoomList | undefined>({
   key: 'getCouponRoomDataList',
   default: undefined,
 });
+
+export const isActivityResetCouponState = atom<boolean>({
+  key: 'isActivityResetCoupon',
+  default: false,
+});

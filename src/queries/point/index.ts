@@ -1,22 +1,38 @@
 import { ErrorResponse } from '@/types/api';
 import { POINT_API } from '@api/point';
-import { pointSummaryData } from '@api/point/type';
+import { PointSummaryData, PointTotalData } from '@api/point/type';
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 
 export const useGetPointSummary = (
   rangeDate: string,
   options?: UseQueryOptions<
-    AxiosResponse<pointSummaryData>,
+    AxiosResponse<PointSummaryData>,
     AxiosError<ErrorResponse>,
-    pointSummaryData
+    PointSummaryData
   >,
 ) => {
   return useQuery<
-    AxiosResponse<pointSummaryData>,
+    AxiosResponse<PointSummaryData>,
     AxiosError<ErrorResponse>,
-    pointSummaryData
+    PointSummaryData
   >(['getPointSummary'], () => POINT_API.getPointSummary(rangeDate), {
     ...options,
   });
+};
+
+export const useGetPointTotal = (
+  options?: UseQueryOptions<
+    AxiosResponse<PointTotalData>,
+    AxiosError,
+    PointTotalData
+  >,
+) => {
+  return useQuery<AxiosResponse<PointTotalData>, AxiosError, PointTotalData>(
+    ['getPointTotal'],
+    () => POINT_API.getPointTotal(),
+    {
+      ...options,
+    },
+  );
 };

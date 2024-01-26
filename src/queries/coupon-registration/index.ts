@@ -1,5 +1,5 @@
 import { COUPON_API } from '@api/coupon';
-import { ErrorResponse, Response } from '@/types/api';
+import { ErrorResponse } from '@/types/api';
 import {
   BuyCouponData,
   BuyCouponParams,

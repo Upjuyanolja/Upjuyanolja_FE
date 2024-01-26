@@ -11,8 +11,8 @@ export const capacityHasError = atom<string | null>({
   default: null,
 });
 
-export const checkedRoomOptions = atom({
-  key: 'checkedAccommodationOptions',
+export const checkedRoomDetailOptions = atom({
+  key: 'checkedRoomDetailOptions',
   default: {
     airCondition: false,
     tv: false,
@@ -20,17 +20,17 @@ export const checkedRoomOptions = atom({
   },
 });
 
-export const imageFileState = atom<ImageFile[]>({
-  key: 'imageFileState',
+export const imageRoomFileState = atom<ImageFile[]>({
+  key: 'imageRoomFileState',
   default: [],
 });
 
 export const addedImageFileState = atom<ImageFile[]>({
-  key: 'imageFileState',
+  key: 'addedImageFileState',
   default: [],
 });
 
 export const deletedImageFileState = atom<ImageFile[]>({
-  key: 'imageFileState',
+  key: 'deleteImageFileState',
   default: [],
 });

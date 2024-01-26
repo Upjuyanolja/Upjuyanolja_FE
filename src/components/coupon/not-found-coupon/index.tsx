@@ -35,7 +35,7 @@ export const NotFoundCoupon = () => {
 };
 
 const StyledLayout = styled.div`
-  height: calc(100% - 210px);
+  height: calc(100% - 300px);
   display: flex;
   flex-direction: column;
   align-items: center;
