@@ -86,7 +86,7 @@ export const AccommodationList = ({
     <Container>
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
-          <TextBox typography="body2" fontWeight="bold" color="black500">
+          <TextBox typography="body2" fontWeight="bold">
             {selectedAccommodation?.name}
           </TextBox>
         </StyledFlex>
@@ -102,7 +102,7 @@ export const AccommodationList = ({
             onClick={() => checkModified(item)}
           >
             <StyledFlex>
-              <TextBox typography="body3" fontWeight="bold" color="black500">
+              <TextBox typography="body3" fontWeight="bold">
                 {item.name}
               </TextBox>
             </StyledFlex>
@@ -128,6 +128,7 @@ const StyledButton = styled(Button)`
   justify-content: space-between;
   padding: 10px 16px;
   border-radius: 0;
+  border-bottom: 0.5px solid ${colors.black500};
 `;
 
 const StyledAccommodationWrap = styled.ul<StyledAccommodationWrapProps>`

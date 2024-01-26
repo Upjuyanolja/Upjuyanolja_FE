@@ -52,6 +52,7 @@ const StyledContainer = styled.div`
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   transition: transform 0.3s ease-in;
+  border-right: 0.5px solid ${colors.black500};
 `;
 
 const StyledClosedButton = styled.button`
