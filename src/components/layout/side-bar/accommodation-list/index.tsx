@@ -2,11 +2,11 @@ import { TextBox } from '@components/text-box';
 import { Button, Modal } from 'antd';
 import styled from 'styled-components';
 import { colors } from '@/constants/colors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AccommodationListProps, StyledAccommodationWrapProps } from './type';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Accommodation } from '@api/accommodation/type';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isCouponModifiedState } from '@stores/coupon/atom';
@@ -20,6 +20,7 @@ export const AccommodationList = ({
   const location = useLocation();
   const isCouponModified = useRecoilValue(isCouponModifiedState);
   const currentPath = location.pathname;
+  const { accommodationId } = useParams();
 
   const [selectedAccommodation, setSelectedAccommodation] =
     useRecoilState(accommodationState);
@@ -27,6 +28,12 @@ export const AccommodationList = ({
   const handleSelectBox = () => {
     setClickedSelectBox(!clickedSelectBox);
   };
+
+  useEffect(() => {
+    if (accommodationId) {
+      setSelectedAccommodation(Number(accommodationId));
+    }
+  }, [accommodationId]);
 
   const checkModified = (item: Accommodation) => {
     if (isCouponModified)
