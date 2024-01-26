@@ -103,8 +103,6 @@ const StyledHeaderTextWrapper = styled.div`
 const StyledHeadContentCotainer = styled.div`
   background-color: ${colors.white};
 
-  position: fixed;
-  z-index: 2;
   width: 100%;
 
   margin-top: 64px;

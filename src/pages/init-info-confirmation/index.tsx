@@ -47,6 +47,4 @@ const StyledWrapper = styled.div`
   gap: 48px;
 
   padding: 0 48px;
-
-  margin-top: 204px;
 `;
