@@ -112,8 +112,6 @@ const RoomUpdate = () => {
       const checkOutTime = form.getFieldValue('checkOutTime').format('HH:mm');
       const count = form.getFieldValue('count');
 
-      console.log('imageFile', imageFile);
-
       const updatedRoomData: RoomUpdateData = {
         name: roomName,
         price: price,
@@ -127,7 +125,6 @@ const RoomUpdate = () => {
         removeImages: deletedImageFile,
         option: selectedInitRoomOptions,
       };
-      console.log('updatedRoomData', updatedRoomData);
       updateRoom(updatedRoomData);
       setSelectedInitRoomOptions({
         airCondition: false,
@@ -186,8 +183,6 @@ const RoomUpdate = () => {
   const handleFormValuesChange = () => {
     setIsValid(areFormFieldsValid());
   };
-
-  // console.log(imageFile);
 
   return (
     <StyledWrapper color={colors.white}>
