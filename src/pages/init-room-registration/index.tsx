@@ -103,10 +103,17 @@ export const InitRoomRegistration = () => {
   }, []);
 
   const resetStateAndNavigate = () => {
+    if (userInputValue[0].editRoomIndex !== -1) {
+      message.success('수정되었습니다.');
+    }
+
     setSelectedOptions({ airCondition: false, tv: false, internet: false });
     setImageFiles([]);
     setSameRoomName(false);
     setIsAddRoom(false);
+    if (userInputValue[0].editRoomIndex !== -1) {
+      setUserInputValue((prev) => [{ ...prev[0], editRoomIndex: -1 }]);
+    }
     navigate(ROUTES.INIT_INFO_CONFIRMATION);
   };
 
@@ -166,7 +173,6 @@ export const InitRoomRegistration = () => {
         const updatedUserInputValue = {
           ...prevUserInputValue,
           rooms: updatedRooms,
-          editRoomIndex: -1,
         };
 
         return [updatedUserInputValue];
@@ -197,7 +203,7 @@ export const InitRoomRegistration = () => {
       (room: Room) => room.name === roomNameValue,
     );
 
-    if (hasDuplicate && userInputValue[0].editRoomIndex == -1) {
+    if (hasDuplicate) {
       setSameRoomName(true);
       message.error({
         content: '동일한 객실명의 상품이 이미 존재합니다.',
@@ -270,7 +276,6 @@ export const InitRoomRegistration = () => {
         const updatedUserInputValue = {
           ...prevUserInputValue,
           rooms: updatedRooms,
-          editRoomIndex: -1,
         };
 
         return [updatedUserInputValue];
