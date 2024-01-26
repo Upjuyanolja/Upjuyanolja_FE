@@ -74,7 +74,6 @@ export const ImageUploadContainer = ({
         ...prev,
         { key: imageFile.length, url: '', file: selectedFile },
       ]);
-      console.log(selectedFile);
     } else {
       message.error({
         content: `최대 ${IMAGE_MAX_CAPACITY}MB 파일 크기로 업로드 가능합니다.`,
