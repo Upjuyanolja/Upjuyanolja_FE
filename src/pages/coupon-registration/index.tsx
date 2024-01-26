@@ -27,6 +27,7 @@ export const CouponRegistration = () => {
     setIsModalOpen,
     isGetCouponRoomListRefetch,
     isGetCouponRoomListLoading,
+    isGetCouponRoomListFetching,
   } = useCouponRegistration();
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export const CouponRegistration = () => {
             <CouponCard title="2. 적용 객실 선택">
               <CouponApplier
                 isGetCouponRoomListLoading={isGetCouponRoomListLoading}
+                isGetCouponRoomListFetching={isGetCouponRoomListFetching}
               />
             </CouponCard>
           </StyledCouponCardWrap>

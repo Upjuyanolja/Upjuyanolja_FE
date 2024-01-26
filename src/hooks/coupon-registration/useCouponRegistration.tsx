@@ -29,11 +29,14 @@ export const useCouponRegistration = () => {
     isLoading: isGetCouponRoomListLoading,
     isError: isGetCouponRoomListError,
     refetch: isGetCouponRoomListRefetch,
+    isFetching: isGetCouponRoomListFetching,
   } = useGetCouponRoomList(accommodationId as string, {
     select(data) {
       setGetCouponRoomList(data.data);
       return data.data;
     },
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   const { mutate: buyCoupon } = useBuyCoupon({
@@ -78,11 +81,12 @@ export const useCouponRegistration = () => {
 
   return {
     couponRoomListData,
-    isGetCouponRoomListError,
     buyCoupon,
     isGetCouponRoomListLoading,
+    isGetCouponRoomListError,
+    isGetCouponRoomListFetching,
+    isGetCouponRoomListRefetch,
     isModalOpen,
     setIsModalOpen,
-    isGetCouponRoomListRefetch,
   };
 };

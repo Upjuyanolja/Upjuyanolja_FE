@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { AccommodationListProps, StyledAccommodationWrapProps } from './type';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Accommodation } from '@api/accommodation/type';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { setCookie } from '@hooks/sign-in/useSignIn';
 import { useRecoilValue } from 'recoil';
@@ -16,17 +16,21 @@ export const AccommodationList = ({
   accommodationListData,
 }: AccommodationListProps) => {
   const [clickedSelectBox, setClickedSelectBox] = useState(false);
-  const [accommodationIdx, setAccommodationIdx] = useState(0);
   const { accommodations } = accommodationListData || { accommodations: [] };
   const navigate = useNavigate();
   const location = useLocation();
   const isCouponModified = useRecoilValue(isCouponModifiedState);
+  const currentPath = location.pathname;
+  const { accommodationId } = useParams();
+  const selectedAccommodation = accommodationId
+    ? accommodations.find((acc) => acc.id === parseInt(accommodationId))
+    : null;
 
   const handleSelectBox = () => {
     setClickedSelectBox(!clickedSelectBox);
   };
 
-  const checkModified = (item: Accommodation, idx: number) => {
+  const checkModified = (item: Accommodation) => {
     if (isCouponModified)
       Modal.confirm({
         title: '수정사항이 저장되지 않았습니다.',
@@ -35,19 +39,17 @@ export const AccommodationList = ({
         okText: '취소',
         className: 'confirm-modal',
         onCancel: () => {
-          handleNavigate(item, idx);
+          handleNavigate(item);
         },
       });
     else {
-      handleNavigate(item, idx);
+      handleNavigate(item);
     }
   };
 
-  const handleNavigate = (item: Accommodation, idx: number) => {
+  const handleNavigate = (item: Accommodation) => {
     const accommodationId = item.id;
-    const currentPath = location.pathname;
     const replacedPath = currentPath.split('/').slice(2, 100).join('/');
-
     if (currentPath === ROUTES.POINT_DETAIL) {
       const newPath = ROUTES.POINT_DETAIL;
       return navigate(newPath);
@@ -60,7 +62,6 @@ export const AccommodationList = ({
 
     const newPath = `/${accommodationId}/${replacedPath}`;
     navigate(newPath);
-    setAccommodationIdx(idx);
     setCookie('accommodationId', accommodationId.toString());
   };
 
@@ -86,7 +87,7 @@ export const AccommodationList = ({
       <StyledButton onClick={handleSelectBox}>
         <StyledFlex>
           <TextBox typography="body2" fontWeight="bold">
-            {accommodations[accommodationIdx]?.name}
+            {selectedAccommodation?.name}
           </TextBox>
         </StyledFlex>
         {clickedSelectBox ? <UpOutlined /> : <DownOutlined />}
@@ -95,10 +96,10 @@ export const AccommodationList = ({
         clickedSelectBox={clickedSelectBox}
         className={clickedSelectBox ? 'active' : null}
       >
-        {accommodations?.map((item, idx) => (
+        {accommodations?.map((item) => (
           <StyledAccommodationItem
             key={item.id}
-            onClick={() => checkModified(item, idx)}
+            onClick={() => checkModified(item)}
           >
             <StyledFlex>
               <TextBox typography="body3" fontWeight="bold">
