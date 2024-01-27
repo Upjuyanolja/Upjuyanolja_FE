@@ -39,6 +39,7 @@ const RoomRegistration = () => {
           '객실 등록 요청 완료! 승인 결과는 24시간 이내에 확인 가능합니다.',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
+
       setSelectedOptions({
         airCondition: false,
         tv: false,
