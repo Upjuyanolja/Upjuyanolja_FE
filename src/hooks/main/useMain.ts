@@ -74,7 +74,7 @@ export const useMain = () => {
     select(data) {
       return data.data;
     },
-    staleTime: calculateStaleTime(),
+    // staleTime: calculateStaleTime(),
   });
 
   const {
@@ -86,7 +86,7 @@ export const useMain = () => {
     select(data) {
       return data.data;
     },
-    staleTime: calculateStaleTime(),
+    // staleTime: calculateStaleTime(),
   });
 
   const revenueData = handleRevenueDataFormat(data?.revenue);
