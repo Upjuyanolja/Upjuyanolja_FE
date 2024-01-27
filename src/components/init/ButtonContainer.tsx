@@ -28,9 +28,11 @@ export const ButtonContainer = ({
   const setIsClickPrev = useSetRecoilState(roomPrevButtonState);
 
   const handlePreviousClick = () => {
-    if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
-      navigate(-1);
-    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION) {
+    if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION) {
+      const accommodationId = getCookie('accommodationId');
+      if (accommodationId) navigate(`/${accommodationId}${ROUTES.MAIN}`);
+      else navigate(ROUTES.INIT);
+    } else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION) {
       setIsClickPrev(true);
       navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
     }
