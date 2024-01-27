@@ -235,6 +235,7 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
     if (
       accommodationData.isAccommodationEdit ||
       isClickedPrevButton ||
@@ -253,6 +254,9 @@ export const InitAccommodationRegistration = () => {
         options: userInputValue[0].options,
         type: userInputValue[0].type as defaultAccommodation['type'],
       });
+    }
+    if (updatedAccommodationInfo && userInputValue[0].rooms.length !== 0) {
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
     }
   }, []);
 
