@@ -2,15 +2,17 @@ import { Button, Space } from 'antd';
 import styled from 'styled-components';
 
 import { colors } from '@/constants/colors';
-import { menuStatusState } from '@stores/point-detail/atoms';
-import { useRecoilState } from 'recoil';
+import { menuStatusState, pageNumState } from '@stores/point-detail/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { menuStatusType } from '@api/point-detail/get-point-detail/type';
 
 export const PointMenu = () => {
   const [menuStatus, setMenuStatus] = useRecoilState(menuStatusState);
+  const setPageNum = useSetRecoilState(pageNumState);
 
   const handleClickMenuButton = (status: menuStatusType) => {
     setMenuStatus(status);
+    setPageNum(1);
   };
 
   return (

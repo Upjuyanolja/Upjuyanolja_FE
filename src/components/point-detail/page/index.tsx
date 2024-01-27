@@ -1,11 +1,11 @@
 import { pageNumState, pointDetailDataState } from '@stores/point-detail/atoms';
 import { Pagination, Space } from 'antd';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import styled from 'styled-components';
 
 export const PageComp = () => {
-  const setPageNum = useSetRecoilState(pageNumState);
+  const [pageNum, setPageNum] = useRecoilState(pageNumState);
   const pointDetailData = useRecoilValue(pointDetailDataState);
 
   const handlePageChange = (pageNum: number) => {
@@ -15,7 +15,8 @@ export const PageComp = () => {
   return (
     <StyledSpace>
       <StyledPagination
-        defaultCurrent={1}
+        defaultCurrent={pageNum}
+        current={pageNum}
         total={pointDetailData.totalPages * 10}
         hideOnSinglePage={true}
         onChange={(page) => handlePageChange(page)}

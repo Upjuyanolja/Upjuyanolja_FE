@@ -17,6 +17,7 @@ export type Receipt = {
   amount: string;
   accommodationName?: string;
   orders?: Orders[];
+  method?: string;
 };
 
 export type History = {

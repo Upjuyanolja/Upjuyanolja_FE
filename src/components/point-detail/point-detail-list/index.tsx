@@ -121,7 +121,12 @@ export const PointDetailList = () => {
               <div>
                 <StyledButton
                   isCancel={true}
-                  disabled={histories.status === '결제 완료' ? false : true}
+                  disabled={
+                    histories.status === '결제 완료' &&
+                    histories.receipt.method === '카드'
+                      ? false
+                      : true
+                  }
                   onClick={() => showCancelModal(index)}
                 >
                   결제 취소
