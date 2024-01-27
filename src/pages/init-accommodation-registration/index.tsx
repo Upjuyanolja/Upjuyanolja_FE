@@ -255,7 +255,11 @@ export const InitAccommodationRegistration = () => {
         type: userInputValue[0].type as defaultAccommodation['type'],
       });
     }
-    if (updatedAccommodationInfo && userInputValue[0].rooms.length !== 0) {
+    if (
+      !accommodationData.isAccommodationEdit &&
+      updatedAccommodationInfo &&
+      userInputValue[0].rooms.length !== 0
+    ) {
       navigate(ROUTES.INIT_INFO_CONFIRMATION);
     }
   }, []);

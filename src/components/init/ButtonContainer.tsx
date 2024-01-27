@@ -10,6 +10,7 @@ import { ROUTES } from '@/constants/routes';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   isUpdatedAccommodationState,
+  isUpdatedRoomState,
   roomPrevButtonState,
   userInputValueState,
 } from '@stores/init/atoms';
@@ -41,6 +42,7 @@ export const ButtonContainer = ({
   const setIsUpdatedAccommodation = useSetRecoilState(
     isUpdatedAccommodationState,
   );
+  const setIsUpdatedRoom = useSetRecoilState(isUpdatedRoomState);
 
   const imageUrls: { url: string }[] = userInputValue[0].images.map(
     (image) => ({ url: image.url }),
@@ -73,6 +75,7 @@ export const ButtonContainer = ({
     onSuccess(data) {
       accommodationId = data.data.accommodationId;
       setIsUpdatedAccommodation(false);
+      setIsUpdatedRoom(false);
 
       const cookieAccommodationId = getCookie('accommodationId');
       if (!cookieAccommodationId) setCookie('accommodationId', accommodationId);
