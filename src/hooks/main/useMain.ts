@@ -37,7 +37,7 @@ export const useMain = () => {
     if (data === undefined) return undefined;
     if (data === '') {
       for (let index = 0; index < week; index++) {
-        const date = getChartDate(index);
+        const date = getChartDate(week - index);
         revenueData.push({
           year: date,
           value: 0,

@@ -41,7 +41,11 @@ export const SignIn = () => {
       }
     },
     onError(error) {
-      if (error.response?.data.code === RESPONSE_CODE.REQUEST_BODY_ERROR) {
+      if (
+        error.response?.data.code === RESPONSE_CODE.REQUEST_BODY_ERROR ||
+        error.response?.data.code === RESPONSE_CODE.INCORRECT_EMAIL ||
+        error.response?.data.code === RESPONSE_CODE.INCORRECT_PASSWORD
+      ) {
         message.error({
           content: (
             <TextBox typography="body3" fontWeight={'400'}>
