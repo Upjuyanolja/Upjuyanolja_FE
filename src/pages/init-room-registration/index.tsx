@@ -69,7 +69,7 @@ export const InitRoomRegistration = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (userInputValue[0].rooms.length !== 0) {
+    if (isUpdatedAccommodation && userInputValue[0].rooms.length !== 0) {
       navigate(ROUTES.INIT_INFO_CONFIRMATION);
     }
 
