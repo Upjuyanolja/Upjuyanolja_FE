@@ -73,6 +73,9 @@ const StyledLoadingLayout = styled.div`
 `;
 const StyledMainLayout = styled(Layout)`
   margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const StyledLayout = styled('div')`
   display: flex;
