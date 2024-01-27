@@ -21,7 +21,7 @@ export const InitInfoConfirmation = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setUpdatedAccommodationInfo(true);
+    if (userInputValue[0].name !== '') setUpdatedAccommodationInfo(true);
   }, []);
 
   if (userInputValue[0].name === '') {
