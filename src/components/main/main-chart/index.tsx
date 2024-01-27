@@ -61,13 +61,13 @@ export const MainChart = ({ revenueData, couponMessage }: mainChartProps) => {
       <StyledChart>
         <Column {...config} legend={false} />
       </StyledChart>
-      <StyledResult color="blue">
-        {couponMessage && (
+      {couponMessage && (
+        <StyledResult color="blue">
           <TextBox typography="body2" fontWeight={700} color="primary">
             {couponMessage}
           </TextBox>
-        )}
-      </StyledResult>
+        </StyledResult>
+      )}
     </StyledLayout>
   );
 };

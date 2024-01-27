@@ -5,10 +5,12 @@
   font-family: 'Pretendard Variable', Pretendard, sans-serif;
   box-sizing: border-box;
 }
+
 /*layout custom style*/
 .ant-layout {
   background-color: white;
 }
+
 /*modal custom style*/
 .ant-modal-content {
   border-radius: 16px;
@@ -16,7 +18,6 @@
 .ant-modal-header {
   border-radius: 16px 16px 0 0;
 }
-
 .ant-modal-footer {
   border: none;
 }
@@ -32,139 +33,6 @@
     font-weight: 700;
   }
 }
-
-.ant-modal-confirm-btns {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-
-  width: 100%;
-
-  .ant-btn-default {
-    border: 1px solid #0351ff;
-
-    color: #0351ff;
-    font-size: 20px;
-    font-weight: 700;
-
-    height: 46px;
-  }
-
-  .ant-btn-primary {
-    background-color: #0351ff;
-
-    height: 46px;
-
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .ant-btn-primary:hover {
-    background-color: #0349e6;
-    transition: 0.4s;
-  }
-}
-
-.ant-modal-confirm-body-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-/*button custom style*/
-.ant-btn-primary:hover {
-  background-color: #0349e6;
-}
-.ant-btn-primary:active {
-  background-color: #0241cc;
-}
-.ant-btn-lg {
-  width: 100%;
-}
-.ant-btn-primary[disabled] {
-  background-color: #9199a4;
-  color: white;
-}
-.ant-btn-primary[disabled]:hover {
-  background-color: #9199a4;
-  color: white;
-}
-
-/*drop down custom style*/
-.ant-dropdown-trigger {
-  color: black;
-}
-
-.ant-dropdown-menu-item-only-child:hover {
-  background-color: #e6eeff;
-}
-
-/*tooltip custom style*/
-.ant-tooltip-arrow-content {
-  --antd-arrow-background-color: #ffffff;
-}
-
-.ant-tooltip-inner {
-  background-color: #ffffff;
-  color: black;
-}
-
-.ant-message-notice-content {
-  padding: 0;
-}
-.ant-message-success {
-  display: flex;
-  padding: 10px 16px;
-  background-color: #0cbc72;
-  color: white;
-  gap: 8px;
-}
-.ant-message-success .anticon {
-  color: white;
-}
-.ant-message-error {
-  display: flex;
-  padding: 10px 16px;
-  background-color: #fe395b;
-  color: white;
-  gap: 8px;
-}
-.ant-message-error .anticon {
-  color: white;
-}
-.ant-message-warning {
-  display: flex;
-  padding: 10px 16px;
-  background-color: #9199a4;
-  color: white;
-  gap: 8px;
-}
-
-.ant-message-warning .anticon {
-  color: white;
-}
-
-.ant-message-notice {
-  margin: 50px auto 0 auto;
-}
-
-.ant-table-row-selected td[rowspan] {
-  background-color: white !important;
-}
-
-/* timepicker custom style */
-.ant-picker-time-panel-column:first-child {
-  .ant-picker-time-panel-cell:nth-child(n + 1):nth-child(-n + 9) {
-    display: none;
-  }
-}
-
-.ant-picker-input {
-  #checkInTime,
-  #checkOutTime {
-    cursor: pointer;
-  }
-}
-
 .confirm-modal {
   top: 30vh;
   text-align: center;
@@ -210,12 +78,139 @@
   }
 }
 
-/*message custom*/
+.ant-modal-confirm-btns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  .ant-btn-default {
+    border: 1px solid #0351ff;
+
+    color: #0351ff;
+    font-size: 20px;
+    font-weight: 700;
+
+    height: 46px;
+  }
+  .ant-btn-primary {
+    background-color: #0351ff;
+
+    height: 46px;
+
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .ant-btn-primary:hover {
+    background-color: #0349e6;
+    transition: 0.4s;
+  }
+}
+.ant-modal-confirm-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/*button custom style*/
+.ant-btn-primary:hover {
+  background-color: #0349e6;
+}
+.ant-btn-primary:active {
+  background-color: #0241cc;
+}
+.ant-btn-lg {
+  width: 100%;
+}
+.ant-btn-primary[disabled] {
+  background-color: #9199a4;
+  color: white;
+}
+.ant-btn-primary[disabled]:hover {
+  background-color: #9199a4;
+  color: white;
+}
+
+/*drop down custom style*/
+.ant-dropdown-trigger {
+  color: black;
+}
+.ant-dropdown-menu-item-only-child:hover {
+  background-color: #e6eeff;
+}
+
+/*tooltip custom style*/
+.ant-tooltip-arrow-content {
+  --antd-arrow-background-color: #ffffff;
+}
+.ant-tooltip-inner {
+  background-color: #ffffff;
+  color: black;
+}
+
+/* message custom style */
+.ant-message-notice-content {
+  padding: 0;
+}
+.ant-message-success {
+  display: flex;
+  padding: 10px 16px;
+  background-color: #0cbc72;
+  color: white;
+  gap: 8px;
+}
+.ant-message-success .anticon {
+  color: white;
+}
+.ant-message-error {
+  display: flex;
+  padding: 10px 16px;
+  background-color: #fe395b;
+  color: white;
+  gap: 8px;
+}
+.ant-message-error .anticon {
+  color: white;
+}
+.ant-message-warning {
+  display: flex;
+  padding: 10px 16px;
+  background-color: #9199a4;
+  color: white;
+  gap: 8px;
+}
+
+.ant-message-warning .anticon {
+  color: white;
+}
+
+.ant-message-notice {
+  margin: 50px auto 0 auto;
+}
 .ant-message-custom-content {
   width: 100%;
   min-width: 230px;
   display: flex;
   align-items: center;
+}
+
+/* table custom style */
+.ant-table-row-selected td[rowspan] {
+  background-color: white !important;
+}
+.table-room-container {
+  background-color: white !important;
+}
+
+/* timepicker custom style */
+.ant-picker-time-panel-column:first-child {
+  .ant-picker-time-panel-cell:nth-child(n + 1):nth-child(-n + 9) {
+    display: none;
+  }
+}
+.ant-picker-input {
+  #checkInTime,
+  #checkOutTime {
+    cursor: pointer;
+  }
 }
 
 /*loading style*/
@@ -227,7 +222,6 @@
 .ant-spin-nested-loading > div > .ant-spin-lg .ant-spin-dot {
   margin: 0 0 0 16px;
 }
-
 .ant-checkbox-inner {
   border: 1px solid #0349e6;
 }

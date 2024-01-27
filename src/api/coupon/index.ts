@@ -13,11 +13,11 @@ import {
 
 export const COUPON_API = {
   getStatics: (accommodationId: string) =>
-    instance.get<staticsData>(
+    instance.get<staticsData | ''>(
       `/api/coupons/backoffice/statistics/${accommodationId}`,
     ),
   getRevenue: (accommodationId: string) =>
-    instance.get<revenueData>(
+    instance.get<revenueData | ''>(
       `/api/coupons/backoffice/revenue/${accommodationId}`,
     ),
   getCoupon: (accommodationId: string) =>
