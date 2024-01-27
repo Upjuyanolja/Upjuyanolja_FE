@@ -37,8 +37,8 @@ export const PointMenu = () => {
         <li>
           <StyledButton
             data-testid="menuStatusUsageButton"
-            type={menuStatus === 'usage' ? 'primary' : undefined}
-            onClick={() => handleClickMenuButton('usage')}
+            type={menuStatus === 'usages' ? 'primary' : undefined}
+            onClick={() => handleClickMenuButton('usages')}
           >
             사용
           </StyledButton>

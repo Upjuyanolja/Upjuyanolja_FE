@@ -40,4 +40,4 @@ export type PointDetailDataType = {
   histories: History[];
 };
 
-export type menuStatusType = 'total' | 'charges' | 'usage';
+export type menuStatusType = 'total' | 'charges' | 'usages';
