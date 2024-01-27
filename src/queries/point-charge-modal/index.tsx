@@ -40,7 +40,9 @@ export const usePointCharge = (
     TossRequestType
   >((data: TossRequestType) => POINT_CHARGE_API.postPointCharge(data), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['getPointSummary', 'getPointTotal']);
+      queryClient.invalidateQueries(['getPointSummary']);
+
+      queryClient.invalidateQueries(['getPointTotal']);
       message.success({
         content: '결제가 완료되었습니다.',
         duration: 2,
