@@ -42,6 +42,27 @@ export const CheckBoxContainer = ({
     }
   }, [defaultValue]);
 
+  useEffect(() => {
+    return () => {
+      setSelectedInitRoomOptions({
+        airCondition: false,
+        tv: false,
+        internet: false,
+      });
+      setSelectedAccommodationOptions({
+        cooking: false,
+        parking: false,
+        pickup: false,
+        barbecue: false,
+        fitness: false,
+        karaoke: false,
+        sauna: false,
+        sports: false,
+        seminar: false,
+      });
+    };
+  }, []);
+
   const handleCheckboxChange = (event: CheckboxChangeEvent) => {
     const checkedOption = event.target.value;
 

@@ -34,6 +34,12 @@ export const ImageUploadContainer = ({
     }
   }, [images]);
 
+  useEffect(() => {
+    return () => {
+      setImageFile([]);
+    };
+  }, []);
+
   const [imageFile, setImageFile] = useRecoilState(imageFileState);
   const setRemovedImageFile = useSetRecoilState(deletedImageFileState);
 
