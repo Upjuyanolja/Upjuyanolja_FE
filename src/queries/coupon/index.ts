@@ -19,15 +19,15 @@ import {
 export const useGetStatics = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<staticsData>,
+    AxiosResponse<staticsData | null>,
     AxiosError<ErrorResponse>,
-    staticsData
+    staticsData | null
   >,
 ) => {
   return useQuery<
-    AxiosResponse<staticsData>,
+    AxiosResponse<staticsData | null>,
     AxiosError<ErrorResponse>,
-    staticsData
+    staticsData | null
   >(['getStatics'], () => COUPON_API.getStatics(accommodationId), {
     ...options,
   });

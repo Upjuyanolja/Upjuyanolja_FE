@@ -13,7 +13,7 @@ import {
 
 export const COUPON_API = {
   getStatics: (accommodationId: string) =>
-    instance.get<staticsData>(
+    instance.get<staticsData | null>(
       `/api/coupons/backoffice/statistics/${accommodationId}`,
     ),
   getRevenue: (accommodationId: string) =>

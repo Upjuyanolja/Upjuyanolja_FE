@@ -38,7 +38,7 @@ export const Main = () => {
         <Spin tip="Loading..." size="large" />
       </StyledLoadingLayout>
     );
-  if (!staticsData || !revenueData) return <></>;
+  if (staticsData === undefined || revenueData === undefined) return <></>;
   return (
     <StyledMainLayout>
       <StyledLayout>
