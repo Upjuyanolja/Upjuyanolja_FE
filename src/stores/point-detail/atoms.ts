@@ -27,7 +27,7 @@ export const totalPagesState = atom({
 
 export const menuStatusState = atom<menuStatusType>({
   key: 'menuStatusState',
-  default: 'charges',
+  default: 'total',
 });
 
 export const pointSummaryDataState = atom<PointSummaryData>({
