@@ -18,6 +18,7 @@ import {
   checkedRoomOptions,
   imageFileState,
   isUpdatedAccommodationState,
+  isUpdatedRoomState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { capacityHasError, priceHasError } from '@stores/room/atoms';
@@ -67,6 +68,8 @@ export const InitRoomRegistration = () => {
 
   const [isAddRoom, setIsAddRoom] = useRecoilState(addRoomState);
 
+  const [isUpdatedRoom, setIsUpdatedRoom] = useRecoilState(isUpdatedRoomState);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -101,6 +104,14 @@ export const InitRoomRegistration = () => {
         images: userInputValue[0].rooms[index].images,
         options: userInputValue[0].rooms[index].options,
       });
+    } else if (
+      isUpdatedAccommodation &&
+      isUpdatedRoom &&
+      !isAddRoom &&
+      userInputValue[0].editRoomIndex === -1
+    ) {
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      setIsUpdatedRoom(false);
     }
   }, []);
 
@@ -189,13 +200,13 @@ export const InitRoomRegistration = () => {
       if (error instanceof AxiosError) {
         message.error({
           content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
-          style: { marginTop: '210px' },
+          style: { marginTop: '64px' },
         });
       }
       if (error.response?.data.code === RESPONSE_CODE.IMAGE_SAVE_FAIL) {
         message.error({
           content: '요청을 실패했습니다. 관리자에게 문의해주세요',
-          style: { marginTop: '210px' },
+          style: { marginTop: '64px' },
         });
       }
     },
@@ -221,7 +232,7 @@ export const InitRoomRegistration = () => {
       setSameRoomName(true);
       message.error({
         content: '동일한 객실명의 상품이 이미 존재합니다.',
-        style: { marginTop: '210px' },
+        style: { marginTop: '64px' },
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;

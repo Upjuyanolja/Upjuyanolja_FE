@@ -10,6 +10,7 @@ import { ROUTES } from '@/constants/routes';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   isUpdatedAccommodationState,
+  isUpdatedRoomState,
   roomPrevButtonState,
   userInputValueState,
 } from '@stores/init/atoms';
@@ -27,9 +28,11 @@ export const ButtonContainer = ({
   const setIsClickPrev = useSetRecoilState(roomPrevButtonState);
 
   const handlePreviousClick = () => {
-    if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION)
-      navigate(-1);
-    else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION) {
+    if (window.location.pathname === ROUTES.INIT_ACCOMMODATION_REGISTRATION) {
+      const accommodationId = getCookie('accommodationId');
+      if (accommodationId) navigate(`/${accommodationId}${ROUTES.MAIN}`);
+      else navigate(ROUTES.INIT);
+    } else if (window.location.pathname === ROUTES.INIT_ROOM_REGISTRATION) {
       setIsClickPrev(true);
       navigate(ROUTES.INIT_ACCOMMODATION_REGISTRATION);
     }
@@ -41,6 +44,7 @@ export const ButtonContainer = ({
   const setIsUpdatedAccommodation = useSetRecoilState(
     isUpdatedAccommodationState,
   );
+  const setIsUpdatedRoom = useSetRecoilState(isUpdatedRoomState);
 
   const imageUrls: { url: string }[] = userInputValue[0].images.map(
     (image) => ({ url: image.url }),
@@ -73,6 +77,7 @@ export const ButtonContainer = ({
     onSuccess(data) {
       accommodationId = data.data.accommodationId;
       setIsUpdatedAccommodation(false);
+      setIsUpdatedRoom(false);
 
       const cookieAccommodationId = getCookie('accommodationId');
       if (!cookieAccommodationId) setCookie('accommodationId', accommodationId);
@@ -111,7 +116,7 @@ export const ButtonContainer = ({
       if (error instanceof AxiosError) {
         message.error({
           content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
-          style: { marginTop: '210px' },
+          style: { marginTop: '64px' },
         });
       }
       if (
@@ -124,7 +129,7 @@ export const ButtonContainer = ({
       ) {
         message.error({
           content: '요청을 실패했습니다. 관리자에게 문의해주세요',
-          style: { marginTop: '210px' },
+          style: { marginTop: '64px' },
         });
       }
       if (error.response?.data.code === RESPONSE_CODE.NOT_FOUND_MEMBER) {

@@ -137,13 +137,13 @@ export const InitAccommodationRegistration = () => {
       if (error instanceof AxiosError) {
         message.error({
           content: '요청에 실패했습니다. 잠시 후 다시 시도해주세요',
-          style: { marginTop: '210px' },
+          style: { marginTop: '64px' },
         });
       }
       if (error.response?.data.code === RESPONSE_CODE.IMAGE_SAVE_FAIL) {
         message.error({
           content: '요청을 실패했습니다. 관리자에게 문의해주세요',
-          style: { marginTop: '210px' },
+          style: { marginTop: '64px' },
         });
       }
     },
@@ -235,6 +235,7 @@ export const InitAccommodationRegistration = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
     if (
       accommodationData.isAccommodationEdit ||
       isClickedPrevButton ||
@@ -253,6 +254,13 @@ export const InitAccommodationRegistration = () => {
         options: userInputValue[0].options,
         type: userInputValue[0].type as defaultAccommodation['type'],
       });
+    }
+    if (
+      !accommodationData.isAccommodationEdit &&
+      updatedAccommodationInfo &&
+      userInputValue[0].rooms.length !== 0
+    ) {
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
     }
   }, []);
 

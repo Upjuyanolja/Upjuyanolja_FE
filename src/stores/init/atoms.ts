@@ -85,6 +85,18 @@ export const isUpdatedAccommodationState = atom({
 });
 
 /** 객실 정보를 입력했는지 여부 */
+const { persistAtom: updateRoomPersist } = recoilPersist({
+  key: 'isUpdatedRoomState',
+  storage: localStorage,
+});
+
+export const isUpdatedRoomState = atom({
+  key: 'isUpdatedRoom',
+  default: false,
+  effects_UNSTABLE: [updateRoomPersist],
+});
+
+/** 객실 추가하기 버튼을 눌렀는지 여부 */
 const { persistAtom: addRoomPersist } = recoilPersist({
   key: 'addRoomState',
   storage: localStorage,
