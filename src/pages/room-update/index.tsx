@@ -21,10 +21,12 @@ import { useImageFile } from '@queries/init';
 import { ROUTES } from '@/constants/routes';
 import { AxiosError } from 'axios';
 import { checkedRoomOptions, imageFileState } from '@stores/init/atoms';
+import { useQueryClient } from '@tanstack/react-query';
 
 const RoomUpdate = () => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
+  const queryClient = useQueryClient();
 
   const roomOptions = {
     tv: 'TV',
@@ -95,6 +97,7 @@ const RoomUpdate = () => {
     accommodationId as string,
     {
       onSuccess() {
+        queryClient.invalidateQueries(['room-list']);
         message.success({
           content: '수정되었습니다',
           className: 'coupon-message',

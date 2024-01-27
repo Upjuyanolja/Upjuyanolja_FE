@@ -287,7 +287,7 @@ describe('입력창 테스트', () => {
       expect(screen.getByTestId('pwInput')).toHaveValue('ivegaeul');
       setTimeout(() => {
         const errorMessage = screen.getByText(
-          /영문, 숫자 포함 8~20자로 입력해 주세요./i,
+          /영문(대,소문자), 숫자 포함 8~20자로 입력해 주세요./i,
         );
         expect(errorMessage).toBeInTheDocument();
       }, 2000);
@@ -307,7 +307,9 @@ describe('입력창 테스트', () => {
       expect((pwInput as HTMLInputElement).type).toBe('password');
       expect(screen.getByTestId('pwInput')).toHaveValue('ivegaeul1');
       setTimeout(() => {
-        const errorMessage = screen.getByText(/8~20자 영문\/숫자 조합/i);
+        const errorMessage = screen.getByText(
+          /8~20자 영문(대,소문자)\/숫자 조합/i,
+        );
         expect(errorMessage).toBeInTheDocument();
       }, 2000);
     });
@@ -326,7 +328,9 @@ describe('입력창 테스트', () => {
       expect((pwInput as HTMLInputElement).type).toBe('password');
       expect(screen.getByTestId('pwInput')).toHaveValue('ivegaeul1');
       setTimeout(() => {
-        const errorMessage = screen.getByText(/8~20자 영문\/숫자 조합/i);
+        const errorMessage = screen.getByText(
+          /8~20자 영문(대,소문자)\/숫자 조합/i,
+        );
         expect(errorMessage).toBeInTheDocument();
       }, 2000);
       const checkPwInput = await screen.findByTestId('checkPwInput');
@@ -355,7 +359,9 @@ describe('입력창 테스트', () => {
       expect((pwInput as HTMLInputElement).type).toBe('password');
       expect(screen.getByTestId('pwInput')).toHaveValue('ivegaeul1');
       setTimeout(() => {
-        const errorMessage = screen.getByText(/8~20자 영문\/숫자 조합/i);
+        const errorMessage = screen.getByText(
+          /8~20자 영문(대,소문자)\/숫자 조합/i,
+        );
         expect(errorMessage).toBeInTheDocument();
       }, 2000);
       const checkPwInput = await screen.findByTestId('checkPwInput');
@@ -469,7 +475,9 @@ describe('입력창 테스트', () => {
       expect((pwInput as HTMLInputElement).type).toBe('password');
       expect(screen.getByTestId('pwInput')).toHaveValue('ivegaeul1');
       setTimeout(() => {
-        const errorMessage = screen.getByText(/8~20자 영문\/숫자 조합/i);
+        const errorMessage = screen.getByText(
+          /8~20자 영문(대,소문자)\/숫자 조합/i,
+        );
         expect(errorMessage).toBeInTheDocument();
       }, 2000);
       const checkPwInput = await screen.findByTestId('checkPwInput');
@@ -545,7 +553,9 @@ describe('입력창 테스트', () => {
       expect((pwInput as HTMLInputElement).type).toBe('password');
       expect(screen.getByTestId('pwInput')).toHaveValue('ivegaeul1');
       setTimeout(() => {
-        const errorMessage = screen.getByText(/8~20자 영문\/숫자 조합/i);
+        const errorMessage = screen.getByText(
+          /8~20자 영문(대,소문자)\/숫자 조합/i,
+        );
         expect(errorMessage).toBeInTheDocument();
       }, 2000);
       const checkPwInput = await screen.findByTestId('checkPwInput');

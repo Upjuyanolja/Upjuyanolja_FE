@@ -11,9 +11,9 @@ export const getValidateSchema = () => {
       .string()
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
-        '영문, 숫자 포함 8~20자로 입력해주세요.',
+        '영문(대,소문자), 숫자 포함 8~20자로 입력해주세요.',
       )
-      .required('영문, 숫자 포함 8~20자로 입력해주세요.'),
+      .required('영문(대,소문자), 숫자 포함 8~20자로 입력해주세요.'),
     checkPassword: yup
       .string()
       .oneOf([yup.ref('password')], '비밀번호가 일치하지 않습니다.'),
