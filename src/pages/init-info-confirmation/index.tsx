@@ -20,6 +20,7 @@ export const InitInfoConfirmation = () => {
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setUpdatedAccommodationInfo(true);
   }, []);
 

@@ -68,6 +68,8 @@ export const InitRoomRegistration = () => {
   const [isAddRoom, setIsAddRoom] = useRecoilState(addRoomState);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (
       userInputValue[0].editRoomIndex !== undefined &&
       userInputValue[0].editRoomIndex !== -1

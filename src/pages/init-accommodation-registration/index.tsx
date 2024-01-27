@@ -234,6 +234,7 @@ export const InitAccommodationRegistration = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (
       accommodationData.isAccommodationEdit ||
       isClickedPrevButton ||
