@@ -42,7 +42,7 @@ export const OrderPointInfo = ({
             : '결제 포인트'}
         </TextBox>
         <TextBox typography="body2" color={'primary'} fontWeight={'700'}>
-          {numberFormat(pointDetailData.histories[index].receipt.amount)} P
+          {numberFormat(pointDetailData.histories[index].amount)} P
         </TextBox>
       </OrderPointInfoList>
       <OrderPointInfoList>
@@ -50,7 +50,7 @@ export const OrderPointInfo = ({
           {isCancelStatus ? '환불 예정 금액' : '결제 금액'}
         </TextBox>
         <TextBox typography="body3" color={'black900'} fontWeight={'400'}>
-          {numberFormat(pointDetailData.histories[index].receipt.amount)} 원
+          {numberFormat(pointDetailData.histories[index].amount)} 원
         </TextBox>
       </OrderPointInfoList>
     </OrderPointInfoContainer>
