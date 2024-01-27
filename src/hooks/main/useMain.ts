@@ -1,4 +1,5 @@
 import { ROUTES } from '@/constants/routes';
+import { getChartDate } from '@/utils/dateFormat/dateFormat';
 import { dailyRevenue } from '@api/coupon/type';
 import { useGetStatics, useGetRevenue } from '@queries/coupon';
 import { useEffect } from 'react';
@@ -30,9 +31,26 @@ export const useMain = () => {
     revenueRemove();
   }, [accommodationId]);
 
-  const handleRevenueDataFormat = (data: dailyRevenue[] | undefined) => {
+  const handleRevenueDataFormat = (data: dailyRevenue[] | undefined | null) => {
     const revenueData = [];
-    if (!data) return undefined;
+    const week = 7;
+    if (data === undefined) return undefined;
+    if (data === null) {
+      for (let index = 0; index < week; index++) {
+        const date = getChartDate(index);
+        revenueData.push({
+          year: date,
+          value: 0,
+          type: '쿠폰 사용 매출',
+        });
+        revenueData.push({
+          year: date,
+          value: 0,
+          type: '쿠폰 미사용 매출',
+        });
+      }
+      return revenueData;
+    }
     for (let index = 0; index < data.length; index++) {
       const dailyRevenue = data[index];
       revenueData.push({
@@ -72,8 +90,7 @@ export const useMain = () => {
     remove: staticsRemove,
   } = useGetStatics(accommodationId as string, {
     select(data) {
-      if (data) return data.data;
-      return data;
+      return data.data;
     },
     // staleTime: calculateStaleTime(),
   });

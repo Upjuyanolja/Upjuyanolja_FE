@@ -14,3 +14,19 @@ export const formatDate = (dateString: string) => {
 
   return { format1, format2 };
 };
+
+export const getChartDate = (index: number) => {
+  const today = new Date();
+  const targetLength = 2;
+  const fillChar = '0';
+  const pastDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - index,
+  );
+  const formattedDate = `${String(pastDate.getMonth() + 1).padStart(
+    targetLength,
+    fillChar,
+  )}/${String(pastDate.getDate()).padStart(targetLength, fillChar)}`;
+  return formattedDate;
+};

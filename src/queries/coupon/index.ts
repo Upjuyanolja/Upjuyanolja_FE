@@ -36,15 +36,15 @@ export const useGetStatics = (
 export const useGetRevenue = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<revenueData>,
+    AxiosResponse<revenueData | null>,
     AxiosError<ErrorResponse>,
-    revenueData
+    revenueData | null
   >,
 ) => {
   return useQuery<
-    AxiosResponse<revenueData>,
+    AxiosResponse<revenueData | null>,
     AxiosError<ErrorResponse>,
-    revenueData
+    revenueData | null
   >(['getRevenue'], () => COUPON_API.getRevenue(accommodationId), {
     ...options,
   });

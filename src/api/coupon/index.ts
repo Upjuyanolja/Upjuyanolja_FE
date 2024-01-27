@@ -17,7 +17,7 @@ export const COUPON_API = {
       `/api/coupons/backoffice/statistics/${accommodationId}`,
     ),
   getRevenue: (accommodationId: string) =>
-    instance.get<revenueData>(
+    instance.get<revenueData | null>(
       `/api/coupons/backoffice/revenue/${accommodationId}`,
     ),
   getCoupon: (accommodationId: string) =>
