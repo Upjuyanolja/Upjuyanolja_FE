@@ -10,7 +10,7 @@ import { Layout, Input, Button, message } from 'antd';
 import { TextBox } from '@components/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { AxiosError } from 'axios';
-import { HTTP_STATUS_CODE } from '@/constants/api';
+import { HTTP_STATUS_CODE, RESPONSE_CODE } from '@/constants/api';
 import { colors } from '@/constants/colors';
 import { SignInData } from '@api/sign-in/type';
 import { ACCOMMODATION_API } from '@api/accommodation';
@@ -40,11 +40,26 @@ export const SignIn = () => {
         console.log(error);
       }
     },
-    onError() {
+    onError(error) {
+      if (
+        error.response?.data.code === RESPONSE_CODE.REQUEST_BODY_ERROR ||
+        error.response?.data.code === RESPONSE_CODE.INCORRECT_EMAIL ||
+        error.response?.data.code === RESPONSE_CODE.INCORRECT_PASSWORD
+      ) {
+        message.error({
+          content: (
+            <TextBox typography="body3" fontWeight={'400'}>
+              이메일과 비밀번호를 확인해 주세요.
+            </TextBox>
+          ),
+          duration: 2,
+        });
+        return;
+      }
       message.error({
         content: (
           <TextBox typography="body3" fontWeight={'400'}>
-            이메일과 비밀번호를 확인해 주세요.
+            요청을 처리하지 못했습니다. 관리자에게 문의해주세요.
           </TextBox>
         ),
         duration: 2,

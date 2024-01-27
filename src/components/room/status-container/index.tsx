@@ -18,6 +18,7 @@ export const StatusContainer = ({
     setIsOnSale(defaultStatus === 'SELLING');
   }, [defaultStatus]);
 
+  if (!defaultStatus) return <></>;
   return (
     <StyledInputWrapper>
       <StyledDesc>
@@ -27,7 +28,7 @@ export const StatusContainer = ({
       </StyledDesc>
       <StyledRow>
         <Form.Item name="status">
-          <StyledSwitch defaultChecked={true} onChange={handleInputChange} />
+          <StyledSwitch onChange={handleInputChange} checked={isOnSale} />
         </Form.Item>
         <StyledTextBoxWrapper>
           <TextBox typography="body1" color="black900" fontWeight="normal">

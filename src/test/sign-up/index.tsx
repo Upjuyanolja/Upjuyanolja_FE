@@ -231,7 +231,7 @@ export const SignUp = () => {
             </div>
           )}
           {errors.password === undefined && values.password.length > 0 && (
-            <div>8~20자 영문/숫자 조합</div>
+            <div>8~20자 영문(대,소문자)/숫자 조합</div>
           )}
         </div>
         <div>

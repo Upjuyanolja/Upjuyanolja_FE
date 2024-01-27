@@ -420,7 +420,7 @@ export const SignUp = () => {
               )}
               {errors.password === undefined && values.password.length > 0 && (
                 <TextBox typography="body4" fontWeight={'400'} color="black600">
-                  8~20자 영문/숫자 조합
+                  8~20자 영문(대,소문자)/숫자 조합
                 </TextBox>
               )}
             </PasswordInput>
