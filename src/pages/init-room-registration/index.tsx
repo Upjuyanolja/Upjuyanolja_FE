@@ -18,6 +18,7 @@ import {
   checkedRoomOptions,
   imageFileState,
   isUpdatedAccommodationState,
+  isUpdatedRoomState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { capacityHasError, priceHasError } from '@stores/room/atoms';
@@ -67,11 +68,10 @@ export const InitRoomRegistration = () => {
 
   const [isAddRoom, setIsAddRoom] = useRecoilState(addRoomState);
 
+  const [isUpdatedRoom, setIsUpdatedRoom] = useRecoilState(isUpdatedRoomState);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (isUpdatedAccommodation && userInputValue[0].rooms.length !== 0) {
-      navigate(ROUTES.INIT_INFO_CONFIRMATION);
-    }
 
     if (
       userInputValue[0].editRoomIndex !== undefined &&
@@ -104,6 +104,14 @@ export const InitRoomRegistration = () => {
         images: userInputValue[0].rooms[index].images,
         options: userInputValue[0].rooms[index].options,
       });
+    } else if (
+      isUpdatedAccommodation &&
+      isUpdatedRoom &&
+      !isAddRoom &&
+      userInputValue[0].editRoomIndex === -1
+    ) {
+      navigate(ROUTES.INIT_INFO_CONFIRMATION);
+      setIsUpdatedRoom(false);
     }
   }, []);
 

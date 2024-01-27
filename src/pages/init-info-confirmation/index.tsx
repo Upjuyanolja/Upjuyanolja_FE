@@ -4,7 +4,9 @@ import { AccommodationInfo } from '@components/init/init-info-confirmation/Accom
 import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
 import { getCookie } from '@hooks/sign-in/useSignIn';
 import {
+  addRoomState,
   isUpdatedAccommodationState,
+  isUpdatedRoomState,
   userInputValueState,
 } from '@stores/init/atoms';
 import { useEffect } from 'react';
@@ -18,10 +20,14 @@ export const InitInfoConfirmation = () => {
   const setUpdatedAccommodationInfo = useSetRecoilState(
     isUpdatedAccommodationState,
   );
+  const setUpdatedRoomInfo = useSetRecoilState(isUpdatedRoomState);
+  const setIsAddRoomState = useSetRecoilState(addRoomState);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setIsAddRoomState(false);
     if (userInputValue[0].name !== '') setUpdatedAccommodationInfo(true);
+    if (userInputValue[0].rooms.length !== 0) setUpdatedRoomInfo(true);
   }, []);
 
   if (userInputValue[0].name === '') {
