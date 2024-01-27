@@ -1,6 +1,6 @@
 import { ROUTES } from '@/constants/routes';
 import { getChartDate } from '@/utils/dateFormat/dateFormat';
-import { dailyRevenue } from '@api/coupon/type';
+import { revenueData } from '@api/coupon/type';
 import { useGetStatics, useGetRevenue } from '@queries/coupon';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -31,11 +31,11 @@ export const useMain = () => {
     revenueRemove();
   }, [accommodationId]);
 
-  const handleRevenueDataFormat = (data: dailyRevenue[] | undefined | null) => {
+  const handleRevenueDataFormat = (data: revenueData | undefined | '') => {
     const revenueData = [];
     const week = 7;
     if (data === undefined) return undefined;
-    if (data === null) {
+    if (data === '') {
       for (let index = 0; index < week; index++) {
         const date = getChartDate(index);
         revenueData.push({
@@ -51,8 +51,9 @@ export const useMain = () => {
       }
       return revenueData;
     }
-    for (let index = 0; index < data.length; index++) {
-      const dailyRevenue = data[index];
+    const revenue = data.revenue;
+    for (let index = 0; index < revenue.length; index++) {
+      const dailyRevenue = revenue[index];
       revenueData.push({
         year: dailyRevenue.revenueDate,
         value: dailyRevenue.couponRevenue,
@@ -107,7 +108,7 @@ export const useMain = () => {
     // staleTime: calculateStaleTime(),
   });
 
-  const revenueData = handleRevenueDataFormat(data?.revenue);
+  const revenueData = handleRevenueDataFormat(data);
   return {
     navigateCoupon,
     navigateCouponRegistration,
@@ -117,7 +118,7 @@ export const useMain = () => {
     revenueError,
     isStaticsLoading,
     isRevenueLoading,
-    couponMessage: data?.couponMessage,
+    couponMessage: data ? data.couponMessage : '',
     navigateUserGuide,
     navigateBusinessCenter,
   };
