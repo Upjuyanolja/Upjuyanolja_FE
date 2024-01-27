@@ -12,7 +12,7 @@ const RoomManagement = () => {
   const navigate = useNavigate();
   const { accommodationId: tempAccommodationId } = useParams();
   const accommodationId = tempAccommodationId || '';
-  const { data, remove, hasNextPage, fetchNextPage } = useGetInfiniteRoomList(
+  const { data, refetch, hasNextPage, fetchNextPage } = useGetInfiniteRoomList(
     accommodationId,
     {
       select: (data) => ({
@@ -23,7 +23,7 @@ const RoomManagement = () => {
   );
 
   useEffect(() => {
-    remove();
+    refetch();
   }, [accommodationId]);
 
   const roomItems = useMemo(() => {
@@ -53,7 +53,7 @@ const RoomManagement = () => {
         deleteRoom(roomId, {
           onSuccess: () => {
             message.success('삭제되었습니다');
-            remove();
+            refetch();
           },
           onError: (error: unknown) => {
             if (error instanceof AxiosError)

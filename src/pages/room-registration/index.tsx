@@ -20,11 +20,13 @@ import { AxiosError } from 'axios';
 import { useImageFile } from '@queries/init';
 import { RESPONSE_CODE } from '@/constants/api';
 import { checkedRoomOptions, imageFileState } from '@stores/init/atoms';
+import { useQueryClient } from '@tanstack/react-query';
 
 const RoomRegistration = () => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
   const [isSameRoomName, setIsSameRoomName] = useState(false);
+  const queryClient = useQueryClient();
 
   const roomOptions = {
     tv: 'TV',
@@ -34,12 +36,12 @@ const RoomRegistration = () => {
   const { accommodationId } = useParams();
   const { mutate: addRoom } = useAddRoom(accommodationId as string, {
     onSuccess() {
+      queryClient.invalidateQueries(['room-list']);
       message.success({
         content:
           '객실 등록 요청 완료! 승인 결과는 24시간 이내에 확인 가능합니다.',
       });
       navigate(`/${accommodationId}${ROUTES.ROOM}`);
-
       setSelectedOptions({
         airCondition: false,
         tv: false,
