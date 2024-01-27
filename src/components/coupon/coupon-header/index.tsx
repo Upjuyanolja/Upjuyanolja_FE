@@ -143,6 +143,7 @@ const StyledSaveButton = styled(Button)`
   width: 90px;
   height: 42px;
   border-radius: 4px;
+  border: none;
 `;
 
 const StyledDateContainer = styled.div`
@@ -194,6 +195,7 @@ const StyledPurchaseButton = styled(Button)`
   align-items: center;
   justify-content: center;
   gap: 4px;
+  border: none;
 
   &.ant-btn:hover {
     background-color: ${colors.darkHover};

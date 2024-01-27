@@ -19,15 +19,15 @@ import {
 export const useGetStatics = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<staticsData>,
+    AxiosResponse<staticsData | ''>,
     AxiosError<ErrorResponse>,
-    staticsData
+    staticsData | ''
   >,
 ) => {
   return useQuery<
-    AxiosResponse<staticsData>,
+    AxiosResponse<staticsData | ''>,
     AxiosError<ErrorResponse>,
-    staticsData
+    staticsData | ''
   >(['getStatics'], () => COUPON_API.getStatics(accommodationId), {
     ...options,
   });
@@ -36,15 +36,15 @@ export const useGetStatics = (
 export const useGetRevenue = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<revenueData>,
+    AxiosResponse<revenueData | ''>,
     AxiosError<ErrorResponse>,
-    revenueData
+    revenueData | ''
   >,
 ) => {
   return useQuery<
-    AxiosResponse<revenueData>,
+    AxiosResponse<revenueData | ''>,
     AxiosError<ErrorResponse>,
-    revenueData
+    revenueData | ''
   >(['getRevenue'], () => COUPON_API.getRevenue(accommodationId), {
     ...options,
   });

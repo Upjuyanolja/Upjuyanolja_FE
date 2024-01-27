@@ -10,9 +10,17 @@ export const MainCouponStatusContainer = ({
   navigateCoupon,
 }: MainCouponStatusContainerProps) => {
   const items = [
-    { id: 1, name: '발행 쿠폰(A)', value: staticsData.total },
-    { id: 2, name: '사용 완료 쿠폰(B)', value: staticsData.used },
-    { id: 3, name: '현재 보유 쿠폰(A-B)', value: staticsData.stock },
+    { id: 1, name: '발행 쿠폰(A)', value: staticsData ? staticsData.total : 0 },
+    {
+      id: 2,
+      name: '사용 완료 쿠폰(B)',
+      value: staticsData ? staticsData.used : 0,
+    },
+    {
+      id: 3,
+      name: '현재 보유 쿠폰(A-B)',
+      value: staticsData ? staticsData.stock : 0,
+    },
   ];
 
   const date = new Date();

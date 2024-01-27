@@ -43,7 +43,6 @@ const StyledLayout = styled.div<StyledCouponTagProps>`
   height: 28px;
 
   background-color: ${(props) => props.backgroundColor};
-  border: 1px solid ${(props) => props.borderColor || ''};
   color: ${(props) => props.color};
 
   border-radius: 2px;
