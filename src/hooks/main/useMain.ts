@@ -21,7 +21,7 @@ export const useMain = () => {
   };
 
   const navigateBusinessCenter = () => {
-    navigate(
+    window.open(
       'https://business.yanolja.com/web/kr/business/contentview?presentPage=1&pageRowSize=9&boardType=CONTENTS&boardGroup=Trends&searchDiv=&searchText=&boardNum=551',
     );
   };
