@@ -15,7 +15,7 @@ export type staticsData = {
 };
 
 export type dailyRevenue = {
-  day: string;
+  revenueDate: string;
   couponRevenue: number;
   normalRevenue: number;
 };

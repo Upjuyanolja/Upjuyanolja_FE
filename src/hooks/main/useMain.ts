@@ -36,12 +36,12 @@ export const useMain = () => {
     for (let index = 0; index < data.length; index++) {
       const dailyRevenue = data[index];
       revenueData.push({
-        year: dailyRevenue.day,
+        year: dailyRevenue.revenueDate,
         value: dailyRevenue.couponRevenue,
         type: '쿠폰 사용 매출',
       });
       revenueData.push({
-        year: dailyRevenue.day,
+        year: dailyRevenue.revenueDate,
         value: dailyRevenue.normalRevenue,
         type: '쿠폰 미사용 매출',
       });
