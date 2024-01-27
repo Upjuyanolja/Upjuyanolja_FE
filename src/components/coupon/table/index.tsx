@@ -47,6 +47,7 @@ export const CouponTable = ({
         return { rowSpan: record.room.length };
       },
       width: '144px',
+      className: 'table-room-container',
     },
     Table.SELECTION_COLUMN,
     {
