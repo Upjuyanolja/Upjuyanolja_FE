@@ -18,7 +18,12 @@ export const ServerError = () => {
           페이지가 작동하지 않습니다
         </TextBox>
       </StyledContainer>
-      <StyledButton type="primary">
+      <StyledButton
+        type="primary"
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
         <TextBox typography="h5" fontWeight={700} color="white">
           새로고침
         </TextBox>
