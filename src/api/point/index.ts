@@ -7,5 +7,6 @@ export const POINT_API = {
       `/api/points/summary?rangeDate=${rangeDate}`,
     ),
 
-  getPointTotal: () => instance.get<PointTotalData>('/api/points/total'),
+  getPointTotal: () =>
+    instance.get<PointTotalData>('/api/points/total-balance'),
 };
