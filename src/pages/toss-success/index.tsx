@@ -1,32 +1,27 @@
-import { usePointCharge } from '@queries/point-charge-modal';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { currentUrlState } from '@stores/point-charge-modal';
-import { useRecoilValue } from 'recoil';
+import { useSearchParams } from 'react-router-dom';
+import { usePointCharge } from '@queries/point-charge-modal';
 
-export const TossSuccess = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const currentUrl = useRecoilValue(currentUrlState);
-
-  const orderId = urlParams.get('orderId');
-  const paymentKey = urlParams.get('paymentKey');
-  const amount = urlParams.get('amount');
+export function TossSuccess() {
+  const [searchParams] = useSearchParams();
+  const paymentKey = searchParams.get('paymentKey');
+  const orderId = searchParams.get('orderId');
+  const amount = searchParams.get('amount');
   const pointChargeMutation = usePointCharge();
-
-  const navigation = useNavigate();
-
   useEffect(() => {
-    if (orderId && paymentKey && amount) {
-      const data = {
-        orderId,
-        paymentKey,
-        amount: parseInt(amount),
-      };
-      pointChargeMutation.mutateAsync(data);
-    } else {
-      navigation(currentUrl);
-    }
-  }, []);
+    const fetchData = async () => {
+      if (orderId && paymentKey && amount) {
+        const data = {
+          orderId,
+          paymentKey,
+          amount: parseInt(amount),
+        };
+        await pointChargeMutation.mutateAsync(data);
+      }
+    };
+
+    fetchData();
+  }, [orderId, paymentKey, amount]);
 
   return <div></div>;
-};
+}

@@ -29,7 +29,7 @@ export const ROOM_API = {
     ),
   updateRoom: (data: RoomUpdateData, roomId: string, accommodationId: string) =>
     instance.put<Response<RoomUpdateResponseData>>(
-      ` /backoffice-api/accommodations/${accommodationId}/rooms/${roomId}`,
+      `/backoffice-api/accommodations/${accommodationId}/rooms/${roomId}`,
       data,
     ),
 };

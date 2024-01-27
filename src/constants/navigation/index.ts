@@ -1,23 +1,24 @@
-import { getCookie } from '@hooks/sign-in/useSignIn';
 import { ROUTES } from '../routes';
+import { useRecoilValue } from 'recoil';
+import { accommodationState } from '@stores/accommodation/atom';
 
-export const getNavigationMap = () => {
-  const accommodationId = getCookie('accommodationId') || 0;
+export const NavigationMap = () => {
+  const selectedAccommodation = useRecoilValue(accommodationState);
 
   return {
     Home: {
       label: '홈',
-      link: `/${accommodationId}${ROUTES.MAIN}`,
+      link: `/${selectedAccommodation}${ROUTES.MAIN}`,
       isRequiredAccommodationId: true,
     },
     Coupon: {
       label: '쿠폰 관리',
-      link: `/${accommodationId}${ROUTES.COUPON}`,
+      link: `/${selectedAccommodation}${ROUTES.COUPON}`,
       isRequiredAccommodationId: true,
     },
     CouponRegistration: {
       label: '쿠폰 만들기',
-      link: `/${accommodationId}${ROUTES.COUPON_REGISTRATION}`,
+      link: `/${selectedAccommodation}${ROUTES.COUPON_REGISTRATION}`,
       isRequiredAccommodationId: true,
     },
     PointDetail: {
@@ -27,7 +28,7 @@ export const getNavigationMap = () => {
     },
     RoomUpdate: {
       label: '객실 관리',
-      link: `/${accommodationId}${ROUTES.ROOM}`,
+      link: `/${selectedAccommodation}${ROUTES.ROOM}`,
       isRequiredAccommodationId: true,
     },
     UseGuide: {

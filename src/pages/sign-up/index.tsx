@@ -218,11 +218,7 @@ export const SignUp = () => {
                               ? errors.email && touched.email
                                 ? `${colors.error}`
                                 : `${colors.black600}`
-                              : errors.email &&
-                                  touched.email &&
-                                  errors.email &&
-                                  touched.email &&
-                                  (checkOne_1 || checkOne_2 || checkOne_3)
+                              : emailError || (errors.email && touched.email)
                                 ? `${colors.error}`
                                 : `${colors.success}`,
                   }}

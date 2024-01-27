@@ -10,7 +10,7 @@ export const getValidateSchema = () => {
     password: yup
       .string()
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
         '영문, 숫자 포함 8~20자로 입력해주세요.',
       )
       .required('영문, 숫자 포함 8~20자로 입력해주세요.'),

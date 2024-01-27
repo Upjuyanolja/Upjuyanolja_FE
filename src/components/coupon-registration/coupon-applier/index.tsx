@@ -8,10 +8,11 @@ import { CouponApplierProps } from './type';
 
 export const CouponApplier = ({
   isGetCouponRoomListLoading,
+  isGetCouponRoomListFetching,
 }: CouponApplierProps) => {
   const getCouponRoomDataList = useRecoilValue(getCouponRoomDataListState);
 
-  if (isGetCouponRoomListLoading) {
+  if (isGetCouponRoomListLoading || isGetCouponRoomListFetching) {
     return (
       <SpinWrap>
         <Spin tip="Loading..." size="large" />

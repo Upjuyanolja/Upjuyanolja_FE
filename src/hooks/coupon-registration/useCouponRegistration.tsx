@@ -29,11 +29,14 @@ export const useCouponRegistration = () => {
     isLoading: isGetCouponRoomListLoading,
     isError: isGetCouponRoomListError,
     refetch: isGetCouponRoomListRefetch,
+    isFetching: isGetCouponRoomListFetching,
   } = useGetCouponRoomList(accommodationId as string, {
     select(data) {
       setGetCouponRoomList(data.data);
       return data.data;
     },
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   const { mutate: buyCoupon } = useBuyCoupon({
@@ -42,7 +45,7 @@ export const useCouponRegistration = () => {
       return Modal.confirm({
         content: '쿠폰이 발급되었습니다.',
         okText: '새 쿠폰 만들기',
-        cancelText: '쿠폰 관리',
+        cancelText: '발급한 쿠폰 보기',
         className: 'confirm-modal',
         onOk: () => {
           setIsActivityResetCoupon(!isActivityResetCoupon);
@@ -78,11 +81,12 @@ export const useCouponRegistration = () => {
 
   return {
     couponRoomListData,
-    isGetCouponRoomListError,
     buyCoupon,
     isGetCouponRoomListLoading,
+    isGetCouponRoomListError,
+    isGetCouponRoomListFetching,
+    isGetCouponRoomListRefetch,
     isModalOpen,
     setIsModalOpen,
-    isGetCouponRoomListRefetch,
   };
 };

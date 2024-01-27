@@ -66,8 +66,8 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
             <StyledCenterVertically>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 16 16"
                 fill="none"
               >
@@ -94,21 +94,25 @@ const RoomCard = ({ data, handleDeleteRoom }: RoomCardProps) => {
               }}
             >
               <EditOutlined
-                style={{ fontSize: '20px', color: colors.black700 }}
-              />
-              <TextBox typography="body2" color="black700" fontWeight="bold">
-                수정
-              </TextBox>
-            </StyledEditDeleteButtons>
-            <StyledEditDeleteButtons onClick={() => handleDeleteClick(data.id)}>
-              <DeleteOutlined
                 style={{
                   fontSize: '20px',
                   color: colors.black700,
                   marginTop: 2,
                 }}
               />
-              <TextBox typography="body2" color="black700" fontWeight="bold">
+              <TextBox typography="body3" color="black700" fontWeight="bold">
+                수정
+              </TextBox>
+            </StyledEditDeleteButtons>
+            <StyledEditDeleteButtons onClick={() => handleDeleteClick(data.id)}>
+              <DeleteOutlined
+                style={{
+                  fontSize: '18px',
+                  color: colors.black700,
+                  marginTop: 2,
+                }}
+              />
+              <TextBox typography="body3" color="black700" fontWeight="bold">
                 삭제
               </TextBox>
             </StyledEditDeleteButtons>
@@ -193,7 +197,8 @@ const StyledSaleBanner = styled.div<{ isOnSale: boolean }>`
   left: 0;
   right: 0;
   width: 100%;
-  background-color: ${({ isOnSale }) => (isOnSale ? 'blue' : colors.black600)};
+  background-color: ${({ isOnSale }) =>
+    isOnSale ? colors.primary : colors.black600};
   color: white;
   text-align: center;
   z-index: 3;
@@ -242,8 +247,8 @@ const StyledRightContent = styled(Col)`
 const StyledEditDeleteContainer = styled(Col)`
   display: flex;
   padding: 2px 4px;
-  align-items: center
-  gap: 8px,
+  align-items: center;
+  gap: 8px;
 `;
 
 const StyledNumRoomPriceContainer = styled(Col)`
@@ -267,9 +272,18 @@ const StyledEditDeleteButtons = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
   flex-direction: row;
   padding: 2px 4px;
+
+  .anticon + span {
+    margin-left: 2px;
+  }
+
+  &:hover,
+  &:focus {
+    background: ${colors.midGray};
+    border-color: transparent;
+  }
 `;
 
 const StyledTags = styled.div`
