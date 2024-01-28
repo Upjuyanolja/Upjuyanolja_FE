@@ -20,7 +20,7 @@ import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { useEffect, useState } from 'react';
 import { MouseEvent } from '@/types/event';
 import { CouponAgreementModal } from '@components/agreement-modal/coupon-agreement-modal';
-import { calculatedCouponPoints } from '@/utils/discountCoupon';
+import { calculatedCouponPoints } from '@/utils/coupon/discountCoupon';
 
 export const CouponPreview = () => {
   const selectedDiscountType = useRecoilValue(selectedDiscountTypeState);

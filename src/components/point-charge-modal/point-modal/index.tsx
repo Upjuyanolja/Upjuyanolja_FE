@@ -21,13 +21,13 @@ import {
   loadPaymentWidget,
 } from '@tosspayments/payment-widget-sdk';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
-import { isNumber } from '@/utils/isNumber';
 import { ROUTES } from '@/constants/routes';
 import { currentUrlState } from '@stores/point-charge-modal';
 import { useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { PointAgreementModal } from '@components/agreement-modal/point-agreement-modal';
 import { orderDate } from '@/utils/format/dateFormat';
+import { isNumber } from '@/utils/check-type';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;

@@ -12,8 +12,8 @@ import {
 import { useEffect, useState } from 'react';
 import { numberFormat, removeNumberFormat } from '@/utils/format/numberFormat';
 import { InputChangeEvent, MouseEvent } from '@/types/event';
-import { isNumber } from '@/utils/is-number';
-import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
+import { isNumber } from '@/utils/check-type';
+import { handleEnterKeyDown } from '@/utils/event/handleEnterKeyDown';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   determinedPriceState,

@@ -16,7 +16,7 @@ import {
   Coupon,
   Coupons,
 } from '@api/coupon/type';
-import { calculatedCouponPoints } from '@/utils/discountCoupon';
+import { calculatedCouponPoints } from '@/utils/coupon/discountCoupon';
 import { useParams } from 'react-router-dom';
 import { RESPONSE_CODE } from '@/constants/api';
 import { useRecoilState } from 'recoil';

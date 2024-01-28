@@ -14,7 +14,7 @@ import {
   FLAT_DISCOUNT_TYPE,
   RATE_DISCOUNT_TYPE,
 } from '@/constants/coupon-registration';
-import { calculatedCouponPoints } from '@/utils/discountCoupon';
+import { calculatedCouponPoints } from '@/utils/coupon/discountCoupon';
 
 export const CouponPreviewItem = ({
   roomName,

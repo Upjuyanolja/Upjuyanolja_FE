@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { RoomCouponApplierProps } from './type';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
-import { isNumber } from '@/utils/is-number';
-import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
+import { isNumber } from '@/utils/check-type';
+import { handleEnterKeyDown } from '@/utils/event/handleEnterKeyDown';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   determinedPriceState,
@@ -22,7 +22,7 @@ import {
   PendingRoomDataList,
 } from '@components/coupon-registration/type';
 import { removeNumberFormat } from '@/utils/format/numberFormat';
-import { calculatedCouponPoints } from '@/utils/discountCoupon';
+import { calculatedCouponPoints } from '@/utils/coupon/discountCoupon';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { useParams } from 'react-router-dom';
 

@@ -3,13 +3,13 @@ import { Checkbox, Input } from 'antd';
 import styled from 'styled-components';
 import { InputChangeEvent } from '@/types/event';
 import { useEffect, useState } from 'react';
-import { handleEnterKeyDown } from '@/utils/keydown/handleEnterKeyDown';
+import { handleEnterKeyDown } from '@/utils/event/handleEnterKeyDown';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   groupQuantityValueState,
   isGroupQuantitySelectedState,
 } from '@stores/coupon-registration/atoms';
-import { isNumber } from '@/utils/isNumber';
+import { isNumber } from '@/utils/check-type';
 
 export const CommonQuantityCouponSetter = () => {
   const setGroupQuantityValue = useSetRecoilState(groupQuantityValueState);
