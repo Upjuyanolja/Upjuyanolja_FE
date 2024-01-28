@@ -2,7 +2,7 @@ import { Button, Space } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserProfileProps } from './type';
 import { numberFormat } from '@/utils/Format/numberFormat';
 import { PointModal } from '@components/point-charge-modal/point-modal';

@@ -138,6 +138,10 @@ const StyledButton = styled(Button)`
   padding: 10px 16px;
   border-radius: 0;
   border-bottom: 0.5px solid ${colors.black500};
+
+  .ant-btn {
+    border: none;
+  }
 `;
 
 const StyledAccommodationWrap = styled.ul<StyledAccommodationWrapProps>`
