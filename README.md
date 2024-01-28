@@ -19,7 +19,7 @@
 
 업주야놀자의 B2B Self-coupon Admin(Backoffice) 서비스 프로젝트 :computer: 웹 페이지 입니다
 
-저희 팀은 프론트엔드 6명 백엔드 4명으로 구성되어 있습니다.   
+저희 팀은 프론트엔드 6명 백엔드 5명으로 구성되어 있습니다.   
 
 백엔드는 [이곳](https://github.com/Upjuyanolja/Upjuyanolja_BE)을 클릭해 주세요  
 
