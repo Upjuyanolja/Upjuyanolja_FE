@@ -1,6 +1,6 @@
-import { staticsData } from '@api/coupon/type';
+import { StaticsData } from '@api/coupon/type';
 
 export type MainCouponStatusContainerProps = {
-  staticsData: staticsData | '';
+  staticsData: StaticsData | '';
   navigateCoupon: VoidFunction;
 };

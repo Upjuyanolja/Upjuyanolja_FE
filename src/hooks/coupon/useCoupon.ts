@@ -13,8 +13,8 @@ import {
   CouponEditParams,
   EditCoupon,
   PurchaseCouponParams,
-  coupon,
-  coupons,
+  Coupon,
+  Coupons,
 } from '@api/coupon/type';
 import { calculatedCouponPoints } from '@/utils/discountCoupon';
 import { useParams } from 'react-router-dom';
@@ -164,7 +164,7 @@ export const useCoupon = () => {
     };
   }, []);
 
-  const processCouponTableData = (data: coupons) => {
+  const processCouponTableData = (data: Coupons) => {
     const couponTableData = [];
     const originData = [];
     let key = -1;
@@ -527,7 +527,7 @@ export const useCoupon = () => {
       const room = purchaseData.rooms[index];
       if (!room) continue;
       const coupons: (Omit<
-        coupon,
+        Coupon,
         'couponName' | 'appliedPrice' | 'quantity'
       > & {
         eachPoint: number;

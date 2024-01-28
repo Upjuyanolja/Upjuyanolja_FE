@@ -11,23 +11,23 @@ import {
   CouponDeleteParams,
   CouponEditParams,
   PurchaseCouponParams,
-  coupons,
-  revenueData,
-  staticsData,
+  Coupons,
+  RevenueData,
+  StaticsData,
 } from '@api/coupon/type';
 
 export const useGetStatics = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<staticsData | ''>,
+    AxiosResponse<StaticsData | ''>,
     AxiosError<ErrorResponse>,
-    staticsData | ''
+    StaticsData | ''
   >,
 ) => {
   return useQuery<
-    AxiosResponse<staticsData | ''>,
+    AxiosResponse<StaticsData | ''>,
     AxiosError<ErrorResponse>,
-    staticsData | ''
+    StaticsData | ''
   >(['getStatics'], () => COUPON_API.getStatics(accommodationId), {
     ...options,
   });
@@ -36,15 +36,15 @@ export const useGetStatics = (
 export const useGetRevenue = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<revenueData | ''>,
+    AxiosResponse<RevenueData | ''>,
     AxiosError<ErrorResponse>,
-    revenueData | ''
+    RevenueData | ''
   >,
 ) => {
   return useQuery<
-    AxiosResponse<revenueData | ''>,
+    AxiosResponse<RevenueData | ''>,
     AxiosError<ErrorResponse>,
-    revenueData | ''
+    RevenueData | ''
   >(['getRevenue'], () => COUPON_API.getRevenue(accommodationId), {
     ...options,
   });
@@ -53,12 +53,12 @@ export const useGetRevenue = (
 export const useGetCoupon = (
   accommodationId: string,
   options?: UseQueryOptions<
-    AxiosResponse<coupons>,
+    AxiosResponse<Coupons>,
     AxiosError<ErrorResponse>,
-    coupons
+    Coupons
   >,
 ) =>
-  useQuery<AxiosResponse<coupons>, AxiosError<ErrorResponse>, coupons>(
+  useQuery<AxiosResponse<Coupons>, AxiosError<ErrorResponse>, Coupons>(
     ['getCoupon'],
     () => COUPON_API.getCoupon(accommodationId),
     { ...options },

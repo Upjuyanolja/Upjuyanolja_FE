@@ -1,10 +1,10 @@
 import { DISCOUNT_TYPE } from '@/constants/coupon';
-import { coupon } from '@api/coupon/type';
+import { Coupon } from '@api/coupon/type';
 
 export const calculatedCouponPoints = (
   price: number,
   discount: number,
-  discountType: coupon['discountType'],
+  discountType: Coupon['discountType'],
 ) => {
   const rateTypeRoundingUnit = 1000;
   const roundingUnit = 10;

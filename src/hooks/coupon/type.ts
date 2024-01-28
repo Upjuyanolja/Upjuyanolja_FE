@@ -1,4 +1,4 @@
-import { coupon } from '@api/coupon/type';
+import { Coupon } from '@api/coupon/type';
 import { tableData } from '@components/coupon/table/type';
 
 export type CouponData = {
@@ -6,7 +6,7 @@ export type CouponData = {
   coupons: tableData[];
 };
 
-export type PurchaseCoupons = Omit<coupon, 'appliedPrice' | 'quantity'> & {
+export type PurchaseCoupons = Omit<Coupon, 'appliedPrice' | 'quantity'> & {
   buyQuantity: number;
   eachPoint: number;
   points: number;

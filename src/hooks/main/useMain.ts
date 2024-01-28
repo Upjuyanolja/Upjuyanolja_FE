@@ -1,6 +1,6 @@
 import { ROUTES } from '@/constants/routes';
 import { getChartDate } from '@/utils/dateFormat/dateFormat';
-import { revenueData } from '@api/coupon/type';
+import { RevenueData } from '@api/coupon/type';
 import { useGetStatics, useGetRevenue } from '@queries/coupon';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -31,7 +31,7 @@ export const useMain = () => {
     revenueRemove();
   }, [accommodationId]);
 
-  const handleRevenueDataFormat = (data: revenueData | undefined | '') => {
+  const handleRevenueDataFormat = (data: RevenueData | undefined | '') => {
     const revenueData = [];
     const week = 7;
     if (data === undefined) return undefined;

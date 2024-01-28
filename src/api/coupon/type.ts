@@ -7,25 +7,25 @@ import {
   RoomId,
 } from '@components/coupon-registration/type';
 
-export type staticsData = {
+export type StaticsData = {
   accommodationId: number;
   total: number;
   used: number;
   stock: number;
 };
 
-export type dailyRevenue = {
+export type DailyRevenue = {
   revenueDate: string;
   couponRevenue: number;
   normalRevenue: number;
 };
-export type revenueData = {
+export type RevenueData = {
   accommodationId: number;
-  revenue: dailyRevenue[];
+  revenue: DailyRevenue[];
   couponMessage: string;
 };
 
-export type coupon = {
+export type Coupon = {
   couponId: number;
   status: string;
   discountType: 'FLAT' | 'RATE';
@@ -45,18 +45,18 @@ export type EditCoupon = {
   dayLimit: number;
   couponType: string;
 };
-export type room<T> = {
+export type Room<T> = {
   roomId: number;
   roomName: string;
   roomPrice: number;
   coupons: T[];
 };
 
-export type coupons = {
+export type Coupons = {
   accommodationId: number;
   accommodationName: string;
   expiry: string;
-  rooms: room<coupon>[];
+  rooms: Room<Coupon>[];
 };
 export type CouponDeleteParams = {
   accommodationId: number;
@@ -66,13 +66,13 @@ export type CouponDeleteParams = {
 export type CouponEditParams = {
   accommodationId: number;
   expiry: string;
-  rooms: Omit<room<EditCoupon>, 'roomPrice' | 'roomName'>[];
+  rooms: Omit<Room<EditCoupon>, 'roomPrice' | 'roomName'>[];
 };
 
 export type CouponRoomList = {
   accommodationId: number;
   accommodationName: string;
-  rooms: Pick<room<coupon>, 'roomId' | 'roomName' | 'roomPrice'>[];
+  rooms: Pick<Room<Coupon>, 'roomId' | 'roomName' | 'roomPrice'>[];
 };
 
 export type BuyCouponParams = {
@@ -99,8 +99,8 @@ export type PurchaseCouponParams = {
   expiry: string;
   totalPoints: number;
   rooms: Omit<
-    room<
-      Omit<coupon, 'couponName' | 'appliedPrice' | 'quantity'> & {
+    Room<
+      Omit<Coupon, 'couponName' | 'appliedPrice' | 'quantity'> & {
         eachPoint: number;
         buyQuantity: number;
       }
