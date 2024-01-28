@@ -22,7 +22,7 @@ import { RESPONSE_CODE } from '@/constants/api';
 import { checkedRoomOptions, imageFileState } from '@stores/init/atoms';
 import { useQueryClient } from '@tanstack/react-query';
 
-const RoomRegistration = () => {
+export const RoomRegistration = () => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
   const [isSameRoomName, setIsSameRoomName] = useState(false);
@@ -200,8 +200,6 @@ const RoomRegistration = () => {
     </StyledWrapper>
   );
 };
-
-export default RoomRegistration;
 
 const StyledWrapper = styled.div`
   border-radius: 8px;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { RoomCardData } from '@api/room/type';
 
 export type KoreanOptionNamesType = {

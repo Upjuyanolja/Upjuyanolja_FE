@@ -8,7 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useMemo } from 'react';
 import { RESPONSE_CODE } from '@/constants/api';
 
-const RoomManagement = () => {
+export const RoomManagement = () => {
   const navigate = useNavigate();
   const { accommodationId: tempAccommodationId } = useParams();
   const accommodationId = tempAccommodationId || '';
@@ -102,8 +102,6 @@ const RoomManagement = () => {
     </StyledPageContainer>
   );
 };
-
-export default RoomManagement;
 
 const StyledPageContainer = styled(Card)`
   padding: 32px 48px;
