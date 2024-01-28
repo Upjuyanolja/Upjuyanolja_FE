@@ -10,7 +10,10 @@ import {
   RATE_DISCOUNT_TYPE,
 } from '@/constants/coupon-registration';
 import { useEffect, useState } from 'react';
-import { numberFormat, removeNumberFormat } from '@/utils/format/numberFormat';
+import {
+  numberFormat,
+  removeNumberFormat,
+} from '@/utils/formatiing/numberFormat';
 import { InputChangeEvent, MouseEvent } from '@/types/event';
 import { isNumber } from '@/utils/check-type';
 import { handleEnterKeyDown } from '@/utils/event/handleEnterKeyDown';

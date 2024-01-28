@@ -10,7 +10,7 @@ import {
 } from '@stores/point-detail/atoms';
 import { useRecoilState } from 'recoil';
 
-import { numberFormat } from '@/utils/format/numberFormat';
+import { numberFormat } from '@/utils/formatiing/numberFormat';
 const MONTH_JANUARY = 1;
 const MONTH_DECEMBER = 12;
 

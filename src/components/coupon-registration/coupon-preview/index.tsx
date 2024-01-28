@@ -5,7 +5,10 @@ import { CouponPreviewItem } from './coupon-preview-item';
 import { Spacing } from '@components/spacing';
 import { Button, Checkbox } from 'antd';
 import { PendingRoomDataList, SelectedDiscountType } from '../type';
-import { numberFormat, removeNumberFormat } from '@/utils/format/numberFormat';
+import {
+  numberFormat,
+  removeNumberFormat,
+} from '@/utils/formatiing/numberFormat';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   determinedPriceState,

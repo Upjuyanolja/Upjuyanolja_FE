@@ -4,7 +4,10 @@ import { TextBox } from '@components/text-box';
 import { Divider } from 'antd';
 import styled from 'styled-components';
 import { CouponPreviewItemProps } from './type';
-import { numberFormat, removeNumberFormat } from '@/utils/format/numberFormat';
+import {
+  numberFormat,
+  removeNumberFormat,
+} from '@/utils/formatiing/numberFormat';
 import { useRecoilValue } from 'recoil';
 import {
   determinedPriceState,

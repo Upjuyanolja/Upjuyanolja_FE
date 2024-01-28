@@ -10,7 +10,10 @@ import {
 } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { numberFormat, removeNumberFormat } from '@/utils/format/numberFormat';
+import {
+  numberFormat,
+  removeNumberFormat,
+} from '@/utils/formatiing/numberFormat';
 import { TextBox } from '@components/text-box';
 import { InfoContainer } from '../info-container';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -26,7 +29,7 @@ import { currentUrlState } from '@stores/point-charge-modal';
 import { useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { PointAgreementModal } from '@components/agreement-modal/point-agreement-modal';
-import { orderDate } from '@/utils/format/dateFormat';
+import { orderDate } from '@/utils/formatiing/dateFormat';
 import { isNumber } from '@/utils/check-type';
 
 const MINIMUM_PRICE = 10000;
