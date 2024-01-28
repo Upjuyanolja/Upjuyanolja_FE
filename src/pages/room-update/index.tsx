@@ -23,7 +23,7 @@ import { AxiosError } from 'axios';
 import { checkedRoomOptions, imageFileState } from '@stores/init/atoms';
 import { useQueryClient } from '@tanstack/react-query';
 
-const RoomUpdate = () => {
+export const RoomUpdate = () => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
   const queryClient = useQueryClient();
@@ -230,8 +230,6 @@ const RoomUpdate = () => {
     </StyledWrapper>
   );
 };
-
-export default RoomUpdate;
 
 const StyledWrapper = styled.div`
   border-radius: 8px;
