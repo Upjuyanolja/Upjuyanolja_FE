@@ -34,7 +34,7 @@ export const MainCouponStatusContainer = ({
           onClick={navigateCoupon}
           data-testid="navigate-coupon"
         >
-          쿠폰 관리 바로 가기
+          쿠폰 관리 바로가기
           <RightOutlined color="white" />
         </StyledButton>
         <TextBox typography="body4" color="white">
