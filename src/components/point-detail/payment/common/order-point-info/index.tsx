@@ -6,7 +6,7 @@ import { colors } from '@/constants/colors';
 import { OrderInfoProps } from './types';
 import { useRecoilValue } from 'recoil';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
-import { numberFormat } from '@/utils/Format/numberFormat';
+import { numberFormat } from '@/utils/format-fn/numberFormat';
 
 export const OrderPointInfo = ({
   pointCharge,

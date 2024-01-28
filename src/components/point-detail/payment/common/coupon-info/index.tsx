@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
 import { useRecoilValue } from 'recoil';
-import { numberFormat } from '@/utils/Format/numberFormat';
+import { numberFormat } from '@/utils/format-fn/numberFormat';
 
 export const CouponInfo = ({ index }: { index: number }) => {
   const pointDetailData = useRecoilValue(pointDetailDataState);

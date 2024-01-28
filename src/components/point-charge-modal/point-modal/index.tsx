@@ -10,7 +10,10 @@ import {
 } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { numberFormat, removeNumberFormat } from '@/utils/Format/numberFormat';
+import {
+  numberFormat,
+  removeNumberFormat,
+} from '@/utils/format-fn/numberFormat';
 import { TextBox } from '@components/text-box';
 import { InfoContainer } from '../info-container';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -22,13 +25,12 @@ import {
 } from '@tosspayments/payment-widget-sdk';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { isNumber } from '@/utils/isNumber';
-import { orderNumber } from '@/utils/orderNumber';
 import { ROUTES } from '@/constants/routes';
-
 import { currentUrlState } from '@stores/point-charge-modal';
 import { useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { PointAgreementModal } from '@components/agreement-modal/point-agreement-modal';
+import { orderDate } from '@/utils/format-fn/dateFormat';
 
 const MINIMUM_PRICE = 10000;
 const MAXIMUM_PRICE = 10000000;
@@ -161,7 +163,7 @@ export const PointModal = ({
 
     try {
       await paymentWidget?.requestPayment({
-        orderId: orderNumber(),
+        orderId: orderDate(),
         orderName: '포인트 충전',
         successUrl: `${window.location.origin}${ROUTES.TOSS_SUCCESS}`,
         failUrl: `${window.location.origin}${ROUTES.TOSS_FAIL}`,

@@ -7,9 +7,9 @@ import { useRecoilValue } from 'recoil';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
 import { ReceiptModal } from '../payment/receipt';
 import { useState } from 'react';
-import { numberFormat } from '@/utils/Format/numberFormat';
+import { numberFormat } from '@/utils/format-fn/numberFormat';
 import { CancelModal } from '../payment/cancel';
-import { formatDate } from '@/utils/dateFormat/dateFormat';
+import { formatDate } from '@/utils/format-fn/dateFormat';
 
 export const PointDetailList = () => {
   const pointDetailData = useRecoilValue(pointDetailDataState);

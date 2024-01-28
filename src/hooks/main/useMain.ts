@@ -1,5 +1,5 @@
 import { ROUTES } from '@/constants/routes';
-import { getChartDate } from '@/utils/dateFormat/dateFormat';
+import { getChartDate } from '@/utils/format-fn/dateFormat';
 import { RevenueData } from '@api/coupon/type';
 import { useGetStatics, useGetRevenue } from '@queries/coupon';
 import { useEffect } from 'react';

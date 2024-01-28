@@ -21,7 +21,7 @@ import {
   PendingRoomData,
   PendingRoomDataList,
 } from '@components/coupon-registration/type';
-import { removeNumberFormat } from '@/utils/Format/numberFormat';
+import { removeNumberFormat } from '@/utils/format-fn/numberFormat';
 import { calculatedCouponPoints } from '@/utils/discountCoupon';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { useParams } from 'react-router-dom';
