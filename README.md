@@ -108,16 +108,16 @@
       <th>숙소 등록</th>
     </tr>
     <tr>
-      <td><img src="https://github.com/YBE-7/MiniProject_FE/assets/59966217/27f10e32-ff99-4d47-ba1a-942bfd3b4c4a" alt="회원가입 유효성 검사"></td>
-      <td><img src="https://github.com/YBE-7/MiniProject_FE/assets/59966217/6eb37248-a792-4f33-af2d-79bb3d324401"alt="무한스크롤 시연"></td>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/aa2853b5-6118-41e3-9c2f-31f3a8a9601c" alt="회원가입 유효성 검사"></td>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/04e5cfd5-1acb-4442-aa2b-7d86c259b059"alt="무한스크롤 시연"></td>
     </tr>
     <tr align="center">
       <th>포인트 충전</th>
       <th>쿠폰 구매</th>
     </tr>
     <tr>
-      <td><img src="https://github.com/YBE-7/MiniProject_FE/assets/59966217/31cc1d41-e252-4c9a-a466-dca74ec67c7e" alt="날짜에 따라 가격 및 품절 변경"></td>
-      <td><img src="https://github.com/YBE-7/MiniProject_FE/assets/59966217/86ddcbf3-460f-4770-bc05-94b011a392d0" alt="결제페이지 필수 동의 여부"></td>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/cdcc409b-f099-45dc-9072-b3b02d8f9df3" alt="날짜에 따라 가격 및 품절 변경"></td>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/d31c2634-0c10-4693-8751-95080b235d93" alt="결제페이지 필수 동의 여부"></td>
     </tr>
   </table>
 </div>
