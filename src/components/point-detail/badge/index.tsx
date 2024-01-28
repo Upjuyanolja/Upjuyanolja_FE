@@ -1,9 +1,9 @@
 import { colors } from '@/constants/colors';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { badgeProps } from './types';
+import { BadgeProps } from './types';
 
-export const OrderStatusBadge = ({ status }: { status: badgeProps }) => {
+export const OrderStatusBadge = ({ status }: { status: BadgeProps }) => {
   const [color, setColor] = useState('');
 
   useEffect(() => {

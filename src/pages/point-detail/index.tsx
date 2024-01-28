@@ -15,7 +15,7 @@ import {
   pointDetailDataState,
 } from '@stores/point-detail/atoms';
 import { useGetPointDetail } from '@queries/point-detail';
-import { menuStatusType } from '@api/point-detail/get-point-detail/type';
+import { MenuStatusType } from '@api/point-detail/get-point-detail/type';
 import { useGetPointSummary } from '@queries/point';
 import { RESPONSE_CODE } from '@/constants/api';
 
@@ -23,7 +23,7 @@ export const PointDetail = () => {
   const currentYear = useRecoilValue(currentYearState);
   const currentMonth = useRecoilValue(currentMonthState);
   const pageNum = useRecoilValue(pageNumState);
-  const menuStatus = useRecoilValue<menuStatusType>(menuStatusState);
+  const menuStatus = useRecoilValue<MenuStatusType>(menuStatusState);
 
   const setPointSummaryData = useSetRecoilState(pointSummaryDataState);
   const setPointDetailData = useSetRecoilState(pointDetailDataState);

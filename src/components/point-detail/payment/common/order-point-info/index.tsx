@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
-import { orderInfoProps } from './types';
+import { OrderInfoProps } from './types';
 import { useRecoilValue } from 'recoil';
 import { pointDetailDataState } from '@stores/point-detail/atoms';
 import { numberFormat } from '@/utils/Format/numberFormat';
@@ -12,7 +12,7 @@ export const OrderPointInfo = ({
   pointCharge,
   index,
   status,
-}: orderInfoProps) => {
+}: OrderInfoProps) => {
   const [isCancelStatus, setIscancelStatus] = useState<boolean>(false);
 
   useEffect(() => {

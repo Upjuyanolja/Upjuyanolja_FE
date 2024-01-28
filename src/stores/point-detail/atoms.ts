@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 import {
   PointDetailDataType,
-  menuStatusType,
+  MenuStatusType,
 } from '@api/point-detail/get-point-detail/type';
 import { PointSummaryData } from '@api/point/type';
 
@@ -25,7 +25,7 @@ export const totalPagesState = atom({
   default: 10,
 });
 
-export const menuStatusState = atom<menuStatusType>({
+export const menuStatusState = atom<MenuStatusType>({
   key: 'menuStatusState',
   default: 'total',
 });

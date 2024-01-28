@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { colors } from '@/constants/colors';
 import { menuStatusState, pageNumState } from '@stores/point-detail/atoms';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { menuStatusType } from '@api/point-detail/get-point-detail/type';
+import { MenuStatusType } from '@api/point-detail/get-point-detail/type';
 
 export const PointMenu = () => {
   const [menuStatus, setMenuStatus] = useRecoilState(menuStatusState);
   const setPageNum = useSetRecoilState(pageNumState);
 
-  const handleClickMenuButton = (status: menuStatusType) => {
+  const handleClickMenuButton = (status: MenuStatusType) => {
     setMenuStatus(status);
     setPageNum(1);
   };

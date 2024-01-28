@@ -9,7 +9,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { POINT_DETAIL_API } from '@api/point-detail/get-point-detail';
 import {
   PointDetailDataType,
-  menuStatusType,
+  MenuStatusType,
 } from '@api/point-detail/get-point-detail/type';
 import { ORDER_CANCEL_API } from '@api/point-detail/orderCancel';
 import { message } from 'antd';
@@ -18,7 +18,7 @@ import { RESPONSE_CODE } from '@/constants/api';
 import { CancelType } from '@api/point-detail/orderCancel/type';
 
 export const useGetPointDetail = (
-  menuStatus: menuStatusType,
+  menuStatus: MenuStatusType,
   page: number,
   options?: UseQueryOptions<
     AxiosResponse<PointDetailDataType>,

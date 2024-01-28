@@ -1,4 +1,4 @@
-import { badgeProps } from '@components/point-detail/badge/types';
+import { BadgeProps } from '@components/point-detail/badge/types';
 
 export type Coupons = {
   name: string;
@@ -24,7 +24,7 @@ export type History = {
   id: number;
   category: string;
   type: string;
-  status: badgeProps;
+  status: BadgeProps;
   name: string;
   description: string;
   trade: number;
@@ -41,4 +41,4 @@ export type PointDetailDataType = {
   histories: History[];
 };
 
-export type menuStatusType = 'total' | 'charges' | 'usages';
+export type MenuStatusType = 'total' | 'charges' | 'usages';
