@@ -61,7 +61,7 @@
 
 <p align="left">
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
-  <img src="https://img.shields.io/badge/React%20Query-ff4154?style=for-the-badge&logo=React%20Query&logoColor=white">
+  <img src="https://img.shields.io/badge/tanstackquery-671ddf?&style=for-the-badge&logo=React-query&logoColor=white">
   <img src="https://img.shields.io/badge/recoil-007AF4?style=for-the-badge&logo=recoil&logoColor=black"/>
   <img src="https://img.shields.io/badge/Ant%20Design-0170fe?style=for-the-badge&logo=Ant%20Design&logoColor=white">
   <img src="https://img.shields.io/badge/styled%20components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
