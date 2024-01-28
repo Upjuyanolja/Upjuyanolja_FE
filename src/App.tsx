@@ -17,9 +17,9 @@ import { InitInfoConfirmation } from './pages/init-info-confirmation';
 import { Coupon } from './pages/coupon';
 import { CouponRegistration } from './pages/coupon-registration';
 import { Main } from './pages/main';
-import Room from './pages/room-management';
-import RoomRegistration from './pages/room-registration';
-import RoomUpdate from './pages/room-update';
+import { RoomManagement } from './pages/room-management';
+import { RoomRegistration } from './pages/room-registration';
+import { RoomUpdate } from './pages/room-update';
 import { RootLayout } from './layout';
 import './App.less';
 import { RoomLayout } from '@components/room/room-layout';
@@ -149,7 +149,13 @@ function App() {
           />
           <Route
             path={`/:accommodationId${ROUTES.ROOM}`}
-            element={!accessToken ? <Navigate to={ROUTES.SIGNIN} /> : <Room />}
+            element={
+              !accessToken ? (
+                <Navigate to={ROUTES.SIGNIN} />
+              ) : (
+                <RoomManagement />
+              )
+            }
           />
           <Route element={<RoomLayout />}>
             <Route
