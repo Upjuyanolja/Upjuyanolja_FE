@@ -194,10 +194,13 @@
 
 /* table custom style */
 .ant-table-row-selected td[rowspan] {
+  background-color: white !important;
+}
+.ant-table-cell table-room-container {
   background-color: #fafafa !important;
 }
-.table-room-container {
-  background-color: #fafafa !important;
+.ant-table-thead > tr > th {
+  text-align: center;
 }
 
 /* timepicker custom style */
