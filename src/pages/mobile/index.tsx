@@ -11,7 +11,7 @@ export const Mobile = () => {
           PC에서 접속해 주세요!
         </TextBox>
         <Image preview={false} src={PCImage} alt="pc 이미지" />
-        <TextBox typography="body1" fontWeight={400}>
+        <TextBox typography="body2" fontWeight={400}>
           본 서비스는 PC 버전에 최적화되어있습니다.
         </TextBox>
         <TextBox typography="h4" fontWeight={700}>
@@ -37,5 +37,5 @@ const StyledContainer = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
 `;
