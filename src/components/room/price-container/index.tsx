@@ -15,7 +15,7 @@ export const PriceContainer = ({ header, form }: PriceContainerProps) => {
   useEffect(() => {
     setOutOfRangeError(null);
     form.setFieldValue('price', numericValue?.toLocaleString());
-    if (!numericValue) return;
+    if (numericValue === null) return;
     if (numericValue < MIN_PRICE || numericValue > MAX_PRICE) {
       setOutOfRangeError('10,000~1,000,000까지만 입력 가능합니다.');
     }
