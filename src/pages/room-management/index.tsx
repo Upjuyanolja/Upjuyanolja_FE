@@ -106,7 +106,7 @@ const RoomManagement = () => {
 export default RoomManagement;
 
 const StyledPageContainer = styled(Card)`
-  padding: 16px 48px;
+  padding: 32px 48px;
   border: none;
   margin: 0;
 `;
