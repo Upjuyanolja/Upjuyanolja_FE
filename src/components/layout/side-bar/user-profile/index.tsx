@@ -4,7 +4,7 @@ import { TextBox } from '@components/text-box';
 import { colors } from '@/constants/colors';
 import { useEffect, useState } from 'react';
 import { UserProfileProps } from './type';
-import { numberFormat } from '@/utils/format-fn/numberFormat';
+import { numberFormat } from '@/utils/format/numberFormat';
 import { PointModal } from '@components/point-charge-modal/point-modal';
 
 export const UserProfile = ({ pointTotalData }: UserProfileProps) => {
