@@ -4,9 +4,9 @@ import { TextBox } from '@components/text-box';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDeleteRoom, useGetInfiniteRoomList } from '@queries/room';
-import { AxiosError } from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useMemo } from 'react';
+import { RESPONSE_CODE } from '@/constants/api';
 
 const RoomManagement = () => {
   const navigate = useNavigate();
@@ -50,14 +50,20 @@ const RoomManagement = () => {
       okText: '삭제',
       className: 'confirm-modal',
       onOk: () => {
+        if (roomItems?.length === 1) {
+          message.error('숙소당 최소 하나의 객실이 필요합니다');
+          return;
+        }
         deleteRoom(roomId, {
           onSuccess: () => {
             message.success('삭제되었습니다');
             refetch();
           },
-          onError: (error: unknown) => {
-            if (error instanceof AxiosError)
-              message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
+          onError: (error) => {
+            if (error.response?.data.code === RESPONSE_CODE.LAST_ROOM_DELETE) {
+              message.error('숙소당 최소 하나의 객실이 필요합니다');
+            }
+            message.error('요청에 실패했습니다 잠시 후 다시 시도해주세요');
           },
         });
       },

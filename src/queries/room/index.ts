@@ -7,7 +7,7 @@ import {
   UseInfiniteQueryOptions,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { Response } from '@/types/api';
+import { ErrorResponse, Response } from '@/types/api';
 import {
   RoomData,
   RoomPostResponseData,
@@ -63,13 +63,13 @@ export const useDeleteRoom = (
   accommodationId: string,
   options?: UseMutationOptions<
     AxiosResponse<Response<RoomDeleteResponseData>>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     number
   >,
 ) => {
   return useMutation<
     AxiosResponse<Response<RoomDeleteResponseData>>,
-    AxiosError,
+    AxiosError<ErrorResponse>,
     number
   >((roomId) => ROOM_API.deleteRoom(roomId, accommodationId), {
     ...options,
