@@ -118,7 +118,9 @@ export const useMain = () => {
     revenueError,
     isStaticsLoading,
     isRevenueLoading,
-    couponMessage: data ? data.couponMessage : '',
+    couponMessage: data
+      ? data.couponMessage
+      : '이업주님. 쿠폰 발급 후 매출이 68% 늘어났어요!',
     navigateUserGuide,
     navigateBusinessCenter,
   };
