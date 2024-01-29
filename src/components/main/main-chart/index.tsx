@@ -40,7 +40,7 @@ export const MainChart = ({ revenueData, couponMessage }: mainChartProps) => {
             최근 일주일 일자별 매출
           </TextBox>
           <TextBox typography="body4" fontWeight={400}>
-            단위: 만원
+            단위: 원
           </TextBox>
         </StyledTitle>
         <div>
