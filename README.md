@@ -19,11 +19,19 @@
 
 업주야놀자의 B2B Self-coupon Admin(Backoffice) 서비스 프로젝트 :computer: 웹 페이지 입니다
 
-저희 팀은 프론트엔드 6명 백엔드 5명으로 구성되어 있습니다.   
-
 백엔드는 [이곳](https://github.com/Upjuyanolja/Upjuyanolja_BE)을 클릭해 주세요  
 
 숙박 예약 서비스는 [이곳](https://github.com/Upjuyanolja/FastCatch-FrontEnd)을 클릭해 주세요
+
+--- 
+
+**테스트 계정** 
+
+emai: pgh123166@naver.com
+
+password: Abcd1234
+
+(입점 DB에 존재하지 않는 이메일이면 회원가입이 불가합니다)
 
 ---
 
@@ -44,6 +52,14 @@
         <td align="center"><a href="https://github.com/xxxjinn">신현진</a></td>
         <td align="center"><a href="https://github.com/yangjaehyuk">양재혁</a></td>
         <td align="center"><a href="https://github.com/tkyoun0421">윤태관</a></td>
+    </tr>
+      <tr>
+        <td align="center"> -메인페이지<br/>-쿠폰 매출 차트<br/>-쿠폰 관리 페이지</br>-추가 구매 모달</br>-이용가이드 </td>
+        <td align="center"> -포인트 충전 모달<br/>-토스페이 결제<br/>-포인트 내역 페이지</br></td>
+        <td align="center"> -객실관리 페이지<br/>-객실 삭제<br/>-객실 수정</br>-객실 등록</br></td>
+        <td align="center"> -최초 숙소 등록 페이지 및<br/> 숙소 추가하기 페이지 <br/> -객실 최초 등록 페이지<br/>-등록 정보 확인 페이지</td>
+        <td align="center"> -로그인<br/>-회원가입</br>-로그아웃</td>
+        <td align="center"> -사이드바<br/>-쿠폰 만들기 페이지</td>
     </tr>
  </table>
 
@@ -82,9 +98,17 @@
 ## 🎨 화면 구성
 <div style="text-align: center">
   
-  <h4>메인 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a8b0a5b0-7786-4fd8-b0e5-0d3bbb197a6a" alt="메인 페이지">
+  <h4>메인 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/81469686/be11c7f0-0c0a-4ddf-81ac-a56e53fcb3f2" alt="메인 페이지">
+메인 페이지에서는 쿠폰 현황과 일자별 쿠폰 매출을 차트 형식으로 확인할 수 있습니다.
+
+--- 
+
 
   <h4>쿠폰 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/ca107a8e-c20a-41f8-b985-273ee923742b" alt="메인 페이지">
+쿠폰 관리 페이지에서는 select와 checkbox를 통한 쿠폰 발급 상태를 변경할 수 있습니다 ( 소진은 변경 불가 )
+일일 제한 수량, 노출 기준, 쿠폰 적용 기간 또한 사용자가 직접 변경할 수 있습니다
+쿠폰 아이템을 선택해서 삭제와 추가 구매를 할 수 있습니다
+  ---
   
   <h4>쿠폰 만들기 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a9b27167-d28b-4713-868f-92918f9f0344" alt="카테고리별 페이지">
   
