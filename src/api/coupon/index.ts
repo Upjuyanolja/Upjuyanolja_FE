@@ -12,15 +12,15 @@ import {
 } from './type';
 
 export const COUPON_API = {
-  getStatics: (accommodationId: string) =>
+  statics: (accommodationId: string) =>
     instance.get<StaticsData | ''>(
       `/api/coupons/backoffice/statistics/${accommodationId}`,
     ),
-  getRevenue: (accommodationId: string) =>
+  revenue: (accommodationId: string) =>
     instance.get<RevenueData | ''>(
       `/api/coupons/backoffice/revenue/${accommodationId}`,
     ),
-  getCoupon: (accommodationId: string) =>
+  coupon: (accommodationId: string) =>
     instance.get<Coupons>(`/api/coupons/backoffice/manage/${accommodationId}`),
   deleteCoupon: (params: CouponDeleteParams) =>
     instance.delete<''>('/api/coupons/backoffice/manage', {
@@ -28,7 +28,7 @@ export const COUPON_API = {
     }),
   editCoupon: (params: CouponEditParams) =>
     instance.patch<''>('/api/coupons/backoffice/manage', params),
-  getCouponRoomList: (accommodationId: string) =>
+  couponRoomList: (accommodationId: string) =>
     instance.get<CouponRoomList>(
       `/api/coupons/backoffice/buy/${accommodationId}`,
     ),

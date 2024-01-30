@@ -26,7 +26,7 @@ export const SignIn = () => {
         }
         setCookie('accessToken', response.data.accessToken);
         setCookie('refreshToken', response.data.refreshToken);
-        const { data } = await ACCOMMODATION_API.getAccommodationList();
+        const { data } = await ACCOMMODATION_API.accommodationList();
         const hasAccommodationData = data.accommodations.length > 0;
         const memberResponse = response.data.memberResponse;
         const memberData = JSON.stringify(memberResponse);

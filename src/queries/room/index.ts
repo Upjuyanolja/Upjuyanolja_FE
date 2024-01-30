@@ -48,7 +48,7 @@ export const useGetInfiniteRoomList = (
     RoomListResponseData
   >(
     ['room-list'],
-    ({ pageParam = 0 }) => ROOM_API.getRoomList(accommodationId, 8, pageParam),
+    ({ pageParam = 0 }) => ROOM_API.roomList(accommodationId, 8, pageParam),
     {
       getNextPageParam: ({ data: { pageNum, totalPages } }) => {
         const nextPage = pageNum + 1;
@@ -89,7 +89,7 @@ export const useGetRoomDetail = (
     AxiosResponse<RoomDeleteResponseData>,
     AxiosError,
     RoomDeleteResponseData
-  >(['getRoomDetail'], () => ROOM_API.getRoomDetail(roomId, accommodationId), {
+  >(['getRoomDetail'], () => ROOM_API.roomDetail(roomId, accommodationId), {
     ...options,
   });
 };

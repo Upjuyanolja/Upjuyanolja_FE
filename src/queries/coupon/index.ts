@@ -28,7 +28,7 @@ export const useGetStatics = (
     AxiosResponse<StaticsData | ''>,
     AxiosError<ErrorResponse>,
     StaticsData | ''
-  >(['getStatics'], () => COUPON_API.getStatics(accommodationId), {
+  >(['getStatics'], () => COUPON_API.statics(accommodationId), {
     ...options,
   });
 };
@@ -45,7 +45,7 @@ export const useGetRevenue = (
     AxiosResponse<RevenueData | ''>,
     AxiosError<ErrorResponse>,
     RevenueData | ''
-  >(['getRevenue'], () => COUPON_API.getRevenue(accommodationId), {
+  >(['getRevenue'], () => COUPON_API.revenue(accommodationId), {
     ...options,
   });
 };
@@ -60,7 +60,7 @@ export const useGetCoupon = (
 ) =>
   useQuery<AxiosResponse<Coupons>, AxiosError<ErrorResponse>, Coupons>(
     ['getCoupon'],
-    () => COUPON_API.getCoupon(accommodationId),
+    () => COUPON_API.coupon(accommodationId),
     { ...options },
   );
 

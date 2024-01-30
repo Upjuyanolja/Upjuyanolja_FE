@@ -16,7 +16,7 @@ export const useGetPointSummary = (
     AxiosResponse<PointSummaryData>,
     AxiosError<ErrorResponse>,
     PointSummaryData
-  >(['getPointSummary'], () => POINT_API.getPointSummary(rangeDate), {
+  >(['getPointSummary'], () => POINT_API.pointSummary(rangeDate), {
     ...options,
   });
 };
@@ -30,7 +30,7 @@ export const useGetPointTotal = (
 ) => {
   return useQuery<AxiosResponse<PointTotalData>, AxiosError, PointTotalData>(
     ['getPointTotal'],
-    () => POINT_API.getPointTotal(),
+    () => POINT_API.totalPoint(),
     {
       ...options,
     },

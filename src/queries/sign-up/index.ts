@@ -16,7 +16,7 @@ export const usePostSignUp = (
   >,
 ) => {
   return useMutation<AxiosResponse<PostSignUpResData>, AxiosError, SignUpData>(
-    (data: SignUpData) => SIGN_UP_API.postSignUp(data),
+    (data: SignUpData) => SIGN_UP_API.signUp(data),
     {
       ...options,
     },
@@ -34,7 +34,7 @@ export const usePostAuthentication = (
     AxiosResponse<PostAuthenticationData>,
     AxiosError,
     AuthenticationData
-  >((data: AuthenticationData) => SIGN_UP_API.postAuthentication(data), {
+  >((data: AuthenticationData) => SIGN_UP_API.authentication(data), {
     ...options,
   });
 };

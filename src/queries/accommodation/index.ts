@@ -14,7 +14,7 @@ export const useGetAccommodationList = (
     AxiosResponse<AccommodationListData>,
     AxiosError,
     AccommodationListData
-  >(['getAccommodationList'], () => ACCOMMODATION_API.getAccommodationList(), {
+  >(['getAccommodationList'], () => ACCOMMODATION_API.accommodationList(), {
     ...options,
   });
 };

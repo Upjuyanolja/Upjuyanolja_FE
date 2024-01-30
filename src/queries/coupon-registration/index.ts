@@ -23,7 +23,7 @@ export const useGetCouponRoomList = (
 ) => {
   return useQuery<AxiosResponse<CouponRoomList>, AxiosError, CouponRoomList>(
     ['getCouponRoomList'],
-    () => COUPON_API.getCouponRoomList(accommodationId),
+    () => COUPON_API.couponRoomList(accommodationId),
     {
       ...options,
     },

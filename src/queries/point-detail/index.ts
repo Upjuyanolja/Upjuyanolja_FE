@@ -30,13 +30,9 @@ export const useGetPointDetail = (
     AxiosResponse<PointDetailDataType>,
     AxiosError<ErrorResponse>,
     PointDetailDataType
-  >(
-    ['getPointDetail'],
-    () => POINT_DETAIL_API.getPointDetail(menuStatus, page),
-    {
-      ...options,
-    },
-  );
+  >(['getPointDetail'], () => POINT_DETAIL_API.pointDetail(menuStatus, page), {
+    ...options,
+  });
 };
 
 export const useDeleteOrderCancel = (
@@ -64,7 +60,7 @@ export const useDeleteOrderCancel = (
     AxiosResponse<CancelType>,
     AxiosError<ErrorResponse>,
     number
-  >((chargeId: number) => ORDER_CANCEL_API.deleteOrderCancel(chargeId), {
+  >((chargeId: number) => ORDER_CANCEL_API.orderCancel(chargeId), {
     onSuccess: () => {
       queryClient.invalidateQueries(['getPointSummary']);
       queryClient.invalidateQueries(['getPointTotal']);

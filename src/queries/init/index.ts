@@ -20,8 +20,7 @@ export const useImageFile = (
     AxiosError<ErrorResponse>,
     FormData
   >(
-    (formData: FormData) =>
-      ACCOMMODATION_REGISTRATION_API.postImageFile(formData),
+    (formData: FormData) => ACCOMMODATION_REGISTRATION_API.imageFile(formData),
     {
       ...options,
     },
@@ -41,7 +40,7 @@ export const useAccommodationInfo = (
     PostAccommodationParams
   >(
     (params: PostAccommodationParams) =>
-      ACCOMMODATION_REGISTRATION_API.postAccommodationInfo(params),
+      ACCOMMODATION_REGISTRATION_API.accommodationInfo(params),
     {
       ...options,
     },

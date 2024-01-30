@@ -14,7 +14,7 @@ export const NotFound = () => {
       navigate(`/${accommodationId}${ROUTES.MAIN}`);
       return;
     }
-    const { data } = await ACCOMMODATION_API.getAccommodationList();
+    const { data } = await ACCOMMODATION_API.accommodationList();
     const hasAccommodationData = data.accommodations.length > 0;
     const accommodationIdData = data.accommodations[0].id;
     if (hasAccommodationData && accommodationIdData) {

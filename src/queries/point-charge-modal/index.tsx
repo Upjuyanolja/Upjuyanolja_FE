@@ -38,7 +38,7 @@ export const usePointCharge = (
     AxiosResponse<PointChargeType>,
     AxiosError<ErrorResponse>,
     TossRequestType
-  >((data: TossRequestType) => POINT_CHARGE_API.postPointCharge(data), {
+  >((data: TossRequestType) => POINT_CHARGE_API.pointCharge(data), {
     onSuccess: () => {
       queryClient.invalidateQueries(['getPointSummary']);
 

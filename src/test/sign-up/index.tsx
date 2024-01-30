@@ -94,7 +94,7 @@ export const SignUp = () => {
       ]);
 
       try {
-        const res = await SIGN_UP_API.getVerify({
+        const res = await SIGN_UP_API.verify({
           // 버튼을 누를 때마다 갱신된 데이터를 받아와야 하기 때문에 쿼리 사용 안했습니다. (staleTime: 0)
           email: values.email,
           verificationCode: values.verificationCode,
