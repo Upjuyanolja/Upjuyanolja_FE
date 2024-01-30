@@ -25,17 +25,29 @@ import { isCouponModifiedState } from '@stores/coupon/atom';
  * @description 쿠폰 관리 페이지 로직을 다루는 hook
  * 
  * @returns
- *  data,
-    isGetCouponError,
-    deleteCoupon,
+   deleteCoupon,
     couponData,
     handleSelectStatus,
     handleSelectRecord,
     handleSelectCouponType,
     handleChangeDayLimit,
     handleDeleteButton,
-    isModified,
     handleChangeDate,
+    handleEditButton,
+    handleModalOpen,
+    handleModalClose,
+    isModalOpen,
+    handleBatchEditCheckbox,
+    purchaseData,
+    handleChangeBatchValue,
+    handleChangeBuyQuantity,
+    handlePurchaseButton,
+    isPointModalOpen,
+    setIsPointModalOpen,
+    isGetCouponLoading,
+    handleAgreeCheckbox,
+    isAgreed,
+    error,
  */
 
 export const useCoupon = () => {
@@ -111,9 +123,9 @@ export const useCoupon = () => {
           className: 'confirm-modal',
           onOk: () => setIsPointModalOpen(true),
         });
-      } else {
-        message.error('요청에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        return;
       }
+      message.error('요청에 실패했습니다. 잠시 후 다시 시도해 주세요.');
     },
   });
 
@@ -164,6 +176,10 @@ export const useCoupon = () => {
     };
   }, []);
 
+  /**
+   * 서버로부터 받은 쿠폰 데이터를 테이블에 할당할 수 있는 데이터로 가공
+   * @param {Coupons} data 서버로 부터 받은 쿠폰 데이터
+   */
   const processCouponTableData = (data: Coupons) => {
     const couponTableData = [];
     const originData = [];
@@ -224,6 +240,9 @@ export const useCoupon = () => {
     };
   };
 
+  /**
+   * 서버로부터 받은 쿠폰 데이터를 추가 구매 모달에 출력될 수 있는 데이터로 가공
+   */
   const processPurchaseData = () => {
     const data: PurchaseData = {
       batchValue: 0,
@@ -266,6 +285,11 @@ export const useCoupon = () => {
     setPurchaseData(data);
   };
 
+  /**
+   * 쿠폰 상태 변경시 check 된 아이템의 쿠폰 상태를 변경
+   * @param {string} value 변경된 쿠폰 상태
+   */
+
   const handleSelectStatus = (value: string) => {
     setSelectedStatus(value);
     const { expiry, coupons: data } = { ...couponData };
@@ -274,6 +298,12 @@ export const useCoupon = () => {
     });
     setCouponData({ expiry, coupons: data });
   };
+
+  /**
+   * checkbox를 통해 쿠폰 아이템 선택 시 selectedRowKey에 해당 쿠폰 아이템 key를 추가하고
+   * 쿠폰 아이템의 상태를 select box에 있는 상태로 변경시켜주는 함수
+   * @param {number} selectedRowKeys 선택된 record keys
+   */
 
   const handleSelectRecord = (selectedRowKeys: number[]) => {
     const { expiry, coupons: data } = { ...couponData };
@@ -286,11 +316,23 @@ export const useCoupon = () => {
     setSelectedRowKeys(selectedRowKeys);
   };
 
+  /**
+   * 노출 기준 선택 시 couponData state를 업데이트 시켜주는 함수
+   * @param {string} value 선택된 노출 기준 값
+   * @param {number} key 선택된 쿠폰 아이템
+   */
+
   const handleSelectCouponType = (value: string, key: number) => {
     const { expiry, coupons: data } = { ...couponData };
     data[key].couponType = value;
     setCouponData({ expiry, coupons: data });
   };
+
+  /**
+   * 일일 제한 수량 input 값 변경 시 couponData state를 업데이트 시켜주는 함수
+   * @param {React.ChangeEvent<HTMLInputElement>} event 발생한 이벤트
+   * @param {number} key 선택된 쿠폰 아이템
+   */
 
   const handleChangeDayLimit = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -304,15 +346,29 @@ export const useCoupon = () => {
     setCouponData({ expiry, coupons: data });
   };
 
+  /**
+   * 쿠폰 적용 기간 변경 시 couponData state를 업데이트 시켜주는 함수
+   * @param {string} date 날짜
+   */
+
   const handleChangeDate = (date: string) => {
     const { coupons } = { ...couponData };
     setCouponData({ expiry: date, coupons });
   };
 
+  /**
+   * checkbox로 선택된 row가 존재하는지 확인하는 함수
+   * @returns {boolean} 존재 여부
+   */
   const isSelectedRow = () => {
     return selectedRowKeys.length !== 0;
   };
 
+  /**
+   * 선택된 row 중 쿠폰 상태가 소진인 아이템이 존재하는지 확인하는 함수
+   * @param {number[]} selectedRowKeys
+   * @returns {boolean} 존재 여부
+   */
   const findNotSoldOutData = (selectedRowKeys: number[]) => {
     for (let index = 0; index < selectedRowKeys.length; index++) {
       const key = selectedRowKeys[index];
@@ -321,6 +377,10 @@ export const useCoupon = () => {
     return false;
   };
 
+  /**
+   * 삭제할 데이터를 서버에게 request 하기 위해 가공하는 함수
+   * @param {number[]} selectedRowKeys 선택된 rows의 key
+   */
   const processDeleteData = (selectedRowKeys: number[]) => {
     const rooms: { couponId: number }[][] = [];
     for (let index = 0; index < selectedRowKeys.length; index++) {
@@ -347,6 +407,9 @@ export const useCoupon = () => {
     return data;
   };
 
+  /**
+   * 수정할 쿠폰 데이터를 서버에게 request 하기 위해 가공하는 함수
+   */
   const processEditData = () => {
     const rooms: EditCoupon[][] = [];
     for (let index = 0; index < couponData.coupons.length; index++) {
@@ -387,6 +450,9 @@ export const useCoupon = () => {
     return data;
   };
 
+  /**
+   * 삭제 버튼을 클릭했을 때 실행할 함수
+   */
   const handleDeleteButton = () => {
     if (isCouponModified) {
       message.warning('수정 중인 내용을 먼저 저장하세요');
@@ -421,6 +487,9 @@ export const useCoupon = () => {
     });
   };
 
+  /**
+   * 저장 버튼을 클릭했을 때 실행할 함수
+   */
   const handleEditButton = () => {
     Modal.confirm({
       title:
@@ -434,6 +503,10 @@ export const useCoupon = () => {
       },
     });
   };
+
+  /**
+   * 추가 구매 버튼을 클릭했을 때 실행할 함수
+   */
 
   const handleModalOpen = () => {
     if (isCouponModified) {
@@ -451,18 +524,32 @@ export const useCoupon = () => {
     setIsModalOpen(false);
   };
 
+  /**
+   * 개별 구매 수량 input 값의 유효성 검사를 하는 함수
+   * @param {number} value
+   * @param {PurchaseCoupons} coupon
+   */
   const validateBuyQuantity = (value: number, coupon: PurchaseCoupons) => {
     if (value > 999 || value < 0) return;
     if (Number.isNaN(value)) coupon.buyQuantity = 0;
     else coupon.buyQuantity = value;
   };
 
+  /**
+   * 일괄 적용 input 값의 유효성 검사를 하는 함수
+   * @param {number} value
+   * @param {PurchaseData} data
+   */
   const validateBatchValue = (value: number, data: PurchaseData) => {
     if (value > 999 || value < 0) return;
     if (Number.isNaN(value)) data.batchValue = 0;
     else data.batchValue = value;
   };
 
+  /**
+   * 일괄 적용 input 값이 업데이트 되었을 때 실행할 함수
+   * @param {PurchaseData} data
+   */
   const handleBatchUpdate = (data: PurchaseData) => {
     for (const room of data.rooms) {
       if (!room) continue;
@@ -475,6 +562,9 @@ export const useCoupon = () => {
     setPurchaseData(data);
   };
 
+  /**
+   * 일괄 적용 checkbox의 값을 변경했을 때 실행할 함수
+   */
   const handleBatchEditCheckbox = () => {
     if (!purchaseData) return;
     const data = { ...purchaseData };
@@ -484,6 +574,10 @@ export const useCoupon = () => {
     handleBatchUpdate(data);
   };
 
+  /**
+   *일괄 적용 input 값이 업데이트 되었을 때 실행할 함수
+   * @param {React.ChangeEvent<HTMLInputElement>} event
+   */
   const handleChangeBatchValue = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -494,6 +588,12 @@ export const useCoupon = () => {
     handleBatchUpdate(data);
   };
 
+  /**
+   * 개별 구매 수량 input 값이 업데이트 되었을 때 실행할 함수
+   * @param {React.ChangeEvent<HTMLInputElement>} event
+   *  @param {number} couponId
+   *  @param {number} roomId
+   */
   const handleChangeBuyQuantity = (
     event: React.ChangeEvent<HTMLInputElement>,
     couponId: number,
@@ -514,6 +614,10 @@ export const useCoupon = () => {
     }
     setPurchaseData(data);
   };
+
+  /**
+   * 추가 구매 시 서버에게 request 보낼 데이터를 가공하는 함수
+   */
 
   const processPurchasePostData = () => {
     const data: PurchaseCouponParams = {
@@ -553,6 +657,10 @@ export const useCoupon = () => {
     data.rooms = roomData;
     return data;
   };
+
+  /**
+   * 구매하기 버튼 클릭 시 실행할 함수
+   */
   const handlePurchaseButton = () => {
     Modal.confirm({
       content: '쿠폰을 구매하시겠습니까?',
