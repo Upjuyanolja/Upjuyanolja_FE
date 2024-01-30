@@ -5,7 +5,7 @@ import { getValidateSchema } from '@/utils/sign-up/ValidateSchema';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { SIGN_UP_API } from '@api/sign-up';
 import { Footer } from '@components/layout/footer';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostSignUp, usePostAuthentication } from '@queries/sign-up';
 import { Button, Input, Layout, message } from 'antd';

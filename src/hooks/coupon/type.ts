@@ -1,5 +1,5 @@
 import { Coupon } from '@api/coupon/type';
-import { tableData } from '@components/coupon/table/type';
+import { tableData } from '@components/domain/coupon/table/type';
 
 export type CouponData = {
   expiry: string;

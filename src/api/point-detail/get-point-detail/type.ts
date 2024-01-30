@@ -1,4 +1,4 @@
-import { BadgeProps } from '@components/point-detail/badge/types';
+import { BadgeProps } from '@components/domain/point-detail/badge/types';
 
 export type Coupons = {
   name: string;

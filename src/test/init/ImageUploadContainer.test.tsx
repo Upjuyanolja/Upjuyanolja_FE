@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
+import { ImageUploadContainer } from '@components/domain/init/ImageUploadContainer';
 import { message } from 'antd';
 import { IMAGE_MAX_CAPACITY } from '@/constants/init';
 import { RecoilRoot } from 'recoil';

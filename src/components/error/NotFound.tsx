@@ -1,6 +1,6 @@
 import { ROUTES } from '@/constants/routes';
 import { ACCOMMODATION_API } from '@api/accommodation';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';

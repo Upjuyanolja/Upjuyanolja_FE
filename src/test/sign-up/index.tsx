@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { getValidateSchema } from '@/utils/sign-up/ValidateSchema';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { SIGN_UP_API } from '@api/sign-up/index';
 import { AxiosError } from 'axios';
 import { RESPONSE_CODE } from '@/constants/api';

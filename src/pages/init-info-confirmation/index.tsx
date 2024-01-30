@@ -1,7 +1,7 @@
 import { ROUTES } from '@/constants/routes';
-import { ButtonContainer } from '@components/init/ButtonContainer';
-import { AccommodationInfo } from '@components/init/init-info-confirmation/AccommodationInfo';
-import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
+import { ButtonContainer } from '@components/domain/init/ButtonContainer';
+import { AccommodationInfo } from '@components/domain/init/init-info-confirmation/AccommodationInfo';
+import { RoomInfo } from '@components/domain/init/init-info-confirmation/RoomInfo';
 import { getCookie } from '@hooks/sign-in/useSignIn';
 import {
   addRoomState,

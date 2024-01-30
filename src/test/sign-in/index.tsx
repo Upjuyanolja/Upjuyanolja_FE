@@ -5,7 +5,7 @@ import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { Input, Button, message } from 'antd';
 import { useFormik } from 'formik';
 import React from 'react';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { usePostLogin } from '@queries/sign-in';
 import { useSideBar } from '@hooks/side-bar/useSideBar';
 import { AxiosError } from 'axios';

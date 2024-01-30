@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { ButtonContainer } from '@components/init/ButtonContainer';
+import { ButtonContainer } from '@components/domain/init/ButtonContainer';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 

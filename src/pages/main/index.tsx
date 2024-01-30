@@ -1,11 +1,11 @@
-import { MainChart } from '@components/main/main-chart';
-import { MainCouponStatusContainer } from '@components/main/main-coupon-status-container';
-import { CouponRegistrationContainer } from '@components/main/coupon-navigation-container';
+import { MainChart } from '@components/domain/main/main-chart';
+import { MainCouponStatusContainer } from '@components/domain/main/main-coupon-status-container';
+import { CouponRegistrationContainer } from '@components/domain/main/coupon-navigation-container';
 import promotionImage from '@assets/image/mainPromotionImage.jpg';
 import { Image, Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import { useMain } from '@hooks/main/useMain';
-import { UserGuidNavigationContainer } from '@components/main/user-guide-navigation-container';
+import { UserGuidNavigationContainer } from '@components/domain/main/user-guide-navigation-container';
 import { RESPONSE_CODE } from '@/constants/api';
 import { NotFound } from '@components/error/NotFound';
 import { ServerError } from '@components/error/ServerError';

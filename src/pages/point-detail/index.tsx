@@ -1,7 +1,7 @@
 import { Layout, Spin, message } from 'antd';
 import styled from 'styled-components';
-import { PointBox } from '@components/point-detail/point-box';
-import { PointDetailComp } from '@components/point-detail';
+import { PointBox } from '@components/domain/point-detail/point-box';
+import { PointDetailComp } from '@components/domain/point-detail';
 import { useEffect } from 'react';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { useLocation } from 'react-router-dom';

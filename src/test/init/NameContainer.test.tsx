@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import { NameContainer } from '@components/init/NameContainer';
+import { NameContainer } from '@components/domain/init/NameContainer';
 import { ACCOMMODATION_NAME_MIN_LENGTH } from '@/constants/init/init-accommodation-registration';
 import { Form } from 'antd';
 import { RecoilRoot } from 'recoil';

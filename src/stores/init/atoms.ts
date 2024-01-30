@@ -2,7 +2,7 @@ import {
   AccommodationOptions,
   RoomOptions,
   UserInputValue,
-} from '@components/init/init-accommodation-registration/type';
+} from '@components/domain/init/init-accommodation-registration/type';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { ImageFile } from './type';

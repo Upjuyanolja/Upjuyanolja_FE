@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { NavigationMap } from '@/constants/navigation';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { isCouponModifiedState } from '@stores/coupon/atom';
 import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';

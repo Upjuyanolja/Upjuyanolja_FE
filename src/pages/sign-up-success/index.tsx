@@ -1,8 +1,8 @@
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { Layout, Button } from 'antd';
 import styled from 'styled-components';
-import { TextBox } from '@components/text-box';
-import { Main } from '@components/sign-up';
+import { TextBox } from '@components/atom/text-box';
+import { Main } from '@components/domain/sign-up';
 import { Footer } from '@components/layout/footer';
 
 export const SignUpSuccess = () => {
