@@ -9,14 +9,14 @@ import {
 import { instance } from '..';
 
 export const SIGN_UP_API = {
-  postSignUp: (data: SignUpData) =>
+  signUp: (data: SignUpData) =>
     instance.post<PostSignUpResData>('/api/auth/owners/signup', data),
-  postAuthentication: (data: AuthenticationData) =>
+  authentication: (data: AuthenticationData) =>
     instance.post<PostAuthenticationData>(
       '/api/auth/owners/request-email',
       data,
     ),
-  getVerify: (data: VerificationData) =>
+  verify: (data: VerificationData) =>
     instance.get<GetVerificationData>('/api/auth/owners/verify', {
       params: {
         email: data.email,

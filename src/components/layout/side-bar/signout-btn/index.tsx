@@ -1,7 +1,7 @@
 import { RESPONSE_CODE } from '@/constants/api';
 import { ROUTES } from '@/constants/routes';
 import { LogoutOutlined } from '@ant-design/icons';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { removeCookie } from '@hooks/sign-in/useSignIn';
 import { useDeleteLogout } from '@queries/logout';
 import { message } from 'antd';

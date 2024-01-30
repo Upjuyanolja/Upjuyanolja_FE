@@ -1,11 +1,11 @@
 import { BuyCouponParams } from '@api/coupon/type';
-import { CouponApplier } from '@components/coupon-registration/coupon-applier';
-import { CouponCard } from '@components/coupon-registration/coupon-card';
-import { CouponPreview } from '@components/coupon-registration/coupon-preview';
-import { DiscountType } from '@components/coupon-registration/discount-type';
-import { PointModal } from '@components/point-charge-modal/point-modal';
-import { Spacing } from '@components/spacing';
-import { TextBox } from '@components/text-box';
+import { CouponApplier } from '@components/domain/coupon-registration/coupon-applier';
+import { CouponCard } from '@components/domain/coupon-registration/coupon-card';
+import { CouponPreview } from '@components/domain/coupon-registration/coupon-preview';
+import { DiscountType } from '@components/domain/coupon-registration/discount-type';
+import { PointModal } from '@components/domain/point-charge-modal/point-modal';
+import { Spacing } from '@components/atom/spacing';
+import { TextBox } from '@components/atom/text-box';
 import { useCouponRegistration } from '@hooks/coupon-registration/useCouponRegistration';
 import {
   pendingRoomDataListState,

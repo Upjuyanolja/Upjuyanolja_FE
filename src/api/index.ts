@@ -46,7 +46,7 @@ instance.interceptors.response.use(
       } else {
         const accessToken = getCookie('accessToken');
         if (accessToken) {
-          const res = await REFRESH_API.postRefresh({
+          const res = await REFRESH_API.refreshToken({
             accessToken: accessToken,
             refreshToken: getCookie('refreshToken') as string,
           });

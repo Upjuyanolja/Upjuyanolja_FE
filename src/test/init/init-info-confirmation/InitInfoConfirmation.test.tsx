@@ -1,8 +1,8 @@
 import { ROUTES } from '@/constants/routes';
 import { DeleteOutlined } from '@ant-design/icons';
-import { AccommodationInfo } from '@components/init/init-info-confirmation/AccommodationInfo';
-import { CustomButton } from '@components/init/init-info-confirmation/CustomButton';
-import { RoomInfo } from '@components/init/init-info-confirmation/RoomInfo';
+import { AccommodationInfo } from '@components/domain/init/init-info-confirmation/AccommodationInfo';
+import { CustomButton } from '@components/domain/init/init-info-confirmation/CustomButton';
+import { RoomInfo } from '@components/domain/init/init-info-confirmation/RoomInfo';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';

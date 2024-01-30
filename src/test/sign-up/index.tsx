@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { getValidateSchema } from '@/utils/sign-up/ValidateSchema';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { SIGN_UP_API } from '@api/sign-up/index';
 import { AxiosError } from 'axios';
 import { RESPONSE_CODE } from '@/constants/api';
@@ -94,7 +94,7 @@ export const SignUp = () => {
       ]);
 
       try {
-        const res = await SIGN_UP_API.getVerify({
+        const res = await SIGN_UP_API.verify({
           // 버튼을 누를 때마다 갱신된 데이터를 받아와야 하기 때문에 쿼리 사용 안했습니다. (staleTime: 0)
           email: values.email,
           verificationCode: values.verificationCode,

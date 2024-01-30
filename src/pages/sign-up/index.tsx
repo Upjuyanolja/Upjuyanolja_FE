@@ -5,7 +5,7 @@ import { getValidateSchema } from '@/utils/sign-up/ValidateSchema';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { SIGN_UP_API } from '@api/sign-up';
 import { Footer } from '@components/layout/footer';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostSignUp, usePostAuthentication } from '@queries/sign-up';
 import { Button, Input, Layout, message } from 'antd';
@@ -110,7 +110,7 @@ export const SignUp = () => {
   const handleVerification = async () => {
     if (values.verificationCode.length > 0) {
       try {
-        const res = await SIGN_UP_API.getVerify({
+        const res = await SIGN_UP_API.verify({
           // 버튼을 누를 때마다 갱신된 데이터를 받아와야 하기 때문에 쿼리 사용 안했습니다. (staleTime: 0)
           email: values.email,
           verificationCode: values.verificationCode,

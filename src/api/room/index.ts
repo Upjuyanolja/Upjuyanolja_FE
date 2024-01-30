@@ -15,7 +15,7 @@ export const ROOM_API = {
       `/backoffice-api/accommodations/${accommodationId}/rooms`,
       data,
     ),
-  getRoomList: (accommodationId: string, pageSize: number, pageNum: number) =>
+  roomList: (accommodationId: string, pageSize: number, pageNum: number) =>
     instance.get<RoomListResponseData>(
       `/backoffice-api/accommodations/${accommodationId}/rooms?pageSize=${pageSize}&pageNum=${pageNum}`,
     ),
@@ -23,7 +23,7 @@ export const ROOM_API = {
     instance.delete<Response<RoomDeleteResponseData>>(
       `/backoffice-api/accommodations/${accommodationId}/rooms/${roomId}`,
     ),
-  getRoomDetail: (roomId: string, accommodationId: string) =>
+  roomDetail: (roomId: string, accommodationId: string) =>
     instance.get<RoomDeleteResponseData>(
       `/backoffice-api/accommodations/${accommodationId}/rooms/${roomId}`,
     ),

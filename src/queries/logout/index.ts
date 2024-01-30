@@ -5,10 +5,7 @@ import { AxiosResponse, AxiosError } from 'axios';
 export const useDeleteLogout = (
   options?: UseMutationOptions<AxiosResponse, AxiosError>,
 ) => {
-  return useMutation<AxiosResponse, AxiosError>(
-    () => LOGOUT_API.deleteLogout(),
-    {
-      ...options,
-    },
-  );
+  return useMutation<AxiosResponse, AxiosError>(() => LOGOUT_API.logout(), {
+    ...options,
+  });
 };

@@ -1,5 +1,5 @@
 import { colors } from '@/constants/colors';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { Layout } from 'antd';
 import React from 'react';
 import styled from 'styled-components';

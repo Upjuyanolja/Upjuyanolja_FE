@@ -1,6 +1,6 @@
 import { MAX_PRICE, MIN_PRICE } from '@/constants/room/room-registration';
-import { CapacityContainer } from '@components/room/capacity-container';
-import { PriceContainer } from '@components/room/price-container';
+import { CapacityContainer } from '@components/domain/room/capacity-container';
+import { PriceContainer } from '@components/domain/room/price-container';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Form } from 'antd';

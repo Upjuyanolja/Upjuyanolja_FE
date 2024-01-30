@@ -3,5 +3,5 @@ import { instance } from '..';
 import { UserInfoData } from './type';
 
 export const MEMBER_API = {
-  getUserInfo: () => instance.get<Response<UserInfoData>>('/api/member'),
+  userInfo: () => instance.get<Response<UserInfoData>>('/api/member'),
 };

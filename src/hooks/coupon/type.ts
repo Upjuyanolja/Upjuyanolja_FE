@@ -1,12 +1,12 @@
-import { coupon } from '@api/coupon/type';
-import { tableData } from '@components/coupon/table/type';
+import { Coupon } from '@api/coupon/type';
+import { tableData } from '@components/domain/coupon/table/type';
 
 export type CouponData = {
   expiry: string;
   coupons: tableData[];
 };
 
-export type PurchaseCoupons = Omit<coupon, 'appliedPrice' | 'quantity'> & {
+export type PurchaseCoupons = Omit<Coupon, 'appliedPrice' | 'quantity'> & {
   buyQuantity: number;
   eachPoint: number;
   points: number;

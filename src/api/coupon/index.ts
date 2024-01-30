@@ -6,29 +6,29 @@ import {
   CouponEditParams,
   CouponRoomList,
   PurchaseCouponParams,
-  coupons,
-  revenueData,
-  staticsData,
+  Coupons,
+  RevenueData,
+  StaticsData,
 } from './type';
 
 export const COUPON_API = {
-  getStatics: (accommodationId: string) =>
-    instance.get<staticsData | ''>(
+  statics: (accommodationId: string) =>
+    instance.get<StaticsData | ''>(
       `/api/coupons/backoffice/statistics/${accommodationId}`,
     ),
-  getRevenue: (accommodationId: string) =>
-    instance.get<revenueData | ''>(
+  revenue: (accommodationId: string) =>
+    instance.get<RevenueData | ''>(
       `/api/coupons/backoffice/revenue/${accommodationId}`,
     ),
-  getCoupon: (accommodationId: string) =>
-    instance.get<coupons>(`/api/coupons/backoffice/manage/${accommodationId}`),
+  coupon: (accommodationId: string) =>
+    instance.get<Coupons>(`/api/coupons/backoffice/manage/${accommodationId}`),
   deleteCoupon: (params: CouponDeleteParams) =>
     instance.delete<''>('/api/coupons/backoffice/manage', {
       data: params,
     }),
   editCoupon: (params: CouponEditParams) =>
     instance.patch<''>('/api/coupons/backoffice/manage', params),
-  getCouponRoomList: (accommodationId: string) =>
+  couponRoomList: (accommodationId: string) =>
     instance.get<CouponRoomList>(
       `/api/coupons/backoffice/buy/${accommodationId}`,
     ),

@@ -6,13 +6,13 @@ import {
 } from './type';
 
 export const ACCOMMODATION_REGISTRATION_API = {
-  postImageFile: (formData: FormData) =>
+  imageFile: (formData: FormData) =>
     instance.post<PostImageFile>('/backoffice-api/images', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     }),
 
-  postAccommodationInfo: (params: PostAccommodationParams) =>
+  accommodationInfo: (params: PostAccommodationParams) =>
     instance.post<PostAccommodation>('/backoffice-api/accommodations', params),
 };

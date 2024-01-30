@@ -14,18 +14,17 @@
 
 <br/>
 
-
-안녕하세요😃 
+안녕하세요😃
 
 업주야놀자의 B2B Self-coupon Admin(Backoffice) 서비스 프로젝트 :computer: 웹 페이지 입니다
 
-백엔드는 [이곳](https://github.com/Upjuyanolja/Upjuyanolja_BE)을 클릭해 주세요  
+백엔드는 [이곳](https://github.com/Upjuyanolja/Upjuyanolja_BE)을 클릭해 주세요
 
 숙박 예약 서비스는 [이곳](https://github.com/Upjuyanolja/FastCatch-FrontEnd)을 클릭해 주세요
 
---- 
+---
 
-**테스트 계정** 
+**테스트 계정**
 
 emai: pgh123166@naver.com
 
@@ -36,6 +35,7 @@ password: Abcd1234
 ---
 
 ## 🎯 팀 소개
+
 <table align="center">
     <tr>
         <td align="center"><img alt="avatar" src="https://github.com/gahyuun.png" width="100"></td>
@@ -92,39 +92,50 @@ password: Abcd1234
   <img src="https://img.shields.io/badge/vercel-ffffff?style=for-the-badge&logo=vercel&logoColor=black"/>
 </p>
 
-
 <br/>
 
 ## 🎨 화면 구성
+
 <div style="text-align: center">
   
   <h4>메인 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/81469686/be11c7f0-0c0a-4ddf-81ac-a56e53fcb3f2" alt="메인 페이지">
 메인 페이지에서는 쿠폰 현황과 일자별 쿠폰 매출을 차트 형식으로 확인할 수 있습니다.
 
---- 
-
+---
 
   <h4>쿠폰 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/ca107a8e-c20a-41f8-b985-273ee923742b" alt="메인 페이지">
 쿠폰 관리 페이지에서는 select와 checkbox를 통한 쿠폰 발급 상태를 변경할 수 있습니다 ( 소진은 변경 불가 )
 일일 제한 수량, 노출 기준, 쿠폰 적용 기간 또한 사용자가 직접 변경할 수 있습니다
 쿠폰 아이템을 선택해서 삭제와 추가 구매를 할 수 있습니다
-  ---
-  
+
+---
+
   <h4>쿠폰 만들기 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a9b27167-d28b-4713-868f-92918f9f0344" alt="카테고리별 페이지">
-  
+
+충전한 포인트를 가지고 쿠폰을 구매할 수 있습니다. 구매한 쿠폰은 쿠폰 관리 페이지에서 확인이 가능합니다
+
+---
+
   <h4>포인트 내역 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/4630f880-e1ed-4303-96d5-ea15a7ffc7e4" alt="숙박 상세 페이지">
-  
+
+충전한 포인트와 사용한 포인트 내역을 페이지네이션 형태로 확인할 수 있습니다
+
+---
+
   <h4>객실 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/490e2d41-ba1d-4ad5-8775-f4513f9a2054" alt="장바구니 페이지">
-  
+
+객실을 무한스크롤 형태로 확인할 수 있고 객실을 수정 , 삭제 , 등록이 가능합니다
+
+---
+
   <h4>이용 가이드 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/f523634b-f881-4bf8-8c28-b1e04d923e08">
 
 </div>
 
-
-
 <br>
 
 ## 📚 주요 기능
+
 <div align="center">
   <table>
     <tr align="center">
@@ -153,7 +164,7 @@ password: Abcd1234
 ```
 📂 src
 ┣ 📂 api
-┣ 📂 assets                   
+┣ 📂 assets
 ┣ 📂 components
 ┃  ┣ 📂 layout
 ┃  ┃  ┣ 📂 footer
@@ -161,28 +172,28 @@ password: Abcd1234
 ┃  ┃  ┣ ...
 ┃  ┣ 📂 agreement-modal
 ┃  ┣ 📂 coupon
-┃  ┣ ...           
+┃  ┣ ...
 ┣ 📂 constants
 ┃  ┣ 📂 api
 ┃  ┣ 📂 colors
 ┃  ┣ 📂 coupon
 ┃  ┣ ...
-┣ 📂 hooks                    
+┣ 📂 hooks
 ┣ 📂 mocks
 ┣ 📂 pages
 ┃  ┣ 📂 coupon
 ┃  ┣ 📂 coupon-registration
 ┃  ┣ 📂 init
 ┃  ┣ 📂 init-accommodation-registration
-┃  ┣ ...                  
+┃  ┣ ...
 ┣ 📂 queries
-┣ 📂 stores               
+┣ 📂 stores
 ┣ 📂 test
 ┃  ┣ 📂 coupon
 ┃  ┣ 📂 init
 ┃  ┣ 📂 layouts
-┃  ┣ ...                   
-┣ 📂 types                    
+┃  ┣ ...
+┣ 📂 types
 ┣ 📂 utils
 ┃  ┣ 📂 sign-in
 ┃  ┣ 📂 sign-up
@@ -193,8 +204,11 @@ password: Abcd1234
 
 <br>
 
+### 참고 노션
+
+https://youthful-jump-c97.notion.site/FE-2-f8763ce2d853471ea58f0312e5c5927f?pvs=4
+
 ## 📆 기간
-```2023.12.26 ~ 2024.01.29```
+
+`2023.12.26 ~ 2024.01.29`
 <br>
-
-

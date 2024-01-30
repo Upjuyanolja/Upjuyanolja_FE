@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { ROUTES } from '@/constants/routes';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { Layout } from 'antd';
 import { Outlet, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';

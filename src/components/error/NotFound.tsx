@@ -1,6 +1,6 @@
 import { ROUTES } from '@/constants/routes';
 import { ACCOMMODATION_API } from '@api/accommodation';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { getCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ export const NotFound = () => {
       navigate(`/${accommodationId}${ROUTES.MAIN}`);
       return;
     }
-    const { data } = await ACCOMMODATION_API.getAccommodationList();
+    const { data } = await ACCOMMODATION_API.accommodationList();
     const hasAccommodationData = data.accommodations.length > 0;
     const accommodationIdData = data.accommodations[0].id;
     if (hasAccommodationData && accommodationIdData) {

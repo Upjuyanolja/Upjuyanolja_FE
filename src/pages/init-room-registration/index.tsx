@@ -1,17 +1,17 @@
 import { colors } from '@/constants/colors';
 import { ROUTES } from '@/constants/routes';
-import { ButtonContainer } from '@components/init/ButtonContainer';
-import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
-import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
-import { NameContainer } from '@components/init/NameContainer';
+import { ButtonContainer } from '@components/domain/init/ButtonContainer';
+import { CheckBoxContainer } from '@components/domain/init/CheckBoxContainer';
+import { ImageUploadContainer } from '@components/domain/init/ImageUploadContainer';
+import { NameContainer } from '@components/domain/init/NameContainer';
 import {
   Room,
   defaultRoom,
-} from '@components/init/init-accommodation-registration/type';
-import { CapacityContainer } from '@components/room/capacity-container';
-import { CountContainer } from '@components/room/num-of-rooms-container';
-import { PriceContainer } from '@components/room/price-container';
-import { TimeContainer } from '@components/room/time-container';
+} from '@components/domain/init/init-accommodation-registration/type';
+import { CapacityContainer } from '@components/domain/room/capacity-container';
+import { CountContainer } from '@components/domain/room/num-of-rooms-container';
+import { PriceContainer } from '@components/domain/room/price-container';
+import { TimeContainer } from '@components/domain/room/time-container';
 import { useImageFile } from '@queries/init';
 import {
   addRoomState,
@@ -28,7 +28,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import moment from 'moment';
 import { RESPONSE_CODE } from '@/constants/api';
 

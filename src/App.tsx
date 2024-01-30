@@ -22,7 +22,7 @@ import { RoomRegistration } from './pages/room-registration';
 import { RoomUpdate } from './pages/room-update';
 import { RootLayout } from './layout';
 import './App.less';
-import { RoomLayout } from '@components/room/room-layout';
+import { RoomLayout } from '@components/domain/room/room-layout';
 import { getCookie } from '@hooks/sign-in/useSignIn';
 import { InitLayout } from '@components/layout/init-layout/InitLayout';
 import { MainRedirect } from '@pages/main-redirect';

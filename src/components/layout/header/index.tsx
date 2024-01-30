@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { MOBILE_BREAKPOINTS } from '@/constants/mobile';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { getCookie } from '@hooks/sign-in/useSignIn';
 import { isCouponModifiedState } from '@stores/coupon/atom';
 import { isSideBarOpenState } from '@stores/layout';

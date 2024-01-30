@@ -2,7 +2,7 @@ import { Footer } from '@components/layout/footer';
 import { Layout, Button, Checkbox } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { colors } from '@/constants/colors';

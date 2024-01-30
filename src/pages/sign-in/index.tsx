@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { Footer } from '@components/layout/footer';
-import { Main } from '@components/sign-up';
+import { Main } from '@components/domain/sign-up';
 import { ValidateSchema } from '@/utils/sign-in/ValidateSchema';
 import { getCookie, removeCookie, setCookie } from '@hooks/sign-in/useSignIn';
 import { useCustomNavigate } from '@hooks/sign-up/useSignUp';
 import { usePostLogin } from '@queries/sign-in';
 import { useFormik } from 'formik';
 import { Layout, Input, Button, message } from 'antd';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { AxiosError } from 'axios';
 import { HTTP_STATUS_CODE } from '@/constants/api';
@@ -26,7 +26,7 @@ export const SignIn = () => {
         }
         setCookie('accessToken', response.data.accessToken);
         setCookie('refreshToken', response.data.refreshToken);
-        const { data } = await ACCOMMODATION_API.getAccommodationList();
+        const { data } = await ACCOMMODATION_API.accommodationList();
         const hasAccommodationData = data.accommodations.length > 0;
         const memberResponse = response.data.memberResponse;
         const memberData = JSON.stringify(memberResponse);

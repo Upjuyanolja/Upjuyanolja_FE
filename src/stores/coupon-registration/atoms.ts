@@ -7,7 +7,7 @@ import {
   DiscountValue,
   GroupQuantityValue,
   PendingRoomDataList,
-} from '@components/coupon-registration/type';
+} from '@components/domain/coupon-registration/type';
 import { atom } from 'recoil';
 import { FLAT_DISCOUNT_TYPE } from '@/constants/coupon-registration';
 import { CouponRoomList } from '@api/coupon/type';

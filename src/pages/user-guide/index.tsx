@@ -1,4 +1,4 @@
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { Button, Image } from 'antd';
 import styled from 'styled-components';
 import PdfLogo from '@assets/image/pdfLogo.svg';

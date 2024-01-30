@@ -1,4 +1,4 @@
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';

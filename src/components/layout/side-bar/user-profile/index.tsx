@@ -1,11 +1,11 @@
 import { Button, Space } from 'antd';
 import styled from 'styled-components';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import { colors } from '@/constants/colors';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { UserProfileProps } from './type';
-import { numberFormat } from '@/utils/Format/numberFormat';
-import { PointModal } from '@components/point-charge-modal/point-modal';
+import { numberFormat } from '@/utils/formatiing/numberFormat';
+import { PointModal } from '@components/domain/point-charge-modal/point-modal';
 
 export const UserProfile = ({ pointTotalData }: UserProfileProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

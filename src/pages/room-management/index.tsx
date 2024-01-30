@@ -1,12 +1,12 @@
-import RoomCard from '../../components/room/room-card';
 import { Card, Button, Row, Modal, message } from 'antd';
-import { TextBox } from '@components/text-box';
+import { TextBox } from '@components/atom/text-box';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDeleteRoom, useGetInfiniteRoomList } from '@queries/room';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useMemo } from 'react';
 import { RESPONSE_CODE } from '@/constants/api';
+import RoomCard from '@components/domain/room/room-card';
 
 export const RoomManagement = () => {
   const navigate = useNavigate();

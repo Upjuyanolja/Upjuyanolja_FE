@@ -1,13 +1,13 @@
 import { colors } from '@/constants/colors';
 import { styled } from 'styled-components';
-import { AccommodationCategory } from '@components/init/init-accommodation-registration/AccommodationCategory';
-import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
-import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
+import { AccommodationCategory } from '@components/domain/init/init-accommodation-registration/AccommodationCategory';
+import { AccommodationAddress } from '@components/domain/init/init-accommodation-registration/AccommodationAddress';
+import { AccommodationDesc } from '@components/domain/init/init-accommodation-registration/AccommodationDesc';
 import { Form, message } from 'antd';
-import { ButtonContainer } from '@components/init/ButtonContainer';
-import { CheckBoxContainer } from '@components/init/CheckBoxContainer';
-import { ImageUploadContainer } from '@components/init/ImageUploadContainer';
-import { NameContainer } from '@components/init/NameContainer';
+import { ButtonContainer } from '@components/domain/init/ButtonContainer';
+import { CheckBoxContainer } from '@components/domain/init/CheckBoxContainer';
+import { ImageUploadContainer } from '@components/domain/init/ImageUploadContainer';
+import { NameContainer } from '@components/domain/init/NameContainer';
 import { useEffect, useState } from 'react';
 import {
   checkedAccommodationOptions,
@@ -24,8 +24,8 @@ import { AxiosError } from 'axios';
 import {
   UserInputValue,
   defaultAccommodation,
-} from '@components/init/init-accommodation-registration/type';
-import { AccommodationCategoryProps } from '@components/init/type';
+} from '@components/domain/init/init-accommodation-registration/type';
+import { AccommodationCategoryProps } from '@components/domain/init/type';
 import { RESPONSE_CODE } from '@/constants/api';
 import { getTypeValue } from '@/utils/init';
 

@@ -1,6 +1,6 @@
 import { ROUTES } from '@/constants/routes';
-import { getChartDate } from '@/utils/dateFormat/dateFormat';
-import { revenueData } from '@api/coupon/type';
+import { getChartDate } from '@/utils/formatiing/dateFormat';
+import { RevenueData } from '@api/coupon/type';
 import { useGetStatics, useGetRevenue } from '@queries/coupon';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -31,7 +31,7 @@ export const useMain = () => {
     revenueRemove();
   }, [accommodationId]);
 
-  const handleRevenueDataFormat = (data: revenueData | undefined | '') => {
+  const handleRevenueDataFormat = (data: RevenueData | undefined | '') => {
     const revenueData = [];
     const week = 7;
     if (data === undefined) return undefined;
@@ -68,22 +68,6 @@ export const useMain = () => {
     return revenueData;
   };
 
-  // const calculateStaleTime = () => {
-  //   const now = new Date();
-  //   const targetTime = new Date();
-  //   const targetHour = 6;
-  //   targetTime.setHours(targetHour, 0, 0, 0);
-  //   const day = 24;
-  //   const minute = 60;
-  //   const millisecond = 1000;
-  //   let remainingTime = targetTime.getTime() - now.getTime();
-  //   if (remainingTime < 0) {
-  //     remainingTime += day * minute * minute * millisecond;
-  //   }
-  //   const hours = Math.floor(remainingTime / (minute * minute * millisecond));
-  //   return hours;
-  // };
-
   const {
     data: staticsData,
     error: staticsError,
@@ -93,7 +77,6 @@ export const useMain = () => {
     select(data) {
       return data.data;
     },
-    // staleTime: calculateStaleTime(),
   });
 
   const {
@@ -105,7 +88,6 @@ export const useMain = () => {
     select(data) {
       return data.data;
     },
-    // staleTime: calculateStaleTime(),
   });
 
   const revenueData = handleRevenueDataFormat(data);
@@ -118,7 +100,7 @@ export const useMain = () => {
     revenueError,
     isStaticsLoading,
     isRevenueLoading,
-    couponMessage: '이업주님. 쿠폰 발급 후 매출이 68% 늘어났어요!',
+    couponMessage: data ? data.couponMessage : '',
     navigateUserGuide,
     navigateBusinessCenter,
   };

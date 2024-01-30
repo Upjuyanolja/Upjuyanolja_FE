@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import { AccommodationDesc } from '@components/init/init-accommodation-registration/AccommodationDesc';
-import { AccommodationAddress } from '@components/init/init-accommodation-registration/AccommodationAddress';
+import { AccommodationDesc } from '@components/domain/init/init-accommodation-registration/AccommodationDesc';
+import { AccommodationAddress } from '@components/domain/init/init-accommodation-registration/AccommodationAddress';
 import { ACCOMMODATION_DESC_MIN_LENGTH } from '@/constants/init/init-accommodation-registration';
 import { Form } from 'antd';
 import { RecoilRoot } from 'recoil';
