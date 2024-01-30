@@ -22,3 +22,11 @@ export type dayLimitInputProps = {
     key: number,
   ) => void;
 };
+export type StyledCouponTagProps = {
+  backgroundColor: string;
+  borderColor: string;
+  color: string;
+};
+export type CouponTagProps = {
+  status: string;
+};
