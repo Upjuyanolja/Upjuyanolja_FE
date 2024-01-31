@@ -3,11 +3,11 @@ import Table, { ColumnsType } from 'antd/lib/table';
 import styled from 'styled-components';
 import {
   CouponNameContainer,
+  CouponStatusTag,
   DayLimitInput,
   DayLimitTitle,
   RoomContainer,
 } from '../table-cell';
-import { CouponStatusTag } from '../coupon-status-tag';
 import { Select } from 'antd';
 import { TextBox } from '@components/atom/text-box';
 import { TableProps, couponTableProps, tableData } from './type';

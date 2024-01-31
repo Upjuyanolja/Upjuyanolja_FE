@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Coupon } from '@pages/coupon';
+import { RecoilRoot } from 'recoil';
 
 jest.mock('antd/es/locale/ko_KR', () => ({
   locale: () => null,
@@ -13,21 +14,25 @@ describe('쿠폰 데이터', () => {
   /* 기본 동작 */
   test('쿠폰 페이지가 렌더링된다', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
     await waitFor(() => screen.findByTestId('coupon-header'));
   });
   test('쿠폰 아이템 체크박스가 작동한다', () => {
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
     const checkbox = container.querySelectorAll(
       "input[type='checkbox']",
@@ -40,11 +45,13 @@ describe('쿠폰 데이터', () => {
   /* 삭제  */
   test('아무것도 선택되지 않았을 때, 선택 삭제를 클릭하면 삭제할 쿠폰을 먼저 선택하세요 라는 메세지가 출력된다', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
     await waitFor(() => screen.findByTestId('table-container'), {
       timeout: 5000,
@@ -60,11 +67,13 @@ describe('쿠폰 데이터', () => {
 
   test('수정 중 선택 삭제 버튼을 클릭하면 수정 중인 내용을 먼저 저장하세요 라는 메시지가 출력된다', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     await waitFor(() => screen.findByTestId('table-container'), {
@@ -86,11 +95,13 @@ describe('쿠폰 데이터', () => {
 
   test('수량이 남아있는 쿠폰 삭제 시 수량이 남아있는 쿠폰이 있습니다 라는 메시지가 출력된다', async () => {
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     await waitFor(() => screen.findByTestId('table-container'), {
@@ -120,11 +131,13 @@ describe('쿠폰 데이터', () => {
   /* 수정 */
   test('쿠폰 아이템 일일 제한 수량 수정 후 저장버튼 활성화된다.', () => {
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     const inputBox = container.querySelectorAll(
@@ -140,11 +153,13 @@ describe('쿠폰 데이터', () => {
   });
   test('쿠폰 아이템 일일 제한 수량에 문자 입력 시 block 된다', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     await waitFor(() => screen.findByTestId('table-container'), {
@@ -160,11 +175,13 @@ describe('쿠폰 데이터', () => {
 
   test('저장 버튼을 클릭하면 저장하시겠습니까? 라는 문구가 출력된다', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     await waitFor(() => screen.findByTestId('table-container'), {
@@ -192,11 +209,13 @@ describe('쿠폰 데이터', () => {
 
   test('아무것도 선택되지 않았을 때, 추가 구매를 클릭하면 삭제할 쿠폰을 먼저 선택하세요 라는 메세지가 출력된다', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
     await waitFor(() => screen.findByTestId('table-container'), {
       timeout: 5000,
@@ -212,11 +231,13 @@ describe('쿠폰 데이터', () => {
 
   test('쿠폰 아이템 선택 후 추가 구매 버튼 클릭 시 추가 구매 모달이 출력된다', async () => {
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     await waitFor(() => screen.findByTestId('table-container'), {
@@ -236,11 +257,13 @@ describe('쿠폰 데이터', () => {
   });
   test('수량 일괄 적용 클릭 시 수량 일괄 적용 input 값이 구매 쿠폰 input에 적용된다', async () => {
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     await waitFor(() => screen.findByTestId('table-container'), {
@@ -269,11 +292,13 @@ describe('쿠폰 데이터', () => {
   });
   test('추가 구매 input에 문자 입력 시 block 된다', async () => {
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Coupon />
-        </BrowserRouter>
-      </QueryClientProvider>,
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Coupon />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </RecoilRoot>,
     );
 
     await waitFor(() => screen.findByTestId('table-container'), {
