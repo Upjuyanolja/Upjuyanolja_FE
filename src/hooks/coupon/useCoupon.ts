@@ -181,36 +181,24 @@ export const useCoupon = () => {
    * @param {Coupons} data 서버로 부터 받은 쿠폰 데이터
    */
   const processCouponTableData = (data: Coupons) => {
-    const couponTableData = [];
-    const originData = [];
+    const couponTableData = createData(data);
+    const originData = createData(data);
+    setCouponData({ expiry: data.expiry, coupons: [...couponTableData] });
+    originCouponTableData.current = {
+      expiry: data.expiry,
+      coupons: [...originData],
+    };
+  };
+
+  const createData = (data: Coupons) => {
+    const resultData = [];
     let key = -1;
     for (const room of data.rooms) {
       for (let index = 0; index < room.coupons.length; index++) {
         key++;
         const coupon = room.coupons[index];
         const length = index === 0 ? room.coupons.length : 0;
-        couponTableData.push({
-          room: {
-            name: room.roomName,
-            price: room.roomPrice,
-            id: room.roomId,
-            length,
-          },
-          key,
-          couponId: coupon.couponId,
-          status: coupon.status,
-          info: {
-            name: coupon.couponName,
-            appliedPrice: coupon.appliedPrice,
-          },
-          dayLimit: coupon.dayLimit,
-          quantity: coupon.quantity,
-          couponType: coupon.couponType,
-          discount: coupon.discount,
-          discountType: coupon.discountType,
-          isSoldOut: coupon.status === 'SOLD_OUT',
-        });
-        originData.push({
+        resultData.push({
           room: {
             name: room.roomName,
             price: room.roomPrice,
@@ -233,13 +221,8 @@ export const useCoupon = () => {
         });
       }
     }
-    setCouponData({ expiry: data.expiry, coupons: [...couponTableData] });
-    originCouponTableData.current = {
-      expiry: data.expiry,
-      coupons: [...originData],
-    };
+    return resultData;
   };
-
   /**
    * 서버로부터 받은 쿠폰 데이터를 추가 구매 모달에 출력될 수 있는 데이터로 가공
    */
@@ -382,28 +365,36 @@ export const useCoupon = () => {
    * @param {number[]} selectedRowKeys 선택된 rows의 key
    */
   const processDeleteData = (selectedRowKeys: number[]) => {
-    const rooms: { couponId: number }[][] = [];
-    for (let index = 0; index < selectedRowKeys.length; index++) {
-      const key = selectedRowKeys[index];
+    const roomsMap = createDeleteRoomsMap(selectedRowKeys);
+    const data = createDeleteParams(roomsMap);
+    return data;
+  };
+
+  const createDeleteRoomsMap = (selectedRowKeys: number[]) => {
+    const roomsMap = new Map();
+    for (const key of selectedRowKeys) {
       const { room, couponId } = couponData.coupons[key];
-      if (!rooms[room.id]) {
-        rooms[room.id] = [];
-      }
-      rooms[room.id].push({ couponId });
+      const roomCoupons = roomsMap.get(room.id) || [];
+      roomCoupons.push({ couponId });
+      roomsMap.set(room.id, roomCoupons);
     }
+    return roomsMap;
+  };
+
+  const createDeleteParams = (
+    roomsMap: Map<number, { couponId: number }[]>,
+  ) => {
     const data: CouponDeleteParams = {
       accommodationId: Number(accommodationId as string),
       rooms: [],
     };
-    for (let index = 0; index < rooms.length; index++) {
-      if (rooms[index]) {
-        const roomsData = {
-          roomId: index,
-          coupons: rooms[index],
-        };
-        data.rooms.push(roomsData);
-      }
-    }
+    roomsMap.forEach((roomCoupons, roomId) => {
+      const roomsData = {
+        roomId,
+        coupons: roomCoupons,
+      };
+      data.rooms.push(roomsData);
+    });
     return data;
   };
 
@@ -411,8 +402,14 @@ export const useCoupon = () => {
    * 수정할 쿠폰 데이터를 서버에게 request 하기 위해 가공하는 함수
    */
   const processEditData = () => {
-    const rooms: EditCoupon[][] = [];
-    for (let index = 0; index < couponData.coupons.length; index++) {
+    const roomsMap = createEditRoomsMap();
+    const data = createEditParams(roomsMap);
+    return data;
+  };
+
+  const createEditRoomsMap = () => {
+    const roomsMap = new Map();
+    for (const coupon of couponData.coupons) {
       const {
         room,
         couponId,
@@ -421,11 +418,9 @@ export const useCoupon = () => {
         discountType,
         dayLimit,
         couponType,
-      } = couponData.coupons[index];
-      if (!rooms[room.id]) {
-        rooms[room.id] = [];
-      }
-      rooms[room.id].push({
+      } = coupon;
+      const roomCoupons = roomsMap.get(room.id) || [];
+      roomCoupons.push({
         couponId,
         status,
         discount,
@@ -433,20 +428,23 @@ export const useCoupon = () => {
         dayLimit,
         couponType,
       });
+      roomsMap.set(room.id, roomCoupons);
     }
+    return roomsMap;
+  };
+
+  const createEditParams = (roomsMap: Map<number, EditCoupon[]>) => {
     const data: CouponEditParams = {
       accommodationId: Number(accommodationId as string),
       expiry: couponData.expiry,
       rooms: [],
     };
-    for (let index = 0; index < rooms.length; index++) {
-      if (rooms[index]) {
-        data.rooms.push({
-          roomId: index,
-          coupons: rooms[index],
-        });
-      }
-    }
+    roomsMap.forEach((roomCoupons, roomId) => {
+      data.rooms.push({
+        roomId,
+        coupons: roomCoupons,
+      });
+    });
     return data;
   };
 
